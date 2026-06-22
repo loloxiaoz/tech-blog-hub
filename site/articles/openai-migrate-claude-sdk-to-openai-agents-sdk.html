@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>从 Claude Agent SDK 迁移到 OpenAI Agents SDK · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#6B46C1">API</span>
+          <h1>从 Claude Agent SDK 迁移到 OpenAI Agents SDK</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-07</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Agent</span><span class="tag">迁移指南</span><span class="tag">Agents SDK</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">详细的 Claude Agent SDK 到 OpenAI Agents SDK 迁移指南：分析两者架构差异（沙箱边界、工具映射、生命周期回调），提供十步迁移决策框架，以航班预订助手为运行示例，展示完整迁移路径和验证清单。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/migrate-from-claude-agent-sdk/README" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/migrate-from-claude-agent-sdk/README</a></div></div></div></div></div></div>
+        <div class="prose">
+<h2 id="为什么迁移">为什么迁移</h2>
+<p>全新的 OpenAI Agents SDK 为团队提供了原生模型的 harness，用于构建可跨工具、文件、记忆、审批和沙箱计算协调的 Agent。它是开源的，团队可以检查和自定义运行时行为。</p>
+<p>最重要的架构差异：</p>
+<ul>
+<li><strong>Claude Agent SDK 模式</strong>：harness 在沙箱内运行。沙箱包含 Agent 循环、MCP/工具、文件系统访问和执行环境。</li>
+<li><strong>新 OpenAI Agents SDK 模式</strong>：harness 与计算分离。可信应用运行时拥有 Agent 循环、工具、审批、密钥、护栏、追踪和业务系统访问权限。</li>
+</ul>
+<p>到本指南结束时，你应该拥有一个迁移后的应用，在保留原始 Claude 应用行为的同时，使执行、安全、状态和所有权显式化。</p>
+<hr>
+<h2 id="架构">架构</h2>
+<h3 id="沙箱作为工具">沙箱作为工具</h3>
+<p>将可信控制保留在宿主应用中，仅将沙箱用于以工作区为中心的执行。这更安全、更容易操作，因为密钥、审批决策和业务系统访问都留在执行环境之外。</p>
+<h3 id="技能和说明文件">技能和说明文件</h3>
+<p>迁移 Claude Agent SDK 项目时，请按职责拆分说明和技能文件。</p>
+<table>
+<thead><tr><th>Claude</th><th>OpenAI</th><th>迁移规则</th></tr></thead>
+<tbody>
+<tr><td><code>CLAUDE.md</code> 产品行为</td><td><code>Agent.instructions</code></td><td>在此处保留 Agent 角色、任务策略、工具使用规则和响应格式。</td></tr>
+<tr><td><code>CLAUDE.md</code> 仓库或工作区指导</td><td><code>AGENTS.md</code></td><td>在此处保留仓库范围的约定、测试命令、输出路径和非默认工作区规则。</td></tr>
+<tr><td><code>.claude/skills/*/SKILL.md</code></td><td><code>.agents/skills/*/SKILL.md</code></td><td>将可重用工作流转换为 OpenAI 技能。</td></tr>
+<tr><td><code>.claude/agents/*.md</code></td><td>显式 <code>Agent(...)</code> 定义</td><td>为每个 Claude 子 Agent 创建命名 <code>Agent(...)</code> 和清晰的说明。</td></tr>
+</tbody>
+</table>
+<h3 id="生命周期回调和权限">生命周期回调和权限</h3>
+<table>
+<thead><tr><th>回调用途</th><th>Claude 模式</th><th>迁移到 OpenAI</th></tr></thead>
+<tbody>
+<tr><td>记录工具调用</td><td><code>PreToolUse</code> / <code>PostToolUse</code></td><td><code>RunHooks</code> 或 <code>AgentHooks</code></td></tr>
+<tr><td>阻止有风险的工具调用</td><td>回调返回阻止结果</td><td>工具护栏或审批</td></tr>
+<tr><td>在操作前询问人类</td><td>权限回调</td><td><code>needs_approval</code> 和 <code>RunState</code> 恢复</td></tr>
+</tbody>
+</table>
+<h3 id="子-agent-和所有权">子 Agent 和所有权</h3>
+<ul>
+<li>当主导 Agent 应保持控制、调用专家、组合其输出并生成最终答案时，使用 <code>agent.as_tool(...)</code>。</li>
+<li>当专家应接管对话并拥有最终响应时，使用 <code>handoffs=[...]</code>。</li>
+</ul>
+<hr>
+<h2 id="你需要迁移什么">你需要迁移什么</h2>
+<p>大多数迁移归结为十个决策：</p>
+<table>
+<thead><tr><th>Claude 概念</th><th>迁移</th></tr></thead>
+<tbody>
+<tr><td>沙箱边界</td><td>决定在隔离计算还是可信运行时中运行什么</td></tr>
+<tr><td>说明和技能</td><td>将 <code>CLAUDE.md</code> / Agent 说明映射到 <code>Agent.instructions</code>；将可重用工作流转换为 OpenAI 技能。</td></tr>
+<tr><td>自定义工具</td><td>将业务/领域操作转换为类型化的 <code>@function_tool</code> 函数</td></tr>
+<tr><td>内置工具</td><td>选择正确的执行面：托管、本地/运行时或基于沙箱</td></tr>
+<tr><td>护栏</td><td>在输入、输出和工具边界添加护栏</td></tr>
+<tr><td>Agent 循环</td><td>使用 <code>Runner.run(...)</code></td></tr>
+<tr><td>多 Agent 所有权</td><td>使用 <code>agent.as_tool(...)</code> 保持编排器控制，或通过 <code>handoffs=[...]</code> 将控制权传递给专家</td></tr>
+<tr><td>对话延续</td><td>为对话上下文、暂停运行恢复和沙箱会话恢复选择单独的策略</td></tr>
+<tr><td>审批</td><td>将副作用置于人工审批之后，并从中断恢复</td></tr>
+<tr><td>生命周期回调</td><td>将日志记录/追踪移动到 <code>RunHooks</code> 或 <code>AgentHooks</code>。将阻止、审批或执行重塑逻辑移动到护栏、审批或过滤器</td></tr>
+</tbody>
+</table>
+<hr>
+<h2 id="运行示例：航班预订助手">运行示例：航班预订助手</h2>
+<p>本指南使用航班预订助手示例：</p>
+<ul>
+<li>搜索可用航班</li>
+<li>检查差旅政策</li>
+<li>当存在合规选项时推荐合规选项</li>
+<li>当选项不符合政策时推荐升级</li>
+</ul>
+<h3 id="迁移路径对比">迁移路径对比</h3>
+<table>
+<thead><tr><th>Claude Agent SDK</th><th>OpenAI Agents SDK</th><th>迁移安全规则</th></tr></thead>
+<tbody>
+<tr><td><code>ClaudeAgentOptions</code> + <code>system_prompt</code></td><td><code>Agent(name, instructions, model, tools)</code></td><td>每个 Agent 定义一个职责。</td></tr>
+<tr><td><code>@tool</code> 模式 + 处理程序</td><td><code>@function_tool</code></td><td>映射业务行为。对业务操作使用类型化参数和结构化返回值。</td></tr>
+<tr><td><code>tools</code>、<code>mcp_servers</code>、<code>allowed_tools</code></td><td><code>Agent.tools</code> 加上需要的审批</td><td>映射工具暴露和审批。</td></tr>
+<tr><td>生命周期回调和权限检查</td><td>回调、护栏、审批和过滤器</td><td>在 OpenAI 中，<code>RunHooks</code> 和 <code>AgentHooks</code> 主要用于日志记录和追踪等生命周期副作用。</td></tr>
+<tr><td>子 Agent</td><td><code>agent.as_tool(...)</code> 或 <code>handoffs=[...]</code></td><td>当主 Agent 保持控制时使用 <code>agent.as_tool(...)</code>。</td></tr>
+<tr><td><code>query(...)</code> 或 <code>ClaudeSDKClient</code></td><td><code>Runner.run(...)</code></td><td>保留内置 SDK 循环。</td></tr>
+</tbody>
+</table>
+<hr>
+<h2 id="分步迁移">分步迁移</h2>
+<h3 id="步骤-1：定义第一个-openai-agent">步骤 1：定义第一个 OpenAI Agent</h3>
+<p>如果一个 Claude Agent 端到端处理单个任务，通常映射到一个 OpenAI Agent。</p>
+<h3 id="步骤-2：移植自定义工具">步骤 2：移植自定义工具</h3>
+<p>按以下顺序移植自定义工具：</p>
+<ol>
+<li>保持业务操作不变。</li>
+<li>收紧函数签名。</li>
+<li>编写解释何时使用工具的函数文档。</li>
+<li>返回 Agent 可以检查的结构化数据。</li>
+</ol>
+<h3 id="步骤-3：按执行边界映射内置工具">步骤 3：按执行边界映射内置工具</h3>
+<ul>
+<li>对业务或领域操作使用 <code>@function_tool</code>。</li>
+<li>对 OpenAI 管理的检索或执行使用托管工具。</li>
+<li>对偶尔的本地/运行时操作使用 <code>ShellTool</code> 或 <code>ApplyPatchTool</code>。</li>
+<li>当任务需要隔离工作区时，使用带有沙箱功能的 <code>SandboxAgent</code>。</li>
+</ul>
+<h3 id="步骤-4：将验证移动到正确的护栏边界">步骤 4：将验证移动到正确的护栏边界</h3>
+<table>
+<thead><tr><th>需求</th><th>OpenAI 边界</th></tr></thead>
+<tbody>
+<tr><td>传入请求必须包含路线、日期和预算</td><td>输入护栏。</td></tr>
+<tr><td>最终答案必须包含推荐或升级</td><td>输出护栏。</td></tr>
+<tr><td>工具调用必须遵守参数约束</td><td>工具护栏。</td></tr>
+<tr><td>操作更改生产状态或花费资金</td><td>审批和运行状态恢复。</td></tr>
+</tbody>
+</table>
+<h3 id="步骤-8：推荐测试顺序">步骤 8：推荐测试顺序</h3>
+<ol>
+<li>使用迁移后的自定义工具运行基线 Agent。</li>
+<li>添加输入和输出护栏。</li>
+<li>仅在需要的地方添加工具级检查。</li>
+<li>添加专家 Agent。</li>
+<li>使用 <code>agent.as_tool(...)</code> 或 <code>handoffs=[...]</code> 检查所有权。</li>
+<li>添加对话延续。</li>
+<li>添加副作用审批。</li>
+</ol>
+<hr>
+<h2 id="最终验证清单">最终验证清单</h2>
+<table>
+<thead><tr><th>领域</th><th>通过条件</th></tr></thead>
+<tbody>
+<tr><td>Agent 边界</td><td>一个明确的职责映射到一个 OpenAI Agent。</td></tr>
+<tr><td>自定义工具</td><td>类型化参数、清晰的函数文档、结构化返回；通用文件/Shell 原语映射到 <code>ShellTool</code> / <code>ApplyPatchTool</code>（或沙箱），而不是 1:1 自定义工具。</td></tr>
+<tr><td>内置工具映射</td><td>每个工具都有显式的执行边界。</td></tr>
+<tr><td>内置循环</td><td><code>Runner.run(...)</code> 处理正常的模型/工具循环。</td></tr>
+<tr><td>护栏</td><td>完整请求通过；不完整的输入触发预期的护栏。</td></tr>
+<tr><td>多 Agent 所有权</td><td><code>agent.as_tool(...)</code> 保留父所有权；移交转移所有权。</td></tr>
+<tr><td>延续</td><td>先前轮次通过所选策略一致携带。</td></tr>
+<tr><td>审批</td><td>审批门控操作暂停、浮出中断，然后干净地恢复或拒绝。</td></tr>
+</tbody>
+</table>
+<hr>
+<h2 id="结论">结论</h2>
+<p>成功的迁移保留业务任务并更新执行模型：</p>
+<ul>
+<li><strong>在隔离重要的地方添加沙箱化。</strong> OpenAI 的 Agents SDK 将可信应用与发生有风险或有状态工作的工作区分开。</li>
+<li><strong>将业务操作作为显式工具迁移。</strong> 搜索航班或创建票据等操作应成为具有类型化输入和可预测输出的清晰业务工具。</li>
+<li><strong>保持工具访问和审批分离。</strong> 首先决定 Agent 可以看到哪些工具。然后为需要人工审查的操作添加审批检查。</li>
+<li><strong>适当使用护栏和审批。</strong> 使用护栏检查请求和输出。使用审批暂停有风险的副作用。</li>
+</ul>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#为什么迁移">为什么迁移</a>
+<a class="lv2" href="#架构">架构</a>
+<a class="lv2" href="#你需要迁移什么">你需要迁移什么</a>
+<a class="lv2" href="#运行示例：航班预订助手">运行示例：航班预订助手</a>
+<a class="lv2" href="#分步迁移">分步迁移</a>
+<a class="lv2" href="#最终验证清单">最终验证清单</a>
+<a class="lv2" href="#结论">结论</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-migrate-claude-sdk-to-openai-agents-sdk";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

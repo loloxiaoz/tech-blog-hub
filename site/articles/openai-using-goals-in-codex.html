@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Using Goals in Codex · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#0A4A23">Codex</span>
+          <h1>Using Goals in Codex</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-09</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">Codex</span><span class="tag">Goals</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">Goals 是 Codex 中的持久化目标机制，让线程持续向定义好的结果推进。本文介绍如何编写带有可测量结果、验证方式和约束条件的 Goal，以及 /goal、/goal pause、/goal resume、/goal clear 等生命周期命令的使用方法。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/codex/using_goals_in_codex" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/codex/using_goals_in_codex</a></div></div></div></div></div></div>
+        <div class="prose">
+<p><strong>Authors:</strong> Raj Pathak, Stefano Fabbri | <strong>Date:</strong> May 9, 2026 | <strong>Source:</strong> OpenAI Cookbook</p>
+<hr>
+<p>Goals are persistent objectives in Codex that keep a thread working toward a defined outcome across turns. A Goal gives Codex a completion condition: what should be true, how success should be checked, and what constraints must stay intact.</p>
+<p>A Goal is not background autonomy. It is a scoped, user-controlled completion contract.</p>
+<h2 id="what-you-will-learn">What You Will Learn</h2>
+<p>By the end of this guide:</p>
+<ul>
+<li>Decide when a Goal is better than a one-off prompt</li>
+<li>Write a Goal with measurable outcome, verification surface, and constraints</li>
+<li>Use <code>/goal</code>, <code>/goal pause</code>, <code>/goal resume</code>, <code>/goal clear</code> to manage lifecycle</li>
+</ul>
+<h2 id="quickstart-using-goals">Quickstart: Using Goals</h2>
+<p>Install or update Codex (Goals available starting Codex 0.128.0):</p>
+<pre><code>npm install -g @openai/codex@latest
+codex --version</code></pre>
+<p>Set a Goal with <code>/goal</code> followed by the outcome:</p>
+<pre><code>/goal Reduce p95 latency below 120 ms without regressing correctness tests</code></pre>
+<p>Manage the lifecycle:</p>
+<pre><code>/goal        View current Goal
+/goal pause  Pause an active Goal
+/goal resume Resume a paused Goal
+/goal clear  Remove current Goal</code></pre>
+<h2 id="goals-vs-prompts">Goals vs Prompts</h2>
+<table>
+<thead><tr><th>Prompt</th><th>Goal</th></tr></thead>
+<tbody>
+<tr><td><code>ask → work → result → wait</code></td><td><code>work → check → continue or complete</code></td></tr>
+</tbody>
+</table>
+<p><strong>Prompt:</strong> Do this next thing.</p>
+<p><strong>Goal:</strong> Keep working until this outcome is true.</p>
+<p>A Goal gives Codex a finish line. The work still has to be audited against evidence.</p>
+<h2 id="how-to-write-a-goal">How to Write a Goal</h2>
+<p>A good Goal defines six things:</p>
+<ol>
+<li><strong>Outcome</strong>: What should be true when work is done</li>
+<li><strong>Verification surface</strong>: Test, benchmark, report, or artifact that proves it</li>
+<li><strong>Constraints</strong>: What must not regress while Codex works</li>
+<li><strong>Boundaries</strong>: Which files, tools, or resources Codex may use</li>
+<li><strong>Iteration policy</strong>: How Codex should decide next action after each attempt</li>
+<li><strong>Blocked stop condition</strong>: When Codex should stop and report</li>
+</ol>
+<h3>Weak vs Strong Examples</h3>
+<p><strong>Weak:</strong></p>
+<pre><code>/goal Improve performance</code></pre>
+<p><strong>Strong:</strong></p>
+<pre><code>/goal Reduce p95 checkout latency below 120 ms, verified by checkout benchmark,
+while keeping correctness suite green. Use only checkout service, benchmark
+fixtures, and related tests. Between iterations, record what changed,
+what benchmark showed, and next best experiment to try. If benchmark
+cannot run or no valid paths remain, stop with attempted paths,
+evidence gathered, the blocker, and next input needed.</code></pre>
+<h2 id="what-changes-when-a-goal-is-active">What Changes When a Goal is Active</h2>
+<ol>
+<li><strong>Objective stays visible</strong> — attached to thread across turns</li>
+<li><strong>Continuation becomes possible</strong> — Codex can continue from idle thread when Goal is active and within budget</li>
+<li><strong>Completion must be evidence-based</strong> — not because model believes it's done</li>
+</ol>
+<h2 id="how-goals-are-designed-in-codex">How Goals are Designed in Codex</h2>
+<p>Goals are implemented as <strong>persisted thread state</strong>, not global memory.</p>
+<p>At architecture layer, a Goal is a durable, thread-scoped state recording:</p>
+<ul>
+<li>Objective</li>
+<li>Lifecycle (active/paused/complete/budget-limited)</li>
+<li>Budget accounting</li>
+<li>Progress accounting</li>
+</ul>
+<h2 id="turning-a-weak-goal-into-a-strong-one">Turning a Weak Goal into a Strong One</h2>
+<h3>Example: Performance Tuning</h3>
+<p><strong>Weak:</strong> <code>/goal Improve performance</code></p>
+<p><strong>Strong:</strong> <code>/goal Reduce p95 latency below 120 ms on checkout benchmark while keeping correctness tests green</code></p>
+<h3>Example: Fixing a Flaky Test</h3>
+<p><strong>Weak:</strong> <code>/goal Fix the failing checkout test</code></p>
+<p><strong>Strong:</strong> <code>/goal Make checkout test suite pass on current branch without changing public API behavior. Verify by running full suite. If test is non-deterministic, document reproduction steps and recommended stability fix.</code></p>
+<h3>Example: Research Reproduction</h3>
+<p><strong>Weak:</strong> <code>/goal Reproduce the paper</code></p>
+<p><strong>Strong:</strong> <code>/goal Produce strongest evidence-backed reproduction of Bühlmann et al., "Deep Hedging," using available paper materials and local resources. Attempt every headline result, verify outputs where possible, and end with report that separates confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty.</code></p>
+<h2 id="using-goals-for-complex-research">Using Goals for Complex Research</h2>
+<p>Research Goals should:</p>
+<ul>
+<li>Decompose paper into claim inventory</li>
+<li>Map claims to available evidence</li>
+<li>Label blockers honestly (cannot exactly replay without original training state)</li>
+<li>Produce audit that separates confirmed/approximate/blocked claims</li>
+</ul>
+<h2 id="when-not-to-use-goals">When NOT to Use Goals</h2>
+<ul>
+<li>One-line edit, simple explanation, short code review → use normal prompt</li>
+<li>Finish line is vague → do not use Goal</li>
+<li>Want to hide uncertainty → do not use Goal (say so in the Goal)</li>
+</ul>
+<p>Goals are strongest when task has three properties:</p>
+<ol>
+<li>Durable objective</li>
+<li>Evidence-based finish line</li>
+<li>Path that may require several turns of investigation</li>
+</ol>
+<h2 id="continuation-rules">Continuation Rules</h2>
+<p>Codex checks for continuation only at safe boundaries:</p>
+<ul>
+<li>After a turn has finished</li>
+<li>When no other work is pending</li>
+<li>When no user input is queued</li>
+<li>When thread is idle</li>
+</ul>
+<h2 id="conclusion-let-the-objective-persist-but-let-evidence-decide">Conclusion: Let the Objective Persist, but Let Evidence Decide</h2>
+<p>Goals change the operating model of Codex: from sequence of isolated prompts into stateful work loop around defined outcome.</p>
+<p>The architecture is intentionally bounded. The Goal is scoped to a thread, carries lifecycle state and budget accounting, and can be paused, resumed, cleared, completed, or stopped by budget.</p>
+<p>For complex research, that is the difference between generating an answer and producing an auditable artifact.</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#what-you-will-learn">What You Will Learn</a>
+<a class="lv2" href="#quickstart-using-goals">Quickstart: Using Goals</a>
+<a class="lv2" href="#goals-vs-prompts">Goals vs Prompts</a>
+<a class="lv2" href="#how-to-write-a-goal">How to Write a Goal</a>
+<a class="lv2" href="#what-changes-when-a-goal-is-active">What Changes When a Goal is Active</a>
+<a class="lv2" href="#how-goals-are-designed-in-codex">How Goals are Designed in Codex</a>
+<a class="lv2" href="#turning-a-weak-goal-into-a-strong-one">Turning a Weak Goal into a Strong One</a>
+<a class="lv2" href="#using-goals-for-complex-research">Using Goals for Complex Research</a>
+<a class="lv2" href="#when-not-to-use-goals">When NOT to Use Goals</a>
+<a class="lv2" href="#continuation-rules">Continuation Rules</a>
+<a class="lv2" href="#conclusion-let-the-objective-persist-but-let-evidence-decide">Conclusion: Let the Objective Persist, but Let Evidence Decide</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-using-goals-in-codex";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

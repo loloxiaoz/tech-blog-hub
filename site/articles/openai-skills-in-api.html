@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills in OpenAI API — LLM 知识库</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --surface: #fff;
+    --border: #e8e2d9;
+    --text: #2c2c2c;
+    --text-muted: #7a7060;
+    --accent: #c8673a;
+    --accent-light: #f5ece6;
+    --code-bg: #f3f0eb;
+    --sidebar-w: 240px;
+    --content-max: 720px;
+    --font-serif: 'Noto Serif SC', serif;
+    --font-sans: 'Noto Sans SC', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.8; }
+
+  /* NAV */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,248,245,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.75rem 2rem;
+  }
+  .top-nav a.home { font-family: var(--font-serif); font-weight: 700; font-size: 1.05rem; color: var(--accent); text-decoration: none; }
+  .top-nav span { color: var(--border); }
+  .top-nav a.current { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; }
+
+  /* LAYOUT */
+  .layout { display: flex; max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; gap: 3rem; }
+
+  /* TOC SIDEBAR */
+  .toc-wrap {
+    width: var(--sidebar-w); flex-shrink: 0;
+    position: sticky; top: 72px; align-self: flex-start;
+    max-height: calc(100vh - 90px); overflow-y: auto;
+  }
+  .toc-wrap h3 { font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .toc-wrap a { display: block; font-size: 0.82rem; color: var(--text-muted); text-decoration: none; padding: 0.2rem 0 0.2rem 0.75rem; border-left: 2px solid var(--border); line-height: 1.5; transition: color .15s, border-color .15s; }
+  .toc-wrap a:hover, .toc-wrap a.active { color: var(--accent); border-left-color: var(--accent); }
+  .toc-wrap a.lv3 { padding-left: 1.5rem; font-size: 0.78rem; }
+
+  /* ARTICLE */
+  .article-wrap { flex: 1; min-width: 0; }
+
+  .article-header { margin-bottom: 2.5rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
+  .meta-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .badge { font-size: 0.7rem; font-weight: 600; letter-spacing: .05em; padding: 0.2rem 0.6rem; border-radius: 4px; color: #fff; }
+  .meta-date, .meta-time { font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-sans); }
+  .article-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.35; color: var(--text); margin-bottom: 1rem; }
+  .article-summary { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; border-left: 3px solid var(--accent); padding-left: 1rem; background: var(--accent-light); padding: 0.9rem 1rem; border-radius: 0 6px 6px 0; }
+  .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+  .tag { font-size: 0.72rem; padding: 0.15rem 0.5rem; border: 1px solid var(--border); border-radius: 3px; color: var(--text-muted); background: var(--surface); }
+
+  /* PROSE */
+  .prose { max-width: var(--content-max); }
+  .prose h2 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; margin: 2.4rem 0 0.9rem; color: var(--text); padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .prose h3 { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.6rem; color: var(--text); }
+  .prose p { margin-bottom: 1.1rem; font-size: 0.97rem; }
+  .prose ul, .prose ol { margin: 0.6rem 0 1.1rem 1.5rem; }
+  .prose li { margin-bottom: 0.45rem; font-size: 0.97rem; }
+  .prose li::marker { color: var(--accent); }
+  .prose strong { font-weight: 600; color: var(--text); }
+  .prose em { font-style: italic; color: var(--text-muted); }
+  .prose code { font-family: var(--font-mono); font-size: 0.84em; background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; color: #b84a1e; }
+  .prose pre { background: #1e1b18; border-radius: 8px; padding: 1.25rem 1.4rem; overflow-x: auto; margin: 1.2rem 0 1.5rem; }
+  .prose pre code { background: none; color: #e8ddd0; font-size: 0.83rem; padding: 0; border-radius: 0; }
+  .prose table { width: 100%; border-collapse: collapse; margin: 1.2rem 0 1.5rem; font-size: 0.88rem; }
+  .prose thead { background: var(--code-bg); }
+  .prose th { text-align: left; padding: 0.55rem 0.85rem; font-weight: 600; border: 1px solid var(--border); }
+  .prose td { padding: 0.5rem 0.85rem; border: 1px solid var(--border); vertical-align: top; }
+  .prose tr:nth-child(even) { background: #faf8f5; }
+  .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .prose blockquote { border-left: 3px solid var(--accent); background: var(--accent-light); padding: 0.8rem 1rem; margin: 1.2rem 0; border-radius: 0 6px 6px 0; font-size: 0.94rem; }
+
+  /* FOOTER */
+  .article-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+  .back-link { font-size: 0.85rem; color: var(--accent); text-decoration: none; }
+  .back-link:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .toc-wrap { display: none; }
+    .layout { padding: 1.5rem 1rem 3rem; }
+    .article-title { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="home" href="../index.html">LLM 知识库</a>
+  <span>›</span>
+  <a class="current" href="#">Skills in OpenAI API</a>
+</nav>
+
+<div class="layout">
+  <aside class="toc-wrap">
+    <h3>目录</h3>
+    <a class="lv2" href="#what-is-skill">什么是 Skill？</a>
+    <a class="lv2" href="#when-to-use">何时使用 Skills</a>
+    <a class="lv2" href="#vs-tools">Skills vs. 工具 vs. 系统提示</a>
+    <a class="lv2" href="#packaging">Skill 打包规范</a>
+    <a class="lv2" href="#create-skill">通过 API 创建 Skills</a>
+    <a class="lv2" href="#mount-skills">挂载到执行环境</a>
+    <a class="lv2" href="#best-practices">运营最佳实践</a>
+    <a class="lv2" href="#conclusion">结论</a>
+  </aside>
+
+  <main class="article-wrap">
+    <header class="article-header">
+      <div class="meta-row">
+        <span class="badge" style="background-color: #6B46C1;">API</span>
+        <span class="meta-date">2026-05-01</span>
+        <span class="meta-time">· 约 8 分钟</span>
+      </div>
+      <h1 class="article-title">Skills in OpenAI API</h1>
+      <p class="article-summary">本文介绍如何通过 OpenAI API 上传、管理和附加可复用的 Skills 到托管环境。Skills 是以 SKILL.md 为锚定的文件夹包，模型可按需发现并执行。本文涵盖 Skills vs. 工具 vs. 系统提示的区别、打包规范、API 创建方式、挂载到执行环境的方法，以及运营最佳实践。<p style="margin:.8rem 0 1.5rem;padding:.6rem 1rem;background:rgba(217,119,87,.08);border-left:3px solid var(--accent,#D97757);border-radius:0 6px 6px 0;font-size:.9rem;color:var(--text-muted,#6B6B63)">原文链接：<a href="https://developers.openai.com/blog/skills-in-openai-api" target="_blank" rel="noopener" style="color:var(--accent,#D97757);word-break:break-all">https://developers.openai.com/blog/skills-in-openai-api</a></p></p>
+      <div class="tag-row">
+        <span class="tag">API</span>
+        <span class="tag">Skills</span>
+        <span class="tag">Agent</span>
+      </div>
+    </header>
+
+    <article class="prose" id="openai-skills-in-api">
+      <h2 id="what-is-skill">什么是 Skill？</h2>
+<p>Skill 是一个可复用的文件包（指令 + 脚本 + 资产），打包为一个文件夹，并以必需的 <code>SKILL.md</code> 清单文件为锚定。OpenAI 将该包复制到执行环境中，使模型可以按需读取指令并运行代码。</p>
+<p>在托管 shell 中，当你将 Skills 附加到 shell 工具环境（<code>environment.type="container_auto"</code>）时：</p>
+<ul>
+<li>服务将 Skills 上传并解压到运行时</li>
+<li>服务读取 <code>SKILL.md</code> frontmatter（name/description），然后将每个 skill 的 <code>name</code>、<code>description</code> 和 <code>path</code> 添加到隐藏的系统提示上下文中</li>
+<li>如果模型决定调用某个 skill，它使用 <code>path</code> 读取 <code>SKILL.md</code>，然后通过 shell 工具探索文件并执行脚本</li>
+</ul>
+<p>Skills 适用于流程：可重复的工作流，其中<em>方式</em>很重要（步骤、分支逻辑、格式规则、脚本）。</p>
+<h2 id="when-to-use">何时使用 Skills</h2>
+<p><strong>Skills 在以下情况特别合适：</strong></p>
+<ol>
+<li><strong>你想要可复用、独立版本化的行为集合</strong>。示例："PowerPoint 格式化程序"、"公司特定报告生成器"。</li>
+<li><strong>你的工作流高度条件化或分支复杂</strong>。如果 X → 做这个；否则如果 Y → 做那个；加上验证 + 重试。</li>
+<li><strong>你的工作流需要代码执行和本地产物</strong>。任何受益于脚本、模板、测试固件或应该与指令并置的参考资产。</li>
+<li><strong>你想保持系统提示精简</strong>。将稳定的流程放在 skills 中；系统提示保留全局行为。</li>
+<li><strong>多个 Agent 或团队共享同一"规范风格"</strong>。Skills 是一个不错的"组织标准库"模式。</li>
+<li><strong>你需要可复现性</strong>：Skills 天然兼容通过 skill 版本进行版本固定。</li>
+</ol>
+<h2 id="vs-tools">Skills vs. 工具 vs. 系统提示</h2>
+<table>
+<thead><tr><th>层次</th><th>用途</th><th>避免</th></tr></thead>
+<tbody>
+<tr><td>系统提示</td><td>全局行为和约束、"始终做X"原则、小型稳定策略</td><td>放置长篇多步骤流程</td></tr>
+<tr><td>工具</td><td>调用外部服务、创建副作用、获取实时状态</td><td>范围过宽或副作用不明确</td></tr>
+<tr><td>Skills</td><td>可重复工作流、脚本/模板、沙箱中代码执行、按需调用</td><td>一次性任务或每日变更的流程</td></tr>
+</tbody>
+</table>
+<h2 id="packaging">Skill 打包：SKILL.md 和文件夹布局</h2>
+<p>Skill 只是一个文件夹包。示例结构：</p>
+<ul>
+<li><code>SKILL.md</code>（必需）</li>
+<li>脚本，如 <code>*.py</code>、<code>*.js</code>（可选）</li>
+<li>辅助工具和 <code>requirements.txt</code></li>
+<li>资产、模板、示例输入</li>
+</ul>
+<p>OpenAI 模型期望名称和描述来自 frontmatter（对于发现和路由很重要）。将 <code>name</code> 和 <code>description</code> 放在 <code>SKILL.md</code> frontmatter 中：</p>
+<pre><code>---
+name: csv-insights
+description: Summarize a CSV, compute basic stats, and produce a markdown report + a plot image.
+---
+
+# CSV Insights Skill
+
+## When to use this
+Use this skill when the user provides a CSV file and wants:
+- a quick summary (row/col counts, missing values)
+- basic numeric statistics
+- a simple visualization</code></pre>
+<h2 id="create-skill">通过 API 创建 Skills</h2>
+<p>使用 <code>POST /v1/skills</code> 上传并验证你的 skill，从清单 frontmatter 中提取 name 和 description。</p>
+<p><strong>Option A：上传文件（multipart）</strong></p>
+<pre><code>curl -X POST 'https://api.openai.com/v1/skills' \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -F 'files[]=@./csv_insights_skill/SKILL.md;filename=csv_insights_skill/SKILL.md;type=text/markdown' \
+  -F 'files[]=@./csv_insights_skill/calculate.py;filename=csv_insights_skill/calculate.py;type=text/plain'</code></pre>
+<p><strong>Option B：上传 zip</strong></p>
+<pre><code>curl -X POST 'https://api.openai.com/v1/skills' \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -F 'files=@./csv_insights_skill.zip;type=application/zip'</code></pre>
+<p>如果遇到服务器错误，<strong>在本地打 zip 包并上传 zip</strong>。这是一个实用的变通方法。</p>
+<h2 id="mount-skills">将 Skills 挂载到执行环境</h2>
+<p>通过 Responses API 使用 skills，将其附加到 shell 工具的 <code>tools[].environment.skills</code> 中：</p>
+<pre><code class="language-python">response = client.responses.create(
+  model="gpt-5.2",
+  tools=[{
+    "type": "shell",
+    "environment": {
+      "type": "container_auto",
+      "skills": [
+        {"type": "skill_reference", "skill_id": "&lt;skill_id&gt;"},
+        {"type": "skill_reference", "skill_id": "&lt;skill_id&gt;", "version": 2},
+      ],
+    },
+  }],
+  input="Use the skills to analyze the uploaded CSV and write outputs to /mnt/output."
+)</code></pre>
+<h2 id="best-practices">运营最佳实践</h2>
+<h3 id="bp1">1. 让 Skills 可发现</h3>
+<ul>
+<li>在 frontmatter 中放置<strong>清晰的</strong> <code>name</code> 和 <code>description</code>。</li>
+<li>在 <code>SKILL.md</code> 中包含：何时使用、如何运行、预期输出、注意事项。</li>
+<li>添加明确的路由指导："何时使用"与"何时不使用"，以及一些关键边缘情况。</li>
+<li>在正例旁边包含反例（skill 不应被触发时）以提高路由准确性。</li>
+</ul>
+<h3 id="bp2">2. 优先使用 zip 上传</h3>
+<p>Zip 包可移植、易于版本化，也是上传行为异常时的实用变通方法。</p>
+<h3 id="bp3">3. 在生产中固定版本</h3>
+<p>你要能说"运行此流程版本"，而不是"运行最新版本"。</p>
+<ul>
+<li>如何固定：<code>version: 2</code></li>
+<li>如何浮动：<code>version: "latest"</code></li>
+<li>省略时：默认为 <code>default_version</code></li>
+</ul>
+<h3 id="bp4">4. 将 Skills 设计为小型 CLI</h3>
+<p>一个好的 skill 脚本：从命令行运行；打印确定性 stdout；遇到错误时大声失败并显示用法/错误；在需要时将输出写入已知文件路径。</p>
+<h3 id="bp5">5. 避免在系统提示中重复 Skills</h3>
+<p>如果系统提示重复了整个流程，会绕过 skills，失去可复用性 + 版本控制 + 条件调用的整个价值。</p>
+<h3 id="limits">限制与验证</h3>
+<ul>
+<li><code>SKILL.md</code> 匹配不区分大小写</li>
+<li>每个包只允许一个清单文件（<code>skill.md</code>/<code>SKILL.md</code>）</li>
+<li>最大 zip 上传大小：50 MB</li>
+<li>每个 skill 版本最多文件数：500</li>
+<li>最大未压缩文件大小：25 MB</li>
+</ul>
+<h2 id="conclusion">结论</h2>
+<p>Skills 是提示词和工具之间缺失的"中间层"：<strong>提示词</strong>定义始终开启的行为，<strong>工具</strong>提供原子能力和副作用，而 <strong>Skills</strong> 打包可重复流程（指令 + 脚本 + 资产），模型可以<strong>按需挂载和执行</strong>。</p>
+<p><strong>使用 Skills 保持你的系统提示精简，让你的工作流持久耐用。</strong>从小处开始——用清晰的 <code>SKILL.md</code> 打包一个稳定流程，使其可作为小型 CLI 运行，然后发布。进入生产后，固定版本以获得可复现性，通过发布新版本安全迭代，并将你的 skills 库视为内部标准库：经过审计、可发现、在 Agent 间共享。</p>
+    </article>
+
+    <footer class="article-footer">
+      <a class="back-link" href="../index.html">← 返回文章列表</a>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function() {
+  const tocLinks = document.querySelectorAll('.toc-wrap a');
+  const headings = document.querySelectorAll('#openai-skills-in-api h2[id], #openai-skills-in-api h3[id]');
+  if (!headings.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector('.toc-wrap a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+  headings.forEach(h => observer.observe(h));
+})();
+</script>
+</body>
+</html>

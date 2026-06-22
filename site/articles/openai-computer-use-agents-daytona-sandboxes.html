@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Computer Use Agents in Daytona Sandboxes · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;
+  --ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+@media(max-width:480px){.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>Computer Use Agents in Daytona Sandboxes</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-04-19</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 10 分钟</span><span class="tag">Agent</span><span class="tag">Computer Use</span><span class="tag">Sandbox</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">本教程展示如何使用 OpenAI Agents SDK 的 Computer Use 工具配合 Daytona 沙箱，实现浏览器 UI 自动化操作。通过 DaytonaAsyncComputer 适配器将沙箱桌面接入 Agents SDK，智能体可以像人类一样截图、点击、输入，完成网页表单填写等任务，整个过程可录制为视频。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/computer-use-agents-in-daytona-sandboxes" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/computer-use-agents-in-daytona-sandboxes</a></div></div></div></div></div></div>
+        <div class="prose">
+<h2 id="overview">概述</h2>
+<p>很多有价值的工作仍然存在于没有公开API的浏览器UI中：第三方仪表盘、管理面板、表单密集型工作流。OpenAI <a href="https://openai.github.io/openai-agents-python/">Agents SDK</a> 的 <strong>Computer Use工具</strong>允许智能体查看并控制桌面系统。在本教程中，我们使用 <a href="https://www.daytona.io/">Daytona</a> 沙箱作为桌面的运行载体。</p>
+<p>Computer Use工具只需要几个基础原语即可驱动桌面：<code>screenshot</code>（截图）、<code>click</code>（点击）、<code>type</code>（输入）、<code>scroll</code>（滚动）、<code>press keys</code>（按键）。Daytona沙箱将包含浏览器的Linux桌面封装在Python SDK中，恰好暴露了这些原语。一个实现了Agents SDK <code>AsyncComputer</code>接口的轻量适配器可以将沙箱接入该工具。</p>
+<p>智能体循环在本notebook中运行，而沙箱负责实际的点击和输入操作。作为演示，本教程中的智能体将填写一个网页表单。该表单在沙箱内的<code>localhost:8080</code>上提供服务，整个会话会被录制为<code>.mp4</code>视频。</p>
+<p>相同的模式适用于任何可以描述为"打开应用、导航到某个位置、与屏幕交互"的任务：端到端UI流程测试、驱动传统桌面软件，或任何仅以人工交互界面存在的流程。</p>
+<h2 id="prerequisites">前置要求</h2>
+<ul>
+<li>Python 3.10+</li>
+<li><a href="https://www.daytona.io/">Daytona</a> 账号和API密钥，导出为环境变量 <code>DAYTONA_API_KEY</code></li>
+<li>OpenAI API密钥，导出为环境变量 <code>OPENAI_API_KEY</code></li>
+<li>OpenAI Agents SDK和Daytona Python SDK</li>
+</ul>
+<p>请将两个API密钥保存在你的shell环境中。本notebook通过<code>os.environ[...]</code>读取它们，不会将密钥写入沙箱。</p>
+<h2 id="install">安装依赖</h2>
+<p>克隆cookbook仓库并进入本示例目录：</p>
+<pre><code>git clone https://github.com/openai/openai-cookbook.git
+cd openai-cookbook/examples/agents_sdk/computer_use_with_daytona</code></pre>
+<p>从该目录打开 <code>computer_use_with_daytona.ipynb</code>，并安装以下依赖：</p>
+<pre><code>%pip install -r requirements.txt --quiet</code></pre>
+<h2 id="imports">导入和环境配置</h2>
+<p>我们从三个地方导入依赖：</p>
+<ol>
+<li>Agents SDK（<code>Agent</code>、<code>Runner</code>、<code>ComputerTool</code>，以及我们要实现的 <code>AsyncComputer</code>/<code>Button</code>/<code>Environment</code> 类型）</li>
+<li>Daytona SDK（<code>AsyncDaytona</code> 和 <code>CreateSandboxFromSnapshotParams</code>）</li>
+<li>标准库的异步/路径辅助工具</li>
+</ol>
+<pre><code class="language-python">from __future__ import annotations
+
+import asyncio
+import logging
+import os
+from pathlib import Path
+from typing import Any
+
+from daytona import AsyncDaytona, CreateSandboxFromSnapshotParams
+from agents import Agent, AsyncComputer, Button, ComputerTool, Environment, Runner, trace
+from IPython.display import Video
+
+assert os.environ.get("DAYTONA_API_KEY"), "DAYTONA_API_KEY is not set."
+assert os.environ.get("OPENAI_API_KEY"), "OPENAI_API_KEY is not set."
+
+logger = logging.getLogger("computer_use_with_daytona")</code></pre>
+<h2 id="adapter">Computer Use 适配器</h2>
+<p>Agents SDK的 <a href="https://platform.openai.com/docs/guides/tools-computer-use">Computer Use工具</a> 可以对接任何实现 <code>AsyncComputer</code> 接口的对象：该接口要求有一个返回base64编码PNG的 <code>screenshot</code> 方法，以及 <code>click</code>、<code>double_click</code>、<code>scroll</code>、<code>type</code>、<code>keypress</code>、<code>move</code>、<code>drag</code>、<code>wait</code> 方法。</p>
+<p>Daytona的桌面沙箱在 <code>sandbox.computer_use.*</code> 下暴露了匹配的API。下面的类就是两者之间的适配器：</p>
+<pre><code class="language-python">_DEFAULT_WIDTH, _DEFAULT_HEIGHT = 1024, 768
+
+_CUA_KEY_TO_DAYTONA: dict[str, str] = {
+    "arrowdown": "down",
+    "arrowleft": "left",
+    "arrowright": "right",
+    "arrowup": "up",
+    "option": "alt",
+    "super": "cmd",
+    "win": "cmd",
+}
+
+def _normalize_key(key: str) -> str:
+    if len(key) > 1:
+        key = _CUA_KEY_TO_DAYTONA.get(key.lower(), key.lower())
+    return key
+
+class DaytonaAsyncComputer(AsyncComputer):
+    """基于Daytona沙箱桌面的AsyncComputer实现。"""
+
+    def __init__(self, sandbox, *, width=_DEFAULT_WIDTH, height=_DEFAULT_HEIGHT):
+        self._sandbox = sandbox
+        self._width = width
+        self._height = height
+
+    async def __aenter__(self):
+        await self._sandbox.computer_use.start()
+        await asyncio.sleep(2)
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        try:
+            await self._sandbox.computer_use.stop()
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            logger.warning("Failed to stop computer-use processes", exc_info=True)
+
+    @property
+    def environment(self):
+        return "ubuntu"
+
+    @property
+    def dimensions(self):
+        return (self._width, self._height)
+
+    async def screenshot(self):
+        response = await self._sandbox.computer_use.screenshot.take_full_screen()
+        return response.screenshot or ""
+
+    async def click(self, x, y, button):
+        if button not in ("left", "right"):
+            return
+        await self._sandbox.computer_use.mouse.click(x, y, button)
+
+    async def double_click(self, x, y):
+        await self._sandbox.computer_use.mouse.click(x, y, "left", True)
+
+    async def scroll(self, x, y, scroll_x, scroll_y):
+        if scroll_y != 0:
+            direction = "down" if scroll_y > 0 else "up"
+            amount = max(1, abs(scroll_y) // 100)
+            await self._sandbox.computer_use.mouse.scroll(x, y, direction, amount)
+
+    async def type(self, text):
+        await self._sandbox.computer_use.keyboard.type(text)
+
+    async def wait(self):
+        await asyncio.sleep(1)
+
+    async def move(self, x, y):
+        await self._sandbox.computer_use.mouse.move(x, y)
+
+    async def keypress(self, keys):
+        if not keys:
+            return
+        if len(keys) == 1:
+            await self._sandbox.computer_use.keyboard.press(_normalize_key(keys[0]))
+        else:
+            *modifiers, key = keys
+            await self._sandbox.computer_use.keyboard.press(
+                _normalize_key(key), [_normalize_key(m) for m in modifiers]
+            )
+
+    async def drag(self, path):
+        if len(path) < 2:
+            return
+        for i in range(len(path) - 1):
+            sx, sy = path[i]
+            ex, ey = path[i + 1]
+            await self._sandbox.computer_use.mouse.drag(sx, sy, ex, ey)</code></pre>
+<h2 id="form-setup">表单、数据和提示词</h2>
+<p>我们要填写的表单位于本文件夹的 <code>form.html</code> 中。它是一个单页HTML注册表单，包含5个字段集：个人信息、职业详情、会议偏好、旅行/住宿、附加信息。字段涵盖文本输入、邮箱、电话、日期、<code>&lt;select&gt;</code> 下拉框、单选组、带最大选择限制的多选复选框组和一个文本域。</p>
+<p>我们通过三部分告诉智能体要做什么：</p>
+<ol>
+<li><code>APPLICANT_DATA</code>：智能体必须输入的信息，从 <code>fake_applicant_data.txt</code> 加载。</li>
+<li><code>INSTRUCTIONS</code>：系统提示，填写表单的指导说明。</li>
+<li><code>TASK</code>：启动运行的简短用户输入。</li>
+</ol>
+<pre><code class="language-python">_DESKTOP_SNAPSHOT = "daytonaio/sandbox:0.6.0"
+_FORM_DIR = "/home/daytona/form"
+_SERVER_PORT = 8080
+
+APPLICANT_DATA = Path("fake_applicant_data.txt").read_text()
+
+INSTRUCTIONS = """\
+You control a remote Linux desktop via mouse, keyboard, and screenshots.
+A conference registration form is being served at http://localhost:8080.
+
+When asked to fill the form:
+1. Open a browser (look for one in the taskbar or application menu).
+2. Navigate to http://localhost:8080.
+3. Fill every field using the applicant data the user provides.
+4. Click "Complete Registration".
+5. When you see the "Registration Complete!" confirmation, take a screenshot
+   and say DONE.
+"""
+
+TASK = f"Fill the conference registration form with this applicant data:\n\n{APPLICANT_DATA}"</code></pre>
+<h2 id="sandbox-create">创建沙箱</h2>
+<p><code>AsyncDaytona()</code> 从 <code>DAYTONA_API_KEY</code> 读取API密钥。<code>daytona.create(...)</code> 从桌面快照启动沙箱；调用在沙箱准备好进行文件系统和进程操作时返回。沙箱句柄将传递给下游所有组件。</p>
+<pre><code class="language-python">daytona = AsyncDaytona()
+sandbox = await daytona.create(
+    CreateSandboxFromSnapshotParams(snapshot=_DESKTOP_SNAPSHOT),
+)
+print(f"Sandbox ready: {sandbox.id}")</code></pre>
+<h2 id="form-serve">在沙箱内启动表单服务</h2>
+<p>我们将 <code>form.html</code> 上传到沙箱，并使用 <code>python3 -m http.server</code> 在8080端口提供服务。注意两个细节：</p>
+<ol>
+<li>Daytona Python SDK上传的是字节流而非路径，因此我们在主机上读取 <code>form.html</code>，将字节流推送到 <code>/home/daytona/form/index.html</code>。</li>
+<li>后台运行的服务器需要将stdout/stderr重定向到日志文件，以便 <code>exec</code> 立即返回。</li>
+</ol>
+<pre><code class="language-python">form_html = Path("form.html").read_bytes()
+await sandbox.fs.create_folder(_FORM_DIR, "0755")
+await sandbox.fs.upload_file(form_html, f"{_FORM_DIR}/index.html")
+
+await sandbox.process.exec(
+    f"sh -c 'cd {_FORM_DIR} && python3 -m http.server {_SERVER_PORT} "
+    f"> /tmp/httpd.log 2>&1 &'"
+)</code></pre>
+<h2 id="run-agent">运行智能体</h2>
+<p>这是核心步骤。我们执行以下操作：</p>
+<ol>
+<li>进入 <code>DaytonaAsyncComputer</code> 上下文管理器，启动沙箱的computer-use进程（Xvfb、窗口管理器、VNC）。</li>
+<li>启动会话录制。</li>
+<li>构建 <code>Agent</code>，仅配置一个工具 <code>ComputerTool(computer=computer)</code>，在 <code>trace(...)</code> 块中使用 <code>Runner.run(...)</code> 运行它。</li>
+<li>在 <code>finally</code> 块中，停止录制并将其下载到本地。</li>
+</ol>
+<pre><code class="language-python">async with DaytonaAsyncComputer(sandbox) as computer:
+    recording = await sandbox.computer_use.recording.start("form-fill")
+    print(f"Recording started: {recording.id}")
+
+    try:
+        with trace("Daytona form-fill demo"):
+            agent = Agent(
+                name="Form filler",
+                instructions=INSTRUCTIONS,
+                tools=[ComputerTool(computer=computer)],
+                model="gpt-5.4",
+            )
+            result = await Runner.run(agent, TASK, max_turns=50)
+            print(f"\n--- Final output ---\n{result.final_output}")
+    finally:
+        stopped = await sandbox.computer_use.recording.stop(recording.id)
+        local_recording_path = Path(stopped.file_name).name
+        await sandbox.computer_use.recording.download(recording.id, local_recording_path)
+        print(f"Recording downloaded to: {local_recording_path}")</code></pre>
+<h2 id="cleanup">清理沙箱</h2>
+<p>使用完毕后删除沙箱。Daytona也会按自己的计划自动销毁沙箱，但显式删除可以保持账号整洁，并确保不会产生闲置时间的费用。</p>
+<pre><code class="language-python">await daytona.delete(sandbox)
+print(f"Sandbox {sandbox.id} deleted.")</code></pre>
+<h2 id="extensions">后续扩展方向</h2>
+<ul>
+<li><strong>其他类型的表单</strong>：该模式适用于智能体可以通过浏览器访问的任何网页表单。可以替换 <code>form.html</code> 为其他页面，或者去掉HTTP服务器，将智能体指向外部URL。</li>
+<li><strong>其他后端</strong>：<code>AsyncComputer</code> 是可移植的接口。如果你将适配器和沙箱替换为其他支持CUA的桌面，本notebook的其余部分保持不变。</li>
+<li><strong>评估</strong>：验证可以在沙箱内运行：将提交的负载与 <code>APPLICANT_DATA</code> 对比，你就可以得到一个确定性的表单填写评估。</li>
+</ul>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#overview">概述</a><a class="lv2" href="#prerequisites">前置要求</a><a class="lv2" href="#install">安装依赖</a><a class="lv2" href="#imports">导入和环境配置</a><a class="lv2" href="#adapter">Computer Use 适配器</a><a class="lv2" href="#form-setup">表单、数据和提示词</a><a class="lv2" href="#sandbox-create">创建沙箱</a><a class="lv2" href="#form-serve">在沙箱内启动表单服务</a><a class="lv2" href="#run-agent">运行智能体</a><a class="lv2" href="#cleanup">清理沙箱</a><a class="lv2" href="#extensions">后续扩展方向</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-computer-use-agents-daytona-sandboxes";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

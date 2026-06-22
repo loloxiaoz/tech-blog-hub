@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Macro Evals for Agentic Systems · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>Macro Evals for Agentic Systems</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-19</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Eval</span><span class="tag">Agent</span><span class="tag">Multi-Agent</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">介绍多智能体系统的宏观评测工作流：从收集追踪数据、运行下层评测，到 BERTopic 风格的行为模式发现，再到 AgentTrace 风格的根因诊断，让 AI 工程团队能从数千条 Agent 事件中提炼出可操作的改进信号。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems</a></div></div></div></div></div></div>
+        <div class="prose">
+<p><strong>Authors:</strong> Shikhar Kwatra (OpenAI), Will Thieme, Bradley Strauss</p>
+<p><strong>Date:</strong> May 19, 2026 | <strong>Source:</strong> OpenAI Cookbook</p>
+<hr>
+<p>When an agentic system fails, the problem is often larger than a single bad response. A handoff may happen too late, a specialist agent may miss the same signal across many runs, or a review process may trigger for the wrong class of cases. To improve the system, teams need to see recurring behaviors across the whole population of traces.</p>
+<p>This cookbook walks through a <strong>macro-eval workflow</strong> for a multi-agent system. We use a synthetic EV order workflow where specialist agents handle pricing, compliance, supply, factory routing, scheduling, and release decisions while market and operational conditions change.</p>
+<h2 id="what-you-will-learn">What You Will Learn</h2>
+<p>By the end of this guide, you will be able to:</p>
+<ol>
+<li>Generate or collect many traced agent runs</li>
+<li>Run lower-level evals on each completed run</li>
+<li>Turn each trace into a compact document</li>
+<li>Discover recurring behavior patterns across the population</li>
+<li>Drill into one high-impact pattern to find where a human should inspect the system next</li>
+</ol>
+<p>The goal is not to build a perfect taxonomy of every trace. The goal is to show how an AI engineering team can move from thousands of agent events to a small number of patterns that are understandable by both technical and business stakeholders.</p>
+<h2 id="1-why-macro-evals">1. Why Macro Evals?</h2>
+<p>Evals are how AI teams measure whether a system is working. For a simple model call, an eval might compare one output against a rubric or reference answer. For an agentic system, we also need to evaluate whether the system used the right tools, delegated to the right specialist, paused for review when risk was high, and stayed grounded in the business context.</p>
+<p><strong>Multi-agent systems</strong> make this harder because a final answer is only the last event in a longer workflow. A release recommendation can look plausible while the trace reveals that the pricing agent ignored an incentive, the supply agent missed a stockout, or the orchestrator routed around a required review step.</p>
+<p>This notebook separates the problem into two levels:</p>
+<ul>
+<li><strong>Lower-level evals</strong> grade individual agents, handoffs, tools, and completed runs.</li>
+<li><strong>Macro evals</strong> look across many lower-level findings. They ask: which kinds of problems repeat, where do they concentrate, and which part of the agent workflow should we inspect first?</li>
+</ul>
+<p>We will use four reader-facing labels throughout the cookbook:</p>
+<ul>
+<li><code>case_type</code>: the generated business situation (clean order, validation block, supplier substitution, pricing exception)</li>
+<li><code>run_outcome</code>: how the run ended (completed, awaiting review, blocked, failed)</li>
+<li><code>eval_finding</code>: the lower-level signal that says what seemed wrong or risky</li>
+<li><code>behavior_pattern</code>: the recurring pattern discovered across many traces</li>
+</ul>
+<p><strong>Useful mental model:</strong> <code>case_type</code> is the setup, <code>run_outcome</code> is the ending, <code>eval_finding</code> is the local symptom, and <code>behavior_pattern</code> is the population-level pattern.</p>
+<h2 id="2-the-simulation-automotive-orders-in-a-changing-world">2. The Simulation: Automotive Orders in a Changing World</h2>
+<p>The simulated business is an <strong>EV order and post-configuration workflow</strong>. A customer has chosen a vehicle configuration, and the company needs to decide whether the order can proceed as-is, needs adjustment, should be rerouted, requires substitution, or should pause for review.</p>
+<p>The simulation includes the kinds of constraints that make real automotive fulfillment hard:</p>
+<ul>
+<li>Component availability and supplier substitution</li>
+<li>Factory capacity and production scheduling</li>
+<li>Pricing exceptions, promotions, and incentives</li>
+<li>Tariffs and dated market signals</li>
+<li>Regional compliance constraints</li>
+<li>Customer clarification and escalation paths</li>
+<li>Release review thresholds for risky or ambiguous cases</li>
+</ul>
+<p>The agent swarm is organized around those business responsibilities. An orchestrator receives the order and current environment, then delegates to specialists (validation, supply risk, procurement planning, capacity balancing, factory routing, market intelligence, pricing, compliance, customer communications, release review).</p>
+<h2 id="3-lower-level-agent-evals-with-promptfoo">3. Lower-Level Agent Evals with Promptfoo</h2>
+<p>A mature multi-agent system should not rely on final-answer inspection alone. Each launched agent usually needs its own evals: did this specialist use the right evidence, call the right tools, respect policy, hand off at the right time, and produce an output that the rest of the system can trust?</p>
+<p><strong>Promptfoo</strong> plays that role in this notebook. In a live system, some of these checks might run online, some might run asynchronously, and some might be sampled for human review.</p>
+<p>This dataset, Promptfoo grades completed traces with questions that mirror the kinds of agent-level evals teams build for real systems:</p>
+<ul>
+<li>Did the final decision follow from the active issue?</li>
+<li>Did the system respect pricing, tariff, incentive, regional, and policy constraints?</li>
+<li>Did the orchestrator activate the specialists implied by the case?</li>
+<li>Did the run respond to dated market signals rather than acting as if the world were static?</li>
+<li>Was review or escalation proportionate to the risk?</li>
+</ul>
+<p>These checks produce <code>eval_finding</code>. A failing lower-level eval is a <strong>local signal</strong>: one trace, one rubric, one symptom. The macro-eval sections later ask what those local signals become at population scale.</p>
+<h2 id="4-build-the-analysis-dataset">4. Build the Analysis Dataset</h2>
+<p>Now we normalize the run bundles into two analysis tables:</p>
+<ul>
+<li><code>traces_df</code>: one row per run, with metadata, outcome, findings, and document fields</li>
+<li><code>events_df</code>: one row per normalized trace event (handoffs, tool calls, status events, model responses, review/finding markers)</li>
+</ul>
+<p>We also build <strong>trace documents</strong>. The document is the modeling object that the BERTopic-style section will cluster.</p>
+<p>The public analysis path is:</p>
+<p><code>case_type → run_outcome → eval_finding → behavior_pattern</code></p>
+<h2 id="5-bertopic-style-discovery">5. BERTopic-Style Discovery</h2>
+<p>The discovery pass is inspired by the BERTopic family of methods. The high-level idea is modular:</p>
+<ol>
+<li><strong>Represent each trace document as a vector.</strong></li>
+<li><strong>Reduce the vector geometry.</strong> A reducer such as UMAP maps vectors to lower-dimensional points that preserve useful local neighborhoods.</li>
+<li><strong>Cluster dense regions.</strong> A density clusterer such as HDBSCAN groups nearby points and can mark outliers as noise.</li>
+<li><strong>Represent each topic.</strong> For each cluster, compute terms that distinguish that cluster from the rest of the corpus.</li>
+</ol>
+<p>Finally, we rank patterns by a triage metric — a pattern matters more when it is both common and severe.</p>
+<h2 id="6-agenttrace-style-diagnosis">6. AgentTrace-Style Diagnosis</h2>
+<p>Discovery tells us what repeats. <strong>Diagnosis</strong> asks where to inspect first.</p>
+<p>For a selected behavior pattern, we reconstruct a lightweight execution graph where each node is a normalized trace event and each edge links events through temporal order, handoff boundaries, tool-call hierarchies, and nearby execution context.</p>
+<p>From an anchor event, the diagnosis pass walks <strong>backward</strong> through the graph and scores upstream suspects:</p>
+<ul>
+<li><strong>Proximity</strong> rewards events close to the focus event</li>
+<li><strong>Frequency</strong> rewards events that recur across sampled traces in the same behavior pattern</li>
+<li><strong>Bridge</strong> rewards events that connect parts of the execution graph</li>
+<li><strong>Role</strong> rewards events whose agent/tool role is plausibly related to the finding</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Macro evals shift the question from "did this one run fail?" to "which system-level behaviors keep failing across runs?" The workflow in this notebook is:</p>
+<ol>
+<li>Generate or collect many traced runs</li>
+<li>Run lower-level evals on each completed run</li>
+<li>Turn each trace into a compact document</li>
+<li>Discover recurring behavior patterns (BERTopic-style)</li>
+<li>Drill into one high-impact pattern (AgentTrace-style)</li>
+</ol>
+<p>The same loop works for real agentic systems: keep traces, grade them with lower-level evals, turn graded traces into comparable documents, cluster the documents to discover behavior patterns, and use the highest-impact patterns to guide where humans should inspect the system next.</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#what-you-will-learn">What You Will Learn</a>
+<a class="lv2" href="#1-why-macro-evals">1. Why Macro Evals?</a>
+<a class="lv2" href="#2-the-simulation-automotive-orders-in-a-changing-world">2. The Simulation: Automotive Orders in a Changing World</a>
+<a class="lv2" href="#3-lower-level-agent-evals-with-promptfoo">3. Lower-Level Agent Evals with Promptfoo</a>
+<a class="lv2" href="#4-build-the-analysis-dataset">4. Build the Analysis Dataset</a>
+<a class="lv2" href="#5-bertopic-style-discovery">5. BERTopic-Style Discovery</a>
+<a class="lv2" href="#6-agenttrace-style-diagnosis">6. AgentTrace-Style Diagnosis</a>
+<a class="lv2" href="#conclusion">Conclusion</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-macro-evals-agentic-systems";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

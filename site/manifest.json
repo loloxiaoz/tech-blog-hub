@@ -178,6 +178,20 @@
     "source_url": "https://www.anthropic.com/news/anthropic-s1-filing"
   },
   {
+    "id": "openai-models-amazon-bedrock",
+    "title": "Getting Started with OpenAI Models on Amazon Bedrock",
+    "org": "OpenAI",
+    "date": "2026-05-31",
+    "tags": [
+      "OpenAI",
+      "AWS",
+      "Amazon Bedrock",
+      "部署"
+    ],
+    "minutes": 12,
+    "source_url": "https://cookbook.openai.com/examples/partners/AWS/openai_models_with_amazon_bedrock"
+  },
+  {
     "id": "anthropic-series-h",
     "title": "Anthropic 完成 650 亿美元 H 轮融资，估值 9650 亿美元",
     "org": "Anthropic",
@@ -407,6 +421,20 @@
     "source_url": ""
   },
   {
+    "id": "openai-macro-evals-agentic-systems",
+    "title": "Macro Evals for Agentic Systems",
+    "org": "OpenAI",
+    "date": "2026-05-19",
+    "tags": [
+      "OpenAI",
+      "Evals",
+      "Agent",
+      "评测"
+    ],
+    "minutes": 8,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems"
+  },
+  {
     "id": "widening-frontier-ai-conversation",
     "title": "Widening the conversation on frontier AI",
     "org": "Anthropic",
@@ -478,6 +506,21 @@
     "source_url": "https://www.microsoft.com/en-us/research/blog/gridsfm-a-new-small-foundation-model-for-the-electric-grid/"
   },
   {
+    "id": "openai-agent-improvement-loop-traces-evals",
+    "title": "Build an Agent Improvement Loop with Traces, Evals, and Codex",
+    "org": "OpenAI",
+    "date": "2026-05-12",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Evals",
+      "Agent",
+      "Traces"
+    ],
+    "minutes": 6,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/agent_improvement_loop_with_traces_evals_and_codex"
+  },
+  {
     "id": "microsoft-research-09-advancing-ai-for-materials-with-mattersim-experimental-synth",
     "title": "Advancing AI for materials with MatterSim: experimental synthesis, faster simulation, and multi-task models",
     "org": "Microsoft",
@@ -487,6 +530,20 @@
     ],
     "minutes": 1,
     "source_url": "https://www.microsoft.com/en-us/research/blog/advancing-ai-for-materials-with-mattersim-experimental-synthesis-faster-simulation-and-multi-task-models/"
+  },
+  {
+    "id": "openai-build-iterative-repair-loops-codex",
+    "title": "Build iterative repair loops with Codex",
+    "org": "OpenAI",
+    "date": "2026-05-11",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Agent",
+      "迭代修复"
+    ],
+    "minutes": 10,
+    "source_url": "https://cookbook.openai.com/examples/codex/Build_iterative_repair_loops_with_Codex"
   },
   {
     "id": "ant-afoo-medical-agent",
@@ -664,6 +721,19 @@
     "source_url": ""
   },
   {
+    "id": "openai-using-goals-in-codex",
+    "title": "Using Goals in Codex",
+    "org": "OpenAI",
+    "date": "2026-05-09",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Agent"
+    ],
+    "minutes": 6,
+    "source_url": "https://cookbook.openai.com/examples/codex/using_goals_in_codex"
+  },
+  {
     "id": "anthropic-research-03-teaching-claude-why",
     "title": "Teaching Claude why",
     "org": "Anthropic",
@@ -702,6 +772,20 @@
     ],
     "minutes": 4,
     "source_url": "https://www.anthropic.com/research/teaching-claude-why"
+  },
+  {
+    "id": "openai-migrate-claude-sdk-to-openai-agents-sdk",
+    "title": "Migrate from Claude Agent SDK to OpenAI Agents SDK",
+    "org": "OpenAI",
+    "date": "2026-05-07",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Agents SDK",
+      "迁移"
+    ],
+    "minutes": 8,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/migrate-from-claude-agent-sdk/README"
   },
   {
     "id": "anthropic-institute-focus",
@@ -788,6 +872,20 @@
     "source_url": "https://www.anthropic.com/engineering/claude-code-best-practices"
   },
   {
+    "id": "openai-agents-sdk-deployment-manager",
+    "title": "Agents SDK Deployment Manager",
+    "org": "OpenAI",
+    "date": "2026-05-05",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Agents SDK",
+      "部署"
+    ],
+    "minutes": 4,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/deployment_manager/README"
+  },
+  {
     "id": "rag-retrieval-optimization-4layers",
     "title": "阿里Agent岗二面：RAG检索优化四层系统性框架",
     "org": "RAG 研究",
@@ -799,6 +897,35 @@
     ],
     "minutes": 3,
     "source_url": "https://mp.weixin.qq.com/s/ipMjYyYFl3pxbaX9Hl1yaw"
+  },
+  {
+    "id": "openai-building-reliable-agents-memory-compaction",
+    "title": "Building Reliable Agents with Memory and Compaction",
+    "org": "OpenAI",
+    "date": "2026-05-01",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Agent",
+      "Memory",
+      "Compaction"
+    ],
+    "minutes": 5,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/building_reliable_agents_with_memory_and_compaction"
+  },
+  {
+    "id": "openai-building-workspace-agents-chatgpt",
+    "title": "Building workspace agents in ChatGPT",
+    "org": "OpenAI",
+    "date": "2026-05-01",
+    "tags": [
+      "OpenAI",
+      "ChatGPT",
+      "Agent",
+      "工作流"
+    ],
+    "minutes": 8,
+    "source_url": "https://developers.openai.com/blog/building-workspace-agents-in-chatgpt"
   },
   {
     "id": "demystifying-evals-for-ai-agents",
@@ -996,6 +1123,20 @@
     "source_url": ""
   },
   {
+    "id": "openai-computer-use-agents-daytona-sandboxes",
+    "title": "Computer Use Agents in Daytona Sandboxes",
+    "org": "OpenAI",
+    "date": "2026-04-15",
+    "tags": [
+      "OpenAI",
+      "Computer Use",
+      "Agent",
+      "沙盒"
+    ],
+    "minutes": 10,
+    "source_url": "https://developers.openai.com/blog/computer-use-agents-in-daytona-sandboxes"
+  },
+  {
     "id": "minimax-09-print-model-parameters",
     "title": "print model parameters",
     "org": "MiniMax",
@@ -1007,6 +1148,19 @@
     ],
     "minutes": 9,
     "source_url": "https://github.com/MiniMax-AI/VTP"
+  },
+  {
+    "id": "openai-what-makes-great-chatgpt-app",
+    "title": "What makes a great ChatGPT app",
+    "org": "OpenAI",
+    "date": "2026-04-14",
+    "tags": [
+      "OpenAI",
+      "ChatGPT",
+      "产品设计"
+    ],
+    "minutes": 3,
+    "source_url": "https://developers.openai.com/blog/what-makes-a-great-chatgpt-app"
   },
   {
     "id": "automated-alignment-researchers",
@@ -1077,6 +1231,19 @@
     "source_url": "https://mp.weixin.qq.com/s/BqOdWsCjtXoUllUuFVb29w"
   },
   {
+    "id": "openai-15-lessons-chatgpt-apps",
+    "title": "15 lessons learned building ChatGPT Apps",
+    "org": "OpenAI",
+    "date": "2026-04-08",
+    "tags": [
+      "OpenAI",
+      "ChatGPT",
+      "工程实践"
+    ],
+    "minutes": 6,
+    "source_url": "https://developers.openai.com/blog/15-lessons-learned-building-chatgpt-apps"
+  },
+  {
     "id": "scaling-managed-agents",
     "title": "Scaling Managed Agents: Decoupling the brain from the hands",
     "org": "Anthropic",
@@ -1092,6 +1259,20 @@
     "source_url": "https://www.anthropic.com/engineering/managed-agents"
   },
   {
+    "id": "openai-migrate-legacy-codebase-sandbox-agents",
+    "title": "Migrate a Legacy Codebase with Sandbox Agents",
+    "org": "OpenAI",
+    "date": "2026-04-07",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Agent",
+      "代码迁移"
+    ],
+    "minutes": 12,
+    "source_url": "https://cookbook.openai.com/examples/agents_sdk/sandboxed-code-migration/sandboxed_code_migration_agent"
+  },
+  {
     "id": "emotion-concepts",
     "title": "Emotion Concepts and Their Function in a Large Language Model",
     "org": "Anthropic",
@@ -1104,6 +1285,20 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/research/emotion-concepts"
+  },
+  {
+    "id": "openai-prompt-caching-201",
+    "title": "Prompt Caching 201",
+    "org": "OpenAI",
+    "date": "2026-04-01",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Prompt Caching",
+      "性能优化"
+    ],
+    "minutes": 10,
+    "source_url": "https://cookbook.openai.com/examples/prompt_caching_201"
   },
   {
     "id": "agent-skills-last-mile",
@@ -1128,6 +1323,20 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/research/how-australia-uses-claude"
+  },
+  {
+    "id": "openai-perplexity-voice-search",
+    "title": "How Perplexity Brought Voice Search to Millions Using the Realtime API",
+    "org": "OpenAI",
+    "date": "2026-03-25",
+    "tags": [
+      "OpenAI",
+      "Audio",
+      "Realtime API",
+      "Voice"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/how-perplexity-brought-voice-search-to-millions"
   },
   {
     "id": "claude-code-auto-mode",
@@ -1203,6 +1412,20 @@
     "source_url": "https://haskellforall.com/2026/03/a-sufficiently-detailed-spec-is-code"
   },
   {
+    "id": "openai-designing-delightful-frontends-gpt54",
+    "title": "Designing delightful frontends with GPT-5.4",
+    "org": "OpenAI",
+    "date": "2026-03-20",
+    "tags": [
+      "OpenAI",
+      "Frontend",
+      "GPT-5.4",
+      "UI/UX"
+    ],
+    "minutes": 8,
+    "source_url": "https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4"
+  },
+  {
     "id": "anthropic-research-05-what-81-000-peoplewant-from-ai",
     "title": "What 81,000 peoplewant from AI",
     "org": "Anthropic",
@@ -1243,6 +1466,32 @@
     "source_url": "https://www.anthropic.com/engineering/diff-tool-ai"
   },
   {
+    "id": "openai-from-prompts-to-products-responses",
+    "title": "From prompts to products: One year of Responses",
+    "org": "OpenAI",
+    "date": "2026-03-11",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Responses API"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/from-prompts-to-products-one-year-of-responses"
+  },
+  {
+    "id": "openai-skills-in-api",
+    "title": "Skills in OpenAI API",
+    "org": "OpenAI",
+    "date": "2026-03-10",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Skills"
+    ],
+    "minutes": 8,
+    "source_url": "https://developers.openai.com/blog/skills-in-openai-api"
+  },
+  {
     "id": "openclaw-vs-claude-code",
     "title": "OpenClaw 和 Claude Code 的本质分歧：人本位 vs AI本位",
     "org": "Anthropic",
@@ -1253,6 +1502,20 @@
     ],
     "minutes": 2,
     "source_url": "https://mp.weixin.qq.com/s/qa1J3KglD8ITh75NrfbfGA"
+  },
+  {
+    "id": "openai-using-skills-accelerate-oss",
+    "title": "Using skills to accelerate OSS maintenance",
+    "org": "OpenAI",
+    "date": "2026-03-09",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Skills",
+      "开源"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/using-skills-to-accelerate-oss-maintenance"
   },
   {
     "id": "anthropic-engineering-04-eval-awareness-in-claude-opus-4-6-s-browsecomp-performance",
@@ -1301,6 +1564,20 @@
     "source_url": "https://www.anthropic.com/research/labor-market-impacts"
   },
   {
+    "id": "openai-realtime-eval-guide",
+    "title": "Realtime Eval Guide",
+    "org": "OpenAI",
+    "date": "2026-03-01",
+    "tags": [
+      "OpenAI",
+      "Audio",
+      "Realtime API",
+      "Evals"
+    ],
+    "minutes": 12,
+    "source_url": "https://cookbook.openai.com/examples/Realtime_eval_guide"
+  },
+  {
     "id": "sft-to-rl-decision",
     "title": "大厂实战中，如何判断SFT到什么程度开始做RL",
     "org": "AI 工程实践",
@@ -1314,6 +1591,47 @@
     "source_url": "https://mp.weixin.qq.com/s/DQcrP2iSaGKchEkKbQd9dw"
   },
   {
+    "id": "openai-building-frontend-uis-codex-figma",
+    "title": "Building frontend UIs with Codex and Figma",
+    "org": "OpenAI",
+    "date": "2026-02-26",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Frontend",
+      "Figma"
+    ],
+    "minutes": 3,
+    "source_url": "https://developers.openai.com/blog/building-frontend-uis-with-codex-and-figma"
+  },
+  {
+    "id": "openai-codex-prompting-guide",
+    "title": "Codex Prompting Guide",
+    "org": "OpenAI",
+    "date": "2026-02-25",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "提示词工程"
+    ],
+    "minutes": 15,
+    "source_url": "https://developers.openai.com/blog/codex-prompting-guide"
+  },
+  {
+    "id": "openai-realtime-prompting-guide",
+    "title": "Realtime Prompting Guide",
+    "org": "OpenAI",
+    "date": "2026-02-25",
+    "tags": [
+      "OpenAI",
+      "Audio",
+      "Realtime API",
+      "提示词工程"
+    ],
+    "minutes": 15,
+    "source_url": "https://cookbook.openai.com/examples/Realtime_prompting_guide"
+  },
+  {
     "id": "model-deprecation-update",
     "title": "模型退役承诺更新：Claude Opus 3 案例",
     "org": "Anthropic",
@@ -1321,6 +1639,20 @@
     "tags": [],
     "minutes": 2,
     "source_url": "https://www.anthropic.com/news/model-deprecation-update"
+  },
+  {
+    "id": "openai-run-long-horizon-tasks-codex",
+    "title": "Run long horizon tasks with Codex",
+    "org": "OpenAI",
+    "date": "2026-02-23",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "Agent",
+      "长任务"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/run-long-horizon-tasks-with-codex"
   },
   {
     "id": "persona-selection-model",
@@ -1358,6 +1690,21 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/research/india-country-brief"
+  },
+  {
+    "id": "openai-shell-skills-compaction-agents",
+    "title": "Shell + Skills + Compaction: Tips for long-running agents",
+    "org": "OpenAI",
+    "date": "2026-02-11",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Agent",
+      "Skills",
+      "Compaction"
+    ],
+    "minutes": 5,
+    "source_url": "https://developers.openai.com/blog/shell-skills-compaction-tips-for-long-running-agents"
   },
   {
     "id": "c-compiler-parallel-claudes",
@@ -1420,6 +1767,20 @@
     "source_url": "https://www.anthropic.com/research/ai-coding-skills"
   },
   {
+    "id": "openai-testing-agent-skills-evals",
+    "title": "Testing Agent Skills Systematically with Evals",
+    "org": "OpenAI",
+    "date": "2026-01-22",
+    "tags": [
+      "OpenAI",
+      "Evals",
+      "Agent",
+      "Skills"
+    ],
+    "minutes": 5,
+    "source_url": "https://developers.openai.com/blog/testing-agent-skills-systematically-with-evals"
+  },
+  {
     "id": "ai-resistant-evaluations",
     "title": "Designing AI-resistant technical evaluations",
     "org": "Anthropic",
@@ -1446,6 +1807,20 @@
     "source_url": "https://www.anthropic.com/research/assistant-axis"
   },
   {
+    "id": "openai-quantifying-infrastructure-noise-evals",
+    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "org": "OpenAI",
+    "date": "2026-01-15",
+    "tags": [
+      "OpenAI",
+      "Evals",
+      "基准测试",
+      "Agent"
+    ],
+    "minutes": 7,
+    "source_url": "https://developers.openai.com/blog/quantifying-infrastructure-noise-evals"
+  },
+  {
     "id": "economic-index-primitives",
     "title": "Anthropic Economic Index Report: Economic Primitives",
     "org": "Anthropic",
@@ -1458,6 +1833,34 @@
     "source_url": "https://www.anthropic.com/research/economic-index-primitives"
   },
   {
+    "id": "openai-scaling-managed-agents",
+    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "org": "OpenAI",
+    "date": "2026-01-14",
+    "tags": [
+      "OpenAI",
+      "Agent",
+      "Managed Agents",
+      "架构"
+    ],
+    "minutes": 8,
+    "source_url": "https://developers.openai.com/blog/scaling-managed-agents"
+  },
+  {
+    "id": "openai-supercharging-codex-jetbrains-mcp",
+    "title": "Supercharging Codex with JetBrains MCP at Skyscanner",
+    "org": "OpenAI",
+    "date": "2026-01-11",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "MCP",
+      "JetBrains"
+    ],
+    "minutes": 3,
+    "source_url": "https://developers.openai.com/blog/supercharging-codex-with-jetbrains-mcp-at-skyscanner"
+  },
+  {
     "id": "next-gen-constitutional-classifiers",
     "title": "Next-generation Constitutional Classifiers: 更高效的通用越狱防护",
     "org": "Anthropic",
@@ -1468,6 +1871,20 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/research/constitutional-classifiers"
+  },
+  {
+    "id": "openai-context-engineering-personalization",
+    "title": "Context Engineering for Personalization",
+    "org": "OpenAI",
+    "date": "2026-01-05",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Context Engineering",
+      "个性化"
+    ],
+    "minutes": 7,
+    "source_url": "https://cookbook.openai.com/examples/context_engineering_for_personalization"
   },
   {
     "id": "rag-2025-year-end-review",
@@ -1484,6 +1901,20 @@
     ],
     "minutes": 2,
     "source_url": "https://zhuanlan.zhihu.com/p/1984948557493592394"
+  },
+  {
+    "id": "openai-updates-developers-voice",
+    "title": "Updates for developers building with voice",
+    "org": "OpenAI",
+    "date": "2025-12-22",
+    "tags": [
+      "OpenAI",
+      "Audio",
+      "Voice",
+      "API"
+    ],
+    "minutes": 2,
+    "source_url": "https://developers.openai.com/blog/updates-for-developers-building-with-voice"
   },
   {
     "id": "introducing-bloom",
@@ -1726,6 +2157,20 @@
     "source_url": "https://www.anthropic.com/research/signs-of-introspection"
   },
   {
+    "id": "openai-codex-education-dagster-labs",
+    "title": "Using Codex for education at Dagster Labs",
+    "org": "OpenAI",
+    "date": "2025-10-27",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "教育",
+      "工程实践"
+    ],
+    "minutes": 3,
+    "source_url": "https://developers.openai.com/blog/using-codex-for-education-at-dagster-labs"
+  },
+  {
     "id": "claude-code-sandboxing",
     "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
     "org": "Anthropic",
@@ -1764,6 +2209,19 @@
     "source_url": "https://zhuanlan.zhihu.com/p/1960251424324682438"
   },
   {
+    "id": "openai-codex-ran-devday-2025",
+    "title": "How Codex ran OpenAI DevDay 2025",
+    "org": "OpenAI",
+    "date": "2025-10-10",
+    "tags": [
+      "OpenAI",
+      "Codex",
+      "DevDay"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/how-codex-ran-openai-devday-2025"
+  },
+  {
     "id": "context-engineering-agents",
     "title": "Effective context engineering for AI agents",
     "org": "Anthropic",
@@ -1787,6 +2245,19 @@
     "source_url": "https://qwenlm.github.io/blog/qwen3guard/"
   },
   {
+    "id": "openai-why-we-built-responses-api",
+    "title": "Why we built the Responses API",
+    "org": "OpenAI",
+    "date": "2025-09-22",
+    "tags": [
+      "OpenAI",
+      "API",
+      "Responses API"
+    ],
+    "minutes": 3,
+    "source_url": "https://developers.openai.com/blog/why-we-built-the-responses-api"
+  },
+  {
     "id": "postmortem-three-issues",
     "title": "A Postmortem of Three Recent Issues",
     "org": "Anthropic",
@@ -1808,6 +2279,44 @@
     ],
     "minutes": 1,
     "source_url": "https://platform.kimi.com/blog/posts/k2-prom"
+  },
+  {
+    "id": "openai-developer-notes-realtime-api",
+    "title": "Developer notes on the Realtime API",
+    "org": "OpenAI",
+    "date": "2025-09-12",
+    "tags": [
+      "OpenAI",
+      "Audio",
+      "Realtime API"
+    ],
+    "minutes": 4,
+    "source_url": "https://developers.openai.com/blog/developer-notes-on-the-realtime-api"
+  },
+  {
+    "id": "openai-for-developers-2025",
+    "title": "OpenAI for Developers in 2025",
+    "org": "OpenAI",
+    "date": "2025-09-11",
+    "tags": [
+      "OpenAI",
+      "Developer",
+      "年度回顾"
+    ],
+    "minutes": 2,
+    "source_url": "https://developers.openai.com/blog/openai-for-developers-in-2025"
+  },
+  {
+    "id": "openai-hello-world-developer-blog",
+    "title": "Hello, world! — OpenAI Developer Blog",
+    "org": "OpenAI",
+    "date": "2025-09-11",
+    "tags": [
+      "OpenAI",
+      "Developer Blog"
+    ],
+    "minutes": 2,
+    "source_url": "https://developers.openai.com/blog/hello-world"
   },
   {
     "id": "writing-effective-tools-agents",

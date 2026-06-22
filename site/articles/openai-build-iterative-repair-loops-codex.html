@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>使用 Codex 构建迭代修复循环 · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+@media(max-width:480px){.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#0A4A23">Codex</span>
+          <h1>使用 Codex 构建迭代修复循环</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-11</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 10 分钟</span><span class="tag">Codex</span><span class="tag">Agent</span><span class="tag">迭代修复</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">介绍如何使用 Codex CLI 构建闭环智能体工作流：审查→修复→验证三阶段迭代，以文档可靠性修复为例，展示结构化输出交接、并发处理、迭代收敛和审计跟踪的完整实现方案。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/codex/Build_iterative_repair_loops_with_Codex" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/codex/Build_iterative_repair_loops_with_Codex</a></div></div></div></div></div></div>
+        <div class="prose">
+<h2 id="概述">概述</h2>
+<p>本教程介绍<strong>闭环智能体工作流</strong>：智能体先生成输出，再验证输出，最后根据反馈优化下一轮的输出。</p>
+<p>我们将以文档可靠性工作流为例：检测、修复、验证过时或损坏的API和SDK示例。示例使用了本Cookbook仓库中适配的故意过时的notebook文件。</p>
+<p>我们将使用Codex构建这个智能体循环：Codex会检查当前状态、应用针对性修改、运行验证，当反馈显示仍有问题时重复上述步骤。</p>
+<blockquote>注意：notebook任务仅为示例，该模式适用于所有能够用可靠反馈衡量智能体输出的场景。</blockquote>
+<p>整个工作流分为三个阶段：</p>
+<ol>
+<li><strong>审查</strong>：检查当前工件，返回结构化发现，不编辑文件</li>
+<li><strong>修复</strong>：根据发现和最新验证反馈，对复制的工件应用针对性修改</li>
+<li><strong>验证</strong>：运行相关检查，报告仍需要优化的内容</li>
+</ol>
+<p>验证是闭环的关键：修复后的notebook必须满足相关检查要求，所有遗留问题都会成为下一轮修复的输入。</p>
+<hr>
+<h2 id="环境配置">环境配置</h2>
+<p>本notebook使用<strong>无头模式的Codex CLI</strong>，因此修复步骤可以直接在Python单元格中运行，无需使用聊天UI。第一个代码单元格会安装CLI，如果你已经安装了CLI，可以跳过该单元格。</p>
+<p>在运行实时修复循环之前，需要在环境中设置<code>OPENAI_API_KEY</code>。</p>
+<p>本notebook默认使用快速修复模型，确保完整示例可以在合理时间内运行完毕。如果要尝试其他模型，可以在开始前设置<code>REPAIR_MODEL</code>。安装单元格固定了已知的Codex CLI版本以确保可复现性，当你需要更新的CLI行为时可以手动更新版本。</p>
+<pre><code>!npm install -g @openai/codex@0.130.0
+MODEL = os.getenv("REPAIR_MODEL", "gpt-5.4-mini")</code></pre>
+<hr>
+<h2 id="加载示例工件">加载示例工件</h2>
+<p>以下单元格会加载三个配套notebook，并汇总驱动修复循环的元数据。</p>
+<p>示例特意做得很小，运行速度快，但仍然可以验证架构：审查阶段会发现实质性问题，修复阶段会做针对性修改，验证阶段会为下一轮生成反馈。</p>
+<p>在本示例中，验证会端到端执行每个修复后的notebook。如果是其他领域，验证也可以是单元测试、策略检查、schema 验证器、模拟仿真或者人工审批步骤。关键是失败要转化为结构化反馈，而不是死路一条。</p>
+<hr>
+<h2 id="定义业务规则和问题分类">定义业务规则和问题分类</h2>
+<p>在让Codex审查或修复工件之前，需要先给它一个小的共享约定，这样可以让循环聚焦于重要问题，而不是让模型从零开始推断所有产品和风格规则。</p>
+<p>以下规则定义了这些示例notebook的"合格"标准：使用最新的API模式、明确的设置步骤、可本地运行的示例、保留原始教学目标。</p>
+<hr>
+<h2 id="审查阶段">审查阶段</h2>
+<p>审查阶段读取工件并返回结构化发现，不运行验证，也不编辑文件。这种分离让第一步保持聚焦：在修改任何内容之前先识别可能的问题。</p>
+<p>我们将审查提示发送给<code>codex exec</code>并附带JSON schema，schema可以保证结果可被机器读取，后续单元格可以直接将发现项传入修复提示，无需从之前的回答中抓取文本。</p>
+<hr>
+<h2 id="修复阶段">修复阶段</h2>
+<p>修复阶段会获取当前工件、审查发现、业务规则，以及上一轮的任何验证反馈。随着循环不断学习，提示会变得更加具体。</p>
+<p>Codex会在迭代目录中编辑副本，并返回修改内容的简短摘要。循环不会假设修改已经生效，验证阶段会在下一步判断修改效果。</p>
+<hr>
+<h2 id="验证阶段">验证阶段</h2>
+<p>验证的工作方式类似于小型评估：我们定义期望的行为，运行相关检查，然后让判定器根据评判标准对结果打分。</p>
+<p>对于文档示例，首先执行notebook。很多notebook问题只有在运行时才会出现：缺少导入、过时的文件路径、依赖旧API响应的单元格，或者对作者来说清晰但对新读者来说不清晰的设置指南。</p>
+<p>如果验证失败，失败信息会成为下一轮修复传递的证据，这样可以让下一轮修复基于观察到的行为，而不是仅仅依赖diff中看起来正确的内容。</p>
+<hr>
+<h2 id="运行迭代循环">运行迭代循环</h2>
+<p>每个notebook案例都是独立的，因此我们可以并发处理这些案例，这样既可以让演示快速运行，又能为每个示例保留相同的审查、修复和验证流程。</p>
+<p>迭代结果示例：</p>
+<ul>
+<li>第1轮：最简单的固定装置通过；更深的固定装置保留小差异</li>
+<li>第2轮：中等深度的固定装置在看到验证反馈后清除</li>
+<li>第3轮：最深的固定装置清除或留下聚焦的最终差异</li>
+</ul>
+<hr>
+<h2 id="摘要告诉我们什么">摘要告诉我们什么</h2>
+<p>重要的信号不是Codex做了修改，而是随着循环运行，剩余的验证差异越来越小。</p>
+<table>
+<thead><tr><th>迭代</th><th>信号</th><th>重要性</th></tr></thead>
+<tbody>
+<tr><td>第1轮</td><td>最简单的固定装置通过；更深的固定装置保留小差异</td><td>循环可以做初始修复，同时传递仍需要证据的案例</td></tr>
+<tr><td>第2轮</td><td>中等深度的固定装置在看到验证反馈后清除</td><td>运行时和判定器反馈成为有用的修复指令</td></tr>
+<tr><td>第3轮</td><td>最深的固定装置清除或留下聚焦的最终差异</td><td>循环收敛，或者产生清晰的交接给人工审查者</td></tr>
+</tbody>
+</table>
+<p><code>record.json</code>文件是让这个过程可审计的地方。有用的记录可以回答四个问题：审查发现了什么、Codex修改了什么、notebook是否执行、还剩什么？</p>
+<hr>
+<h2 id="泛化到连续循环">泛化到连续循环</h2>
+<p>上面的固定三轮运行对于教授模式很有用。生产循环应该自己决定何时停止。</p>
+<p>一个好的循环通常会因为四个原因之一停止：验证通过、循环达到最大尝试次数、剩余差异停止变化、或者下一个决策需要人工审查。这些停止条件和修复提示一样重要。</p>
+<p>另一个生产细节是审计跟踪。保存每轮的审查发现、修复的工件、验证结果、验证判定和剩余差异。</p>
+<hr>
+<h2 id="其他适用场景">其他适用场景</h2>
+<p>notebook演练只是教授架构的一种方式。只要智能体更改的文件或流程在被接受之前需要不止主观审查，同样的模式都能提供帮助。</p>
+<p>一些高价值示例：</p>
+<ul>
+<li><strong>协议优化</strong>：起草更新供专家审查，然后根据剂量规则、时间限制或所需的安全检查进行验证</li>
+<li><strong>监管修复</strong>：起草受监管内容的更新，然后检查所需语言、引用、批准和特定司法管辖区的术语是否仍然完整</li>
+<li><strong>支持知识刷新</strong>：更新文章，根据当前产品行为或已知解决方案进行测试，并将不匹配项传递到下一轮</li>
+<li><strong>代码现代化</strong>：替换已弃用的API，运行测试或静态检查，使用剩余失败指导下一个修复</li>
+</ul>
+<hr>
+<h2 id="结论">结论</h2>
+<p>迭代修复循环使智能体维护更容易审查和运作，因为它们将判断与证明分开。</p>
+<p>审查阶段发现候选问题，修复阶段进行针对性修改，验证阶段执行工件并产生下一个差异。当这些阶段交换结构化输出时，工作流变得更容易检查、重复和适应。</p>
+<p>主要思想很简单：不要依赖单次传递，而是给工作流一种从工件中学习、进行有界修复、并对真实验证反馈做出反应的方法。这个小改变让智能体维护更加实用。</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#概述">概述</a>
+<a class="lv2" href="#环境配置">环境配置</a>
+<a class="lv2" href="#加载示例工件">加载示例工件</a>
+<a class="lv2" href="#定义业务规则和问题分类">定义业务规则和问题分类</a>
+<a class="lv2" href="#审查阶段">审查阶段</a>
+<a class="lv2" href="#修复阶段">修复阶段</a>
+<a class="lv2" href="#验证阶段">验证阶段</a>
+<a class="lv2" href="#运行迭代循环">运行迭代循环</a>
+<a class="lv2" href="#摘要告诉我们什么">摘要告诉我们什么</a>
+<a class="lv2" href="#泛化到连续循环">泛化到连续循环</a>
+<a class="lv2" href="#其他适用场景">其他适用场景</a>
+<a class="lv2" href="#结论">结论</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-build-iterative-repair-loops-codex";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>15 lessons learned building ChatGPT Apps · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#F0EEE6;
+  --surface:#FAFAF7;
+  --surface-2:#E8E5DB;
+  --ink:#191919;
+  --ink-2:#3D3B33;
+  --muted:#6B6B63;
+  --line:#DBD7CC;
+  --line-2:#C8C4B8;
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>15 lessons learned building ChatGPT Apps</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">ChatGPT Apps</span><span class="tag">SDK</span><span class="tag">实践经验</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">Alpic 团队三个月内开发了二十余款 ChatGPT 应用，总结出 15 条核心经验：构建 AI-first 应用与传统 Web 开发根本不同——需要管理「用户+UI+模型」三体问题、处理上下文不对称、重新设计 UI 交互范式，并将经验沉淀为开源 Skybridge 框架和 Codex Skill。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/15-lessons-learned-building-chatgpt-apps" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/15-lessons-learned-building-chatgpt-apps</a></div></div></div></div></div></div>
+        <div class="prose">
+<p>在 <a href="https://alpic.ai">Alpic</a>，我们相信下一代产品和服务将围绕 <strong>AI-first 体验</strong>构建——用户与模型协作而非导航传统预设 UI 流程的界面。OpenAI 发布 <strong>Apps SDK</strong> 后，我们立即开始构建。三个月内，我们为旅游、零售和 SaaS 等 B2B 和 B2C 场景开发了二十余款 ChatGPT App。</p>
+
+<p>我们很快发现，<strong>构建 ChatGPT App 与传统 Web 或移动应用根本不同</strong>——在 Web 上行之有效的模式（即时数据获取、UI 驱动状态、显式用户配置等）在 Agentic 环境中往往失效，甚至会主动损害体验。</p>
+
+<h2 id="three-body">The three body problem</h2>
+
+<p>传统 Web 应用只有两个参与者：<strong>用户</strong>和 <strong>UI</strong>。而在 ChatGPT 应用中，第三个参与者进入了系统：<strong>模型</strong>。最难的部分是管理这三者之间的信息流动——我们称这种现象为<strong>上下文不对称</strong>。</p>
+
+<h3 id="lesson1">1. 不是所有上下文都应该共享</h3>
+<table>
+<thead><tr><th>字段</th><th>用途</th><th>可见范围</th></tr></thead>
+<tbody>
+<tr><td><code>structuredContent</code></td><td>Widget 和模型的类型化数据</td><td>Widget 和模型均可见</td></tr>
+<tr><td><code>_meta</code></td><td>响应元数据</td><td>仅 Widget 可见，对模型隐藏</td></tr>
+</tbody>
+</table>
+
+<h3 id="lesson2">2. 懒加载在 AI 应用中效果不佳</h3>
+<p>在 ChatGPT 中，范式是反转的：工具调用意味着延迟，由于安全沙箱和模型推理，往往需要数秒。我们学会了激进的前置加载：在初始工具响应中发送尽可能多的数据。</p>
+
+<h3 id="lesson3">3. 模型需要可见性</h3>
+<p>使用 <code>window.openai.setWidgetState(state)</code> 存储特定状态数据，添加到模型的上下文中。我们还引入了声明式的 <code>data-llm</code> 属性：</p>
+<pre><code>&lt;div
+  data-llm={
+    selectedTab === "details"
+      ? "User is viewing product details"
+      : "User is viewing reviews"
+  }
+&gt;</code></pre>
+
+<h3 id="lesson4">4. 不同交互需要不同 API</h3>
+<p>ChatGPT App 涉及 Widget、服务器和模型之间多条交互路径，需要针对每种场景选择正确的 API。</p>
+
+<h2 id="reinventing-ui">Reinventing UI for AI</h2>
+
+<h3 id="lesson5">5. UI 必须适配多种显示模式</h3>
+<table>
+<thead><tr><th>显示模式</th><th>外观</th><th>使用场景</th></tr></thead>
+<tbody>
+<tr><td><strong>Inline</strong></td><td>默认显示模式</td><td>快速交互</td></tr>
+<tr><td><strong>Fullscreen</strong></td><td>Widget 占满整个屏幕</td><td>复杂 Widget</td></tr>
+<tr><td><strong>Picture-in-Picture</strong></td><td>与 Inline 同尺寸但浮动置顶</td><td>后续对话中仍需保持可见</td></tr>
+</tbody>
+</table>
+
+<h3 id="lesson6">6. 嵌入式环境中的 UI 一致性至关重要</h3>
+<p>OpenAI Apps SDK UI Kit（基于 Tailwind CSS）提供了清晰的基准线。</p>
+
+<h3 id="lesson7">7. 语言优先的筛选</h3>
+<p>不要用侧边栏的筛选排序选项，而是为工具参数提供<strong>值列表（LOV）</strong>，让模型通过自然语言进行筛选。</p>
+
+<h3 id="lesson8">8. 文件可以解锁更丰富的交互</h3>
+<p>体验可以从用户已有的文件开始，文件能开启全新的交互形式。</p>
+
+<h2 id="production">Going to production</h2>
+
+<h3 id="lesson9">9. CSP 是新的 CORS</h3>
+<p>OpenAI 在双层嵌套 iframe 中渲染 App。CSP 配置至关重要：</p>
+<table>
+<thead><tr><th>字段</th><th>用途</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td><code>connectDomains</code></td><td>API 和 XHR 请求</td><td><code>https://api.weather.com</code></td></tr>
+<tr><td><code>resourceDomains</code></td><td>图片、字体、脚本</td><td><code>https://cdn.jsdelivr.net</code></td></tr>
+<tr><td><code>frameDomains</code></td><td>嵌入 iframe</td><td><code>https://www.youtube.com</code></td></tr>
+<tr><td><code>redirectDomains</code></td><td>外部链接</td><td><code>https://app.alpic.ai</code></td></tr>
+</tbody>
+</table>
+
+<h3 id="lesson10">10. 小的 Widget 标志有巨大影响</h3>
+<ul>
+<li><strong><code>widgetDomain</code></strong> 是提交审核必填项</li>
+<li><strong>工具注解</strong>必须遵循发布指南</li>
+<li><strong><code>widgetAccessible</code></strong> 控制 Widget 是否可以自行调用工具</li>
+</ul>
+
+<h2 id="fast-iteration">Optimizing for fast iteration</h2>
+
+<h3 id="lesson11">11. 快速迭代需要热重载</h3>
+<p>我们构建了一个 Vite 插件，支持在 ChatGPT 内直接实时重载 Widget。</p>
+
+<h3 id="lesson12">12. 并非每个测试都属于 ChatGPT</h3>
+<p>我们构建了一个轻量级本地模拟器来 mock ChatGPT 宿主环境。</p>
+
+<h3 id="lesson13">13. 移动端测试需要明确支持</h3>
+<p>我们的 Vite 插件支持在隧道端口上进行域名转发，用于移动端测试。</p>
+
+<h3 id="lesson14">14. 熟悉的抽象（如 React hooks）加速前端开发</h3>
+<p>我们引入了 <code>useCallTool</code>、<code>useWidgetState</code>、<code>useLocale</code> 等 hooks，以及基于 Zustand 构建的 <code>createStore</code>。</p>
+
+<h2 id="codex-skill">Turning lessons into a Codex Skill</h2>
+
+<h3 id="lesson15">15. 将经验转化为可复用工具</h3>
+<ol>
+<li><strong>Skybridge 框架</strong>：一个开源 React 框架，将 ChatGPT App 开发最佳实践封装为可复用抽象</li>
+<li><strong>chatgpt-apps-builder Codex Skill</strong>：支持完整应用生命周期</li>
+</ol>
+<p>安装方式：<code>npx skills add alpic-ai/skybridge</code></p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#three-body">三体问题</a><a class="lv2" href="#reinventing-ui">重新发明 UI</a><a class="lv2" href="#production">走向生产</a><a class="lv2" href="#fast-iteration">快速迭代</a><a class="lv2" href="#codex-skill">沉淀为 Codex Skill</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-15-lessons-chatgpt-apps";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

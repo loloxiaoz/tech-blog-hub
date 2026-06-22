@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>在 Amazon Bedrock 上开始使用 OpenAI 模型 · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>在 Amazon Bedrock 上开始使用 OpenAI 模型</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-31</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 12 分钟</span><span class="tag">Amazon Bedrock</span><span class="tag">API</span><span class="tag">Responses API</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">详细介绍如何在 Amazon Bedrock 上使用 OpenAI 兼容的 Responses API，涵盖配置 Bedrock 环境、验证端点、结构化输出、函数工具调用、直接 PDF 输入、有状态对话和提示词缓存等完整工作流。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/partners/AWS/openai_models_with_amazon_bedrock" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/partners/AWS/openai_models_with_amazon_bedrock</a></div></div></div></div></div></div>
+        <div class="prose">
+<p>Amazon Bedrock 上的 OpenAI 模型提供了兼容 OpenAI 的 Responses API 接口，支持生产级工作流，包括文本生成、结构化输出、应用工具调用、直接文件输入、响应状态管理、提示词缓存和后台任务处理。本指南以虚构零售商 BrightCart 的售后支持助手工作流为例，演示完整的 API 使用流程。</p>
+<h2 id="你将学到">你将学到</h2>
+<ol>
+<li>使用 Bedrock 专属环境变量配置 Bedrock 托管的 OpenAI 模型</li>
+<li>验证 Responses 端点，检查响应 schema、用量元数据和标准化错误</li>
+<li>使用原始 HTTPS 和 OpenAI SDK 发送文本请求</li>
+<li>生成带 schema 约束的 JSON 和轻量 JSON 模式输出</li>
+<li>调用应用管理的函数工具、并行工具和自定义文本工具</li>
+<li>发送直接 PDF 输入、维护有状态和无状态对话、携带加密推理上下文</li>
+<li>使用提示词缓存、后台模式、上下文压缩、运维检查和存储响应清理</li>
+</ol>
+<h3 id="前置要求">前置要求</h3>
+<ul>
+<li>Amazon Bedrock 上 OpenAI 模型的 Bearer 令牌</li>
+<li>Python 3.9 及以上版本</li>
+<li>可访问 Bedrock OpenAI 兼容端点的网络环境</li>
+</ul>
+<h3 id="支持的模型">支持的模型</h3>
+<table>
+<thead><tr><th>AWS 区域</th><th>支持的模型 ID</th></tr></thead>
+<tbody>
+<tr><td><code>us-west-2</code></td><td><code>openai.gpt-5.4</code></td></tr>
+<tr><td><code>us-east-2</code></td><td><code>openai.gpt-5.5</code>、<code>openai.gpt-5.4</code></td></tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-配置-amazon-bedrock">1. 配置 Amazon Bedrock</h2>
+<p>运行 Notebook 前请先设置以下环境变量，默认配对为 <code>us-west-2</code> + <code>openai.gpt-5.4</code>：</p>
+<pre><code>export AWS_BEARER_TOKEN_BEDROCK="YOUR_BEDROCK_BEARER_TOKEN"
+export AWS_REGION="us-west-2"
+export BEDROCK_MODEL="openai.gpt-5.4"
+export BEDROCK_BASE_URL="https://bedrock-mantle.${AWS_REGION}.api.aws/openai/v1"</code></pre>
+<p>Bearer 令牌从 <code>AWS_BEARER_TOKEN_BEDROCK</code> 读取，如果缺失，配置单元格会弹出口令式提示，不会明文打印令牌。</p>
+<h3 id="安装依赖">安装依赖</h3>
+<pre><code>%pip install -U "openai&gt;=2.28.0" requests pandas ipython --quiet</code></pre>
+<h3 id="创建客户端">创建客户端</h3>
+<pre><code>from openai import OpenAI
+client = OpenAI(api_key=AWS_BEARER_TOKEN_BEDROCK, base_url=BEDROCK_BASE_URL, max_retries=0)</code></pre>
+<hr>
+<h2 id="2-发起第一次-responses-请求">2. 发起第一次 Responses 请求</h2>
+<p>本节从两个角度展示 Responses 请求接口：首先检查和运行原始 HTTPS 请求，让端点、请求头和 JSON 体可见；然后使用 OpenAI SDK 发起相同的应用工作流。</p>
+<h3 id="验证端点">验证端点</h3>
+<p>第一次实际调用故意设计得非常简单：发送一个 <code>store=false</code> 的最小 Responses 请求，在运行更复杂的示例前先排查配置问题。</p>
+<pre><code>preflight_payload = {
+    "model": MODEL_ID,
+    "input": "Reply with exactly: ok",
+    "max_output_tokens": 1024,
+    "store": False,
+}</code></pre>
+<h3 id="使用-openai-sdk">使用 OpenAI SDK</h3>
+<pre><code>sdk_text_payload = {
+    "model": MODEL_ID,
+    "input": "Write a three-sentence overview for a developer building a BrightCart support assistant with the Responses API.",
+    "reasoning": {"effort": "low"},
+    "max_output_tokens": 1024,
+    "store": False,
+}
+text_response = create_response(**sdk_text_payload)</code></pre>
+<hr>
+<h2 id="3-生成结构化-json">3. 生成结构化 JSON</h2>
+<p>结构化 JSON 将模型输出转换为应用代码可以解析、验证和路由的数据。本节对比严格的 schema 约束输出和轻量 JSON 模式：</p>
+<ul>
+<li><strong>Structured Outputs</strong>：当需要严格契约时使用，通过 <code>text.format.type="json_schema"</code> 和 <code>strict=true</code> 约束输出</li>
+<li><strong>JSON 模式</strong>：当只需要有效 JSON 但精确 schema 可以灵活时使用，通过 <code>text.format.type="json_object"</code> 指定</li>
+</ul>
+<hr>
+<h2 id="4-添加应用管理的工具">4. 添加应用管理的工具</h2>
+<p>函数调用让模型可以向应用请求数据或操作，但你的代码仍然负责执行工具并返回结果。本节定义本地 BrightCart 工具，演示：</p>
+<ul>
+<li><strong>单个函数调用</strong>：模型选择参数，应用执行本地函数，返回 <code>function_call_output</code></li>
+<li><strong>并行工具调用</strong>：允许模型在一次轮次中请求多个独立查询，设置 <code>parallel_tool_calls: True</code></li>
+</ul>
+<hr>
+<h2 id="5-直接-pdf-输入">5. 直接 PDF 输入</h2>
+<p>Responses API 可以接受直接 PDF 输入，以便模型可以从上传的文档中提取、汇总或回答有关问题。通过 <code>input_file</code> 类型发送内联 base64 数据或可访问 URL：</p>
+<pre><code>{
+    "type": "input_file",
+    "filename": "policy.txt",
+    "file_data": f"data:text/plain;base64,{policy_b64}",
+}</code></pre>
+<hr>
+<h2 id="6-维护对话状态">6. 维护对话状态</h2>
+<p>有状态对话让应用可以在多个轮次中携带上下文：</p>
+<ul>
+<li><strong>有状态对话</strong>：使用 <code>previous_response_id</code> 链接每个响应到先前存储的响应 ID</li>
+<li><strong>无状态对话</strong>：每次请求时完全控制历史记录，显式传入历史消息列表</li>
+</ul>
+<hr>
+<h2 id="7-高级功能">7. 高级功能</h2>
+<ul>
+<li><strong>提示词缓存</strong>：通过 <code>prompt_cache_key</code> 和 <code>prompt_cache_retention</code> 减少重复前缀的 token 消耗</li>
+<li><strong>后台模式</strong>：通过 <code>background: True</code> 异步处理长时间运行的任务</li>
+<li><strong>上下文压缩</strong>：通过 <code>context_compression</code> 控制长对话的上下文管理策略</li>
+<li><strong>存储响应清理</strong>：通过 <code>responses.delete(response_id)</code> 清理已存储的响应</li>
+</ul>
+<hr>
+<h2 id="结论">结论</h2>
+<p>Amazon Bedrock 上的 OpenAI Responses API 提供了与原生 OpenAI API 一致的接口，让开发者可以在 AWS 基础设施上无缝使用 OpenAI 模型的完整功能集，同时享受 Bedrock 的企业级安全和合规保障。</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#你将学到">你将学到</a>
+<a class="lv2" href="#1-配置-amazon-bedrock">1. 配置 Amazon Bedrock</a>
+<a class="lv2" href="#2-发起第一次-responses-请求">2. 发起第一次 Responses 请求</a>
+<a class="lv2" href="#3-生成结构化-json">3. 生成结构化 JSON</a>
+<a class="lv2" href="#4-添加应用管理的工具">4. 添加应用管理的工具</a>
+<a class="lv2" href="#5-直接-pdf-输入">5. 直接 PDF 输入</a>
+<a class="lv2" href="#6-维护对话状态">6. 维护对话状态</a>
+<a class="lv2" href="#7-高级功能">7. 高级功能</a>
+<a class="lv2" href="#结论">结论</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-models-amazon-bedrock";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

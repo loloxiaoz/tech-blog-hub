@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>在 ChatGPT 中构建工作区智能体 · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;
+  --muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>在 ChatGPT 中构建工作区智能体</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-01</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">ChatGPT</span><span class="tag">Workspace Agent</span><span class="tag">自动化</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">介绍如何使用 ChatGPT 对话式构建器创建工作区智能体，以销售会议准备助手为例，演示应用连接器配置、技能添加、记忆启用、定时调度和团队分享的完整部署流程。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/building-workspace-agents-in-chatgpt" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/building-workspace-agents-in-chatgpt</a></div></div></div></div></div></div>
+        <div class="prose">
+<h2 id="引言">引言</h2>
+<p>ChatGPT 工作区智能体是共享式智能体，可以运行可复用的工作流，在 ChatGPT 中独立完成端到端任务。它们可以调用已连接的应用、遵循技能规则、按日程自动运行，还可以分享给工作区内的同事使用。</p>
+<p>在本教程中，我们将构建一个支持销售团队的工作区智能体：通过自动生成次日客户通话的会议简报，借助最新的客户数据，帮助销售团队更高效地准备销售会议。</p>
+<p>具体来说，我们的智能体将每天运行，检查次日的客户会议，从 SharePoint 收集近期的账户上下文，搜索每个参会者的最新公司新闻和背景资料。智能体将生成会议简报，将其保存为 SharePoint 文档，并向我们发送执行摘要。</p>
+<h2 id="前置条件和配置">前置条件和配置</h2>
+<p>完成本教程需要：</p>
+<ol>
+<li>一个支持工作区智能体的 ChatGPT 商业版、企业版或教育版工作区</li>
+<li>一组允许智能体访问日历和账户信息的应用（连接器）</li>
+</ol>
+<p>我们将使用谷歌日历和微软 SharePoint 来演示工作流。</p>
+<p>在开始构建前，请向工作区管理员确认以下四项设置：</p>
+<ol>
+<li><strong>工作区已启用智能体功能</strong></li>
+<li><strong>你拥有构建和分享智能体的权限</strong></li>
+<li><strong>所需应用已启用</strong>（谷歌日历、Gmail、SharePoint）</li>
+<li><strong>[可选] 工作区已批准 Slack 应用</strong></li>
+</ol>
+<hr>
+<h2 id="构建你的智能体">构建你的智能体</h2>
+<h3 id="步骤-1：描述你的工作流">步骤 1：描述你的工作流</h3>
+<p>将以下文本输入智能体构建器：</p>
+<pre><code>创建一个帮助准备销售会议的智能体。智能体需要检查我的谷歌日历，获取明天的客户会议信息。排除仅内部参与的会议，跳过没有外部参会者的活动。
+对于每个客户会议，从 SharePoint 中提取近期的笔记和反馈，然后搜索过去 30 天内的相关公司新闻。
+之后撰写一份 2-3 页的会议简报，将会议简报保存为 SharePoint 文档。
+然后，给我发送一封电子邮件，包含我即将参加的会议的每日摘要，以及完整简报的链接。</code></pre>
+<h3 id="步骤-2：审查并配置你的应用">步骤 2：审查并配置你的应用</h3>
+<p>了解智能体对各工具的操作权限非常重要：</p>
+<ul>
+<li><strong>谷歌日历连接</strong>：使用「终端用户账户」模式，只启用读取操作。</li>
+<li><strong>Gmail 连接器</strong>：使用「终端用户账户」配置，每个用户收到自己的简报。</li>
+<li><strong>微软 SharePoint 连接</strong>：使用「智能体拥有的账户」，关联到销售团队的服务账户。允许广泛的读取操作，但禁止批量写入操作和删除操作。</li>
+</ul>
+<p>除了已启用的连接器之外，智能体还可以访问「网络搜索」功能，用于补充最新公开公司新闻。</p>
+<h3 id="步骤-3：启用技能和记忆">步骤 3：启用技能和记忆</h3>
+<p>技能封装了指令、资源和脚本，帮助智能体可靠地完成指令。技能基于<a href="https://agentskills.io/home">开源智能体技能标准</a>构建，因此可以在不同 AI 产品中使用。</p>
+<p>我们还将为智能体启用「记忆」功能。记忆功能让智能体能够通过访问持久化文件夹，在不同智能体会话之间保持上下文。注意，这个记忆不会在智能体的不同终端用户之间共享。</p>
+<hr>
+<h2 id="测试你的智能体">测试你的智能体</h2>
+<p>在设置智能体按周期运行之前，以及在与其他团队成员分享之前，我们可以选择智能体构建器右上角的「预览」或「在 ChatGPT 中尝试」来测试智能体。</p>
+<p>在测试过程中，我们可以查看智能体采取行动的操作轨迹——访问连接器、引用技能和记忆——以及智能体完成任务的思维链推理过程。</p>
+<p>当智能体完成时，我们会看到它为每场即将到来的客户会议生成了格式规范的 SharePoint 文档，并向我们发送了电子邮件摘要。</p>
+<hr>
+<h2 id="部署你的智能体">部署你的智能体</h2>
+<h3 id="设置定时任务">设置定时任务</h3>
+<p>将智能体设置为每天下午 4 点运行，为我们提供次日的预览。在智能体屏幕的右上角选择「日程安排」，然后选择「添加新日程」来指定智能体应该运行的时间。</p>
+<p>例如，除了工作日每日日程之外，我们还可以创建一个「每周准备」日程，在每周日晚上运行，为本周的每场即将到来的会议准备简报。</p>
+<h3 id="与团队分享">与团队分享</h3>
+<p>在智能体构建器的「渠道」部分，选择「ChatGPT」，然后选择「启用分享」。我们可以开启分享来生成智能体的可分享链接，工作区内的任何人都可以直接与该智能体对话，或者复制智能体来创建自己的分支版本。</p>
+<h3 id="账户模式对分享的影响">账户模式对分享的影响</h3>
+<p>因为我们为谷歌日历和 Gmail 连接器选择了「终端用户账户」模式，每个使用我们智能体的人都需要登录这些应用，智能体将能够访问他们各自的会议和电子邮件。</p>
+<p>然而，因为我们为 SharePoint 连接器选择了「智能体拥有的账户」模式，<strong>任何我们分享智能体的人都将能够访问 SharePoint 资源</strong>。</p>
+<h3 id="公司目录">公司目录</h3>
+<p>除了向团队成员提供智能体链接之外，我们还可以选择将智能体列在公司目录中，让工作区内的任何人都可以查看该智能体。你可以通过在 ChatGPT 中选择「智能体」，然后选择智能体目录选项卡，来访问员工构建的智能体的公司目录。</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div>
+<a class="lv2" href="#引言">引言</a>
+<a class="lv2" href="#前置条件和配置">前置条件和配置</a>
+<a class="lv2" href="#构建你的智能体">构建你的智能体</a>
+<a class="lv2" href="#测试你的智能体">测试你的智能体</a>
+<a class="lv2" href="#部署你的智能体">部署你的智能体</a>
+</nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-building-workspace-agents-chatgpt";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

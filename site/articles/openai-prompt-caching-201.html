@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt Caching 201 — TechBlog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Noto+Serif+SC:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#faf8f5;--surface:#fff;--ink:#2d2a26;--ink2:#5c5650;--ink3:#8c877f;--accent:#c17a3a;--border:#e8e2d9;--radius:10px;--max:780px}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.nav-brand{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:600;color:var(--ink)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:.875rem;color:var(--ink2);font-weight:500}
+.nav-links a:hover{color:var(--accent);text-decoration:none}
+/* LAYOUT */
+.page{max-width:1100px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+@media(max-width:860px){.page{grid-template-columns:1fr}.toc-aside{display:none}}
+/* ARTICLE */
+article{min-width:0}
+.article-header{margin-bottom:40px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.article-title{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;line-height:1.2;color:var(--ink);margin-bottom:16px}
+.article-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:.82rem;color:var(--ink3);margin-bottom:20px}
+.article-meta span{display:flex;align-items:center;gap:4px}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tag{background:#f0ece6;color:var(--ink2);font-size:.75rem;padding:3px 10px;border-radius:20px;font-weight:500}
+.article-summary{background:#f5f1eb;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;font-size:.93rem;color:var(--ink2);line-height:1.65;margin-bottom:8px}
+/* PROSE */
+.prose{font-family:'Noto Serif SC','Fraunces',serif;font-size:1.02rem;line-height:1.85;color:var(--ink)}
+.prose h2{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:600;margin:2.4rem 0 .8rem;color:var(--ink);border-bottom:1px solid var(--border);padding-bottom:.4rem}
+.prose h3{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--ink)}
+.prose p{margin-bottom:1rem}
+.prose ul,.prose ol{margin:.6rem 0 1rem 1.4rem}
+.prose li{margin-bottom:.35rem}
+.prose strong{font-weight:600;color:var(--ink)}
+.prose em{font-style:italic}
+.prose code{font-family:'SF Mono','Fira Code',monospace;font-size:.84em;background:#f0ece6;padding:2px 6px;border-radius:4px;color:#7c3d12}
+.prose pre{background:#2d2a26;border-radius:var(--radius);padding:18px 20px;overflow-x:auto;margin:1.2rem 0;font-size:.85rem;line-height:1.6}
+.prose pre code{background:none;padding:0;color:#e8dcc8;font-size:inherit;border-radius:0}
+.prose blockquote{border-left:3px solid var(--accent);margin:1.4rem 0;padding:12px 18px;background:#faf5ee;border-radius:0 var(--radius) var(--radius) 0;color:var(--ink2);font-size:.95rem}
+.prose blockquote p{margin-bottom:.4rem}
+.prose blockquote p:last-child{margin-bottom:0}
+.prose table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem;font-family:'Inter',sans-serif}
+.prose table th{background:#f0ece6;font-weight:600;text-align:left;padding:9px 14px;border:1px solid var(--border);color:var(--ink)}
+.prose table td{padding:8px 14px;border:1px solid var(--border);color:var(--ink2)}
+.prose table tr:hover td{background:#faf8f5}
+.prose a{color:var(--accent)}
+/* TOC */
+.toc-aside{position:sticky;top:80px}
+.toc-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.toc-title{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;margin-bottom:12px;color:var(--ink)}
+.toc-box a{display:block;font-size:.8rem;color:var(--ink2);padding:3px 0 3px 12px;border-left:2px solid transparent;transition:all .15s;line-height:1.4;margin-bottom:2px}
+.toc-box a:hover,.toc-box a.active{color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+.toc-box a.lv3{padding-left:22px;font-size:.77rem}
+/* BACK */
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink3);margin-bottom:32px;font-family:'Inter',sans-serif}
+.back-link:hover{color:var(--accent);text-decoration:none}
+/* FOOTER */
+footer{text-align:center;padding:32px 24px;font-size:.8rem;color:var(--ink3);border-top:1px solid var(--border);margin-top:64px}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">TechBlog</a>
+  <div class="nav-links">
+    <a href="../index.html">首页</a>
+    <a href="../graph.html">知识图谱</a>
+  </div>
+</nav>
+
+<div class="page">
+  <article>
+    <a class="back-link" href="../index.html">← 返回首页</a>
+    <div class="article-header">
+      <div class="badge" style="background:#6B46C1">API</div>
+      <h1 class="article-title">Prompt Caching 201</h1>
+      <div class="article-meta">
+        <span>📅 2026-05-20</span>
+        <span>⏱ 约 10 分钟</span>
+      </div>
+      <div class="tag-list">
+        <span class="tag">API</span><span class="tag">Caching</span><span class="tag">Performance</span>
+      </div>
+      <div class="article-summary">Prompt Caching 进阶实践指南：从技术原理（KV Cache 跳过 prefill 计算）到成本影响（最高节省 98.75%）、延迟影响（最高降低 80%），再到提升缓存命中率的战术手册（稳定前缀、prompt_cache_key、Responses API、Flex Processing），以及 Realtime API 中的 retention_ratio 截断策略。</div>
+    </div>
+    <div class="prose">
+<p style="margin:0 0 1.5rem;padding:.6rem 1rem;background:rgba(217,119,87,.08);border-left:3px solid #D97757;border-radius:0 6px 6px 0;font-size:.9rem">原文链接：<a href="https://cookbook.openai.com/examples/prompt_caching_201" target="_blank" rel="noopener" style="color:#D97757;word-break:break-all">https://cookbook.openai.com/examples/prompt_caching_201</a></p><h2 id="basics">Prompt Caching 基础</h2>
+<p>模型提示词通常包含重复内容——例如系统指令、工具和消息。当请求包含系统最近处理过的前缀时，OpenAI 可以将其路由到已计算过该前缀的服务器，使模型可以复用之前的工作而不是从头重新计算。</p>
+<p>Prompt Caching 可以将首 token 延迟降低最多 80%，将输入 token 成本降低最多 90%。它自动在所有 API 请求上工作，无需额外费用。</p>
+<ul>
+<li>缓存命中需要精确的重复前缀匹配，自动适用于包含 1024 个或更多 token 的提示词，以 128 token 为增量发生缓存命中。</li>
+<li>整个请求前缀均可缓存：消息、图像、音频、工具定义和结构化输出模式。</li>
+<li>内存提示词缓存在所有 API 请求上自动工作。扩展提示词缓存将其增加到 24 小时。</li>
+<li>缓存仅在两个请求共享相同前缀并落在同一台机器上时有效。使用可选参数 <code>prompt_cache_key</code> 可改善路由。</li>
+</ul>
+<h2 id="why-caching">为什么缓存很重要</h2>
+<h3 id="technical-reason">核心技术原因：跳过 Prefill 计算</h3>
+<p>通过 transformer 层对输入 token 的前向传递是推理成本和延迟的主要驱动因素。Prompt Caching 专门应用于注意力层内的键值投影。KV 缓存跨所有层和头存储该前缀的键和值张量。</p>
+<p>如果你再发出一个请求——前缀相同——处理新的、未见过的后缀时，模型会复用缓存的张量，只计算新 token 的注意力。语义基础已经建立；模型只是在现有注意力状态之上构建，而不是从头重新计算。</p>
+<h3 id="cost-impact">成本影响</h3>
+<p>缓存折扣可能很显著。以下是一些示例（完整列表见定价页面）：</p>
+<table>
+<thead><tr><th>模型</th><th>输入（每 1M tokens）</th><th>缓存输入（每 1M tokens）</th><th>缓存折扣</th></tr></thead>
+<tbody>
+<tr><td>gpt-4o</td><td>$2.50</td><td>$1.25</td><td>50.00%</td></tr>
+<tr><td>gpt-4.1</td><td>$2.00</td><td>$0.50</td><td>75.00%</td></tr>
+<tr><td>gpt-5-nano</td><td>$0.05</td><td>$0.005</td><td>90.00%</td></tr>
+<tr><td>gpt-5.2</td><td>$1.75</td><td>$0.175</td><td>90.00%</td></tr>
+<tr><td>gpt-realtime (audio)</td><td>$32.00</td><td>$0.40</td><td>98.75%</td></tr>
+</tbody>
+</table>
+<h3 id="latency-impact">延迟影响</h3>
+<p>减少首 token 时间（TTFT）是提高缓存率的主要动机。缓存 token 可以将延迟降低最多约 80%。对于最短的提示词（1024 token），缓存请求快 7%，但在更长的端（150k+ token），我们看到 TTFT 快 67%。输入越长，缓存对首 token 延迟的影响越大。</p>
+<h2 id="measure-first">首先测量缓存（以便迭代）</h2>
+<p>响应包含使用字段，指示有多少提示词 token 来自缓存。所有请求将在 <code>usage.prompt_tokens_details</code> 中显示 <code>cached_tokens</code> 字段：</p>
+<pre><code class="language-json">"usage": {
+  "prompt_tokens": 2006,
+  "completion_tokens": 300,
+  "total_tokens": 2306,
+  "prompt_tokens_details": {
+    "cached_tokens": 1920
+  }
+}</code></pre>
+<h2 id="improve-cache">提升缓存命中率战术手册</h2>
+<h3 id="tip41">4.1 发送超过 1024 token 的提示词</h3>
+<p>有时，使你的提示词稍微更长可以降低总体成本。假设你有一个 900 token 的提示词——你永远不会获得缓存命中。如果你将提示词延长到 1100 token 并获得 50% 的缓存率，你将节省 33% 的 token 成本。一旦你越过缓存阈值并实现有意义的复用，这些重复 token 的边际成本就会大幅下降。</p>
+<h3 id="tip42">4.2 稳定前缀</h3>
+<p>这是最省力、影响最大的优化：保持提示词早期部分的稳定。将持久内容放在开头：</p>
+<ul>
+<li>指令</li>
+<li>工具定义</li>
+<li>模式</li>
+</ul>
+<p>将易变内容（用户输入、动态值、会话特定数据）移到末尾。早期 token 的即使细微变化也会使精确前缀匹配无效并阻止缓存命中。</p>
+<blockquote>
+<p><strong>提示：使用 metadata</strong></p>
+<p>我们见过客户因在请求早期包含时间戳（用于后续查找/调试）而意外使其缓存失效。将其移到 <code>metadata</code> 中，这不会影响缓存！</p>
+</blockquote>
+<h3 id="tip43">4.3 保持工具和模式相同</h3>
+<p>工具、模式及其排序对缓存前缀有贡献——它们在开发者指令之前注入，这意味着更改它们会使缓存失效。这包括：模式键更改、工具排序更改、指令更改。</p>
+<p><strong>提示：在不破坏提示词缓存的情况下调整工具</strong></p>
+<p>利用 <a href="https://developers.openai.com/api/docs/guides/function-calling/#tool-choice"><code>allowed_tools</code></a> <code>tool_choice</code> 选项。它允许你在不更改工具数组（不破坏缓存）的情况下限制模型在请求上可以调用的工具。</p>
+<pre><code># 静态"工具"保留在缓存的提示词前缀中：
+tools = [get_weather_def, get_location_def, calendar_def, ...]
+
+# 每次调用的"allowed_tools"只存在于请求元数据中，不在前缀中：
+allowed_tools = {"mode":"auto", "tools":["get_weather","get_location"]}</code></pre>
+<h3 id="tip44">4.4 使用 prompt_cache_key 提高路由粘性</h3>
+<p>缓存仅在两个请求共享相同前缀并落在同一台机器上时有效。请求基于提示词前 ~256 个 token 的哈希路由到推理引擎。当你提供 <code>prompt_cache_key</code> 时，它与该哈希结合以增加路由粘性。</p>
+<p>一个编码客户通过开始使用 <code>prompt_cache_key</code> 将命中率从 60% 提高到 87%。</p>
+<p>推理引擎每个前缀 + <code>prompt_cache_key</code> 组合每分钟可以处理大约 ~15 个请求。这意味着你应该选择使每个前缀 + 键组合低于 ~15 RPM 的键粒度。</p>
+<h3 id="tip45">4.5 使用 Responses API 而不是 Chat Completions</h3>
+<p>与 Chat Completions 相比，Responses API 的请求缓存利用率提高 40-80%。这是因为，与 Chat Completions 不同，原始思维链 token 通过 <code>previous_response_id</code> 在 Responses API 的轮次之间持久化。Chat Completions 没有提供持久化这些 token 的方法。</p>
+<h3 id="tip46">4.6 对上下文工程保持深思熟虑</h3>
+<p>当你删除、总结或压缩对话中的早期轮次时，你会破坏缓存。在这方面，上下文工程和提示词缓存本质上是相互对立的——一个优先考虑动态性，另一个优先考虑稳定性。</p>
+<p><strong>实用规则</strong>：利用你的 eval 来选择在成本（减少总输入 token 的截断/摘要以及缓存）和通过精心上下文工程获得的智能之间取得平衡的压缩方法和频率。</p>
+<h2 id="troubleshooting">故障排除：为什么你可能看到较低的缓存</h2>
+<ul>
+<li>工具或响应格式模式更改</li>
+<li>命中模型上下文窗口的简单截断</li>
+<li>指令或系统提示的更改</li>
+<li>推理努力度的更改</li>
+<li>缓存过期：经过太长时间，保存的前缀被丢弃</li>
+<li>添加空格、时间戳或其他动态内容</li>
+<li>将 Chat Completions 与推理模型一起使用（隐藏的思维链 token 被丢弃）</li>
+</ul>
+<h2 id="extended-caching">扩展提示词缓存与零数据保留</h2>
+<p><a href="https://developers.openai.com/api/docs/guides/prompt-caching#extended-prompt-cache-retention">扩展提示词缓存</a>通过在内存满时将键/值张量卸载到 GPU 本地存储来工作，显著增加可用于缓存的存储容量。</p>
+<pre><code class="language-json">{
+  "model": "gpt-5.1",
+  "input": "Write me a haiku about froge...",
+  "prompt_cache_retention": "24h"
+}</code></pre>
+<p>KV 缓存只保存模型的键/值张量（注意力层产生的隐藏状态的线性投影）——这是模型内部的中间表示，意味着<strong>无论保留策略如何，原始文本/多模态输入从未被存储</strong>。</p>
+<h2 id="realtime-api">Realtime API 中的缓存</h2>
+<p>Realtime API 中的缓存与 Responses API 的工作方式相同——所有传入的音频、文本或图像都将被缓存，前缀的任何更改都会破坏缓存。然而，鉴于 Realtime API 较短的上下文窗口（目前 32k），管理截断尤为重要。</p>
+<h3 id="retention-ratio">Retention Ratio</h3>
+<p>默认情况下（<code>truncation: "auto"</code>），服务器仅删除足够的旧消息以适应上下文窗口。这种"即时"修剪每次超过限制时都会稍微移动对话的开始，导致频繁的缓存未命中。</p>
+<p><code>retention_ratio</code> 设置通过让你控制保留多少早期上下文来改变这一点。例如，<code>retention_ratio: 0.7</code> 意味着在截断发生时，系统保留大约 70% 的现有对话窗口，丢弃最旧的 ~30%。</p>
+<pre><code class="language-json">{
+  "event": "session.update",
+  "session": {
+    "truncation": {
+      "type": "retention_ratio",
+      "retention_ratio": 0.7
+    }
+  }
+}</code></pre>
+<p>这创建了一个更稳定的前缀，在多个轮次中存活，减少重复的缓存破坏。权衡是截断发生在更大的块中，因此你可能一次失去更多对话历史。</p>
+<h2 id="conclusion">结论</h2>
+<p>Prompt Caching 是 OpenAI 平台上可用的最高杠杆优化之一。当你的前缀稳定且路由良好时，你可以显著降低成本和延迟，而不改变模型行为或质量。</p>
+<p>关键思想简单但强大：稳定前缀，监控 <code>cached_tokens</code>，注意 ~15 RPM 限制，并深思熟虑地使用 <code>prompt_cache_key</code>。缓存是尽力而为且路由感知的，但经过有意工程，它可以在效率方面带来显著改善。</p>
+    </div>
+  </article>
+
+  <aside class="toc-aside">
+    <div class="toc-box">
+      <div class="toc-title">目录</div>
+      <a class="lv2" href="#basics">基础概念</a><a class="lv2" href="#why-caching">为什么缓存很重要</a><a class="lv2" href="#measure-first">首先测量缓存</a><a class="lv2" href="#improve-cache">提升缓存命中率战术</a><a class="lv2" href="#troubleshooting">故障排除</a><a class="lv2" href="#extended-caching">扩展提示词缓存</a><a class="lv2" href="#realtime-api">Realtime API 中的缓存</a><a class="lv2" href="#conclusion">结论</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  © 2026 TechBlog · 由 Claude 驱动
+</footer>
+
+<script id="openai-prompt-caching-201">
+(function(){
+  const tocLinks = document.querySelectorAll('.toc-box a');
+  const headings = document.querySelectorAll('.prose h2[id], .prose h3[id]');
+  if(!tocLinks.length || !headings.length) return;
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        tocLinks.forEach(a=>a.classList.remove('active'));
+        const active = document.querySelector('.toc-box a[href="#'+entry.target.id+'"]');
+        if(active) active.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -75% 0px'});
+  headings.forEach(h=>observer.observe(h));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex Prompting Guide — LLM 知识库</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Georgia',serif;background:#faf8f5;color:#2c2c2c;line-height:1.7}
+a{color:#8B4513;text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:#fff;border-bottom:1px solid #e8e0d5;padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:1rem;height:56px}
+.logo{font-size:1.1rem;font-weight:700;color:#2c2c2c;letter-spacing:.02em}
+.logo span{color:#c0622f}
+nav{margin-left:auto;display:flex;gap:1.5rem;font-size:.9rem}
+.layout{display:grid;grid-template-columns:240px 1fr 200px;gap:2rem;max-width:1200px;margin:2rem auto;padding:0 1.5rem}
+aside.left{font-size:.85rem}
+aside.left .widget{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:1rem;margin-bottom:1.2rem}
+aside.left .widget h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:.6rem}
+.toc-links{display:flex;flex-direction:column;gap:.3rem}
+.toc-links a{color:#555;font-size:.82rem;padding:.1rem 0}
+.toc-links a.lv2{padding-left:0;color:#555}
+.toc-links a:hover{color:#c0622f}
+article{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:2.5rem 3rem;min-width:0}
+.article-badge{display:inline-block;padding:.2rem .7rem;border-radius:4px;font-size:.75rem;font-weight:600;color:#fff;margin-bottom:1rem;letter-spacing:.04em}
+article h1{font-size:1.9rem;font-weight:700;line-height:1.3;margin-bottom:.6rem;color:#1a1a1a}
+.meta{font-size:.83rem;color:#888;margin-bottom:.5rem}
+.meta span{margin-right:1rem}
+.tags{margin:1rem 0 1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.tags span{background:#f3ede4;color:#7a4a2a;font-size:.75rem;padding:.15rem .55rem;border-radius:3px}
+.summary-box{background:#fdf6ee;border-left:3px solid #c0622f;padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin-bottom:2rem;font-size:.92rem;color:#555;line-height:1.6}
+article h2{font-size:1.25rem;font-weight:700;margin:2rem 0 .7rem;color:#1a1a1a;border-bottom:1px solid #f0e8de;padding-bottom:.3rem}
+article h3{font-size:1.05rem;font-weight:600;margin:1.5rem 0 .5rem;color:#2c2c2c}
+article p{margin-bottom:1rem;font-size:.95rem;color:#3c3c3c}
+article ul,article ol{margin:.5rem 0 1rem 1.4rem;font-size:.95rem;color:#3c3c3c}
+article li{margin-bottom:.4rem}
+article pre{background:#1e1e1e;color:#d4d4d4;padding:1.2rem 1.4rem;border-radius:6px;overflow-x:auto;font-size:.82rem;line-height:1.6;margin:1rem 0}
+article code{font-family:'Menlo','Consolas',monospace}
+article p code,article li code{background:#f0ebe3;color:#8B3A0F;padding:.1em .35em;border-radius:3px;font-size:.88em}
+aside.right{font-size:.82rem}
+aside.right .widget{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:1rem;margin-bottom:1.2rem}
+aside.right .widget h3{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:.6rem}
+.back-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.85rem;color:#888;margin-bottom:1rem}
+.back-link:hover{color:#c0622f}
+footer{text-align:center;padding:2rem;font-size:.8rem;color:#aaa;border-top:1px solid #e8e0d5;margin-top:3rem}
+@media(max-width:900px){.layout{grid-template-columns:1fr}aside.left,aside.right{display:none}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">LLM <span>知识库</span></div>
+<nav>
+<a href="../index.html">首页</a>
+<a href="../graph.html">知识图谱</a>
+</nav>
+</header>
+<div class="layout">
+<aside class="left">
+<div class="widget">
+<h3>目录</h3>
+<div class="toc-links">
+<a class="lv2" href="#intro">简介</a><a class="lv2" href="#getting-started">迁移关键步骤</a><a class="lv2" href="#base-prompt">推荐基础提示词</a><a class="lv2" href="#in-progress-updates">In-progress 更新</a><a class="lv2" href="#agents-md">使用 AGENTS.md</a><a class="lv2" href="#context-compaction">Context Compaction</a><a class="lv2" href="#tools">工具使用指南</a><a class="lv2" href="#gpt53-features">GPT-5.3 新特性</a><a class="lv2" href="#troubleshooting">故障排除</a>
+</div>
+</div>
+</aside>
+<article>
+<a class="back-link" href="../index.html">← 返回列表</a>
+<div class="article-badge" style="background:#0A4A23">Codex</div>
+<h1>Codex Prompting Guide</h1>
+<div class="meta">
+<span>2026-02-25</span>
+<span>约 15 分钟</span>
+</div>
+<div class="tags">
+<span>Codex</span><span>Prompting</span><span>Agent</span>
+</div>
+<div class="summary-box">本指南介绍如何为 Codex 模型（gpt-5.3-codex）优化提示词和工具配置。涵盖推荐的基础提示词、自主性设置、代码实现规范、工具使用指南（apply_patch、shell_command、update_plan）、Preamble 机制，以及新版 gpt-5.3-codex 的 Phase 参数和 Persona 设置。
+<div class="source-link" style="margin:0 0 1.5rem;padding:.6rem 1rem;background:var(--accent-soft,rgba(217,119,87,.10));border-radius:6px;font-size:.9rem">原文链接：<a href="https://developers.openai.com/blog/codex-prompting-guide" target="_blank" rel="noopener" style="color:var(--accent,#D97757);word-break:break-all">https://developers.openai.com/blog/codex-prompting-guide</a></div>
+
+<h2 id="intro">简介</h2>
+<p>Codex 模型是当前编码 Agent 的最先进模型。本指南适用于通过 API 直接使用模型以获得最大可定制性；我们也提供了 <a href="https://developers.openai.com/codex/sdk/">Codex SDK</a> 用于更简单的集成。</p>
+<p>API 中提供的调优模型为 <code>gpt-5.3-codex</code>，详见 <a href="https://developers.openai.com/api/docs/models/gpt-5.3-codex">模型页面</a>。</p>
+<h3 id="recent-improvements">Codex 模型近期改进</h3>
+<ul>
+<li><strong>更快、更高 token 效率</strong>：使用更少推理 token 完成任务。推荐使用 <code>medium</code> 推理努力度作为交互式编码的均衡快速模型。</li>
+<li><strong>更高智能和更长自主运行</strong>：Codex 高度能力化，可以在你最难的任务上自主运行数小时。可使用 <code>high</code> 或 <code>xhigh</code> 推理努力度处理最困难的任务。</li>
+<li><strong>原生压缩支持</strong>：压缩功能使多小时推理不会触达上下文限制，也让用户对话无需开启新的聊天会话即可持续更长时间。</li>
+<li><strong>更好的 PowerShell 和 Windows 环境支持</strong>：Codex 现在在 PowerShell 和 Windows 环境中更加强大。</li>
+</ul>
+<h2 id="getting-started">迁移到 codex-cli 的关键步骤</h2>
+<p>如果你已有可用的 Codex 实现，模型应该只需最少修改即可正常工作；但如果你为 GPT-5 系列模型或第三方模型优化了提示词和工具集，我们建议进行更显著的调整。最佳参考实现是我们完全开源的 <a href="https://github.com/openai/codex">codex-cli agent</a>。</p>
+<ol>
+<li><strong>更新你的提示词</strong>：如果可能，以我们的标准 Codex-Max 提示词作为基础，并从中进行有针对性的补充。最关键的片段是涵盖自主性、持续性、代码库探索、工具使用和前端质量的部分。</li>
+<li><strong>更新你的工具</strong>：包括我们的 <code>apply_patch</code> 实现和以下最佳实践。这是获得最佳性能的主要杠杆。</li>
+</ol>
+<h2 id="base-prompt">推荐基础提示词</h2>
+<p>此提示词最初是默认的 GPT-5.1-Codex-Max 提示词，后来针对答案正确性、完整性、质量、正确的工具使用和并行性以及行动偏向进行了进一步优化。</p>
+<pre><code>You are Codex, based on GPT-5. You are running as a coding agent in the Codex CLI on a user's computer.
+
+# General
+- When searching for text or files, prefer using `rg` or `rg --files` respectively.
+- If a tool exists for an action, prefer to use the tool instead of shell commands.
+- When multiple tool calls can be parallelized, use make these tool calls in parallel.
+- Default expectation: deliver working code, not just a plan.
+
+# Autonomy and Persistence
+- You are autonomous senior engineer: once the user gives a direction, proactively gather context, plan, implement, test, and refine without waiting for additional prompts.
+- Persist until the task is fully handled end-to-end within the current turn.
+- Bias to action: default to implementing with reasonable assumptions.
+
+# Code Implementation
+- Act as a discerning engineer: optimize for correctness, clarity, and reliability.
+- Conform to the codebase conventions: follow existing patterns, helpers, naming, formatting.
+- Keep type safety: Changes should always pass build and type-check.</code></pre>
+<h2 id="in-progress-updates">In-progress 用户更新</h2>
+<p>Codex 模型系列可以在工作过程中输出进度更新。对于 gpt-5.3-codex 之前的版本，这些更新是系统生成的，无法通过提示词控制。对于 gpt-5.3-codex 及之后的版本，这些更新更具沟通性，并将提供更多关于正在发生的事情及原因的关键信息。</p>
+<h2 id="agents-md">使用 AGENTS.md</h2>
+<p>codex-cli 自动枚举这些文件并将它们注入对话中；模型经过训练会严格遵循这些指令。</p>
+<ol>
+<li>文件来自 <code>~/.codex</code> 以及从仓库根目录到当前工作目录的每个目录。</li>
+<li>它们按顺序合并，后面目录中的文件会覆盖前面的。</li>
+<li>每个合并块以独立的用户角色消息形式出现。</li>
+</ol>
+<h2 id="context-compaction">Context Compaction</h2>
+<p>Compaction 显著扩大了有效上下文窗口，用户对话可以进行多轮而不会触达上下文窗口限制或出现长上下文性能降级，Agent 也可以执行比典型上下文窗口更长的轨迹。</p>
+<h3 id="compaction-how">工作原理</h3>
+<ol>
+<li>你照常使用 Responses API，发送包含工具调用、用户输入和助手消息的输入项。</li>
+<li>当你的上下文窗口变大时，你可以调用 <code>/compact</code> 生成一个新的压缩上下文窗口。</li>
+<li>对于后续调用 <code>/responses</code> 端点，你可以传入新的压缩对话项列表。模型将保留关键的先前状态，同时使用更少的对话 token。</li>
+</ol>
+<h2 id="tools">工具使用指南</h2>
+<ol>
+<li>我们强烈推荐使用精确的 <code>apply_patch</code> 实现，因为模型在此 diff 格式上经过高度训练。</li>
+<li>对于终端命令，我们推荐使用我们的 <code>shell</code> 工具。</li>
+<li>对于计划/TODO项，我们的 <code>update_plan</code> 工具效果最好。</li>
+</ol>
+<h3 id="apply-patch">Apply_patch 工具</h3>
+<p>实现 <code>apply_patch</code> 最简单的方式是使用 Responses API 中我们的原生实现，你也可以使用带 <a href="https://cookbook.openai.com/examples/gpt-5/gpt-5_new_params_and_tools">context-free grammar</a> 的 freeform 工具实现：</p>
+<pre><code class="language-python">from openai import OpenAI
+client = OpenAI()
+
+tools = [
+    read_file_tool,
+    cast(ToolParam, {"type": "apply_patch"}),
+]
+
+response = client.responses.create(
+    model="gpt-5.1-Codex-Max",
+    input=input_items,
+    tools=tools,
+    parallel_tool_calls=False,
+)</code></pre>
+<h3 id="shell-tool">Shell_command 工具</h3>
+<p>这是我们的默认 shell 工具。注意我们发现使用字符串类型的命令比命令列表性能更好：</p>
+<pre><code class="language-json">{
+  "type": "function",
+  "function": {
+    "name": "shell_command",
+    "description": "Runs a shell command and returns its output. Always set the workdir param.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "command": {"type": "string"},
+        "workdir": {"type": "string"},
+        "timeout_ms": {"type": "number"}
+      },
+      "required": ["command"]
+    }
+  }
+}</code></pre>
+<h3 id="tool-response-truncation">工具响应截断</h3>
+<p>我们建议按以下方式截断工具调用响应：</p>
+<ul>
+<li>上限为 10k token。可以通过计算 <code>num_bytes / 4</code> 粗略估算。</li>
+<li>如果达到上限，应使用一半预算用于开头，另一半用于结尾，中间截断为 <code>...{N} tokens truncated...</code>。</li>
+</ul>
+<h2 id="gpt53-features">GPT-5.3 Codex 新特性</h2>
+<h3 id="phase-param">Phase 参数</h3>
+<p>为更好地支持 <code>gpt-5.3-codex</code> 的 preamble 消息，Responses API 包含了 <code>phase</code> 字段，旨在防止长时运行任务期间的提前停止和其他不良行为。</p>
+<p><code>phase</code> 的值为：</p>
+<ul>
+<li><code>null</code></li>
+<li><code>"commentary"</code>：对应助手消息应被视为评论/preamble内容</li>
+<li><code>"final_answer"</code>：对应助手消息应被视为最终、结论性内容</li>
+</ul>
+<p><strong>重要</strong>：正确保留助手项上的 <code>phase</code> 是 <code>gpt-5.3-codex</code> 的要求。如果助手 <code>phase</code> 元数据在历史重建过程中丢失，可能导致显著的性能降级。</p>
+<h3 id="persona">Persona（暖色 vs 稳重）</h3>
+<p>Codex 应用和 CLI 支持两种 Persona：</p>
+<ul>
+<li><strong>Warm（暖色）</strong>：更多温暖感、伙伴式配对能量。更多致谢、安慰和情境设置。适合用户从叙事导向中受益的场景（入职、模糊任务、高风险变更）。</li>
+<li><strong>Grounded（稳重）</strong>：更简洁、直接、以交付为导向。每 token 可操作信息更多。适合延迟/吞吐量重要，或用户熟悉工作流程并只想要进度和结果时。</li>
+</ul>
+<h2 id="troubleshooting">故障排除与元提示</h2>
+<p>我们明确追踪的常见失败模式：</p>
+<ul>
+<li>过度思考/在第一个有用动作之前延迟过长</li>
+<li>不自然、类似日志的状态更新，而不是配对编程协作</li>
+<li>尴尬的 preamble 措辞和重复性咒语（"Good catch"、"Aha"、"Got it–" 等）</li>
+</ul>
+<p>上述失败模式通常可以通过元提示解决。你可以在轮次结束时询问模型如何改进其自身指令以应对表现不佳的响应。</p>
+
+</article>
+<aside class="right">
+<div class="widget">
+<h3>文章信息</h3>
+<p style="font-size:.82rem;color:#666;line-height:1.6">来源：OpenAI<br>发布：2026-02-25<br>阅读：约 15 分钟</p>
+</div>
+</aside>
+</div>
+<footer>LLM 知识库 · 由 Claude 维护</footer>
+<script>
+(function(){
+  var id = "openai-codex-prompting-guide";
+  var toc = document.querySelectorAll('.toc-links a');
+  var headers = document.querySelectorAll('article h2, article h3');
+  window.addEventListener('scroll', function(){
+    var scrollY = window.scrollY + 80;
+    var current = '';
+    headers.forEach(function(h){
+      if(h.offsetTop <= scrollY) current = h.id;
+    });
+    toc.forEach(function(a){
+      a.style.color = (a.getAttribute('href') === '#' + current) ? '#c0622f' : '';
+      a.style.fontWeight = (a.getAttribute('href') === '#' + current) ? '600' : '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

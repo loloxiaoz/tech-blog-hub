@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shell + Skills + Compaction: Tips for long-running agents · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#F0EEE6;
+  --surface:#FAFAF7;
+  --surface-2:#E8E5DB;
+  --ink:#191919;
+  --ink-2:#3D3B33;
+  --muted:#6B6B63;
+  --line:#DBD7CC;
+  --line-2:#C8C4B8;
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#6B46C1">API</span>
+          <h1>Shell + Skills + Compaction: Tips for long-running agents that do real work</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-02-11</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 5 分钟</span><span class="tag">Agent</span><span class="tag">Skills</span><span class="tag">Compaction</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">OpenAI 发布三项 Agentic 原语：Skills（可复用的版本化指令包）、升级版 Shell 工具（托管容器 + 受控网络访问）、以及服务端 Compaction（自动压缩长对话历史）。三者结合可大幅提升长任务 Agent 的可靠性和可预测性。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/shell-skills-compaction-tips-for-long-running-agents" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/shell-skills-compaction-tips-for-long-running-agents</a></div></div></div></div></div></div>
+        <div class="prose">
+<p>我们正在从单轮助手转向能处理真实知识工作的长任务 Agent：读取大型数据集、更新文件、编写应用。基于开发者反馈和构建 Codex 及内部 Agent 的经验，OpenAI 发布了一套新的 Agentic 原语。</p>
+
+<h2 id="mental-model">A brief mental model</h2>
+
+<h3 id="skills">Skills: 模型可按需加载的"程序"</h3>
+<p>Skill 是包含 <code>SKILL.md</code> 清单的文件包，内含前置元数据和指令。可以理解为一个版本化的操作手册，模型需要做实际工作时可以随时查阅。</p>
+
+<h3 id="shell">Shell tool: Agent 的"执行环境"</h3>
+<p>Shell 工具让模型在真实终端环境中工作，支持：</p>
+<ul>
+<li>OpenAI 托管的容器</li>
+<li>你自己执行的本地 Shell 运行时</li>
+</ul>
+
+<h3 id="compaction">Compaction: 保持长任务运行</h3>
+<p>服务端 Compaction 通过自动管理上下文窗口和压缩对话历史来保持长任务的连续性运行。</p>
+
+<h3 id="together">Why they're better together</h3>
+<ul>
+<li>Skills 将稳定的程序和示例移入可复用包，消除"提示词意大利面"</li>
+<li>Shell 提供完整执行环境，可安装代码、运行脚本、写入输出</li>
+<li>Compaction 在长任务中保持连续性，同一工作流可持续执行，无需手动上下文手术</li>
+</ul>
+
+<h2 id="tips">Tips and tricks</h2>
+
+<h3 id="tip1">1. 像写路由逻辑一样写 Skill 描述（不是营销文案）</h3>
+<p>Skill 的描述实际上是模型的决策边界。它应该回答：什么时候该用？什么时候不该用？输出和成功标准是什么？</p>
+
+<h3 id="tip2">2. 添加反例和边界情况以减少误触发</h3>
+<p>Glean 发现基于 Skill 的路由最初在针对性评测中触发率下降约 <strong>20%</strong>，在描述中添加反例和边界情况后才得以恢复。</p>
+
+<h3 id="tip3">3. 将模板和示例放入 Skill（不用时几乎零成本）</h3>
+<p>Skill 内的模板和可行示例有两个优势：在需要时精准可用；不会为无关查询增加 token 膨胀。</p>
+
+<h3 id="tip4">4. 从设计之初就考虑长任务运行</h3>
+<ul>
+<li>跨步骤复用同一容器</li>
+<li>传递 <code>previous_response_id</code> 让模型续接工作</li>
+<li>将 Compaction 作为长任务的默认原语，而非应急备选</li>
+</ul>
+
+<h3 id="tip5">5. 需要确定性时，明确告诉模型使用某个 Skill</h3>
+<p>直接说："使用 <code>&lt;skill name&gt;</code> skill。"这将模糊路由变为明确合约。</p>
+
+<h3 id="tip6">6. 将 Skills + 网络访问视为高风险组合（为隔离而设计）</h3>
+<p>强烈建议的默认安全姿态：Skills <strong>允许</strong> / Shell <strong>允许</strong> / 网络 <strong>仅通过最小白名单按请求启用</strong>。</p>
+
+<h3 id="tip7">7. 将 <code>/mnt/data</code> 作为制品的交接边界</h3>
+<p>将 <code>/mnt/data</code> 视为写入输出的标准位置，用于检索、审查或传回。</p>
+
+<h3 id="tip8">8. 理解白名单的双层系统</h3>
+<ul>
+<li>组织级白名单（由管理员配置）：设置允许的最大目标范围</li>
+<li>请求级 <code>network_policy</code>：必须是组织白名单的子集</li>
+</ul>
+
+<h3 id="tip9">9. 使用 <code>domain_secrets</code> 进行身份验证调用</h3>
+<p>如果允许的域需要 Auth headers，使用 <code>domain_secrets</code>，这样模型永远不会看到原始凭证。</p>
+
+<h3 id="tip10">10. 在云端和本地使用相同的 API</h3>
+<p>Skills 在托管 Shell 和本地 Shell 模式下都可使用。跨两种模式保持 Skills 一致。</p>
+
+<h2 id="patterns">Three build patterns</h2>
+
+<h3 id="pattern-a">Pattern A: Install → fetch → write artifact</h3>
+<p>从托管 Shell 获益的最简单方式：安装依赖、获取外部数据、生成具体交付物。</p>
+
+<h3 id="pattern-b">Pattern B: Skills + shell for repeatable workflows</h3>
+<p>将工作流编码在 Skill 中，挂载到 Shell 环境，让 Agent 遵循 Skill 确定性地生成制品。</p>
+
+<h3 id="pattern-c">Pattern C (advanced): Skills as enterprise workflow carriers</h3>
+<p>Salesforce 导向的 Skill 在 Glean 的评测中将准确率从 <strong>73% 提升至 85%</strong>，同时将首 token 时间减少了 <strong>18.1%</strong>。</p>
+
+<h2 id="summary">Build once, run anywhere</h2>
+<ul>
+<li>用 Skills 编码"如何做"（程序、模板、护栏）</li>
+<li>用 Shell 执行"去做"（安装、运行、写入制品）</li>
+<li>用 Compaction 保持长任务连贯性</li>
+<li>快速迭代时在本地开始；需要可重复的隔离执行时迁移到托管容器</li>
+<li>用组织级和请求级白名单锁定网络访问</li>
+</ul>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#mental-model">Mental Model</a><a class="lv2" href="#tips">Tips and Tricks</a><a class="lv2" href="#patterns">Three Build Patterns</a><a class="lv2" href="#summary">Build Once, Run Anywhere</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-shell-skills-compaction-agents";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用沙箱 Agent 迁移遗留代码库 — KB LLM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;
+  --ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;
+  --accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;--code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+.anav{display:flex;justify-content:space-between;gap:14px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){.ahead h1{font-size:26px}.anav{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<nav class="abar">
+  <div class="abar-in">
+    <a class="back" href="../index.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      返回列表
+    </a>
+    <span class="spacer"></span>
+    <button class="btn" id="read-btn" onclick="toggleRead()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5l-8 8-3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      标为已读
+    </button>
+  </div>
+</nav>
+
+<div class="alayout">
+  <article class="article">
+    <header class="ahead">
+      <span class="badge" style="background:#0A4A23">Codex</span>
+      <h1>使用沙箱 Agent 迁移遗留代码库</h1>
+      <div class="m">
+        <span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          2026-04-07
+        </span>
+        <span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          约 12 分钟
+        </span>
+        <span class="tag">Agent</span>
+        <span class="tag">Sandbox</span>
+        <span class="tag">Code Migration</span>
+      </div>
+    </header>
+
+    <div class="summary-card">
+      <div class="sc-row">
+        <div class="sc-block">
+          <div class="sc-label">摘要</div>
+          <div class="sc-text">本教程介绍如何使用 Agents SDK 和沙箱技术迁移遗留代码库。核心模式是"沙箱即工具"：编排层运行在可信主机进程中，shell命令和文件编辑在隔离的沙箱中执行。支持 Docker、E2B、Cloudflare 等多种沙箱后端，可无缝切换而无需修改 Agent 代码。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+<p style="margin:0 0 1.5rem;padding:.6rem 1rem;background:rgba(217,119,87,.08);border-left:3px solid #D97757;border-radius:0 6px 6px 0;font-size:.9rem">原文链接：<a href="https://cookbook.openai.com/examples/agents_sdk/sandboxed-code-migration/sandboxed_code_migration_agent" target="_blank" rel="noopener" style="color:#D97757;word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/sandboxed-code-migration/sandboxed_code_migration_agent</a></p><h2 id="overview">概述</h2>
+<p>代码现代化是一项持续的工作。过时的依赖、安全风险、合规压力、遗留模式会在大型代码库中不断累积，一次性提交的大规模迁移PR不仅难以审核，合并风险也很高。</p>
+<p>代码迁移Agent应当在受控环境中运行，每次只处理一个范围明确的任务：检查相关仓库、编辑文件、运行检查、返回补丁。</p>
+<p>本教程使用 <strong>Agents SDK</strong>，将执行编排放在可信的主机进程中，而shell命令和文件编辑则在隔离的执行环境中运行。这种分离设计让主机编排可以使用密钥、工具、外部服务，同时只向沙箱提供当前任务所需的文件和命令。</p>
+<p>完成本教程后，你将能够：</p>
+<ul>
+<li>让Agent编排层运行在执行环境之外，执行环境仅负责运行shell命令和文件编辑</li>
+<li>将现代化工作拆分为适合任务粒度的仓库分片</li>
+<li>通过测试、检查、产物和审计日志验证每个分片</li>
+<li>无需重写Agent即可切换沙箱提供商</li>
+</ul>
+<h2 id="architecture">架构设计：沙箱即工具</h2>
+<p>核心模式：<strong>可信主机进程</strong>负责Agents SDK编排层、工具、MCP服务器、凭证、策略、审计工作；<strong>执行环境</strong>仅接收当前任务的范围化工作区，以及运行命令和编辑文件所需的沙箱能力。</p>
+<p>在本模式的流程中，沙箱是编排层在Agent需要文件系统、终端命令、测试运行或补丁时调用的工具，更完整的Agent栈都留在编排层一侧。</p>
+<h3 id="flow">整体流程</h3>
+<ol>
+<li>你的应用收到迁移请求，将其拆分为任务粒度的仓库分片</li>
+<li>对每个任务，主机侧的Agents SDK编排层启动一个Agent，创建一个全新的沙箱</li>
+<li>编排层将该任务的仓库和迁移说明暂存到沙箱中</li>
+<li>Agent使用沙箱工具检查文件、编辑代码、运行测试</li>
+<li>主机接收任务的报告和补丁，写入审计日志，删除沙箱，继续处理下一个任务</li>
+</ol>
+<h2 id="prerequisites">前置要求</h2>
+<ul>
+<li>Python 3.10+</li>
+<li>本地运行的Docker（用于Docker沙箱示例）</li>
+<li>OpenAI API密钥，导出为 <code>OPENAI_API_KEY</code> 环境变量</li>
+<li>支持沙箱的OpenAI Agents SDK</li>
+<li>可选：托管沙箱提供商凭证，例如E2B的 <code>E2B_API_KEY</code></li>
+</ul>
+<h2 id="step1">步骤1：定义迁移任务</h2>
+<p>本教程在 <code>repo_fixtures/</code> 目录下包含两个小型示例仓库。任务列表将每个迁移分片指向本地仓库：</p>
+<pre><code class="language-python">@dataclass(frozen=True)
+class MigrationTask:
+    name: str
+    repo_path: Path
+
+    @property
+    def migration_brief_path(self) -> Path:
+        return self.repo_path / "MIGRATION.md"
+
+
+DEFAULT_MIGRATION_TASKS = (
+    MigrationTask(
+        name="support_reply_service",
+        repo_path=EXAMPLE_ROOT / "repo_fixtures" / "support_reply_service",
+    ),
+    MigrationTask(
+        name="case_summary_service",
+        repo_path=EXAMPLE_ROOT / "repo_fixtures" / "case_summary_service",
+    ),
+)</code></pre>
+<p>适配你自己的代码库时，只需替换任务的 <code>repo_path</code>，编辑对应的 <code>MIGRATION.md</code> 即可，通用的运行提示词可以保持不变。</p>
+<h2 id="step2">步骤2：在Agent编辑前验证基线</h2>
+<p>在Agent修改仓库前，先自己运行相同的测试。Agent会在修改任何文件前，在该任务的沙箱内运行这个基线测试命令：</p>
+<pre><code class="language-python">baseline = subprocess.run(
+    [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-t", "."],
+    cwd=task.repo_path,
+    text=True,
+    capture_output=True,
+    check=False,
+)
+assert baseline.returncode == 0</code></pre>
+<h2 id="step3">步骤3：暂存沙箱工作区</h2>
+<p>清单是沙箱的边界，它告诉沙箱客户端哪些主机文件需要暂存，以及它们在执行环境中的路径。对于真实的迁移场景，只暂存目标检出代码、任务说明和该次运行所需的文件，将凭证、客户存储、内存保留在主机编排层中。</p>
+<pre><code class="language-python">def build_manifest(task: MigrationTask | None = None) -> Manifest:
+    task = task or DEFAULT_MIGRATION_TASKS[0]
+    return Manifest(
+        root="/workspace",
+        entries={
+            "migration_agent/AGENTS.md": LocalFile(
+                src=EXAMPLE_ROOT / "migration_agent" / "AGENTS.md"
+            ),
+            "repo": LocalDir(src=task.repo_path),
+        },
+    )</code></pre>
+<h2 id="step4">步骤4：定义沙箱Agent</h2>
+<p>Agent获得两个沙箱能力：<code>Shell()</code>（用于终端操作）和 <code>ApplyPatch()</code>（用于文件编辑）。定义中其余部分都保留在主机编排层：指令、模型设置、MCP服务器、类型化输出契约。</p>
+<pre><code class="language-python">def build_agent(*, model: str, manifest: Manifest, mcp_servers=None) -> SandboxAgent:
+    return SandboxAgent(
+        name="Code Migration Agent",
+        model=model,
+        instructions=AGENT_INSTRUCTIONS,
+        developer_instructions=DEVELOPER_INSTRUCTIONS,
+        default_manifest=manifest,
+        capabilities=[Shell(), ApplyPatch()],
+        mcp_servers=list(mcp_servers or []),
+        model_settings=ModelSettings(tool_choice="required"),
+        output_type=MigrationResult,
+    )
+
+agent = build_agent(model="gpt-5.4", manifest=manifest)</code></pre>
+<h2 id="step5">步骤5：运行迁移任务流</h2>
+<p>完整的运行是主机侧对迁移任务的循环：对每个任务，编排层构建清单和Agent，创建一个全新的沙箱会话，将会话传入 <code>Runner.run_streamed</code>。任务完成后，主机将返回的补丁包写入 <code>outputs/&lt;task_name&gt;/</code> 目录，删除沙箱，再开始下一个任务。</p>
+<h2 id="step7">步骤7：切换沙箱提供商</h2>
+<p>本部分展示三种沙箱后端，模式完全相同：修改沙箱客户端，无需修改Agent。</p>
+<h3 id="docker">Docker（本地运行）</h3>
+<pre><code class="language-python">client = DockerSandboxClient(docker.from_env())
+session = await client.create(
+    manifest=manifest,
+    options=DockerSandboxClientOptions(image="python:3.14-slim"),
+)</code></pre>
+<h3 id="e2b">E2B（托管沙箱）</h3>
+<pre><code class="language-bash">export E2B_API_KEY="..."
+python src/run_migration_agent.py --backend e2b</code></pre>
+<h3 id="cloudflare">Cloudflare（托管Worker沙箱）</h3>
+<pre><code class="language-bash">export CLOUDFLARE_SANDBOX_WORKER_URL="https://..."
+python src/run_migration_agent.py --backend cloudflare</code></pre>
+<h2 id="production">生产环境注意事项</h2>
+<table>
+<thead><tr><th>边界</th><th>生产模式</th></tr></thead>
+<tbody>
+<tr><td>编排层</td><td>将编排、工具、凭证、策略、审计保留在主机中</td></tr>
+<tr><td>沙箱</td><td>仅暂存任务工作区，在其中运行命令和编辑，任务完成后销毁</td></tr>
+<tr><td>数据访问</td><td>通过主机路由客户存储和网络访问，不要直接暴露给沙箱</td></tr>
+<tr><td>输出</td><td>在主机中验证沙箱输出，再展示给用户或应用变更</td></tr>
+</tbody>
+</table>
+<h2 id="next-steps">后续步骤</h2>
+<p>适配本模式时，将 <code>migration_tasks</code> 替换为你的仓库、包或服务，为每个任务分配一个检出代码和一个 <code>MIGRATION.md</code>，保持验证命令明确，返回补丁供审核而不是直接自动应用主机侧变更。添加确定性评估，检查迁移契约是否满足，而不仅仅是测试套件是否通过。</p>
+    </div>
+
+    <nav class="anav">
+      <a href="../index.html">
+        <div class="lbl">返回</div>
+        <div class="ti">文章列表</div>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc">
+    <div class="t">目录</div>
+    <a class="lv2" href="#overview">概述</a><a class="lv2" href="#architecture">架构设计：沙箱即工具</a><a class="lv2" href="#prerequisites">前置要求</a><a class="lv2" href="#step1">步骤1：定义迁移任务</a><a class="lv2" href="#step2">步骤2：验证基线</a><a class="lv2" href="#step3">步骤3：暂存沙箱工作区</a><a class="lv2" href="#step4">步骤4：定义沙箱Agent</a><a class="lv2" href="#step5">步骤5：运行迁移任务流</a><a class="lv2" href="#step7">步骤7：切换沙箱提供商</a><a class="lv2" href="#production">生产环境注意事项</a><a class="lv2" href="#next-steps">后续步骤</a>
+  </aside>
+</div>
+
+<footer class="foot">KB LLM &nbsp;·&nbsp; 个人知识库 &nbsp;·&nbsp; 持续更新中</footer>
+
+<script>
+(function(){
+  var ID = "openai-migrate-legacy-codebase-sandbox-agents";
+  var btn = document.getElementById("read-btn");
+  var key = "read:" + ID;
+  function setDone(){
+    btn.textContent = "已读";
+    btn.classList.add("done");
+  }
+  if(localStorage.getItem(key)) setDone();
+  window.toggleRead = function(){
+    if(localStorage.getItem(key)){
+      localStorage.removeItem(key);
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5l-8 8-3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 标为已读';
+      btn.classList.remove("done");
+    } else {
+      localStorage.setItem(key, "1");
+      setDone();
+    }
+  };
+})();
+</script>
+</body>
+</html>

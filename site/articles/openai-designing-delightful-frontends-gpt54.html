@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Designing delightful frontends with GPT-5.4 · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#F0EEE6;
+  --surface:#FAFAF7;
+  --surface-2:#E8E5DB;
+  --ink:#191919;
+  --ink-2:#3D3B33;
+  --muted:#6B6B63;
+  --line:#DBD7CC;
+  --line-2:#C8C4B8;
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m .tag{font-size:11px}
+
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+@media(max-width:480px){.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#1A73E8">OpenAI</span>
+          <h1>Designing delightful frontends with GPT-5.4</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-03-20</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Frontend</span><span class="tag">GPT-5.4</span><span class="tag">Design</span></div>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">GPT-5.4 在前端设计能力上有显著提升，重点包括更强的图像理解、更完整的功能实现、以及原生 Computer Use 支持。本文提供了一套实用技巧，帮助开发者通过明确设计约束、提供视觉参考、结构化叙事等方法，引导模型输出高质量、生产就绪的前端界面。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4</a></div></div></div></div></div></div>
+        <div class="prose">
+<p>GPT-5.4 比前代模型具备更强的前端开发能力——能生成更具视觉吸引力和更宏大的前端界面。该模型在 UI 能力和图像使用方面经过专项训练。在正确引导下，它可以生成包含细腻交互和精美视觉的生产就绪前端。</p>
+
+<p>优秀的设计需要在克制与创新之间取得平衡。当提示词不够具体时，模型往往会退回到训练数据中高频出现的模式——这些模式可能是验证过的惯例，但也可能是需要避免的习惯性做法，导致结果偏向通用结构和薄弱的视觉层次。</p>
+
+<h2 id="model-improvements">Model Improvements</h2>
+
+<p>GPT-5.4 在前端工作上有三项实质性提升：</p>
+<ul>
+<li><strong>更强的图像理解</strong>，贯穿整个设计流程</li>
+<li><strong>功能更完整</strong>的应用和网站</li>
+<li><strong>更好地使用工具</strong>来检查、测试和验证自身工作</li>
+</ul>
+
+<h3 id="image-understanding">Image understanding and tool use</h3>
+
+<p>GPT-5.4 经过训练可以原生使用图像搜索和图像生成工具，将视觉推理直接融入设计过程。为获得最佳效果，建议先让模型生成情绪板或多个视觉选项，再选择最终素材。可以用如下系统提示引导：</p>
+
+<pre><code>Default to using any uploaded/pre-generated images. Otherwise use the image generation tool to create visually stunning image artifacts. Do not reference or link to web images unless the user explicitly asks for them.</code></pre>
+
+<h3 id="functionality">Functionality improvements</h3>
+
+<p>模型被训练为能开发更完整、功能更健全的应用。它在长任务上的可靠性更强——以前认为不可能的游戏和复杂用户体验，现在一两轮对话就能实现。</p>
+
+<h3 id="computer-use">Computer Use and Verification</h3>
+
+<p>GPT-5.4 是首个经过 Computer Use 训练的主线模型。结合 Playwright 等工具，它可以迭代检查自身工作、验证行为、精化实现，支持更长、更自主的开发工作流。</p>
+
+<p>Playwright 特别适合前端开发：模型可检查渲染页面、测试多种视口、导航应用流程、检测状态或导航问题，还能通过视觉方式验证工作结果是否匹配参考 UI。</p>
+
+<h2 id="practical-tips">Practical tips quickstart</h2>
+
+<p>如果只采用本文的几个实践，优先选这四条：</p>
+<ol>
+<li>从低推理级别开始</li>
+<li>提前定义设计系统和约束（字体、配色、布局）</li>
+<li>提供视觉参考或情绪板（附截图）作为视觉护栏</li>
+<li>提前定义叙事或内容策略，引导模型的内容创作</li>
+</ol>
+
+<p>以下是一个入门提示词框架（节选关键规则）：</p>
+
+<pre><code>## Frontend tasks
+When doing frontend design tasks, avoid generic, overbuilt layouts.
+
+Use these hard rules:
+- One composition: The first viewport must read as one composition.
+- Brand first: The brand or product name must be a hero-level signal.
+- Typography: Use expressive, purposeful fonts; avoid default stacks.
+- Background: Use gradients, images, or subtle patterns to build atmosphere.
+- Full-bleed hero: The hero image should be a dominant edge-to-edge visual plane.
+- Cards: Default: no cards. Never use cards in the hero.
+- One job per section: Each section should have one purpose, one headline.
+- Use motion to create presence and hierarchy, not noise.</code></pre>
+
+<h2 id="techniques">Techniques for better designs</h2>
+
+<h3 id="design-principles">Start with design principles</h3>
+
+<p>定义约束：一个 H1 标题、不超过六个版块、最多两种字体、一种强调色、一个首屏 CTA。</p>
+
+<h3 id="visual-references">Provide visual references</h3>
+
+<p>参考截图或情绪板帮助模型推断版面节奏、字体比例、间距系统和图像处理方式。</p>
+
+<h3 id="narrative">Structure the page as a narrative</h3>
+
+<p>典型营销页结构：</p>
+<ol>
+<li>Hero — 建立品牌认知和承诺</li>
+<li>支撑图像 — 展示场景或环境</li>
+<li>产品细节 — 解释产品价值</li>
+<li>社会证明 — 建立可信度</li>
+<li>最终 CTA — 将兴趣转化为行动</li>
+</ol>
+
+<h3 id="design-system">Instruct design system adherence</h3>
+
+<p>鼓励模型在早期建立清晰的设计系统。定义核心设计 token（如 <code>background</code>、<code>surface</code>、<code>primary text</code>、<code>accent</code>）以及字体角色（<code>display</code>、<code>headline</code>、<code>body</code>、<code>caption</code>）。对于大多数 Web 项目，<strong>React + Tailwind</strong> 是良好的起点。</p>
+
+<h3 id="reasoning-level">Dial back the reasoning</h3>
+
+<p>对于较简单的网站，更多推理并不总是更好。实践中，<strong>低和中等推理级别往往能带来更强的前端结果</strong>，帮助模型保持快速专注，同时为更有野心的设计留有提升空间。</p>
+
+<h3 id="real-content">Ground the design in real content</h3>
+
+<p>向模型提供真实的文案、产品背景或明确的项目目标，是改善前端结果最简单的方式之一。</p>
+
+<h2 id="frontend-skill">Bringing it all together with the Frontend Skill</h2>
+
+<p>为帮助开发者更好地使用 GPT-5.4 进行前端工作，OpenAI 提供了专用的 <code>frontend-skill</code>，为模型提供结构、品味和交互模式方面的更强引导。该 Skill 的核心原则：</p>
+<ul>
+<li><strong>从构图开始，而非组件</strong></li>
+<li><strong>优先使用全出血 Hero 或全画布视觉锚点</strong></li>
+<li><strong>品牌或产品名称是最突出的文字</strong></li>
+<li><strong>默认无卡片布局</strong>，使用版块、列、分割线和媒体块代替</li>
+<li><strong>每个视口像海报，而非文档</strong></li>
+<li><strong>至少 2-3 个有意图的动效</strong>用于视觉主导的工作</li>
+</ul>
+
+<p>安装方式：<code>$skill-installer frontend-skill</code></p>
+
+<h2 id="key-takeaway">Key Takeaway</h2>
+
+<p>当提示词提供清晰的设计约束、视觉参考、结构化叙事和定义好的设计系统时，GPT-5.4 可以生成高质量的前端界面。如果你想展示完全由 GPT-5.4 和 Codex 等编程 Agent 生成的项目，可以提交到 OpenAI 的展示画廊。</p>
+        </div>
+        <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#model-improvements">Model Improvements</a><a class="lv2" href="#practical-tips">Practical Tips Quickstart</a><a class="lv2" href="#techniques">Techniques for Better Designs</a><a class="lv2" href="#frontend-skill">Frontend Skill</a><a class="lv2" href="#key-takeaway">Key Takeaway</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="openai-designing-delightful-frontends-gpt54";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>
