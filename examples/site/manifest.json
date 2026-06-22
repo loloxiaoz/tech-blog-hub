@@ -1,0 +1,54 @@
+[
+  {
+    "id": "02-context-engineering",
+    "title": "面向 AI 智能体的有效上下文工程",
+    "org": "Anthropic",
+    "date": "2025-09-29",
+    "tags": [
+      "上下文工程",
+      "Agent",
+      "长周期"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+  },
+  {
+    "id": "03-qwen3-overview",
+    "title": "Qwen3 技术概览：混合推理与多尺寸开源",
+    "org": "阿里通义千问 Qwen",
+    "date": "2025-04-29",
+    "tags": [
+      "Qwen",
+      "开源模型",
+      "混合推理"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen3/"
+  },
+  {
+    "id": "04-deepseek-r1",
+    "title": "DeepSeek-R1：用强化学习激发推理能力",
+    "org": "DeepSeek",
+    "date": "2025-01-20",
+    "tags": [
+      "DeepSeek",
+      "强化学习",
+      "推理模型"
+    ],
+    "minutes": 1,
+    "source_url": "https://api-docs.deepseek.com/news/news250120"
+  },
+  {
+    "id": "01-building-effective-agents",
+    "title": "构建高效的智能体（Building Effective Agents）",
+    "org": "Anthropic",
+    "date": "2024-12-19",
+    "tags": [
+      "Agent",
+      "工作流",
+      "工程实践"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/engineering/building-effective-agents"
+  }
+]
