@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MiniMax-01 · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ─────────────────────────────────────────────
+   Anthropic Brand Design Tokens
+   Warm Minimalism: parchment bg + clay orange accent
+   ───────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --bg:#F0EEE6;          /* warm parchment — Anthropic page background */
+  --surface:#FAFAF7;     /* off-white card surface */
+  --surface-2:#E8E5DB;   /* subtle warm fill, tags, code bg */
+  --ink:#191919;         /* near-black primary text */
+  --ink-2:#3D3B33;       /* body text, slightly warm */
+  --muted:#6B6B63;       /* secondary / caption text */
+  --line:#DBD7CC;        /* dividers & borders */
+  --line-2:#C8C4B8;      /* stronger divider on hover */
+
+  /* Accent — Anthropic clay orange */
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+
+  /* Semantic */
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+
+  /* Elevation */
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+
+  /* Shape */
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+
+  /* Typography */
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── Layout ── */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ── Hero — dot-grid texture background ── */
+.hero{background:var(--bg);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(25,20,10,.12) 1px,transparent 1px);
+  background-size:18px 18px;opacity:.45}
+.hero-in{max-width:1200px;margin:0 auto;position:relative;z-index:1;
+  padding:clamp(48px,7vw,84px) clamp(16px,4vw,32px) clamp(36px,5vw,60px)}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:none;width:28px;height:2px;background:var(--accent);border-radius:2px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(34px,5.5vw,58px);
+  font-weight:900;letter-spacing:-.03em;line-height:1.08;color:var(--ink)}
+.hero h1 .dot{color:var(--accent)}
+.hero-desc{color:var(--muted);margin-top:18px;font-size:clamp(14px,2vw,16px);
+  max-width:560px;line-height:1.8;font-weight:300}
+.stats{display:flex;gap:clamp(24px,5vw,48px);margin-top:clamp(28px,4vw,40px);flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:3px}
+.stat b{font-family:var(--font-serif);font-size:clamp(24px,3.5vw,34px);
+  font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.stat span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── Sticky controls ── */
+.controls{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 0}
+.ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:380px}
+.search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;display:flex}
+.search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-sans);
+  background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search::placeholder{color:var(--muted)}
+/* 两行筛选区 */
+.filter-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+/* label 固定左侧，chips 独立换行 */
+.filter-row{display:flex;align-items:flex-start;gap:8px}
+.filter-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;min-width:52px;padding-top:7px;flex-shrink:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1}
+.chip{padding:5px 13px;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+  font-size:12.5px;font-weight:600;font-family:var(--font-sans);letter-spacing:.01em;
+  color:var(--muted);background:var(--surface);cursor:pointer;
+  transition:all .15s ease;white-space:nowrap;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip.active{background:var(--ink);color:#F0EEE6;border-color:var(--ink)}
+/* 话题类 chip 用稍淡的样式区分 */
+.chip.topic{border-style:dashed}
+.chip.topic.active{background:var(--accent);border-color:var(--accent);border-style:solid}
+
+/* ── Card grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:clamp(12px,2vw,18px);padding:clamp(20px,3vw,32px) 0 clamp(60px,8vw,96px)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;position:relative;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;cursor:pointer}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.card-date{font-size:11.5px;color:var(--muted);font-weight:400}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.4;margin-bottom:10px;letter-spacing:-.01em}
+.card h3 a{color:var(--ink);transition:color .15s}
+.card h3 a:hover{color:var(--accent)}
+/* 整张卡片可点击：伪元素覆盖整个 card（card 已有 position:relative）*/
+.card h3 a::after{content:'';position:absolute;inset:0;z-index:1}
+/* 卡片内其他链接（标签、徽章等）需高于覆盖层才能独立点击 */
+.card .badge,.card .tags,.card .rt{position:relative;z-index:2}
+.card .sum{font-size:13px;color:var(--muted);line-height:1.75;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;justify-content:space-between;align-items:center;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);gap:8px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.rt{font-size:11.5px;color:var(--muted);white-space:nowrap;
+  display:flex;align-items:center;gap:4px;flex-shrink:0}
+.readdot{position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;
+  background:var(--success);display:none;box-shadow:0 0 0 2.5px rgba(61,139,94,.2)}
+.card.read .readdot{display:block}
+.card.read{opacity:.6}
+.empty{text-align:center;color:var(--muted);padding:72px 0;font-size:15px}
+.empty strong{display:block;font-family:var(--font-serif);font-size:28px;
+  font-weight:700;color:var(--line-2);margin-bottom:8px}
+
+/* ── Article page navbar ── */
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+/* ── Article layout ── */
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m a{color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ahead .m a:hover{color:var(--accent-hover)}
+.ahead .m .tag{font-size:11px}
+
+/* ── Prose ── */
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+/* ── TOC ── */
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+/* ── Summary card ── */
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.summary-card .sc-divider{width:1px;background:rgba(217,119,87,.25);flex-shrink:0;align-self:stretch}
+/* ── Source link button ── */
+.source-btn{display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+  letter-spacing:.02em;transition:background .15s,transform .15s;
+  margin-top:16px;text-decoration:none}
+.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}
+.source-btn svg{flex-shrink:0}
+/* ── Prev/Next nav ── */
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+/* ── Footer ── */
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Responsive ── */
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+  .ctrl-row{flex-direction:column;align-items:stretch}
+  .search-wrap{max-width:100%}
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-label{display:none}
+  .chips{flex-wrap:nowrap}
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+@media(max-width:480px){.stats{gap:20px}.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#E1341E">MiniMax</span>
+          <h1>MiniMax-01</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-07-07</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 14 分钟</span><span class="tag">MiniMax</span><span class="tag">开源</span><span class="tag">技术报告</span></div>
+          <a class="source-btn" href="https://github.com/MiniMax-AI/MiniMax-01" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">English Summary</div><div class="sc-text">We are delighted to introduce two remarkable models, <strong>MiniMax-Text-01</strong> and <strong>MiniMax-VL-01</strong>.</div></div></div></div>
+        <div class="prose"><source srcset="figures/MiniMaxLogo-Dark.png" media="(prefers-color-scheme: dark)">
+      <img src="https://cdn.jsdelivr.net/gh/MiniMax-AI/MiniMax-01@main/figures/MiniMaxLogo-Light.png" width="60%" alt="MiniMax" onerror="this.style.display='none'">
+    </source>
+  <a href="https://www.minimax.io" target="_blank" style="margin: 2px; color: var(--fgColor-default);">
+    <img alt="Homepage" src="https://img.shields.io/badge/_Homepage-MiniMax-FF4040?style=flat-square&labelColor=2C3E50&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNDkwLjE2IDQxMS43Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjMzLjQ1LDQwLjgxYTE3LjU1LDE3LjU1LDAsMSwwLTM1LjEsMFYzMzEuNTZhNDAuODIsNDAuODIsMCwwLDEtODEuNjMsMFYxNDVhMTcuNTUsMTcuNTUsMCwxLDAtMzUuMDksMHY3OS4wNmE0MC44Miw0MC44MiwwLDAsMS04MS42MywwVjE5NS40MmExMS42MywxMS42MywwLDAsMSwyMy4yNiwwdjI4LjY2YTE3LjU1LDE3LjU1LDAsMCwwLDM1LjEsMFYxNDVBNDAuODIsNDAuODIsMCwwLDEsMTQwLDE0NVYzMzEuNTZhMTcuNTUsMTcuNTUsMCwwLDAsMzUuMSwwVjIxNy41aDBWNDAuODFhNDAuODEsNDAuODEsMCwxLDEsODEuNjIsMFYyODEuNTZhMTEuNjMsMTEuNjMsMCwxLDEtMjMuMjYsMFptMjE1LjksNjMuNEE0MC44Niw0MC44NiwwLDAsMCw0MDguNTMsMTQ1VjMwMC44NWExNy41NSwxNy41NSwwLDAsMS0zNS4wOSwwdi0yNjBhNDAuODIsNDAuODIsMCwwLDAtODEuNjMsMFYzNzAuODlhMTcuNTUsMTcuNTUsMCwwLDEtMzUuMSwwVjMzMGExMS42MywxMS42MywwLDEsMC0yMy4yNiwwdjQwLjg2YTQwLjgxLDQwLjgxLDAsMCwwLDgxLjYyLDBWNDAuODFhMTcuNTUsMTcuNTUsMCwwLDEsMzUuMSwwdjI2MGE0MC44Miw0MC44MiwwLDAsMCw4MS42MywwVjE0NWExNy41NSwxNy41NSwwLDEsMSwzNS4xLDBWMjgxLjU2YTExLjYzLDExLjYzLDAsMCwwLDIzLjI2LDBWMTQ1QTQwLjg1LDQwLjg1LDAsMCwwLDQ0OS4zNSwxMDQuMjFaIi8+PC9zdmc+&logoWidth=20" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+  <a href="https://arxiv.org/abs/2501.08313" target="_blank" style="margin: 2px;">
+    <img alt="Paper" src="https://img.shields.io/badge/📖_Paper-MiniMax--01-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+   <a href="https://chat.minimax.io/" target="_blank" style="margin: 2px;">
+    <img alt="Chat" src="https://img.shields.io/badge/_MiniMax_Chat-FF4040?style=flat-square&labelColor=2C3E50&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNDkwLjE2IDQxMS43Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjMzLjQ1LDQwLjgxYTE3LjU1LDE3LjU1LDAsMSwwLTM1LjEsMFYzMzEuNTZhNDAuODIsNDAuODIsMCwwLDEtODEuNjMsMFYxNDVhMTcuNTUsMTcuNTUsMCwxLDAtMzUuMDksMHY3OS4wNmE0MC44Miw0MC44MiwwLDAsMS04MS42MywwVjE5NS40MmExMS42MywxMS42MywwLDAsMSwyMy4yNiwwdjI4LjY2YTE3LjU1LDE3LjU1LDAsMCwwLDM1LjEsMFYxNDVBNDAuODIsNDAuODIsMCwwLDEsMTQwLDE0NVYzMzEuNTZhMTcuNTUsMTcuNTUsMCwwLDAsMzUuMSwwVjIxNy41aDBWNDAuODFhNDAuODEsNDAuODEsMCwxLDEsODEuNjIsMFYyODEuNTZhMTEuNjMsMTEuNjMsMCwxLDEtMjMuMjYsMFptMjE1LjksNjMuNEE0MC44Niw0MC44NiwwLDAsMCw0MDguNTMsMTQ1VjMwMC44NWExNy41NSwxNy41NSwwLDAsMS0zNS4wOSwwdi0yNjBhNDAuODIsNDAuODIsMCwwLDAtODEuNjMsMFYzNzAuODlhMTcuNTUsMTcuNTUsMCwwLDEtMzUuMSwwVjMzMGExMS42MywxMS42MywwLDEsMC0yMy4yNiwwdjQwLjg2YTQwLjgxLDQwLjgxLDAsMCwwLDgxLjYyLDBWNDAuODFhMTcuNTUsMTcuNTUsMCwwLDEsMzUuMSwwdjI2MGE0MC44Miw0MC44MiwwLDAsMCw4MS42MywwVjE0NWExNy41NSwxNy41NSwwLDEsMSwzNS4xLDBWMjgxLjU2YTExLjYzLDExLjYzLDAsMCwwLDIzLjI2LDBWMTQ1QTQwLjg1LDQwLjg1LDAsMCwwLDQ0OS4zNSwxMDQuMjFaIi8+PC9zdmc+&logoWidth=20" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+  <a href="https://www.minimax.io/platform" style="margin: 2px;">
+    <img alt="API" src="https://img.shields.io/badge/⚡_API-Platform-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+  <a href="https://github.com/MiniMax-AI/MiniMax-MCP" style="margin: 2px;">
+    <img alt="MCP" src="https://img.shields.io/badge/🚀_MCP-MiniMax_MCP-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a> 
+  <a href="https://huggingface.co/MiniMaxAI" target="_blank" style="margin: 2px;">
+    <img alt="Hugging Face" src="https://img.shields.io/badge/🤗_Hugging_Face-MiniMax-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+  <a href="https://github.com/MiniMax-AI/MiniMax-AI.github.io/blob/main/images/wechat-qrcode.jpeg" target="_blank" style="margin: 2px;">
+    <img alt="WeChat" src="https://img.shields.io/badge/_WeChat-MiniMax-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+  <a href="https://github.com/MiniMax-AI/MiniMax-01/blob/main/LICENSE-MODEL" style="margin: 2px;">
+    <img alt="Model License" src="https://img.shields.io/badge/_Model_License-Model_Agreement-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+   <a href="https://github.com/MiniMax-AI/MiniMax-01/blob/main/LICENSE-CODE" style="margin: 2px;">
+    <img alt="Code License" src="https://img.shields.io/badge/_Code_License-MIT-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;" onerror="this.style.display='none'"/>
+  </a>
+<h1 id="minimax-01">MiniMax-01</h1>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>We are delighted to introduce two remarkable models, <strong>MiniMax-Text-01</strong> and <strong>MiniMax-VL-01</strong>. MiniMax-Text-01 is a powerful language model boasting 456 billion total parameters, with 45.9 billion activated per token. To unlock its long-context capabilities, it adopts a hybrid architecture integrating Lightning Attention, Softmax Attention, and Mixture-of-Experts (MoE). Leveraging advanced parallel strategies like Linear Attention Sequence Parallelism Plus (LASP+), varlen ring attention, and Expert Tensor Parallel (ETP), its training context length extends to 1 million tokens, and it can handle up to 4 million tokens during inference. Consequently, MiniMax-Text-01 showcases top-tier performance on various academic benchmarks. Building on MiniMax-Text-01&#x27;s prowess, we developed MiniMax-VL-01 for enhanced visual capabilities. It uses the &quot;ViT-MLP-LLM&quot; framework common in multimodal LLMs. It is initialized and trained using three key components: a 303-million-parameter Vision Transformer (ViT) for visual encoding, a randomly initialized two-layer MLP projector for image adaptation, and MiniMax-Text-01 as the base LLM. This model features a dynamic resolution mechanism. Input images are resized according to a pre-set grid, with resolutions ranging from 336×336 to 2016×2016, while maintaining a 336×336 thumbnail. The resized images are split into non - overlapping patches of the same size. These patches and the thumbnail are encoded separately and then combined to form a full image representation. As a result, MiniMax-VL-01 has achieved top-level performance on multimodal leaderboards, demonstrating its edge in complex multimodal tasks.   <img width="100%" src="https://cdn.jsdelivr.net/gh/MiniMax-AI/MiniMax-01@main/figures/TextBench.png" onerror="this.style.display='none'">   <img width="100%" src="https://cdn.jsdelivr.net/gh/MiniMax-AI/MiniMax-01@main/figures/VisionBench.png" onerror="this.style.display='none'"></p>
+<h2 id="2-model-architecture">2. Model Architecture</h2>
+<p>The architecture of MiniMax-Text-01 is briefly described as follows:</p>
+<ul><li>Total Parameters: 456B</li><li>Activated Parameters per Token: 45.9B</li><li>Number Layers: 80</li><li>Hybrid Attention: a softmax attention is positioned after every 7 lightning attention.</li><li>Number of attention heads: 64</li><li>Attention head dimension: 128</li><li>Mixture of Experts:</li><li>Number of experts: 32</li><li>Expert hidden dimension: 9216</li><li>Top-2 routing strategy</li><li>Positional Encoding: Rotary Position Embedding (RoPE) applied to half of the attention head dimension with a base frequency of 10,000,000</li><li>Hidden Size: 6144</li><li>Vocab Size: 200,064</li></ul>
+<p>For MiniMax-VL-01, the additional ViT architecture details is as follows:</p>
+<ul><li>Total Parameters: 303M</li><li>Number of layers: 24</li><li>Patch size: 14</li><li>Hidden size: 1024</li><li>FFN hidden size: 4096</li><li>Number of heads: 16</li><li>Attention head dimension: 64</li></ul>
+<h2 id="3-evaluation">3. Evaluation</h2>
+<h3 id="text-benchmarks">Text Benchmarks</h3>
+<h4 id="core-academic-benchmarks">Core Academic Benchmarks</h4>
+<table><thead><tr><th><strong>Tasks</strong></th><th><strong>GPT-4o (11-20)</strong></th><th><strong>Claude-3.5-Sonnet (10-22)</strong></th><th><strong>Gemini-1.5-Pro (002)</strong></th><th><strong>Gemini-2.0-Flash (exp)</strong></th><th><strong>Qwen2.5-72B-Inst.</strong></th><th><strong>DeepSeek-V3</strong></th><th><strong>Llama-3.1-405B-Inst.</strong></th><th><strong>MiniMax-Text-01</strong></th></tr></thead><tbody><tr><td><strong>General</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>MMLU<sup>*</sup></td><td>85.7</td><td>88.3</td><td>86.8</td><td>86.5</td><td>86.1</td><td>88.5</td><td><strong>88.6</strong></td><td>88.5</td></tr><tr><td>MMLU-Pro<sup>*</sup></td><td>74.4</td><td><strong>78.0</strong></td><td>75.8</td><td>76.4</td><td>71.1</td><td>75.9</td><td>73.3</td><td>75.7</td></tr><tr><td>SimpleQA</td><td><strong>39.0</strong></td><td>28.1</td><td>23.4</td><td>26.6</td><td>10.3</td><td>24.9</td><td>23.2</td><td>23.7</td></tr><tr><td>C-SimpleQA</td><td>64.6</td><td>56.8</td><td>59.4</td><td>63.3</td><td>52.2</td><td>64.8</td><td>54.7</td><td><strong>67.4</strong></td></tr><tr><td>IFEval _(avg)_</td><td>84.1</td><td><strong>90.1</strong></td><td>89.4</td><td>88.4</td><td>87.2</td><td>87.3</td><td>86.4</td><td>89.1</td></tr><tr><td>Arena-Hard</td><td><strong>92.4</strong></td><td>87.6</td><td>85.3</td><td>72.7</td><td>81.2</td><td>91.4</td><td>63.5</td><td>89.1</td></tr><tr><td><strong>Reasoning</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>GPQA<sup>*</sup> _(diamond)_</td><td>46.0</td><td><strong>65.0</strong></td><td>59.1</td><td>62.1</td><td>49.0</td><td>59.1</td><td>50.7</td><td>54.4</td></tr><tr><td>DROP<sup>*</sup> _(F1)_</td><td>89.2</td><td>88.8</td><td>89.2</td><td>89.3</td><td>85.0</td><td>91.0</td><td><strong>92.5</strong></td><td>87.8</td></tr><tr><td><strong>Mathematics</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>GSM8k<sup>*</sup></td><td>95.6</td><td><strong>96.9</strong></td><td>95.2</td><td>95.4</td><td>95.8</td><td>96.7</td><td>96.7</td><td>94.8</td></tr><tr><td>MATH<sup>*</sup></td><td>76.6</td><td>74.1</td><td><strong>84.6</strong></td><td>83.9</td><td>81.8</td><td><strong>84.6</strong></td><td>73.8</td><td>77.4</td></tr><tr><td><strong>Coding</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>MBPP +</td><td>76.2</td><td>75.1</td><td>75.4</td><td>75.9</td><td>77.0</td><td><strong>78.8</strong></td><td>73.0</td><td>71.7</td></tr><tr><td>HumanEval</td><td>90.2</td><td><strong>93.7</strong></td><td>86.6</td><td>89.6</td><td>86.6</td><td>92.1</td><td>89.0</td><td>86.9</td></tr></tbody></table>
+<sup>*</sup> Evaluated following a _0-shot CoT_ setting.
+<h4 id="long-benchmarks">Long Benchmarks</h4>
+<p><strong>4M Needle In A Haystack Test</strong>   <img width="90%" src="https://cdn.jsdelivr.net/gh/MiniMax-AI/MiniMax-01@main/figures/niah.png" onerror="this.style.display='none'"> <strong>Ruler</strong> | Model | 4k | 8k | 16k | 32k | 64k | 128k | 256k | 512k | 1M | |-------|----|----|-----|-----|-----|------|------|------|----| | <strong>GPT-4o (11-20)</strong> | <strong>0.970</strong> | 0.921 | 0.890 | 0.888 | 0.884 | - | - | - | - | | <strong>Claude-3.5-Sonnet (10-22)</strong> | 0.965 | 0.960 | 0.957 | 0.950 | <strong>0.952</strong> | 0.938 | - | - | - | | <strong>Gemini-1.5-Pro (002)</strong> | 0.962 | 0.960 | <strong>0.960</strong> | <strong>0.958</strong> | 0.938 | 0.917 | 0.916 | 0.861 | 0.850 | | <strong>Gemini-2.0-Flash (exp)</strong> | 0.960 | 0.960 | 0.951 | 0.957 | 0.937 | 0.860 | 0.797 | 0.709 | - | | <strong>MiniMax-Text-01</strong> | 0.963 | <strong>0.961</strong> | 0.953 | 0.954 | 0.943 | <strong>0.947</strong> | <strong>0.945</strong> | <strong>0.928</strong> | <strong>0.910</strong> |</p>
+<p><strong>LongBench v2</strong> | <strong>Model</strong>                  | <strong>overall</strong> | <strong>easy</strong> | <strong>hard</strong> | <strong>short</strong> | <strong>medium</strong> | <strong>long</strong> | |----------------------------|-------------|----------|----------|------------|------------|----------| | Human                      | 53.7        | 100.0    | 25.1     | 47.2       | 59.1       | 53.7     | | <strong>w/ CoT</strong>                 |             |          |          |            |            |          | | GPT-4o (11-20)             | 51.4        | 54.2     | 49.7     | 59.6       | 48.6       | 43.5     | | Claude-3.5-Sonnet (10-22)  | 46.7        | 55.2     | 41.5     | 53.9       | 41.9       | 44.4     | | Deepseek-V3                | -           | -        | -        | -          | -          | -        | | Qwen2.5-72B-Inst.          | 43.5        | 47.9     | 40.8     | 48.9       | 40.9       | 39.8     | | <strong>MiniMax-Text-01</strong>        | <strong>56.5</strong>    | <strong>66.1</strong> | <strong>50.5</strong> | <strong>61.7</strong>   | <strong>56.7</strong>   | <strong>47.2</strong> | | <strong>w/o CoT</strong>                |             |          |          |            |            |          | | GPT-4o (11-20)             | 50.1        | 57.4     | 45.6     | 53.3       | 52.4       | 40.2     | | Claude-3.5-Sonnet (10-22)  | 41.0        | 46.9     | 37.3     | 46.1       | 38.6       | 37.0     | | Deepseek-V3                | 48.7        | -        | -        | -          | -          | -        | | Qwen2.5-72B-Inst.          | 42.1        | 42.7     | 41.8     | 45.6       | 38.1       | <strong>44.4</strong> | | <strong>MiniMax-Text-01</strong>        | <strong>52.9</strong>    | <strong>60.9</strong> | <strong>47.9</strong> | <strong>58.9</strong>   | <strong>52.6</strong>   | 43.5     |</p>
+<p><strong>MTOB</strong> | <strong>Context Type</strong> | <strong>no context</strong> | <strong>half book</strong> | <strong>full book</strong> | <strong>Δ half book</strong> | <strong>Δ full book</strong> | |------------------|----------------|---------------|---------------|------------------|-----------------| | <strong>eng → kalam (ChrF)</strong> | | | | | | | GPT-4o (11-20) | 9.90 | <strong>54.30</strong> | - | 44.40 | - | | Claude-3.5-Sonnet (10-22) | 20.22 | 53.62 | 55.65 | 33.39 | 35.42 | | Gemini-1.5-Pro (002) | 16.79 | 53.68 | <strong>57.90</strong> | 36.89 | 41.11 | | Gemini-2.0-Flash (exp) | 12.20 | 49.50 | 53.30 | 37.30 | 41.10 | | Qwen-Long | 16.55 | 48.48 | 45.94 | 31.92 | 29.39 | | <strong>MiniMax-Text-01</strong> | 6.0 | 51.74 | 51.60 | <strong>45.7</strong> | <strong>45.6</strong> | | <strong>kalam → eng (BLEURT)</strong> | | | | | | | GPT-4o (11-20) | 33.20 | 58.30 | - | 25.10 | - | | Claude-3.5-Sonnet (10-22) | 31.42 | 59.70 | 62.30 | 28.28 | 30.88 | | Gemini-1.5-Pro (002) | 32.02 | <strong>61.52</strong> | <strong>63.09</strong> | <strong>29.50</strong> | <strong>31.07</strong> | | Gemini-2.0-Flash (exp) | 33.80 | 57.50 | 57.00 | 23.70 | 23.20 | | Qwen-Long | 30.13 | 53.14 | 32.15 | 23.01 | 2.02 | | <strong>MiniMax-Text-01</strong> | 33.65 | 57.10 | 58.00 | 23.45 | 24.35 |</p>
+<h3 id="vision-benchmarks">Vision Benchmarks</h3>
+<table><thead><tr><th>Tasks</th><th>GPT-4o<br>(11-20)</th><th>Claude-3.5-Sonnet (10-22)</th><th>Gemini-1.5-Pro (002)</th><th>Gemini-2.0-Flash (exp)</th><th>Qwen2-VL-72B-Inst.</th><th>InternVL2.5-78B</th><th>LLama-3.2-90B</th><th>MiniMax-VL-01</th></tr></thead><tbody><tr><td><strong>Knowledge</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>MMMU<sup>*</sup></td><td>63.5</td><td><strong>72.0</strong></td><td>68.4</td><td>70.6</td><td>64.5</td><td>66.5</td><td>62.1</td><td>68.5</td></tr><tr><td>MMMU-Pro<sup>*</sup></td><td>54.5</td><td>54.7</td><td>50.9</td><td><strong>57.0</strong></td><td>43.2</td><td>47.3</td><td>36.0</td><td>52.7</td></tr><tr><td><strong>Visual Q&amp;A</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>ChartQA<sup>*</sup><sub>relaxed</sub></td><td>88.1</td><td>90.8</td><td>88.7</td><td>88.3</td><td>91.2</td><td>91.5</td><td>85.5</td><td><strong>91.7</strong></td></tr><tr><td>DocVQA<sup>*</sup></td><td>91.1</td><td>94.2</td><td>91.5</td><td>92.9</td><td><strong>97.1</strong></td><td>96.1</td><td>90.1</td><td>96.4</td></tr><tr><td>OCRBench</td><td>806</td><td>790</td><td>800</td><td>846</td><td>856</td><td>847</td><td>805</td><td><strong>865</strong></td></tr><tr><td><strong>Mathematics &amp; Sciences</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>AI2D<sup>*</sup></td><td>83.1</td><td>82.0</td><td>80.9</td><td>85.1</td><td>84.4</td><td><strong>86.8</strong></td><td>78.9</td><td>83.3</td></tr><tr><td>MathVista<sup>*</sup></td><td>62.1</td><td>65.4</td><td>70.6</td><td><strong>73.1</strong></td><td>69.6</td><td>68.4</td><td>57.3</td><td>68.6</td></tr><tr><td>OlympiadBench<sub>full</sub></td><td>25.2</td><td>28.4</td><td>32.1</td><td><strong>46.1</strong></td><td>21.9</td><td>25.1</td><td>19.3</td><td>24.2</td></tr><tr><td><strong>Long Context</strong></td></tr><tr><td>M-LongDoc<sub>acc</sub></td><td><strong>41.4</strong></td><td>31.4</td><td>26.2</td><td>31.4</td><td>11.6</td><td>19.7</td><td>13.9</td><td>32.5</td></tr><tr><td><strong>Comprehensive</strong></td></tr><tr><td>MEGA-Bench<sub>macro</sub></td><td>49.4</td><td>51.4</td><td>45.9</td><td><strong>53.9</strong></td><td>46.8</td><td>45.3</td><td>19.9</td><td>47.4</td></tr><tr><td><strong>User Experience</strong></td></tr><tr><td>In-house Benchmark</td><td>62.3</td><td>47.0</td><td>49.2</td><td><strong>72.1</strong></td><td>40.6</td><td>34.8</td><td>13.6</td><td>56.6</td></tr></tbody></table>
+<sup>*</sup> Evaluated following a _0-shot CoT_ setting.
+<h2 id="4-quickstart">4. Quickstart</h2>
+<p>Here, we provide a simple example  to demonstrate how to use MiniMax-Text-01 and MiniMax-VL-01 respectively.</p>
+<h3 id="minimax-text-01">MiniMax-Text-01</h3>
+<pre><code class="lang-python">from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, QuantoConfig, GenerationConfig
+
+# load hf config
+hf_config = AutoConfig.from_pretrained(&quot;MiniMaxAI/MiniMax-Text-01&quot;, trust_remote_code=True)
+
+# quantization config, int8 is recommended
+quantization_config =  QuantoConfig(
+            weights=&quot;int8&quot;,
+            modules_to_not_convert=[
+                &quot;lm_head&quot;,
+                &quot;embed_tokens&quot;,
+            ] + [f&quot;model.layers.{i}.coefficient&quot; for i in range(hf_config.num_hidden_layers)]
+            + [f&quot;model.layers.{i}.block_sparse_moe.gate&quot; for i in range(hf_config.num_hidden_layers)]
+        )
+
+# assume 8 GPUs
+world_size = 8
+layers_per_device = hf_config.num_hidden_layers // world_size
+# set device map
+device_map = {
+    &#x27;model.embed_tokens&#x27;: &#x27;cuda:0&#x27;,
+    &#x27;model.norm&#x27;: f&#x27;cuda:{world_size - 1}&#x27;,
+    &#x27;lm_head&#x27;: f&#x27;cuda:{world_size - 1}&#x27;
+}
+for i in range(world_size):
+    for j in range(layers_per_device):
+        device_map[f&#x27;model.layers.{i * layers_per_device + j}&#x27;] = f&#x27;cuda:{i}&#x27;
+
+# load tokenizer
+tokenizer = AutoTokenizer.from_pretrained(&quot;MiniMaxAI/MiniMax-Text-01&quot;)
+prompt = &quot;Hello!&quot;
+messages = [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;You are a helpful assistant created by MiniMax based on MiniMax-Text-01 model.&quot;}]},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: prompt}]},
+]
+text = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True
+)
+# tokenize and move to device
+model_inputs = tokenizer(text, return_tensors=&quot;pt&quot;).to(&quot;cuda&quot;)
+
+# load bfloat16 model, move to device, and apply quantization
+quantized_model = AutoModelForCausalLM.from_pretrained(
+    &quot;MiniMaxAI/MiniMax-Text-01&quot;,
+    torch_dtype=&quot;bfloat16&quot;,
+    device_map=device_map,
+    quantization_config=quantization_config,
+    trust_remote_code=True,
+    offload_buffers=True,
+)
+
+# generate response
+generation_config = GenerationConfig(
+    max_new_tokens=20,
+    eos_token_id=200020,
+    use_cache=True,
+)
+generated_ids = quantized_model.generate(**model_inputs, generation_config=generation_config)
+print(f&quot;generated_ids: {generated_ids}&quot;)
+generated_ids = [
+    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+]
+response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]</code></pre>
+<h3 id="minimax-vl-01">MiniMax-VL-01</h3>
+<pre><code class="lang-python">from transformers import AutoModelForCausalLM, AutoProcessor, AutoConfig, QuantoConfig, GenerationConfig
+import torch
+import json
+import os
+from PIL import Image
+
+# load hf config
+hf_config = AutoConfig.from_pretrained(&quot;MiniMaxAI/MiniMax-VL-01&quot;, trust_remote_code=True)
+
+# quantization config, int8 is recommended
+quantization_config =  QuantoConfig(
+            weights=&quot;int8&quot;,
+            modules_to_not_convert=[
+                &quot;vision_tower&quot;,
+                &quot;image_newline&quot;,
+                &quot;multi_modal_projector&quot;,
+                &quot;lm_head&quot;,
+                &quot;embed_tokens&quot;,
+            ] + [f&quot;model.layers.{i}.coefficient&quot; for i in range(hf_config.text_config.num_hidden_layers)]
+            + [f&quot;model.layers.{i}.block_sparse_moe.gate&quot; for i in range(hf_config.text_config.num_hidden_layers)]
+        )
+
+# set device map
+model_safetensors_index_path = os.path.join(&quot;MiniMax-VL-01&quot;, &quot;model.safetensors.index.json&quot;)
+with open(model_safetensors_index_path, &quot;r&quot;) as f:
+    model_safetensors_index = json.load(f)
+weight_map = model_safetensors_index[&#x27;weight_map&#x27;]
+vision_map = {}
+for key, value in weight_map.items():
+    if &#x27;vision_tower&#x27; in key or &#x27;image_newline&#x27; in key or &#x27;multi_modal_projector&#x27; in key:
+        new_key = key.replace(&#x27;.weight&#x27;,&#x27;&#x27;).replace(&#x27;.bias&#x27;,&#x27;&#x27;)
+        if new_key not in vision_map:
+            vision_map[new_key] = value
+# assume 8 GPUs
+world_size = 8
+device_map = {
+    &#x27;language_model.model.embed_tokens&#x27;: &#x27;cuda:0&#x27;,
+    &#x27;language_model.model.norm&#x27;: f&#x27;cuda:{world_size - 1}&#x27;,
+    &#x27;language_model.lm_head&#x27;: f&#x27;cuda:{world_size - 1}&#x27;
+}
+for key, value in vision_map.items():
+    device_map[key] = f&#x27;cuda:0&#x27;
+device_map[&#x27;vision_tower.vision_model.post_layernorm&#x27;] = f&#x27;cuda:0&#x27;
+layers_per_device = hf_config.text_config.num_hidden_layers // world_size
+for i in range(world_size):
+    for j in range(layers_per_device):
+        device_map[f&#x27;language_model.model.layers.{i * layers_per_device + j}&#x27;] = f&#x27;cuda:{i}&#x27;
+
+# load processor
+processor = AutoProcessor.from_pretrained(&quot;MiniMaxAI/MiniMax-VL-01&quot;, trust_remote_code=True)
+messages = [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;You are a helpful assistant created by MiniMax based on MiniMax-VL-01 model.&quot;}]},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: [{&quot;type&quot;: &quot;image&quot;, &quot;image&quot;: &quot;placeholder&quot;},{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Describe this image.&quot;}]},
+]
+prompt = processor.tokenizer.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
+raw_image = Image.open(&quot;figures/image.jpg&quot;)
+# tokenize and move to device
+model_inputs = processor(images=[raw_image], text=prompt, return_tensors=&#x27;pt&#x27;).to(&#x27;cuda&#x27;).to(torch.bfloat16)
+
+# load bfloat16 model, move to device, and apply quantization
+quantized_model = AutoModelForCausalLM.from_pretrained(
+    &quot;MiniMaxAI/MiniMax-VL-01&quot;,
+    torch_dtype=&quot;bfloat16&quot;,
+    device_map=device_map,
+    quantization_config=quantization_config,
+    trust_remote_code=True,
+    offload_buffers=True,
+)
+generation_config = GenerationConfig(
+    max_new_tokens=100,
+    eos_token_id=200020,
+    use_cache=True,
+)
+
+# generate response
+generated_ids = quantized_model.generate(**model_inputs, generation_config=generation_config)
+print(f&quot;generated_ids: {generated_ids}&quot;)
+generated_ids = [
+    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+]
+response = processor.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]</code></pre>
+<h2 id="5-deployment-guide">5. Deployment Guide</h2>
+<p>For production deployment, we recommend using <a href="https://docs.vllm.ai/en/latest/" target="_blank" rel="noopener">vLLM</a> to serve MiniMax-Text-01 and MiniMax-VL-01. vLLM provides excellent performance for serving large language models with the following features:</p>
+<ul><li>🔥 Outstanding service throughput performance</li><li>⚡ Efficient and intelligent memory management</li><li>📦 Powerful batch request processing capability</li><li>⚙️ Deeply optimized underlying performance</li></ul>
+<p>For detailed vLLM deployment instructions, please refer to our <a href="docs/vllm_deployment_guide.md" target="_blank" rel="noopener">vLLM Deployment Guide</a>.</p>
+<p>Alternatively, you can also deploy using Transformers directly. For detailed Transformers deployment instructions, you can see our <a href="docs/transformers_deployment_guide.md" target="_blank" rel="noopener">MiniMax-Text-01 Transformers Deployment Guide</a>.</p>
+<h2 id="6-citation">6. Citation</h2>
+<pre><code class="lang-">@misc{minimax2025minimax01scalingfoundationmodels,
+      title={MiniMax-01: Scaling Foundation Models with Lightning Attention}, 
+      author={MiniMax and Aonian Li and Bangwei Gong and Bo Yang and Boji Shan and Chang Liu and Cheng Zhu and Chunhao Zhang and Congchao Guo and Da Chen and Dong Li and Enwei Jiao and Gengxin Li and Guojun Zhang and Haohai Sun and Houze Dong and Jiadai Zhu and Jiaqi Zhuang and Jiayuan Song and Jin Zhu and Jingtao Han and Jingyang Li and Junbin Xie and Junhao Xu and Junjie Yan and Kaishun Zhang and Kecheng Xiao and Kexi Kang and Le Han and Leyang Wang and Lianfei Yu and Liheng Feng and Lin Zheng and Linbo Chai and Long Xing and Meizhi Ju and Mingyuan Chi and Mozhi Zhang and Peikai Huang and Pengcheng Niu and Pengfei Li and Pengyu Zhao and Qi Yang and Qidi Xu and Qiexiang Wang and Qin Wang and Qiuhui Li and Ruitao Leng and Shengmin Shi and Shuqi Yu and Sichen Li and Songquan Zhu and Tao Huang and Tianrun Liang and Weigao Sun and Weixuan Sun and Weiyu Cheng and Wenkai Li and Xiangjun Song and Xiao Su and Xiaodong Han and Xinjie Zhang and Xinzhu Hou and Xu Min and Xun Zou and Xuyang Shen and Yan Gong and Yingjie Zhu and Yipeng Zhou and Yiran Zhong and Yongyi Hu and Yuanxiang Fan and Yue Yu and Yufeng Yang and Yuhao Li and Yunan Huang and Yunji Li and Yunpeng Huang and Yunzhi Xu and Yuxin Mao and Zehan Li and Zekang Li and Zewei Tao and Zewen Ying and Zhaoyang Cong and Zhen Qin and Zhenhua Fan and Zhihang Yu and Zhuo Jiang and Zijia Wu},
+      year={2025},
+      eprint={2501.08313},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2501.08313}, 
+}</code></pre>
+<h2 id="7-chatbot-api">7. Chatbot &amp; API</h2>
+<p>For general use and evaluation, we provide a <a href="https://chat.minimax.io/" target="_blank" rel="noopener">Chatbot</a> with online search capabilities and the <a href="https://www.minimax.io/platform" target="_blank" rel="noopener">online API</a> for developers. For general use and evaluation, we provide the <a href="https://github.com/MiniMax-AI/MiniMax-MCP" target="_blank" rel="noopener">MiniMax MCP Server</a> with video generation, image generation, speech synthesis, and voice cloning for developers.</p>
+<p>Contact us at <a href="mailto:model@minimax.io" target="_blank" rel="noopener">model@minimax.io</a>.</p></div>
+        <div class="anav"><a class="prev" href="moonshot-kimi-07-kimi-playground-一站式体验-kimi-k2-的工具调用能力.html"><div class="lbl">‹ 上一篇</div><div class="ti">Kimi Playground 一站式体验 Kimi K2 的工具调用能力</div></a><a class="next" href="claude-support-usage.html"><div class="lbl">下一篇 ›</div><div class="ti">How People Use Claude for Support, Advice, and Companionship</div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#1-introduction">1. Introduction</a><a class="lv2" href="#2-model-architecture">2. Model Architecture</a><a class="lv2" href="#3-evaluation">3. Evaluation</a><a class="lv3" href="#text-benchmarks">Text Benchmarks</a><a class="lv3" href="#vision-benchmarks">Vision Benchmarks</a><a class="lv2" href="#4-quickstart">4. Quickstart</a><a class="lv3" href="#minimax-text-01">MiniMax-Text-01</a><a class="lv3" href="#minimax-vl-01">MiniMax-VL-01</a><a class="lv2" href="#5-deployment-guide">5. Deployment Guide</a><a class="lv2" href="#6-citation">6. Citation</a><a class="lv2" href="#7-chatbot-api">7. Chatbot &amp; API</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="minimax-01-minimax-01";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

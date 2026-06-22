@@ -1,0 +1,19 @@
+# Generated sites — never commit output
+output/
+*/site/
+*.html
+!examples/site/*.html
+!examples/site/articles/*.html
+!anthropic-cards/*.html
+
+# Generated article markdown from wiki conversion
+wiki-site/
+
+# Personal environment — do NOT distribute
+.obsidian/
+anthropic-cards/*.png
+
+# OS
+.DS_Store
+__pycache__/
+*.pyc

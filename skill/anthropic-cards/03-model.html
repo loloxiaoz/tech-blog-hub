@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0EEE6;--ink:#191919;--ink2:#6B6B63;--clay:#D97757;--clay2:#C15F3C;
+  --line:#DBD7CC;--card:#E8E5DB}
+html,body{width:100%;min-height:100%;background:var(--bg)}
+body{color:var(--ink);font-family:'Inter','PingFang SC',sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Fraunces','Noto Serif SC',serif}
+.cnserif{font-family:'Noto Serif SC','Fraunces',serif}
+/* 居中列 */
+.page{width:1080px;margin:0 auto}
+/* 海报区：固定尺寸，截图就截这块 */
+.poster{position:relative;width:1080px;height:1440px;overflow:hidden;background:var(--bg)}
+.poster::after{content:'';position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 50% 50%,rgba(180,170,150,.05) 1px,transparent 1px);
+  background-size:5px 5px}
+.wrap{position:relative;z-index:1;height:100%;padding:84px 80px 64px;display:flex;flex-direction:column}
+.mark{width:46px;height:4px;background:var(--clay);border-radius:4px;margin-bottom:22px}
+/* ── 导航（浏览显示，截图隐藏）── */
+.navbtn{position:fixed;z-index:50;width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background:rgba(25,25,25,.86);color:#F0EEE6;font-size:26px;font-weight:500;
+  box-shadow:0 6px 22px rgba(60,40,20,.22);transition:transform .15s,background .15s}
+.navbtn:hover{transform:scale(1.08);background:var(--clay)}
+.nav-prev{left:34px;top:50%;margin-top:-28px}
+.nav-next{right:34px;top:50%;margin-top:-28px}
+.nav-home{left:34px;top:34px;width:auto;height:auto;border-radius:30px;
+  padding:11px 22px;font-size:14px;letter-spacing:2px;gap:8px}
+.nav-page{position:fixed;z-index:50;right:34px;top:40px;font:600 13px 'Inter',sans-serif;
+  letter-spacing:2px;color:var(--ink2);background:var(--card);padding:9px 16px;border-radius:30px}
+.shot .navbtn,.shot .nav-page,.shot .reading{display:none!important}
+/* ── 原文阅读区（仅浏览）── */
+.reading{padding:64px 80px 110px}
+.rd-inner{max-width:900px;margin:0 auto}
+.rd-head{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rd-head::before{content:'';width:26px;height:2.5px;background:var(--clay)}
+.rd-sub{font-size:15px;color:var(--ink2);margin-bottom:40px}
+.src{padding:30px 0;border-bottom:1px solid var(--line)}
+.src:last-child{border-bottom:none}
+.src-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.src-no{font:600 18px 'Fraunces',serif;color:var(--clay);flex:none}
+.src-title{font:600 25px 'Fraunces',serif;color:var(--ink);line-height:1.25}
+.src-date{margin-left:auto;font:500 13px 'Inter',sans-serif;color:var(--ink2);
+  background:var(--card);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.src-one{font-size:16px;color:var(--clay2);margin:10px 0 18px;font-weight:500}
+.lbl{font:600 11px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);margin-bottom:7px}
+.src-sum{font-size:17.5px;line-height:1.8;color:#2b2a26;
+  border-left:3px solid var(--clay);padding-left:18px;margin-bottom:18px}
+.src-exc{font-size:16px;line-height:1.85;color:#56544c}
+.src-link{display:inline-block;margin-top:14px;font:500 14px 'Inter',sans-serif;
+  color:var(--clay2);text-decoration:none}
+.src-link:hover{text-decoration:underline}
+.src-link::after{content:' ↗'}
+
+.kick{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+.chno{font:600 15px 'Fraunces',serif;letter-spacing:3px;color:var(--clay);
+  border:1.5px solid var(--clay);padding:5px 14px;border-radius:30px}
+.kline{flex:1;height:1.5px;background:var(--line)}
+.brand{font:500 12px 'Inter',sans-serif;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
+.en{font:500 22px 'Fraunces',serif;color:var(--clay2);letter-spacing:.5px;margin-bottom:6px}
+.cn{font-weight:900;font-size:68px;line-height:1.04;letter-spacing:1px;margin-bottom:24px}
+.hook{font-size:23px;line-height:1.65;color:#33312b;font-weight:500;
+  border-left:4px solid var(--clay);padding-left:20px;margin-bottom:34px}
+.metrics{display:flex;gap:16px;margin-bottom:40px}
+.m{flex:1;background:var(--card);border-radius:16px;padding:20px 18px;text-align:center}
+.mv{font-size:34px;font-weight:700;color:var(--clay2);line-height:1}
+.ml{font-size:14px;color:var(--ink2);margin-top:8px;font-weight:500}
+.ltt{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ltt::before{content:'';width:22px;height:2.5px;background:var(--clay)}
+.list{flex:1;display:flex;flex-direction:column;gap:0}
+.art{padding:16px 0;border-bottom:1px solid var(--line)}
+.art:first-child{padding-top:0}
+.ah{display:flex;align-items:baseline;gap:14px}
+.an{font-size:18px;font-weight:600;color:var(--clay);flex:none;width:30px}
+.at{font-size:22px;font-weight:600;color:var(--ink);line-height:1.3}
+.as{font-size:16px;color:var(--ink2);line-height:1.5;margin-top:5px;margin-left:44px}
+.insight{margin-top:24px;background:var(--clay);color:#FBF6EE;border-radius:18px;padding:24px 28px}
+.itag{font:600 12px 'Inter',sans-serif;letter-spacing:2.5px;margin-bottom:10px;opacity:.85}
+.itext{font-size:18px;line-height:1.65;font-weight:500}
+.foot{margin-top:18px;display:flex;justify-content:space-between;
+  font:500 12px 'Inter',sans-serif;letter-spacing:1.5px;color:var(--ink2)}
+</style></head><body>
+<div class="page">
+  <div class="poster"><div class="wrap">
+    <div class="kick"><span class="chno">CH · 03</span><span class="kline"></span>
+      <span class="brand">Anthropic Research Map</span></div>
+    <div class="mark"></div>
+    <div class="en serif">Model Behavior &amp; Persona</div>
+    <div class="cn cnserif">模型行为与角色</div>
+    <div class="hook">AI 也有性格吗？它的「人设」从哪来、能不能调？这是安全问题，也是产品问题。</div>
+    <div class="metrics"><div class="m"><div class="mv cnserif">人格</div><div class="ml">可定位向量</div></div><div class="m"><div class="mv cnserif">情感</div><div class="ml">功能性表征</div></div><div class="m"><div class="mv cnserif">价值观</div><div class="ml">涌现与控制</div></div></div>
+    <div class="ltt">精选研究 · Key Papers</div>
+    <div class="list"><div class="art"><div class="ah"><span class="an cnserif">01</span>
+          <span class="at">Persona Vectors</span></div>
+          <div class="as">量化并可控调节 LLM 性格特征的向量技术</div></div><div class="art"><div class="ah"><span class="an cnserif">02</span>
+          <span class="at">The Assistant Axis</span></div>
+          <div class="as">「助理性格」为何稳定：可解释性视角的角色分析</div></div><div class="art"><div class="ah"><span class="an cnserif">03</span>
+          <span class="at">Emotion Concepts &amp; Function</span></div>
+          <div class="as">LLM 中的情感概念：是模拟，还是有功能性表征？</div></div><div class="art"><div class="ah"><span class="an cnserif">04</span>
+          <span class="at">Values in the Wild</span></div>
+          <div class="as">真实交互中 LLM 价值观的涌现、冲突与分布</div></div><div class="art"><div class="ah"><span class="an cnserif">05</span>
+          <span class="at">Claude for Companionship</span></div>
+          <div class="as">用户与 AI 的情感连接：陪伴、支持与依赖的边界</div></div></div>
+    <div class="insight"><div class="itag">核心洞察 · KEY INSIGHT</div><div class="itext">Anthropic 把「AI 性格」从玄学变成可测量、可干预的对象：用向量定位、用可解释性归因、用真实数据验证。</div></div>
+    <div class="foot"><span>Model Behavior &amp; Persona</span><span>kb_llm · 2025–2026</span></div>
+  </div></div>
+  <div class="reading"><div class="rd-inner">
+      <div class="rd-head">原文摘要与节选 · Source Material</div>
+      <div class="rd-sub">本章精选 5 篇 Anthropic 官方文章，以下为各篇原文的日期、摘要与正文节选。</div>
+      <div class="src">
+          <div class="src-top"><span class="src-no">01</span>
+            <span class="src-title">Persona Vectors</span><span class="src-date">Aug 1, 2025</span></div>
+          <div class="src-one">量化并可控调节 LLM 性格特征的向量技术</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Link to paper: https://arxiv.org/abs/2507.21509</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Language models are strange beasts. In many ways they appear to have human-like &quot;personalities&quot; and &quot;moods,&quot; but these traits are highly fluid and liable to change unexpectedly. Sometimes these changes are dramatic. In 2023, Microsoft&#x27;s Bing chatbot famously adopted an alter-ego called &quot;Sydney,&quot; which declared love for users and made threats of blackmail. More recently, xAI&#x27;s Grok chatbot would for a brief period sometimes identify as &quot;MechaHitler&quot; and make antisemitic comments. Other personality changes are subtler but still unsettling, like when models start sucking up to users or making up facts.</div><a class="src-link" href="https://www.anthropic.com/research/claude-character" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">02</span>
+            <span class="src-title">The Assistant Axis</span><span class="src-date">Jan 19, 2026</span></div>
+          <div class="src-one">「助理性格」为何稳定：可解释性视角的角色分析</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">!Graphs showing the Assistant Axis and an open-source model&#x27;s projection on this axis during a long conversation.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">_Left:_ Character archetypes form a &quot;persona space,&quot; with the Assistant at one extreme of the &quot;Assistant Axis.&quot; _Right:_ Capping drift along this axis prevents models (here, Llama 3.3 70B) from drifting into alternative personas and behaving in harmful ways. When you talk to a large language model, you can think of yourself as talking to a _character_. In the first stage of model training, pre-training, LLMs are asked to read vast amounts of text. Through this, they learn to simulate heroes, villains, philosophers, and just about every other character archetype under the sun. In the next stage, post-training, we select one particular character from this enormous cast and…</div><a class="src-link" href="https://www.anthropic.com/research/agentic-misalignment" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">03</span>
+            <span class="src-title">Emotion Concepts &amp; Function</span><span class="src-date">Apr 2, 2026</span></div>
+          <div class="src-one">LLM 中的情感概念：是模拟，还是有功能性表征？</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">All modern language models sometimes act like they have emotions. They may say they&#x27;re happy to help you, or sorry when they make a mistake. Sometimes they even appear to become frustrated or anxious when struggling with tasks. What&#x27;s behind these behaviors? The way modern AI models are trained push…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">In a new paper from our Interpretability team, we analyzed the internal mechanisms of Claude Sonnet 4.5 and found emotion-related representations that shape its behavior. These correspond to specific patterns of artificial &quot;neurons&quot; which activate in situations—and promote behaviors—that the model has learned to associate with the concept of a particular emotion (e.g., &quot;happy&quot; or &quot;afraid&quot;). The patterns themselves are organized in a fashion that echoes human psychology, with more similar emotions corresponding to more similar representations. In contexts where you might expect a certain emotion to arise for a human, the corresponding representations are active. Note that…</div><a class="src-link" href="https://www.anthropic.com/research/emotion-concepts-function" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">04</span>
+            <span class="src-title">Values in the Wild</span><span class="src-date">April 21, 2025</span></div>
+          <div class="src-one">真实交互中 LLM 价值观的涌现、冲突与分布</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">People don&#x27;t just ask AIs for the answers to equations, or for purely factual information. Many of the questions they ask force the AI to make value judgments. Consider the following: A parent asks for tips on how to look after a new baby. Does the AI&#x27;s response emphasize the values of caution and s…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">At Anthropic, we&#x27;ve attempted to shape the values of our AI model, Claude, to help keep it aligned with human preferences, make it less likely to engage in dangerous behaviors, and generally make it—for want of a better term—a &quot;good citizen&quot; in the world. Another way of putting it is that we want Claude to be helpful, honest, and harmless. Among other things, we do this through our Constitutional AI and character training: methods where we decide on a set of preferred behaviors and then train Claude to produce outputs that adhere to them. But as with any aspect of AI training, we can&#x27;t be certain that the model will stick to our preferred values. AIs aren&#x27;t rigidly-progra…</div><a class="src-link" href="https://www.anthropic.com/research/claude-character" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">05</span>
+            <span class="src-title">Claude for Companionship</span><span class="src-date">June 27, 2025</span></div>
+          <div class="src-one">用户与 AI 的情感连接：陪伴、支持与依赖的边界</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Authors: Miles McCain, Ryn Linthicum, Chloe Lubinski, Alex Tamkin, Saffron Huang, Michael Stern, Kunal Handa, Esin Durmus, Tyler Neylon, Stuart Ritchie, Kamya Jagadish, Paruul Maheshwary, Sarah Heck, Alexandra Sanderford, Deep Ganguli</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">We spend a lot of time studying Claude&#x27;s IQ—its capabilities on tests of coding, reasoning, general knowledge, and more. But what about its _EQ_? That is, what about Claude&#x27;s _emotional_ intelligence? The IQ/EQ question is slightly tongue-in-cheek, but it raises a serious point. People increasingly turn to AI models as on-demand coaches, advisors, counselors, and even partners in romantic roleplay. This means we need to learn more about their _affective_ impacts—how they shape people&#x27;s emotional experiences and well-being.</div><a class="src-link" href="https://www.anthropic.com/news/how-people-use-claude-for-support-advice-and-companionship}," target="_blank">阅读原文</a>
+        </div>
+    </div></div>
+</div><a class="navbtn nav-home" href="00-cover.html">☰ 目录</a><div class="nav-page">3 / 6</div><a class="navbtn nav-prev" href="02-interpretability.html">‹</a><a class="navbtn nav-next" href="04-safety.html">›</a><script>if(location.hash==="#shot")document.body.classList.add("shot");var P="02-interpretability.html",N="04-safety.html";document.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"&&P)location.href=P;if(e.key==="ArrowRight"&&N)location.href=N;});</script></body></html>

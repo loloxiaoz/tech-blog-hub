@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0EEE6;--ink:#191919;--ink2:#6B6B63;--clay:#D97757;--clay2:#C15F3C;
+  --line:#DBD7CC;--card:#E8E5DB}
+html,body{width:100%;min-height:100%;background:var(--bg)}
+body{color:var(--ink);font-family:'Inter','PingFang SC',sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Fraunces','Noto Serif SC',serif}
+.cnserif{font-family:'Noto Serif SC','Fraunces',serif}
+/* 居中列 */
+.page{width:1080px;margin:0 auto}
+/* 海报区：固定尺寸，截图就截这块 */
+.poster{position:relative;width:1080px;height:1440px;overflow:hidden;background:var(--bg)}
+.poster::after{content:'';position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 50% 50%,rgba(180,170,150,.05) 1px,transparent 1px);
+  background-size:5px 5px}
+.wrap{position:relative;z-index:1;height:100%;padding:84px 80px 64px;display:flex;flex-direction:column}
+.mark{width:46px;height:4px;background:var(--clay);border-radius:4px;margin-bottom:22px}
+/* ── 导航（浏览显示，截图隐藏）── */
+.navbtn{position:fixed;z-index:50;width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background:rgba(25,25,25,.86);color:#F0EEE6;font-size:26px;font-weight:500;
+  box-shadow:0 6px 22px rgba(60,40,20,.22);transition:transform .15s,background .15s}
+.navbtn:hover{transform:scale(1.08);background:var(--clay)}
+.nav-prev{left:34px;top:50%;margin-top:-28px}
+.nav-next{right:34px;top:50%;margin-top:-28px}
+.nav-home{left:34px;top:34px;width:auto;height:auto;border-radius:30px;
+  padding:11px 22px;font-size:14px;letter-spacing:2px;gap:8px}
+.nav-page{position:fixed;z-index:50;right:34px;top:40px;font:600 13px 'Inter',sans-serif;
+  letter-spacing:2px;color:var(--ink2);background:var(--card);padding:9px 16px;border-radius:30px}
+.shot .navbtn,.shot .nav-page,.shot .reading{display:none!important}
+/* ── 原文阅读区（仅浏览）── */
+.reading{padding:64px 80px 110px}
+.rd-inner{max-width:900px;margin:0 auto}
+.rd-head{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rd-head::before{content:'';width:26px;height:2.5px;background:var(--clay)}
+.rd-sub{font-size:15px;color:var(--ink2);margin-bottom:40px}
+.src{padding:30px 0;border-bottom:1px solid var(--line)}
+.src:last-child{border-bottom:none}
+.src-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.src-no{font:600 18px 'Fraunces',serif;color:var(--clay);flex:none}
+.src-title{font:600 25px 'Fraunces',serif;color:var(--ink);line-height:1.25}
+.src-date{margin-left:auto;font:500 13px 'Inter',sans-serif;color:var(--ink2);
+  background:var(--card);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.src-one{font-size:16px;color:var(--clay2);margin:10px 0 18px;font-weight:500}
+.lbl{font:600 11px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);margin-bottom:7px}
+.src-sum{font-size:17.5px;line-height:1.8;color:#2b2a26;
+  border-left:3px solid var(--clay);padding-left:18px;margin-bottom:18px}
+.src-exc{font-size:16px;line-height:1.85;color:#56544c}
+.src-link{display:inline-block;margin-top:14px;font:500 14px 'Inter',sans-serif;
+  color:var(--clay2);text-decoration:none}
+.src-link:hover{text-decoration:underline}
+.src-link::after{content:' ↗'}
+
+.kick{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+.chno{font:600 15px 'Fraunces',serif;letter-spacing:3px;color:var(--clay);
+  border:1.5px solid var(--clay);padding:5px 14px;border-radius:30px}
+.kline{flex:1;height:1.5px;background:var(--line)}
+.brand{font:500 12px 'Inter',sans-serif;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
+.en{font:500 22px 'Fraunces',serif;color:var(--clay2);letter-spacing:.5px;margin-bottom:6px}
+.cn{font-weight:900;font-size:68px;line-height:1.04;letter-spacing:1px;margin-bottom:24px}
+.hook{font-size:23px;line-height:1.65;color:#33312b;font-weight:500;
+  border-left:4px solid var(--clay);padding-left:20px;margin-bottom:34px}
+.metrics{display:flex;gap:16px;margin-bottom:40px}
+.m{flex:1;background:var(--card);border-radius:16px;padding:20px 18px;text-align:center}
+.mv{font-size:34px;font-weight:700;color:var(--clay2);line-height:1}
+.ml{font-size:14px;color:var(--ink2);margin-top:8px;font-weight:500}
+.ltt{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ltt::before{content:'';width:22px;height:2.5px;background:var(--clay)}
+.list{flex:1;display:flex;flex-direction:column;gap:0}
+.art{padding:16px 0;border-bottom:1px solid var(--line)}
+.art:first-child{padding-top:0}
+.ah{display:flex;align-items:baseline;gap:14px}
+.an{font-size:18px;font-weight:600;color:var(--clay);flex:none;width:30px}
+.at{font-size:22px;font-weight:600;color:var(--ink);line-height:1.3}
+.as{font-size:16px;color:var(--ink2);line-height:1.5;margin-top:5px;margin-left:44px}
+.insight{margin-top:24px;background:var(--clay);color:#FBF6EE;border-radius:18px;padding:24px 28px}
+.itag{font:600 12px 'Inter',sans-serif;letter-spacing:2.5px;margin-bottom:10px;opacity:.85}
+.itext{font-size:18px;line-height:1.65;font-weight:500}
+.foot{margin-top:18px;display:flex;justify-content:space-between;
+  font:500 12px 'Inter',sans-serif;letter-spacing:1.5px;color:var(--ink2)}
+</style></head><body>
+<div class="page">
+  <div class="poster"><div class="wrap">
+    <div class="kick"><span class="chno">CH · 05</span><span class="kline"></span>
+      <span class="brand">Anthropic Research Map</span></div>
+    <div class="mark"></div>
+    <div class="en serif">Economic Impact</div>
+    <div class="cn cnserif">AI 经济影响</div>
+    <div class="hook">AI 到底抢了谁的活、帮了谁？Anthropic 用真实对话数据，把感觉变成了可追踪的证据。</div>
+    <div class="metrics"><div class="m"><div class="mv cnserif">81,000</div><div class="ml">人需求调研</div></div><div class="m"><div class="mv cnserif">多国</div><div class="ml">澳·印·全球</div></div><div class="m"><div class="mv cnserif">1,250</div><div class="ml">专业人士访谈</div></div></div>
+    <div class="ltt">精选研究 · Key Papers</div>
+    <div class="list"><div class="art"><div class="ah"><span class="an cnserif">01</span>
+          <span class="at">Economic Index: Claude 3.7 Insights</span></div>
+          <div class="as">Claude 使用的经济任务分布：哪些工作最依赖 AI</div></div><div class="art"><div class="ah"><span class="an cnserif">02</span>
+          <span class="at">Economic Primitives</span></div>
+          <div class="as">AI 经济影响的基础框架：任务 · 技能 · 职业</div></div><div class="art"><div class="ah"><span class="an cnserif">03</span>
+          <span class="at">What 81,000 People Want from AI</span></div>
+          <div class="as">8.1 万用户调研：AI 真正被需要的场景与期望</div></div><div class="art"><div class="ah"><span class="an cnserif">04</span>
+          <span class="at">Labor Market Impacts of AI</span></div>
+          <div class="as">AI 劳动力市场影响的新度量方法与早期证据</div></div><div class="art"><div class="ah"><span class="an cnserif">05</span>
+          <span class="at">AI Assistance &amp; Coding Skills</span></div>
+          <div class="as">AI 辅助编程对开发者技能形成的正负两面</div></div></div>
+    <div class="insight"><div class="itag">核心洞察 · KEY INSIGHT</div><div class="itext">方法论才是核心资产：用真实对话 + 标准化框架，把 AI 的经济影响做成可跨国、跨时间比较的指数——别人难复制的数据壁垒。</div></div>
+    <div class="foot"><span>Economic Impact</span><span>kb_llm · 2025–2026</span></div>
+  </div></div>
+  <div class="reading"><div class="rd-inner">
+      <div class="rd-head">原文摘要与节选 · Source Material</div>
+      <div class="rd-sub">本章精选 5 篇 Anthropic 官方文章，以下为各篇原文的日期、摘要与正文节选。</div>
+      <div class="src">
+          <div class="src-top"><span class="src-no">01</span>
+            <span class="src-title">Economic Index: Claude 3.7 Insights</span><span class="src-date">Mar 27, 2025</span></div>
+          <div class="src-one">Claude 使用的经济任务分布：哪些工作最依赖 AI</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Last month, we launched the Anthropic Economic Index—a new initiative where we&#x27;re regularly releasing data and research aimed at understanding AI&#x27;s effects on labor markets and the economy over time.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Today, we&#x27;re releasing our second research report from the Index, covering usage data on Claude.ai following the launch of Claude 3.7 Sonnet—our newest and most capable model with strengths in agentic coding and a new &quot;extended thinking&quot; mode. Briefly, our latest results are the following:</div><a class="src-link" href="https://www.anthropic.com/economic-index" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">02</span>
+            <span class="src-title">Economic Primitives</span><span class="src-date">January 15, 2026</span></div>
+          <div class="src-one">AI 经济影响的基础框架：任务 · 技能 · 职业</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Date: January 15, 2026 Authors: Ruth Appel, Maxim Massenkoff, Peter McCrory, Miles McCain, Ryan Heller, Tyler Neylon, Alex Tamkin</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">This report introduces new metrics of AI usage to provide a rich portrait of interactions with Claude in November 2025, just prior to the release of Opus 4.5. These &quot;primitives&quot;—simple, foundational measures of how Claude is used, which we generate by asking Claude specific questions about anonymized Claude.ai and first-party (1P) API transcripts—cover five dimensions relevant to AI&#x27;s economic impact: user and AI skills, how complex tasks are, the degree of autonomy afforded to Claude, how successful Claude is, and whether Claude is used for personal, educational, or work purposes. The results reveal striking geographic variation, real-world estimates of AI task horizons,…</div><a class="src-link" href="https://www.anthropic.com/research/anthropic-economic-index-january-2026-report}," target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">03</span>
+            <span class="src-title">What 81,000 People Want from AI</span></div>
+          <div class="src-one">8.1 万用户调研：AI 真正被需要的场景与期望</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Authors: Saffron Huang, Shan Carter, Jake Eaton, Sarah Pollack, Dexter Callender III, Nikki Makagiansar, Maria Gonzalez, Sylvie Carr, Jerry Hong, Kunal Handa, Miles McCain, Thomas Millar, Mo Julapalli, Grace Yun, AJ Alt, Chelsea Larsson, Jane Leibrock, Matt Gallivan, Theodore Sumers, Esin Durmus, Ma…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Last December, tens of thousands of Claude users around the world had a conversation with our AI interviewer to share how they use AI, what they dream it could make possible, and what they fear it might do. For the first time, AI has enabled us to collect rich, open-ended interviews at extraordinary scale. We heard from people across 159 countries in 70 languages. We believe this is the largest and most multilingual qualitative study ever conducted.</div><a class="src-link" href="https://www.anthropic.com/research/anthropic-interviewer" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">04</span>
+            <span class="src-title">Labor Market Impacts of AI</span><span class="src-date">March 5, 2026</span></div>
+          <div class="src-one">AI 劳动力市场影响的新度量方法与早期证据</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Date: March 5, 2026 Authors: Maxim Massenkoff and Peter McCrory</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">We introduce a new measure of AI displacement risk, observed exposure, that combines theoretical LLM capability and real-world usage data, weighting automated (rather than augmentative) and work-related uses more heavily AI is far from reaching its theoretical capability: actual coverage remains a fraction of what&#x27;s feasible Occupations with higher observed exposure are projected by the BLS to grow less through 2034 Workers in the most exposed professions are more likely to be older, female, more educated, and higher-paid We find no systematic increase in unemployment for highly exposed workers since late 2022, though we find suggestive evidence that hiring of younger wor…</div>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">05</span>
+            <span class="src-title">AI Assistance &amp; Coding Skills</span><span class="src-date">Jan 29, 2026</span></div>
+          <div class="src-one">AI 辅助编程对开发者技能形成的正负两面</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Research shows AI helps people do parts of their job faster. In an observational study of Claude.ai data, we found AI can speed up some tasks by 80%. But does this increased productivity come with trade-offs? Other research shows that when people use AI assistance, they become less engaged with thei…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">It&#x27;s unclear whether this cognitive offloading can prevent people from growing their skills on the job, or—in the case of coding—understanding the systems they&#x27;re building. Our latest study, a randomized controlled trial with software developers as participants, investigates this potential downside of using AI at work. We focused on coding, a field where AI tools have rapidly become standard. Here, AI creates a potential tension: as coding grows more automated and speeds up work, humans will still need the skills to catch errors, guide output, and ultimately provide oversight for AI deployed in high-stakes environments. Does AI provide a shortcut to both skill development…</div><a class="src-link" href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank">阅读原文</a>
+        </div>
+    </div></div>
+</div><a class="navbtn nav-home" href="00-cover.html">☰ 目录</a><div class="nav-page">5 / 6</div><a class="navbtn nav-prev" href="04-safety.html">‹</a><a class="navbtn nav-next" href="06-policy.html">›</a><script>if(location.hash==="#shot")document.body.classList.add("shot");var P="04-safety.html",N="06-policy.html";document.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"&&P)location.href=P;if(e.key==="ArrowRight"&&N)location.href=N;});</script></body></html>

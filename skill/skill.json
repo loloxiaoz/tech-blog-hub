@@ -1,0 +1,24 @@
+{
+  "name": "tech-blog-downloader",
+  "version": "1.2.0",
+  "description": "Download AI tech blogs (Anthropic/OpenAI/DeepSeek/Qwen/Kimi etc. 23 sources), translate to Chinese, generate offline static learning site.",
+  "description_zh": "抓取 23 个 AI 大厂博客，翻译为中文，生成可离线浏览的静态学习站",
+  "author": "kb_llm",
+  "license": "MIT",
+  "keywords": ["ai-blog", "tech-blog", "anthropic", "deepseek", "openai", "translation", "static-site"],
+  "commands": [],
+  "files": [
+    "SKILL.md",
+    "blogs.json",
+    "generate_site.py",
+    "fetcher.py",
+    "harvest.py",
+    "tag_articles.py",
+    "references/",
+    "examples/"
+  ],
+  "requires": {
+    "python": ">=3.7",
+    "pip": ["requests", "beautifulsoup4"]
+  }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0EEE6;--ink:#191919;--ink2:#6B6B63;--clay:#D97757;--clay2:#C15F3C;
+  --line:#DBD7CC;--card:#E8E5DB}
+html,body{width:100%;min-height:100%;background:var(--bg)}
+body{color:var(--ink);font-family:'Inter','PingFang SC',sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Fraunces','Noto Serif SC',serif}
+.cnserif{font-family:'Noto Serif SC','Fraunces',serif}
+/* 居中列 */
+.page{width:1080px;margin:0 auto}
+/* 海报区：固定尺寸，截图就截这块 */
+.poster{position:relative;width:1080px;height:1440px;overflow:hidden;background:var(--bg)}
+.poster::after{content:'';position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 50% 50%,rgba(180,170,150,.05) 1px,transparent 1px);
+  background-size:5px 5px}
+.wrap{position:relative;z-index:1;height:100%;padding:84px 80px 64px;display:flex;flex-direction:column}
+.mark{width:46px;height:4px;background:var(--clay);border-radius:4px;margin-bottom:22px}
+/* ── 导航（浏览显示，截图隐藏）── */
+.navbtn{position:fixed;z-index:50;width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background:rgba(25,25,25,.86);color:#F0EEE6;font-size:26px;font-weight:500;
+  box-shadow:0 6px 22px rgba(60,40,20,.22);transition:transform .15s,background .15s}
+.navbtn:hover{transform:scale(1.08);background:var(--clay)}
+.nav-prev{left:34px;top:50%;margin-top:-28px}
+.nav-next{right:34px;top:50%;margin-top:-28px}
+.nav-home{left:34px;top:34px;width:auto;height:auto;border-radius:30px;
+  padding:11px 22px;font-size:14px;letter-spacing:2px;gap:8px}
+.nav-page{position:fixed;z-index:50;right:34px;top:40px;font:600 13px 'Inter',sans-serif;
+  letter-spacing:2px;color:var(--ink2);background:var(--card);padding:9px 16px;border-radius:30px}
+.shot .navbtn,.shot .nav-page,.shot .reading{display:none!important}
+/* ── 原文阅读区（仅浏览）── */
+.reading{padding:64px 80px 110px}
+.rd-inner{max-width:900px;margin:0 auto}
+.rd-head{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rd-head::before{content:'';width:26px;height:2.5px;background:var(--clay)}
+.rd-sub{font-size:15px;color:var(--ink2);margin-bottom:40px}
+.src{padding:30px 0;border-bottom:1px solid var(--line)}
+.src:last-child{border-bottom:none}
+.src-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.src-no{font:600 18px 'Fraunces',serif;color:var(--clay);flex:none}
+.src-title{font:600 25px 'Fraunces',serif;color:var(--ink);line-height:1.25}
+.src-date{margin-left:auto;font:500 13px 'Inter',sans-serif;color:var(--ink2);
+  background:var(--card);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.src-one{font-size:16px;color:var(--clay2);margin:10px 0 18px;font-weight:500}
+.lbl{font:600 11px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);margin-bottom:7px}
+.src-sum{font-size:17.5px;line-height:1.8;color:#2b2a26;
+  border-left:3px solid var(--clay);padding-left:18px;margin-bottom:18px}
+.src-exc{font-size:16px;line-height:1.85;color:#56544c}
+.src-link{display:inline-block;margin-top:14px;font:500 14px 'Inter',sans-serif;
+  color:var(--clay2);text-decoration:none}
+.src-link:hover{text-decoration:underline}
+.src-link::after{content:' ↗'}
+
+.kick{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+.chno{font:600 15px 'Fraunces',serif;letter-spacing:3px;color:var(--clay);
+  border:1.5px solid var(--clay);padding:5px 14px;border-radius:30px}
+.kline{flex:1;height:1.5px;background:var(--line)}
+.brand{font:500 12px 'Inter',sans-serif;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
+.en{font:500 22px 'Fraunces',serif;color:var(--clay2);letter-spacing:.5px;margin-bottom:6px}
+.cn{font-weight:900;font-size:68px;line-height:1.04;letter-spacing:1px;margin-bottom:24px}
+.hook{font-size:23px;line-height:1.65;color:#33312b;font-weight:500;
+  border-left:4px solid var(--clay);padding-left:20px;margin-bottom:34px}
+.metrics{display:flex;gap:16px;margin-bottom:40px}
+.m{flex:1;background:var(--card);border-radius:16px;padding:20px 18px;text-align:center}
+.mv{font-size:34px;font-weight:700;color:var(--clay2);line-height:1}
+.ml{font-size:14px;color:var(--ink2);margin-top:8px;font-weight:500}
+.ltt{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ltt::before{content:'';width:22px;height:2.5px;background:var(--clay)}
+.list{flex:1;display:flex;flex-direction:column;gap:0}
+.art{padding:16px 0;border-bottom:1px solid var(--line)}
+.art:first-child{padding-top:0}
+.ah{display:flex;align-items:baseline;gap:14px}
+.an{font-size:18px;font-weight:600;color:var(--clay);flex:none;width:30px}
+.at{font-size:22px;font-weight:600;color:var(--ink);line-height:1.3}
+.as{font-size:16px;color:var(--ink2);line-height:1.5;margin-top:5px;margin-left:44px}
+.insight{margin-top:24px;background:var(--clay);color:#FBF6EE;border-radius:18px;padding:24px 28px}
+.itag{font:600 12px 'Inter',sans-serif;letter-spacing:2.5px;margin-bottom:10px;opacity:.85}
+.itext{font-size:18px;line-height:1.65;font-weight:500}
+.foot{margin-top:18px;display:flex;justify-content:space-between;
+  font:500 12px 'Inter',sans-serif;letter-spacing:1.5px;color:var(--ink2)}
+</style></head><body>
+<div class="page">
+  <div class="poster"><div class="wrap">
+    <div class="kick"><span class="chno">CH · 06</span><span class="kline"></span>
+      <span class="brand">Anthropic Research Map</span></div>
+    <div class="mark"></div>
+    <div class="en serif">Policy &amp; Commercialization</div>
+    <div class="cn cnserif">政策治理与商业化</div>
+    <div class="hook">一年时间，从研究实验室烧到 IPO 门口——资本、产品、政策三条线全速齐发。</div>
+    <div class="metrics"><div class="m"><div class="mv cnserif">$65B</div><div class="ml">H 轮融资</div></div><div class="m"><div class="mv cnserif">S-1</div><div class="ml">IPO 启动</div></div><div class="m"><div class="mv cnserif">2028</div><div class="ml">领导力情景</div></div></div>
+    <div class="ltt">精选研究 · Key Papers</div>
+    <div class="list"><div class="art"><div class="ah"><span class="an cnserif">01</span>
+          <span class="at">Introducing Claude Opus 4.8</span></div>
+          <div class="as">最强旗舰发布：推理与编码全面领跑</div></div><div class="art"><div class="ah"><span class="an cnserif">02</span>
+          <span class="at">Anthropic Raises $65B Series H</span></div>
+          <div class="as">约 9650 亿美元估值完成 650 亿 H 轮</div></div><div class="art"><div class="ah"><span class="an cnserif">03</span>
+          <span class="at">Confidentially Files S-1 to SEC</span></div>
+          <div class="as">秘密提交 S-1 草稿，IPO 进程正式启动</div></div><div class="art"><div class="ah"><span class="an cnserif">04</span>
+          <span class="at">2028: Two Scenarios for AI Leadership</span></div>
+          <div class="as">全球 AI 领导力两种未来：合作共赢 vs 竞争分裂</div></div><div class="art"><div class="ah"><span class="an cnserif">05</span>
+          <span class="at">Making Claude a Chemist</span></div>
+          <div class="as">化学领域专业化突破：分子设计与合成推理</div></div></div>
+    <div class="insight"><div class="itag">核心洞察 · KEY INSIGHT</div><div class="itext">2026 上半年的关键词是「加速」：资本（$65B + IPO）、产品（Opus 4.8 + 垂直化）、政策（Glasswing + 2028 情景）三线齐发。</div></div>
+    <div class="foot"><span>Policy &amp; Commercialization</span><span>kb_llm · 2025–2026</span></div>
+  </div></div>
+  <div class="reading"><div class="rd-inner">
+      <div class="rd-head">原文摘要与节选 · Source Material</div>
+      <div class="rd-sub">本章精选 5 篇 Anthropic 官方文章，以下为各篇原文的日期、摘要与正文节选。</div>
+      <div class="src">
+          <div class="src-top"><span class="src-no">01</span>
+            <span class="src-title">Introducing Claude Opus 4.8</span><span class="src-date">May 28, 2026</span></div>
+          <div class="src-one">最强旗舰发布：推理与编码全面领跑</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">We&#x27;re upgrading Claude Opus to a new version: Claude Opus 4.8. It builds on Opus 4.7 with improvements across benchmarks, and is a more effective collaborator. It&#x27;s available today for the same price.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Opus 4.8 launches alongside several new features. Users on claude.ai now have control over the amount of effort Claude puts into a task. Claude Code has a new &quot;dynamic workflows&quot; feature that allows it to tackle very large-scale problems. And fast mode for Opus 4.8—where the model can work at 2.5x the speed—is now three times cheaper than it was for previous models. &gt; Claude Opus 4.8 has noticeably better judgment. In Claude Code, it asks the right questions, catches its own mistakes, pushes back when a plan isn&#x27;t sound, and builds up confidence around complex, multi-service explorations before making big changes. It&#x27;s a great model to build with. &gt; &gt; Tom Pritchard, Staff…</div><a class="src-link" href="https://www.anthropic.com/claude-opus-4-8-system-card" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">02</span>
+            <span class="src-title">Anthropic Raises $65B Series H</span><span class="src-date">May 28, 2026</span></div>
+          <div class="src-one">约 9650 亿美元估值完成 650 亿 H 轮</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Anthropic has raised $65 billion in Series H funding led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital, valuing the company at $965 billion post-money.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Global enterprises across industries are deploying Claude in their core operations, and a growing number of people around the world use it for their everyday work. Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month. This latest funding is expected to advance our safety and interpretability research, expand compute to meet growing demand for Claude, and scale the products and partnerships our customers rely on. &quot;Claude is increasingly indispensable to our growing global community of customers, and we work tirelessly to make tools like Claude Code and Cowork more…</div><a class="src-link" href="https://www.anthropic.com/news/anthropic-amazon-compute" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">03</span>
+            <span class="src-title">Confidentially Files S-1 to SEC</span><span class="src-date">Jun 1, 2026</span></div>
+          <div class="src-one">秘密提交 S-1 草稿，IPO 进程正式启动</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Today, Anthropic, PBC confidentially submitted a draft registration statement on Form S-1 to the U.S. Securities and Exchange Commission for a proposed initial public offering of our common stock. This gives us the option to go public after the SEC completes its review. The proposed initial public o…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">The number of shares to be offered and the price have not yet been set. This announcement is being published under Rule 135 of the Securities Act of 1933, as amended. It is not an offer to sell securities; nor is it a solicitation of an offer to buy them. Any offers, solicitations of offers to buy, or any sales of securities will be made only in accordance with the registration requirements of the Securities Act.</div>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">04</span>
+            <span class="src-title">2028: Two Scenarios for AI Leadership</span><span class="src-date">May 14, 2026</span></div>
+          <div class="src-one">全球 AI 领导力两种未来：合作共赢 vs 竞争分裂</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Published: May 14, 2026 Source: Anthropic (Policy section)</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">We&#x27;re releasing a new paper that explains our views on the competition on AI between the US and China. It&#x27;s essential that the US and its allies stay ahead of authoritarian governments like the Chinese Communist Party, or CCP. AI will soon become powerful enough to be used to repress citizens at unprecedented scale, and even to alter the balance of power among nations. And since AI is advancing more quickly by the day, we have only a limited period of time to set the conditions of the competition—and determine whether and how those threats materialize. It&#x27;s with this in mind that we outline what&#x27;s required to ensure America stays ahead.</div>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">05</span>
+            <span class="src-title">Making Claude a Chemist</span></div>
+          <div class="src-one">化学领域专业化突破：分子设计与合成推理</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Summary: We&#x27;re working with world-class synthetic, computational, and analytical chemists to make Claude better at chemistry. In this post, we share our first work as part of this effort, in which Anthropic chemist, David Kamber, examines how Claude performs on a chemist&#x27;s most common analytical inp…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">When working with molecules, chemists move between hand-drawn structures on a whiteboard, instrument readouts, database query strings, and the technical notations of patents and publications. Each of these representations encodes the same underlying chemistry, but each demands a different kind of fluency. A sketch of caffeine, for example, allows a chemist to spot its resemblance to adenosine, the body&#x27;s drowsiness signal, and predict that it keeps us alert by blocking the receptor. However, that same sketch cannot help a chemist tell it apart from other near-identical looking molecules. Understanding what molecule a chemist is working with is critical. Chemistry undergir…</div><a class="src-link" href="https://www.anthropic.com/news/ai-for-science-program" target="_blank">阅读原文</a>
+        </div>
+    </div></div>
+</div><a class="navbtn nav-home" href="00-cover.html">☰ 目录</a><div class="nav-page">6 / 6</div><a class="navbtn nav-prev" href="05-economic.html">‹</a><script>if(location.hash==="#shot")document.body.classList.add("shot");var P="05-economic.html",N=null;document.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"&&P)location.href=P;if(e.key==="ArrowRight"&&N)location.href=N;});</script></body></html>

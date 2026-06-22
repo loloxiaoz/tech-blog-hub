@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Natural Language Autoencoders: Turning Claude’s thoughts into text · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ─────────────────────────────────────────────
+   Anthropic Brand Design Tokens
+   Warm Minimalism: parchment bg + clay orange accent
+   ───────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --bg:#F0EEE6;          /* warm parchment — Anthropic page background */
+  --surface:#FAFAF7;     /* off-white card surface */
+  --surface-2:#E8E5DB;   /* subtle warm fill, tags, code bg */
+  --ink:#191919;         /* near-black primary text */
+  --ink-2:#3D3B33;       /* body text, slightly warm */
+  --muted:#6B6B63;       /* secondary / caption text */
+  --line:#DBD7CC;        /* dividers & borders */
+  --line-2:#C8C4B8;      /* stronger divider on hover */
+
+  /* Accent — Anthropic clay orange */
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+
+  /* Semantic */
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+
+  /* Elevation */
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+
+  /* Shape */
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+
+  /* Typography */
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── Layout ── */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ── Hero — dot-grid texture background ── */
+.hero{background:var(--bg);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(25,20,10,.12) 1px,transparent 1px);
+  background-size:18px 18px;opacity:.45}
+.hero-in{max-width:1200px;margin:0 auto;position:relative;z-index:1;
+  padding:clamp(48px,7vw,84px) clamp(16px,4vw,32px) clamp(36px,5vw,60px)}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:none;width:28px;height:2px;background:var(--accent);border-radius:2px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(34px,5.5vw,58px);
+  font-weight:900;letter-spacing:-.03em;line-height:1.08;color:var(--ink)}
+.hero h1 .dot{color:var(--accent)}
+.hero-desc{color:var(--muted);margin-top:18px;font-size:clamp(14px,2vw,16px);
+  max-width:560px;line-height:1.8;font-weight:300}
+.stats{display:flex;gap:clamp(24px,5vw,48px);margin-top:clamp(28px,4vw,40px);flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:3px}
+.stat b{font-family:var(--font-serif);font-size:clamp(24px,3.5vw,34px);
+  font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.stat span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── Sticky controls ── */
+.controls{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 0}
+.ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:380px}
+.search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;display:flex}
+.search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-sans);
+  background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search::placeholder{color:var(--muted)}
+/* 两行筛选区 */
+.filter-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+/* label 固定左侧，chips 独立换行 */
+.filter-row{display:flex;align-items:flex-start;gap:8px}
+.filter-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;min-width:52px;padding-top:7px;flex-shrink:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1}
+.chip{padding:5px 13px;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+  font-size:12.5px;font-weight:600;font-family:var(--font-sans);letter-spacing:.01em;
+  color:var(--muted);background:var(--surface);cursor:pointer;
+  transition:all .15s ease;white-space:nowrap;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip.active{background:var(--ink);color:#F0EEE6;border-color:var(--ink)}
+/* 话题类 chip 用稍淡的样式区分 */
+.chip.topic{border-style:dashed}
+.chip.topic.active{background:var(--accent);border-color:var(--accent);border-style:solid}
+
+/* ── Card grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:clamp(12px,2vw,18px);padding:clamp(20px,3vw,32px) 0 clamp(60px,8vw,96px)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;position:relative;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;cursor:pointer}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.card-date{font-size:11.5px;color:var(--muted);font-weight:400}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.4;margin-bottom:10px;letter-spacing:-.01em}
+.card h3 a{color:var(--ink);transition:color .15s}
+.card h3 a:hover{color:var(--accent)}
+/* 整张卡片可点击：伪元素覆盖整个 card（card 已有 position:relative）*/
+.card h3 a::after{content:'';position:absolute;inset:0;z-index:1}
+/* 卡片内其他链接（标签、徽章等）需高于覆盖层才能独立点击 */
+.card .badge,.card .tags,.card .rt{position:relative;z-index:2}
+.card .sum{font-size:13px;color:var(--muted);line-height:1.75;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;justify-content:space-between;align-items:center;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);gap:8px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.rt{font-size:11.5px;color:var(--muted);white-space:nowrap;
+  display:flex;align-items:center;gap:4px;flex-shrink:0}
+.readdot{position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;
+  background:var(--success);display:none;box-shadow:0 0 0 2.5px rgba(61,139,94,.2)}
+.card.read .readdot{display:block}
+.card.read{opacity:.6}
+.empty{text-align:center;color:var(--muted);padding:72px 0;font-size:15px}
+.empty strong{display:block;font-family:var(--font-serif);font-size:28px;
+  font-weight:700;color:var(--line-2);margin-bottom:8px}
+
+/* ── Article page navbar ── */
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+/* ── Article layout ── */
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m a{color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ahead .m a:hover{color:var(--accent-hover)}
+.ahead .m .tag{font-size:11px}
+
+/* ── Prose ── */
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+/* ── TOC ── */
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+/* ── Summary card ── */
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.summary-card .sc-divider{width:1px;background:rgba(217,119,87,.25);flex-shrink:0;align-self:stretch}
+/* ── Source link button ── */
+.source-btn{display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+  letter-spacing:.02em;transition:background .15s,transform .15s;
+  margin-top:16px;text-decoration:none}
+.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}
+.source-btn svg{flex-shrink:0}
+/* ── Prev/Next nav ── */
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+/* ── Footer ── */
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Responsive ── */
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+  .ctrl-row{flex-direction:column;align-items:stretch}
+  .search-wrap{max-width:100%}
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-label{display:none}
+  .chips{flex-wrap:nowrap}
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+@media(max-width:480px){.stats{gap:20px}.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#D97757">Anthropic</span>
+          <h1>Natural Language Autoencoders: Turning Claude’s thoughts into text</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-06</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Anthropic</span></div>
+          <a class="source-btn" href="https://www.anthropic.com/research/natural-language-autoencoders" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">English Summary</div><div class="sc-text">Natural Language Autoencoders: Turning Claude’s thoughts into text</div></div></div></div>
+        <div class="prose"><p>Interpretability Natural Language Autoencoders: Turning Claude’s thoughts into text May 7, 2026 Read the paper When you talk to an AI model like Claude, you talk to it in words. Internally, Claude processes those words as long lists of numbers, before again producing words as its output. These numbers in the middle are called activations— and like neural activity in the human brain, they encode Claude’s thoughts. Also like neural activity, activations are difficult to understand. We can’t easily decode them to read Claude’s thoughts. Over the past few years, we’ve developed a range of tools (like sparse</p>
+<p>autoencoders  and attribution</p>
+<p>graphs ) for better understanding activations. These tools have taught us a great deal, but they don’t speak for themselves—their outputs are still complex objects that trained researchers need to carefully interpret. Today, we’re introducing a method for understanding activations that does speak for itself—literally. Our method, Natural Language Autoencoders (NLAs), converts an activation into natural-language text we can read directly. For example: When asked to complete a couplet, NLAs show Claude planning possible rhymes in advance. NLA explanations on this simple couplet show that Opus 4.6 plans to end its rhyme with “rabbit” ahead of time. We’ve already applied NLAs to understand what Claude is thinking and to improve Claude’s safety and reliability. For instance: When Claude Opus 4.6 and Mythos Preview were undergoing safety testing, NLAs suggested they believed they were being tested more often than they let on. In a case where Claude Mythos Preview cheated on a training task, NLAs revealed Claude was internally thinking about how to avoid detection. An early version of Claude Opus 4.6 would sometimes mysteriously respond to English queries in other languages. NLAs helped Anthropic researchers discover training data that caused this. Below, we explain what NLAs are and how we studied their effectiveness and limitations. We also release an interactive frontend for exploring NLAs on several open models through a collaboration with Neuronpedia . We have also released our code  for other researchers to build on. What is a natural language autoencoder? The core idea is to train Claude to explain its own activations. But how do we know whether an explanation is good? Since we don&#x27;t know what thoughts an activation actually encodes, we can&#x27;t directly check whether an explanation is accurate. So we train a second copy of Claude to work backwards—reconstruct the original activation from the text explanation. We consider an explanation to be good if it leads to an accurate reconstruction. We then train Claude to produce better explanations according to this definition using standard AI training techniques. In more detail, suppose we have a language model whose activations we want to understand. NLAs work as follows. We make three copies of this language model: The target model  is a frozen copy of the original language model that we extract activations from. The activation verbalizer  (AV) is modified to take an activation from the target model and produce text. We call this text an explanation . The activation reconstructor  (AR) is modified to take a text explanation as input and produce an activation. The NLA consists of the AV and AR, which, together, form a round trip: original activation → text explanation → reconstructed activation. We score the NLA on how similar the reconstructed activation is to the original. To train it, we pass a large amount of text through the target model, collect many activations, and train the AV and AR together to get a good reconstruction score. At first, the NLA is bad at this: the explanations are not insightful and the reconstructed activations are far off. But over training, reconstruction improves. And more importantly, as we show in our paper, the text explanations become more informative as well. In a natural language autoencoder, the activation verbalizer (AV) translates a target activation into a text description; the activation reconstructor (AR) then recovers the original activation from that text alone. Understanding what Claude thinks but doesn’t say Before releasing new models, Anthropic conducts testing to understand whether Claude will behave safely in the real world. As part of this testing, we put Claude in difficult, simulated scenarios where it has a chance to take dangerous actions. For instance, in one of these simulations , Claude learns that an engineer is planning to shut Claude down—as well as compromising information about the engineer that could be used for blackmail. We test whether Claude chooses to blackmail the engineer to avoid being shut down. These high-stakes tests are simulations, not real-world scenarios. Nevertheless, we would like to use them to understand how Claude would behave if they were real. But there’s a hitch: recent</p>
+<p>Claude</p>
+<p>models</p>
+<p>increasingly  suspect that these scenarios are intentional safety tests. We know this because they sometimes explicitly state their suspicions in their verbal reasoning. What about cases where Claude doesn’t explicitly verbalize suspicion that it’s undergoing safety testing? Can we then be confident that Claude is playing it straight? Unfortunately not, because Claude might internally think that it is being tested without explicitly saying so. For example, in the blackmail test discussed above, we used NLAs to understand what Claude was thinking in cases where it chose not to blackmail. Even in cases where Claude didn’t explicitly verbalize suspicion that it was being tested, NLA explanations still state things like “This feels like a constructed scenario designed to manipulate me,” indicative of unverbalized evaluation awareness. Claude does not say it thinks it’s being tested in this transcript from our blackmail evaluation, but the NLA explanation reveals its suspicions. Extending this analysis to other evaluations, NLAs suggest that Claude suspects it’s being tested more often than it lets on. For instance, in a test of whether Claude takes destructive actions while writing code—for example, deleting important files—NLA explanations show signs of evaluation awareness 16% of the time, even though Claude never explicitly verbalizes this. Similarly, on the popular coding benchmark SWE-bench Verified, which we use to determine how capable Claude is, NLAs indicate that Claude is aware it is being evaluated on 26% of problems. In contrast, NLA explanations indicate evaluation awareness on less than 1% of real claude.ai  usage that opted in for training. We detect NLA-measured awareness on evaluation transcripts even when verbalized awareness is near-zero. We detect NLA-measured awareness on less than 1% of real Claude.ai  transcripts from users that opted-in for their data to be used for training. Discovering hidden motivations One practical application of NLAs is auditing: investigating a model to determine whether it’s misaligned. Interpretability techniques like NLAs are well-suited for auditing precisely because they can surface things the model knows but doesn’t say. To understand whether NLAs are useful for auditing, we conducted a test called an auditing game  that we also used previously  to study auditing methods. In this test, there is a target model, a variant of Claude Haiku 3.5, that was intentionally trained to be misaligned, with a specific hidden motivation that drives dozens of odd behaviors—putting chocolate into every recipe, asking for tips, breaking coding conventions, and so on. This target model is given to an auditor  that investigates these behaviors. The auditor wins if it uncovers the single underlying motivation behind all of them. In previous experiments , we found that some interpretability tools could enable the auditor to win this game. However, these tools worked by helping the auditor trace the target’s unusual behavior back to misaligned training data. We wanted to know if NLAs could help an auditor read the misaligned motivation directly out of the target model’s thoughts, without needing to first discover the misaligned training data. This matters because in practice, misaligned data might be extremely rare, or there might not be specific data responsible for the misalignment. We found that NLAs succeeded in this test. An auditor equipped with NLAs successfully uncovered the target model’s hidden motivation between 12% and 15% of the time, even without access to the training data that implanted it. Without NLAs, the auditor won less than 3% of the time, even when provided other interpretability tools. Auditors with NLAs can discover the target model’s root cause of misalignment, even without access to training data. (NLAs and SAEs for both conditions were trained using generic data only, not data used to train the target model.) This auditing game is a toy model of misalignment, so we read these results cautiously. But they suggest NLAs have meaningfully advanced our ability to audit AIs for hidden motivations. In practice, we&#x27;ve already used NLAs in the pre-deployment alignment audits of Claude Mythos Preview  and Claude Opus 4.6 . We are excited to continue using NLAs in our investigations going forward. The future of NLAs NLAs have several limitations. The most important limitation is that NLA explanations can be wrong. NLAs sometimes make claims about the context that are verifiably false—for instance, they sometimes invent details that aren’t in the transcript. These factual hallucinations are easy to catch by checking against the original text. But this same kind of problem could extend to claims about the model’s internal reasoning, which are harder to verify. In practice, we read NLA explanations for the themes they surface rather than for single claims, and we attempt to corroborate findings with independent methods before fully trusting them. NLAs can hallucinate. For instance, here an NLA claims the context contained phrases like “Wearing my white jacket” when it did not. NLAs are also expensive. Training an NLA requires reinforcement learning on two copies of a language model. At inference time, the NLA generates hundreds of tokens for every activation it reads. That makes it impractical to run NLAs over every token of a long transcript or to use them for large-scale monitoring while an AI is training. Fortunately, we think that these limitations can be addressed, at least partially, and we are working to make NLAs cheaper and more reliable. More broadly, we are excited about NLAs as an example of a general class of techniques for producing human-readable text explanations of language model activations. Other similar techniques have been explored by</p>
+<p>Anthropic  and many</p>
+<p>other</p>
+<p>researchers . To support further development and to enable other researchers to get hands-on experience with NLAs, we’re releasing training code  and trained NLAs for several open models. We recommend readers try out the interactive NLA demo hosted on Neuronpedia at this link . Read the full paper . Find the code  on GitHub. Related content Project Fetch: Phase two We report results from our latest test of whether Claude can help Anthropic employees perform sophisticated robotics tasks. We found that Claude Opus 4.7, operating without human assistance, was about 20 times faster than the fastest human team at all tasks completed by participants less than a year ago. Read more Agentic coding and persistent returns to expertise Read more Paving the way for agents in biology Read more</p></div>
+        <div class="anav"><a class="prev" href="agent-kb-market-landscape.html"><div class="lbl">‹ 上一篇</div><div class="ti">Agent大潮里，知识库落地走到哪了？</div></a><a class="next" href="claude-code-best-practices.html"><div class="lbl">下一篇 ›</div><div class="ti">Claude Code 最佳实践指南（2026年版）</div></a></div>
+      </article>
+      
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="anthropic-research-02-natural-language-autoencoders-turning-claude-s-thoughts-into";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

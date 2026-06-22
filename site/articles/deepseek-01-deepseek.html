@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DeepSeek · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ─────────────────────────────────────────────
+   Anthropic Brand Design Tokens
+   Warm Minimalism: parchment bg + clay orange accent
+   ───────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --bg:#F0EEE6;          /* warm parchment — Anthropic page background */
+  --surface:#FAFAF7;     /* off-white card surface */
+  --surface-2:#E8E5DB;   /* subtle warm fill, tags, code bg */
+  --ink:#191919;         /* near-black primary text */
+  --ink-2:#3D3B33;       /* body text, slightly warm */
+  --muted:#6B6B63;       /* secondary / caption text */
+  --line:#DBD7CC;        /* dividers & borders */
+  --line-2:#C8C4B8;      /* stronger divider on hover */
+
+  /* Accent — Anthropic clay orange */
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+
+  /* Semantic */
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+
+  /* Elevation */
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+
+  /* Shape */
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+
+  /* Typography */
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── Layout ── */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ── Hero — dot-grid texture background ── */
+.hero{background:var(--bg);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(25,20,10,.12) 1px,transparent 1px);
+  background-size:18px 18px;opacity:.45}
+.hero-in{max-width:1200px;margin:0 auto;position:relative;z-index:1;
+  padding:clamp(48px,7vw,84px) clamp(16px,4vw,32px) clamp(36px,5vw,60px)}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:none;width:28px;height:2px;background:var(--accent);border-radius:2px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(34px,5.5vw,58px);
+  font-weight:900;letter-spacing:-.03em;line-height:1.08;color:var(--ink)}
+.hero h1 .dot{color:var(--accent)}
+.hero-desc{color:var(--muted);margin-top:18px;font-size:clamp(14px,2vw,16px);
+  max-width:560px;line-height:1.8;font-weight:300}
+.stats{display:flex;gap:clamp(24px,5vw,48px);margin-top:clamp(28px,4vw,40px);flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:3px}
+.stat b{font-family:var(--font-serif);font-size:clamp(24px,3.5vw,34px);
+  font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.stat span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── Sticky controls ── */
+.controls{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 0}
+.ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:380px}
+.search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;display:flex}
+.search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-sans);
+  background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search::placeholder{color:var(--muted)}
+/* 两行筛选区 */
+.filter-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+/* label 固定左侧，chips 独立换行 */
+.filter-row{display:flex;align-items:flex-start;gap:8px}
+.filter-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;min-width:52px;padding-top:7px;flex-shrink:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1}
+.chip{padding:5px 13px;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+  font-size:12.5px;font-weight:600;font-family:var(--font-sans);letter-spacing:.01em;
+  color:var(--muted);background:var(--surface);cursor:pointer;
+  transition:all .15s ease;white-space:nowrap;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip.active{background:var(--ink);color:#F0EEE6;border-color:var(--ink)}
+/* 话题类 chip 用稍淡的样式区分 */
+.chip.topic{border-style:dashed}
+.chip.topic.active{background:var(--accent);border-color:var(--accent);border-style:solid}
+
+/* ── Card grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:clamp(12px,2vw,18px);padding:clamp(20px,3vw,32px) 0 clamp(60px,8vw,96px)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;position:relative;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;cursor:pointer}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.card-date{font-size:11.5px;color:var(--muted);font-weight:400}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.4;margin-bottom:10px;letter-spacing:-.01em}
+.card h3 a{color:var(--ink);transition:color .15s}
+.card h3 a:hover{color:var(--accent)}
+/* 整张卡片可点击：伪元素覆盖整个 card（card 已有 position:relative）*/
+.card h3 a::after{content:'';position:absolute;inset:0;z-index:1}
+/* 卡片内其他链接（标签、徽章等）需高于覆盖层才能独立点击 */
+.card .badge,.card .tags,.card .rt{position:relative;z-index:2}
+.card .sum{font-size:13px;color:var(--muted);line-height:1.75;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;justify-content:space-between;align-items:center;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);gap:8px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.rt{font-size:11.5px;color:var(--muted);white-space:nowrap;
+  display:flex;align-items:center;gap:4px;flex-shrink:0}
+.readdot{position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;
+  background:var(--success);display:none;box-shadow:0 0 0 2.5px rgba(61,139,94,.2)}
+.card.read .readdot{display:block}
+.card.read{opacity:.6}
+.empty{text-align:center;color:var(--muted);padding:72px 0;font-size:15px}
+.empty strong{display:block;font-family:var(--font-serif);font-size:28px;
+  font-weight:700;color:var(--line-2);margin-bottom:8px}
+
+/* ── Article page navbar ── */
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+/* ── Article layout ── */
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m a{color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ahead .m a:hover{color:var(--accent-hover)}
+.ahead .m .tag{font-size:11px}
+
+/* ── Prose ── */
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+/* ── TOC ── */
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+/* ── Summary card ── */
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.summary-card .sc-divider{width:1px;background:rgba(217,119,87,.25);flex-shrink:0;align-self:stretch}
+/* ── Source link button ── */
+.source-btn{display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+  letter-spacing:.02em;transition:background .15s,transform .15s;
+  margin-top:16px;text-decoration:none}
+.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}
+.source-btn svg{flex-shrink:0}
+/* ── Prev/Next nav ── */
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+/* ── Footer ── */
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Responsive ── */
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+  .ctrl-row{flex-direction:column;align-items:stretch}
+  .search-wrap{max-width:100%}
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-label{display:none}
+  .chips{flex-wrap:nowrap}
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+@media(max-width:480px){.stats{gap:20px}.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#4D6BFE">DeepSeek</span>
+          <h1>DeepSeek</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-04-27</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 1 分钟</span><span class="tag">DeepSeek</span></div>
+          <a class="source-btn" href="https://www.deepseek.com/en/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">English Summary</div><div class="sc-text">ð DeepSeek-V4 Preview is here with stronger Agent capabilities and top-tier reasoning. Now available on web, app, and API. Click for details.</div></div></div></div>
+        <div class="prose"><p>ð DeepSeek-V4 Preview is here with stronger Agent capabilities and top-tier reasoning. Now available on web, app, and API. Click for details. Into the unknown Start Now Free access to DeepSeek. Experience the intelligent model. Access API Build with the latest DeepSeek models. Powerful models, smooth experience. API Docs Get App ä¸­æ Â© 2026 DeepSeek. All rights reserved. æµICPå¤2023025841å· æµB2-20250178 æµå¬ç½å®å¤33010502011812å· Research DeepSeek R1 DeepSeek V3 DeepSeek Coder V2 DeepSeek VL DeepSeek V2 DeepSeek Coder DeepSeek Math DeepSeek LLM Product DeepSeek App DeepSeek Chat DeepSeek Platform API Pricing Service Status Legal &amp; Safety Privacy Policy Terms of Use Report Vulnerabilities Transparency Join Us Job Description</p></div>
+        <div class="anav"><a class="prev" href="ragflow-agent-harness-data-layer.html"><div class="lbl">‹ 上一篇</div><div class="ti">Agent harness 时代的数据底座：RAGFlow 为何而变</div></a><a class="next" href="deepseek-02-é-æ-åº.html"><div class="lbl">下一篇 ›</div><div class="ti">éæåº¦</div></a></div>
+      </article>
+      
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="deepseek-01-deepseek";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

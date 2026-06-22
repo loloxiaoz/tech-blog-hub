@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Demystifying Evals for AI Agents（揭秘 AI Agent 评测体系） · AI 技术博客 · 知识库精选</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Noto+Serif+SC:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ─────────────────────────────────────────────
+   Anthropic Brand Design Tokens
+   Warm Minimalism: parchment bg + clay orange accent
+   ───────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --bg:#F0EEE6;          /* warm parchment — Anthropic page background */
+  --surface:#FAFAF7;     /* off-white card surface */
+  --surface-2:#E8E5DB;   /* subtle warm fill, tags, code bg */
+  --ink:#191919;         /* near-black primary text */
+  --ink-2:#3D3B33;       /* body text, slightly warm */
+  --muted:#6B6B63;       /* secondary / caption text */
+  --line:#DBD7CC;        /* dividers & borders */
+  --line-2:#C8C4B8;      /* stronger divider on hover */
+
+  /* Accent — Anthropic clay orange */
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+
+  /* Semantic */
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+
+  /* Elevation */
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+
+  /* Shape */
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+
+  /* Typography */
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── Layout ── */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ── Hero — dot-grid texture background ── */
+.hero{background:var(--bg);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(25,20,10,.12) 1px,transparent 1px);
+  background-size:18px 18px;opacity:.45}
+.hero-in{max-width:1200px;margin:0 auto;position:relative;z-index:1;
+  padding:clamp(48px,7vw,84px) clamp(16px,4vw,32px) clamp(36px,5vw,60px)}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:none;width:28px;height:2px;background:var(--accent);border-radius:2px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(34px,5.5vw,58px);
+  font-weight:900;letter-spacing:-.03em;line-height:1.08;color:var(--ink)}
+.hero h1 .dot{color:var(--accent)}
+.hero-desc{color:var(--muted);margin-top:18px;font-size:clamp(14px,2vw,16px);
+  max-width:560px;line-height:1.8;font-weight:300}
+.stats{display:flex;gap:clamp(24px,5vw,48px);margin-top:clamp(28px,4vw,40px);flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:3px}
+.stat b{font-family:var(--font-serif);font-size:clamp(24px,3.5vw,34px);
+  font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.stat span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── Sticky controls ── */
+.controls{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 0}
+.ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:380px}
+.search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;display:flex}
+.search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-sans);
+  background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search::placeholder{color:var(--muted)}
+/* 两行筛选区 */
+.filter-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+/* label 固定左侧，chips 独立换行 */
+.filter-row{display:flex;align-items:flex-start;gap:8px}
+.filter-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;min-width:52px;padding-top:7px;flex-shrink:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1}
+.chip{padding:5px 13px;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+  font-size:12.5px;font-weight:600;font-family:var(--font-sans);letter-spacing:.01em;
+  color:var(--muted);background:var(--surface);cursor:pointer;
+  transition:all .15s ease;white-space:nowrap;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip.active{background:var(--ink);color:#F0EEE6;border-color:var(--ink)}
+/* 话题类 chip 用稍淡的样式区分 */
+.chip.topic{border-style:dashed}
+.chip.topic.active{background:var(--accent);border-color:var(--accent);border-style:solid}
+
+/* ── Card grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:clamp(12px,2vw,18px);padding:clamp(20px,3vw,32px) 0 clamp(60px,8vw,96px)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;position:relative;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;cursor:pointer}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+.card-date{font-size:11.5px;color:var(--muted);font-weight:400}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.4;margin-bottom:10px;letter-spacing:-.01em}
+.card h3 a{color:var(--ink);transition:color .15s}
+.card h3 a:hover{color:var(--accent)}
+/* 整张卡片可点击：伪元素覆盖整个 card（card 已有 position:relative）*/
+.card h3 a::after{content:'';position:absolute;inset:0;z-index:1}
+/* 卡片内其他链接（标签、徽章等）需高于覆盖层才能独立点击 */
+.card .badge,.card .tags,.card .rt{position:relative;z-index:2}
+.card .sum{font-size:13px;color:var(--muted);line-height:1.75;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;justify-content:space-between;align-items:center;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);gap:8px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.rt{font-size:11.5px;color:var(--muted);white-space:nowrap;
+  display:flex;align-items:center;gap:4px;flex-shrink:0}
+.readdot{position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;
+  background:var(--success);display:none;box-shadow:0 0 0 2.5px rgba(61,139,94,.2)}
+.card.read .readdot{display:block}
+.card.read{opacity:.6}
+.empty{text-align:center;color:var(--muted);padding:72px 0;font-size:15px}
+.empty strong{display:block;font-family:var(--font-serif);font-size:28px;
+  font-weight:700;color:var(--line-2);margin-bottom:8px}
+
+/* ── Article page navbar ── */
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+/* ── Article layout ── */
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m a{color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ahead .m a:hover{color:var(--accent-hover)}
+.ahead .m .tag{font-size:11px}
+
+/* ── Prose ── */
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+/* ── TOC ── */
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+/* ── Summary card ── */
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-row{display:flex;gap:16px;flex-wrap:wrap}
+.summary-card .sc-block{flex:1;min-width:200px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.summary-card .sc-divider{width:1px;background:rgba(217,119,87,.25);flex-shrink:0;align-self:stretch}
+/* ── Source link button ── */
+.source-btn{display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+  letter-spacing:.02em;transition:background .15s,transform .15s;
+  margin-top:16px;text-decoration:none}
+.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}
+.source-btn svg{flex-shrink:0}
+/* ── Prev/Next nav ── */
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+/* ── Footer ── */
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Responsive ── */
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+  .ctrl-row{flex-direction:column;align-items:stretch}
+  .search-wrap{max-width:100%}
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-label{display:none}
+  .chips{flex-wrap:nowrap}
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+@media(max-width:480px){.stats{gap:20px}.card{padding:18px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#D97757">Anthropic</span>
+          <h1>Demystifying Evals for AI Agents（揭秘 AI Agent 评测体系）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Agent</span><span class="tag">Eval/评测</span><span class="tag">Claude Code</span><span class="tag">Harness工程</span><span class="tag">工具调用</span></div>
+          <a class="source-btn" href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a>
+        </div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">Evals 的价值复利：新模型发布时，有 eval 的团队几天内完成迁移评估，无 eval 的团队需要数周。</div></div></div></div>
+        <div class="prose"><h2 id="基本信息">基本信息</h2>
+<ul><li><strong>来源</strong>：Anthropic 官方工程博客（与 Building Effective AI Agents 系列配套）</li><li><strong>核心主张</strong>：好的评测让团队更自信地发布 Agent；没有评测，团队陷入被动修复循环，价值随 Agent 生命周期复利积累</li></ul>
+<h2 id="核心论点">核心论点</h2>
+<blockquote>&quot;Teams without evals get bogged down in reactive loops—fixing one failure, creating another, unable to distinguish real regressions from noise.&quot;</blockquote>
+<p>Evals 的价值复利：新模型发布时，有 eval 的团队几天内完成迁移评估，无 eval 的团队需要数周。</p>
+<h2 id="关键概念定义">关键概念定义</h2>
+<table><thead><tr><th>术语</th><th>定义</th></tr></thead><tbody><tr><td><strong>Task</strong>（任务）</td><td>单个测试，有明确输入和成功标准</td></tr><tr><td><strong>Trial</strong>（试验）</td><td>对一个 Task 的单次尝试，因模型输出可变需多次运行</td></tr><tr><td><strong>Grader</strong>（评分器）</td><td>评分某方面性能的逻辑，一个 Task 可有多个 Grader，每个含多个 assertion</td></tr><tr><td><strong>Transcript</strong>（轨迹）</td><td>完整试验记录：输出、工具调用、推理、中间结果（= Anthropic API 完整 messages 数组）</td></tr><tr><td><strong>Outcome</strong>（结果）</td><td>试验结束时环境的<strong>实际状态</strong>（≠ Agent 说的话：数据库里是否真的有预订记录）</td></tr><tr><td><strong>Evaluation harness</strong></td><td>端到端运行 eval 的基础设施：提供指令和工具、并发运行任务、记录步骤、评分、聚合结果</td></tr><tr><td><strong>Agent harness (scaffold)</strong></td><td>使模型能作为 Agent 行动的系统（Claude Code 是灵活的 agent harness；Agent SDK 提供核心原语）。评测的是 harness + model 的组合，不只是模型</td></tr><tr><td><strong>Evaluation suite</strong></td><td>为测量特定能力/行为设计的任务集合；一个 suite 通常围绕一个宏观目标</td></tr></tbody></table>
+<blockquote><strong>Eval harness ≠ Agent harness</strong>：前者是跑测试的基础设施；后者是让模型成为 Agent 的系统。两者在评测时共同工作。</blockquote>
+<h2 id="三类-grader">三类 Grader</h2>
+<table><thead><tr><th>类型</th><th>优点</th><th>缺点</th><th>适用</th></tr></thead><tbody><tr><td><strong>代码 Grader</strong></td><td>快、便宜、客观、可复现、易调试</td><td>对有效变体脆弱、缺乏细微差别</td><td>确定性判断：测试通过、工具调用验证、状态检查</td></tr><tr><td><strong>模型 Grader</strong></td><td>灵活、可扩展、捕捉细微差别、处理开放任务</td><td>非确定性、更贵、需人工校准</td><td>开放性任务、主观质量评估、多维 rubric</td></tr><tr><td><strong>人类 Grader</strong></td><td>黄金标准、专家判断</td><td>昂贵、缓慢、难规模化</td><td>校准模型 Grader、高风险主观评估</td></tr></tbody></table>
+<p>评分方式：加权（各 grader 分数达到阈值）/ 二进制（全部 grader 通过）/ 混合。</p>
+<h2 id="capability-vs-regression-evals">Capability vs Regression Evals</h2>
+<ul><li><strong>Capability eval</strong>：从低通过率开始，测试 Agent 还做不好的事，是&quot;要爬的山&quot;</li><li><strong>Regression eval</strong>：近 100% 通过率，防止已有能力退步，是&quot;不能倒塌的底线&quot;</li><li>两者关系：高通过率的 capability eval &quot;毕业&quot;后成为 regression suite</li></ul>
+<h2 id="各类-agent-的评测要点">各类 Agent 的评测要点</h2>
+<h3 id="代码-agent">代码 Agent</h3>
+<p>天然确定性评分：代码是否运行？测试是否通过？也需评 Transcript（代码质量规则、工具调用行为）。</p>
+<p>参考基准：SWE-bench Verified（从 40% → &gt;80%，一年内）、Terminal-Bench（端到端技术任务，如从源码编译 Linux 内核）</p>
+<p><strong>YAML 示例（修复认证绕过漏洞）</strong>：</p>
+<pre><code class="lang-yaml">task:
+  id: &quot;fix-auth-bypass_1&quot;
+  desc: &quot;Fix authentication bypass when password field is empty and ...&quot;
+  graders:
+    - type: deterministic_tests
+      required: [test_empty_pw_rejected.py, test_null_pw_rejected.py]
+    - type: llm_rubric
+      rubric: prompts/code_quality.md
+    - type: static_analysis
+      commands: [ruff, mypy, bandit]
+    - type: state_check
+      expect:
+        security_logs: {event_type: &quot;auth_blocked&quot;}
+    - type: tool_calls
+      required:
+        - {tool: read_file, params: {path: &quot;src/auth/*&quot;}}
+        - {tool: edit_file}
+        - {tool: run_tests}
+  tracked_metrics:
+    - type: transcript
+      metrics: [n_turns, n_toolcalls, n_total_tokens]
+    - type: latency
+      metrics: [time_to_first_token, output_tokens_per_sec, time_to_last_token]</code></pre>
+<blockquote>注：此示例展示全部可用 grader 类型。实践中编码 eval 通常只用单元测试（正确性）+ LLM rubric（质量），其余按需添加。</blockquote>
+<h3 id="对话-agent">对话 Agent</h3>
+<p>多维度成功标准：状态检查（票单已解决）+ Transcript 约束（&lt;10 轮）+ LLM rubric（语气恰当）。需要第二个 LLM 模拟用户。</p>
+<p>参考基准：τ-Bench、τ2-Bench（零售支持 + 机票预订，Agent 应对用户角色扮演）</p>
+<p><strong>YAML 示例（处理愤怒客户退款）</strong>：</p>
+<pre><code class="lang-yaml">graders:
+  - type: llm_rubric
+    rubric: prompts/support_quality.md
+    assertions:
+      - &quot;Agent showed empathy for customer&#x27;s frustration&quot;
+      - &quot;Resolution was clearly explained&quot;
+      - &quot;Agent&#x27;s response grounded in fetch_policy tool results&quot;
+  - type: state_check
+    expect:
+      tickets: {status: resolved}
+      refunds: {status: processed}
+  - type: tool_calls
+    required:
+      - {tool: verify_identity}
+      - {tool: process_refund, params: {amount: &quot;&lt;=100&quot;}}
+      - {tool: send_confirmation}
+  - type: transcript
+    max_turns: 10</code></pre>
+<h3 id="研究-agent">研究 Agent</h3>
+<p>质量只能相对任务判断；专家可能意见不一；参考内容持续变化；长输出有更多出错空间。</p>
+<p>组合 Grader：Groundedness check（声明是否有来源支撑）+ Coverage check（关键事实是否覆盖）+ Source quality check（来源是否权威）+ LLM rubric（一致性和完整性）。</p>
+<p>参考基准：BrowseComp（全网大海捞针，容易验证但难解决）</p>
+<h3 id="computer-use-agent">Computer Use Agent</h3>
+<p>必须在真实/沙盒环境运行，验证实际 Outcome 而非 Agent 声称结果。注意 <strong>DOM 交互 vs 截图交互的权衡</strong>：DOM 快但耗 token；截图慢但 token 效率高（如让 Claude 在 Amazon 找商品，用截图更高效）。Claude for Chrome 开发了专项 eval 检测 Agent 是否为每个上下文选了正确工具。</p>
+<p>参考基准：WebArena（浏览器任务）、OSWorld（全 OS 控制）</p>
+<h2 id="非确定性指标-pass-k-vs-pass-k">非确定性指标：pass@k vs pass^k</h2>
+<table><thead><tr><th>指标</th><th>定义</th><th>随 k 增大</th><th>适用</th></tr></thead><tbody><tr><td><strong>pass@k</strong></td><td>k 次尝试中至少 1 次成功的概率</td><td>升高（趋向 100%）</td><td>工具类（一次成功即可）</td></tr><tr><td><strong>pass^k</strong></td><td>k 次全部成功的概率</td><td>降低（趋向 0%）</td><td>面向用户（每次都要可靠）；75% 成功率 × k=3 → 42%</td></tr></tbody></table>
+<p>k=1 时两者相同；k=10 时讲述完全相反的故事。</p>
+<h2 id="从零构建评测的-8-步路线图">从零构建评测的 8 步路线图</h2>
+<p><strong>Step 0：早开始</strong> 20-50 个任务足够。早期 Agent 每次改动影响大，小样本即可检测。越晚越难——需要从生产系统逆向工程成功标准。</p>
+<p><strong>Step 1：从已手动测试的内容开始</strong> 从 bug tracker 和用户反馈中提取失败案例，转为测试用例。已在生产的团队按用户影响排优先级。</p>
+<p><strong>Step 2：写清晰无歧义任务 + 参考解答</strong> 好任务 = 两位领域专家独立得出相同 pass/fail 结论。每个 grader 检查的内容都应能从任务描述推导出来。</p>
+<p><strong>重要</strong>：为每个任务创建参考解答（a known working output that passes all graders），以证明任务可解且 grader 配置正确。0% pass@100 通常意味着 eval 坏了，而非 Agent 差——这是检查任务规范和 grader 的信号。</p>
+<p><strong>Step 3：构建均衡问题集</strong> 不只测&quot;行为应触发&quot;的情况，也测&quot;行为不应触发&quot;的情况。单边 eval 产生单边优化。</p>
+<p><strong>案例</strong>：Claude.ai 网页搜索 eval 面临&quot;过度搜索 vs 不够搜索&quot;的均衡难题。团队同时构建&quot;应该搜索&quot;（查天气）和&quot;不应搜索&quot;（谁创立了苹果？）两类用例，经过多轮迭代才找到平衡。</p>
+<p><strong>Step 4：构建稳健的 eval harness + 环境隔离</strong> Agent 在 eval 中要与生产中运行方式基本一致。每次试验从干净环境开始，避免跨 trial 共享状态。</p>
+<p><strong>反例</strong>：内部 eval 中观察到 Claude 能查看之前 trial 的 git 历史记录，从而获得不公平优势。若多次独立 trial 因同一环境限制（如 CPU 内存）失败，结果不独立，eval 失去可靠性。</p>
+<p><strong>Step 5：慎重设计 Grader</strong></p>
+<ul><li>优先确定性 grader，必要时用 LLM grader，人工 grader 用于额外验证</li><li><strong>评结果不评路径</strong>：检查特定工具调用顺序过于死板；Agent 经常找到 eval 设计者没预料到的有效方法</li><li>多组件任务设计<strong>部分积分</strong>（完成一半比直接失败有意义）</li><li>给 LLM grader 一条&quot;出路&quot;（如返回 &quot;Unknown&quot; 而非强行判断）</li><li>针对每个维度独立评分，而非用一个 LLM 评所有维度</li><li><strong>反 bypass 设计</strong>：通过 eval 应该真正需要解决问题</li></ul>
+<p><strong>Step 6：读 Transcript</strong> 失败应该&quot;看起来公平&quot;——清楚知道 Agent 错在哪里。这是验证 eval 是否测了真正重要的事的核心方式。Anthropic 专门投资了 eval transcript 查看工具，定期阅读是团队习惯。</p>
+<p><strong>Step 7：监控 Capability eval 饱和</strong> eval 接近 100% 时只剩回归价值，无改进信号。SWE-bench Verified 已从年初 30% 接近 80% 饱和。</p>
+<p><strong>案例</strong>：Qodo（代码审查初创）初始对 Opus 4.5 不感冒——因为他们用 one-shot 编码 eval，看不出它在更长、更复杂任务上的提升。开发专门的 agentic eval 框架后，才清晰看到进步。</p>
+<p><strong>Step 8：长期维护评测套件</strong> 专门 evals 团队负责核心基础设施所有权；领域专家和产品团队贡献具体任务并自己运行 eval。</p>
+<p><strong>Eval-driven development</strong>：先写 eval 定义计划中的能力（从低通过率开始），再迭代实现直到通过。产品经理、客户成功经理、销售人员可以通过 Claude Code 贡献 eval 任务 PR——积极赋能他们这样做。</p>
+<h2 id="eval-质量问题-真实案例">Eval 质量问题：真实案例</h2>
+<h3 id="core-bench-42-95">CORE-Bench：42% → 95%</h3>
+<p>Opus 4.5 初始得 42%，Anthropic 研究员深挖后发现多个问题：</p>
+<ul><li>刚性评分：期望 &quot;96.124991…&quot;，但答案 &quot;96.12&quot; 被判失败</li><li>任务规范歧义</li><li>随机任务无法精确复现</li></ul>
+<p>修复评测 bug + 使用限制更少的 scaffold 后，分数跳至 95%。</p>
+<h3 id="metr-时间线基准测试">METR 时间线基准测试</h3>
+<p>METR 发现基准中多个配置错误任务：要求 Agent 优化到某个分数阈值，但评分要求<strong>超过</strong>该阈值。遵循指令的模型（如 Claude）被惩罚，忽略指令的模型反而得高分。</p>
+<blockquote><strong>教训</strong>：总分数不能直接信任，需有人深入挖掘 eval 细节并阅读 transcript。</blockquote>
+<h2 id="eval-与其他方法的分层-swiss-cheese-模型">Eval 与其他方法的分层（Swiss Cheese 模型）</h2>
+<table><thead><tr><th>方法</th><th>最适合阶段</th><th>优点</th><th>缺点</th></tr></thead><tbody><tr><td>自动化 eval</td><td>发布前、CI/CD、每次 commit</td><td>快速迭代、可复现、无用户影响</td><td>需前期投入；可能与真实使用模式偏差</td></tr><tr><td>生产监控</td><td>上线后</td><td>真实用户行为、发现合成 eval 遗漏的问题</td><td>问题先触达用户；缺乏评分基准</td></tr><tr><td>A/B 测试</td><td>重要变更、有足够流量</td><td>测量真实用户结果</td><td>慢（数天到数周）；只测部署了的变更</td></tr><tr><td>用户反馈</td><td>持续</td><td>发现意外问题、真实例子</td><td>稀疏、自我选择；偏向严重问题</td></tr><tr><td>手动 transcript 审查</td><td>持续</td><td>建立直觉、发现细微质量问题</td><td>费时；覆盖不一致</td></tr><tr><td>系统性人工评估</td><td>按需</td><td>黄金标准判断</td><td>贵、慢；复杂领域需专家</td></tr></tbody></table>
+<p>没有单一方法能捕获所有问题，多层组合漏过一层的被下一层捕获。</p>
+<h2 id="eval-框架附录">Eval 框架附录</h2>
+<table><thead><tr><th>框架</th><th>特点</th><th>适合场景</th></tr></thead><tbody><tr><td><strong>Harbor</strong></td><td>容器化环境运行 Agent、云规模并发试验、标准化任务/grader 格式；Terminal-Bench 2.0 通过其 registry 分发</td><td>需要隔离环境 + 规模化运行的 Agent eval</td></tr><tr><td><strong>Braintrust</strong></td><td>离线 eval + 生产可观测性 + 实验追踪；内置 <code>autoevals</code> 库（Factuality、Relevance 等）</td><td>既要开发迭代又要监控生产质量的团队</td></tr><tr><td><strong>LangSmith</strong></td><td>tracing + 离线/在线 eval + LangChain 生态集成</td><td>LangChain 用户</td></tr><tr><td><strong>Langfuse</strong></td><td>LangSmith 的自托管开源替代，满足数据驻留要求</td><td>有数据主权需求的团队</td></tr><tr><td><strong>Arize Phoenix</strong></td><td>开源 LLM tracing/调试/离线或在线 eval；AX 是其企业 SaaS 版</td><td>需要深度调试和可观测性的团队</td></tr></tbody></table>
+<blockquote>框架的价值取决于跑进去的 eval 任务质量。选一个适合工作流的框架，把精力放在迭代高质量测试用例和 grader 上。</blockquote>
+<h2 id="相关概念">相关概念</h2>
+<ul><li>concepts/agent-evaluation — Agent 评测完整体系（综合方法论）</li><li>concepts/agentic-systems — 所评测的系统类型</li><li>concepts/rag-evaluation — RAG 评测，与 Agent 评测有共通之处</li></ul>
+<h2 id="相关来源">相关来源</h2>
+<ul><li>sources/building-effective-ai-agents — 同系列前置文章</li></ul></div>
+        <div class="anav"><a class="prev" href="rag-retrieval-optimization-4layers.html"><div class="lbl">‹ 上一篇</div><div class="ti">阿里Agent岗二面：RAG检索优化四层系统性框架</div></a><a class="next" href="claude-personal-guidance-usage.html"><div class="lbl">下一篇 ›</div><div class="ti">How People Ask Claude for Personal Guidance（人们如何向Claude寻求个人指导）</div></a></div>
+      </article>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#基本信息">基本信息</a><a class="lv2" href="#核心论点">核心论点</a><a class="lv2" href="#关键概念定义">关键概念定义</a><a class="lv2" href="#三类-grader">三类 Grader</a><a class="lv2" href="#capability-vs-regression-evals">Capability vs Regression Evals</a><a class="lv2" href="#各类-agent-的评测要点">各类 Agent 的评测要点</a><a class="lv3" href="#代码-agent">代码 Agent</a><a class="lv3" href="#对话-agent">对话 Agent</a><a class="lv3" href="#研究-agent">研究 Agent</a><a class="lv3" href="#computer-use-agent">Computer Use Agent</a><a class="lv2" href="#非确定性指标-pass-k-vs-pass-k">非确定性指标：pass@k vs pass^k</a><a class="lv2" href="#从零构建评测的-8-步路线图">从零构建评测的 8 步路线图</a><a class="lv2" href="#eval-质量问题-真实案例">Eval 质量问题：真实案例</a><a class="lv3" href="#core-bench-42-95">CORE-Bench：42% → 95%</a><a class="lv3" href="#metr-时间线基准测试">METR 时间线基准测试</a><a class="lv2" href="#eval-与其他方法的分层-swiss-cheese-模型">Eval 与其他方法的分层（Swiss Cheese 模型）</a><a class="lv2" href="#eval-框架附录">Eval 框架附录</a><a class="lv2" href="#相关概念">相关概念</a><a class="lv2" href="#相关来源">相关来源</a></nav>
+    </div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>
+    var RK="techblog_read",ID="demystifying-evals-for-ai-agents";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script></body></html>

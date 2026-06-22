@@ -1,0 +1,2801 @@
+[
+  {
+    "id": "minimax-02-minimax-provider-verifier",
+    "title": "MiniMax-Provider-Verifier",
+    "org": "MiniMax",
+    "date": "2026-06-18",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 8,
+    "source_url": "https://github.com/MiniMax-AI/MiniMax-Provider-Verifier"
+  },
+  {
+    "id": "learning-curves",
+    "title": "Learning Curves（学习曲线）",
+    "org": "",
+    "date": "2026-06-16",
+    "tags": [],
+    "minutes": 1,
+    "source_url": ""
+  },
+  {
+    "id": "minimax-03-minimax-m3",
+    "title": "MiniMax-M3",
+    "org": "MiniMax",
+    "date": "2026-06-15",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 3,
+    "source_url": "https://github.com/MiniMax-AI/MiniMax-M3"
+  },
+  {
+    "id": "minimax-04-minimax-code",
+    "title": "MiniMax Code",
+    "org": "MiniMax",
+    "date": "2026-06-14",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 1,
+    "source_url": "https://github.com/MiniMax-AI/minimax-code"
+  },
+  {
+    "id": "microsoft-research-01-ire-identifies-another-lotuslite-specimen",
+    "title": "Ire identifies another LOTUSLITE specimen",
+    "org": "Microsoft",
+    "date": "2026-06-12",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/ire-identifies-another-lotuslite-specimen/"
+  },
+  {
+    "id": "eval-guide-for-pm",
+    "title": "Eval 正在取代 PRD？产品经理的 Eval 入门到落地指南",
+    "org": "",
+    "date": "2026-06-09",
+    "tags": [
+      "Agent",
+      "Eval/评测"
+    ],
+    "minutes": 7,
+    "source_url": ""
+  },
+  {
+    "id": "minimax-05-for-ai-agents-openclaw-cursor-claude-code-etc-add-skill-to-y",
+    "title": "For AI agents (OpenClaw, Cursor, Claude Code, etc.): add skill to your agent",
+    "org": "MiniMax",
+    "date": "2026-06-09",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 4,
+    "source_url": "https://github.com/MiniMax-AI/cli"
+  },
+  {
+    "id": "claude-code-best-practices-official",
+    "title": "Best Practices for Claude Code（Anthropic 官方指南）",
+    "org": "Anthropic",
+    "date": "2026-06-06",
+    "tags": [
+      "Agent",
+      "Claude Code"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+  },
+  {
+    "id": "minimax-06-ai-sdk-minimax-ai-provider",
+    "title": "AI SDK - MiniMax AI Provider",
+    "org": "MiniMax",
+    "date": "2026-06-06",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 4,
+    "source_url": "https://github.com/MiniMax-AI/vercel-minimax-ai-provider"
+  },
+  {
+    "id": "making-claude-chemist",
+    "title": "Making Claude a Chemist: NMR 预测与结构解析评测",
+    "org": "Anthropic",
+    "date": "2026-06-05",
+    "tags": [
+      "Eval/评测",
+      "多模态"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/making-claude-a-chemist"
+  },
+  {
+    "id": "anthropic-engineering-02-policy",
+    "title": "Policy",
+    "org": "Anthropic",
+    "date": "2026-06-04",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 10,
+    "source_url": "https://www.anthropic.com/policy"
+  },
+  {
+    "id": "ai-cyber-threats-mapping",
+    "title": "AI 网络威胁全景图：Anthropic 一年追踪报告",
+    "org": "Anthropic",
+    "date": "2026-06-03",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "Harness工程"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/mapping-ai-cyber-threats"
+  },
+  {
+    "id": "minimax-07-vibeapps",
+    "title": "VibeApps",
+    "org": "MiniMax",
+    "date": "2026-06-03",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 5,
+    "source_url": "https://github.com/MiniMax-AI/OpenRoom"
+  },
+  {
+    "id": "project-glasswing-expanding",
+    "title": "Expanding Project Glasswing（扩大 Project Glasswing）",
+    "org": "Anthropic",
+    "date": "2026-06-02",
+    "tags": [],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/expanding-project-glasswing"
+  },
+  {
+    "id": "anthropic-s1-filing",
+    "title": "Anthropic 向 SEC 秘密提交 S-1 草案（Anthropic confidentially submits draft S-1 to the SEC）",
+    "org": "Anthropic",
+    "date": "2026-06-01",
+    "tags": [
+      "安全/对齐"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.anthropic.com/news/anthropic-s1-filing"
+  },
+  {
+    "id": "anthropic-series-h",
+    "title": "Anthropic 完成 650 亿美元 H 轮融资，估值 9650 亿美元",
+    "org": "Anthropic",
+    "date": "2026-05-28",
+    "tags": [
+      "company",
+      "Agent",
+      "RAG/检索",
+      "Claude Code",
+      "可解释性",
+      "安全/对齐"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/anthropic-series-h"
+  },
+  {
+    "id": "claude-opus-4-8-intro",
+    "title": "Introducing Claude Opus 4.8（Claude Opus 4.8 发布公告）",
+    "org": "Anthropic",
+    "date": "2026-05-28",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code",
+      "安全/对齐",
+      "Harness工程",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/claude-opus-4-8"
+  },
+  {
+    "id": "microsoft-research-02-data-formulator-0-7-ai-powered-data-analytics-for-enterprise",
+    "title": "Data Formulator 0.7: AI-powered data analytics for enterprise data",
+    "org": "Microsoft",
+    "date": "2026-05-28",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/data-formulator-0-7-ai-powered-data-analytics-for-enterprise-data/"
+  },
+  {
+    "id": "anthropic-milan-office",
+    "title": "Anthropic 开设米兰办公室（Anthropic opens Milan office）",
+    "org": "Anthropic",
+    "date": "2026-05-27",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "Claude Code",
+      "经济影响"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/anthropic-milan-office"
+  },
+  {
+    "id": "coding-agents-social-sciences",
+    "title": "Coding Agents in the Social Sciences（编码Agent与社会科学）",
+    "org": "Anthropic",
+    "date": "2026-05-27",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/coding-agents-social-sciences"
+  },
+  {
+    "id": "microsoft-research-03-extending-human-intelligence-through-ai",
+    "title": "Extending Human Intelligence Through AI",
+    "org": "Microsoft",
+    "date": "2026-05-27",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/extending-human-intelligence-through-ai/"
+  },
+  {
+    "id": "anthropic-korea-director",
+    "title": "Anthropic 任命 KiYoung Choi 为韩国代表理事，首尔办公室开业在即",
+    "org": "Anthropic",
+    "date": "2026-05-26",
+    "tags": [
+      "company",
+      "Agent",
+      "MCP",
+      "Claude Code",
+      "经济影响"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/anthropic-korea-director"
+  },
+  {
+    "id": "chris-olah-pope-leo-xiv",
+    "title": "Chris Olah 梵蒂冈演讲：教皇利奥十四世《Magnifica humanitas》通谕发布致辞",
+    "org": "Anthropic",
+    "date": "2026-05-25",
+    "tags": [
+      "可解释性"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/chris-olah-pope-leo-xiv"
+  },
+  {
+    "id": "claude-containment-products",
+    "title": "How we contain Claude across products",
+    "org": "Anthropic",
+    "date": "2026-05-25",
+    "tags": [
+      "Agent",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/how-we-contain-claude"
+  },
+  {
+    "id": "opc-methodology-easy",
+    "title": "Easy《一人企业方法论》v2.1",
+    "org": "AI 工程实践",
+    "date": "2026-05-24",
+    "tags": [],
+    "minutes": 7,
+    "source_url": ""
+  },
+  {
+    "id": "opc-skills-easy",
+    "title": "Easy OPC Agent Skills 集（9 个）",
+    "org": "AI 工程实践",
+    "date": "2026-05-24",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "安全/对齐"
+    ],
+    "minutes": 7,
+    "source_url": ""
+  },
+  {
+    "id": "opc-skills-jiangye",
+    "title": "jiangye1314 OPC Skill 集（5 个 + 12 套 toolkit）",
+    "org": "AI 工程实践",
+    "date": "2026-05-24",
+    "tags": [
+      "Agent",
+      "MCP"
+    ],
+    "minutes": 13,
+    "source_url": ""
+  },
+  {
+    "id": "opc-bubble-or-trend",
+    "title": "一人公司，风口还是泡沫？",
+    "org": "AI 工程实践",
+    "date": "2026-05-23",
+    "tags": [
+      "Agent"
+    ],
+    "minutes": 5,
+    "source_url": ""
+  },
+  {
+    "id": "anthropic-engineering-04-how-we-contain-claude-across-products",
+    "title": "How we contain Claude across products",
+    "org": "Anthropic",
+    "date": "2026-05-22",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 21,
+    "source_url": "https://www.anthropic.com/engineering/how-we-contain-claude"
+  },
+  {
+    "id": "opc-beijing-overview",
+    "title": "新风口来了｜北京重点扶持 AI 轻量化一人公司（OPC）",
+    "org": "AI 工程实践",
+    "date": "2026-05-22",
+    "tags": [
+      "Agent"
+    ],
+    "minutes": 3,
+    "source_url": ""
+  },
+  {
+    "id": "project-glasswing-initial",
+    "title": "Project Glasswing: An initial update（项目蜻蜓：初步进展报告）",
+    "org": "Anthropic",
+    "date": "2026-05-22",
+    "tags": [
+      "Agent",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/project-glasswing-initial"
+  },
+  {
+    "id": "microsoft-research-04-magenticlite-magenticbrain-fara1-5-an-agentic-experience-opt",
+    "title": "MagenticLite, MagenticBrain, Fara1.5: An agentic experience optimized for small models",
+    "org": "Microsoft",
+    "date": "2026-05-21",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/magenticlite-magenticbrain-fara1-5-an-agentic-experience-optimized-for-small-models/"
+  },
+  {
+    "id": "microsoft-research-05-vega-zero-knowledge-proofs-for-digital-identity-in-the-age-o",
+    "title": "Vega: Zero-knowledge proofs for digital identity in the age of AI",
+    "org": "Microsoft",
+    "date": "2026-05-21",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/vega-zero-knowledge-proofs-for-digital-identity-in-the-age-of-ai/"
+  },
+  {
+    "id": "opc-haidian-policy",
+    "title": "海淀区全面打造 OPC 创业生态专项申报指南（含政策解读）",
+    "org": "AI 工程实践",
+    "date": "2026-05-20",
+    "tags": [],
+    "minutes": 5,
+    "source_url": ""
+  },
+  {
+    "id": "widening-frontier-ai-conversation",
+    "title": "Widening the conversation on frontier AI",
+    "org": "Anthropic",
+    "date": "2026-05-19",
+    "tags": [
+      "Eval/评测",
+      "可解释性",
+      "安全/对齐"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/widening-frontier-ai-conversation"
+  },
+  {
+    "id": "microsoft-research-06-further-notes-on-our-recent-research-on-ai-delegation-and-lo",
+    "title": "Further Notes on Our Recent Research on AI Delegation and Long-Horizon Reliability",
+    "org": "Microsoft",
+    "date": "2026-05-15",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/further-notes-on-our-recent-research-on-ai-delegation-and-long-horizon-reliability/"
+  },
+  {
+    "id": "2028-ai-leadership-scenarios",
+    "title": "2028: Two Scenarios for Global AI Leadership（2028：全球AI领导权的两种情景）",
+    "org": "Anthropic",
+    "date": "2026-05-14",
+    "tags": [
+      "Agent",
+      "Eval/评测"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/2028-ai-leadership-scenarios"
+  },
+  {
+    "id": "opc-six-business-models",
+    "title": "6 种 OPC 商业模式",
+    "org": "AI 工程实践",
+    "date": "2026-05-14",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "MCP"
+    ],
+    "minutes": 4,
+    "source_url": ""
+  },
+  {
+    "id": "microsoft-research-07-mimalloc-a-new-high-performance-scalable-memory-allocator-fo",
+    "title": "mimalloc: A new, high-performance, scalable memory allocator for the modern era",
+    "org": "Microsoft",
+    "date": "2026-05-13",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/mimalloc-a-high-performance-scalable-memory-allocator-for-the-modern-era/"
+  },
+  {
+    "id": "microsoft-research-08-gridsfm-a-new-small-foundation-model-for-the-electric-grid",
+    "title": "GridSFM: A new, small foundation model for the electric grid",
+    "org": "Microsoft",
+    "date": "2026-05-13",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/gridsfm-a-new-small-foundation-model-for-the-electric-grid/"
+  },
+  {
+    "id": "microsoft-research-09-advancing-ai-for-materials-with-mattersim-experimental-synth",
+    "title": "Advancing AI for materials with MatterSim: experimental synthesis, faster simulation, and multi-task models",
+    "org": "Microsoft",
+    "date": "2026-05-12",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/advancing-ai-for-materials-with-mattersim-experimental-synthesis-faster-simulation-and-multi-task-models/"
+  },
+  {
+    "id": "ant-afoo-medical-agent",
+    "title": "蚂蚁阿福：从 0 到生产的医疗 Agent 工程化落地",
+    "org": "行业实践",
+    "date": "2026-05-11",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 4,
+    "source_url": ""
+  },
+  {
+    "id": "copilot-to-director-aigc",
+    "title": "从 Copilot 到 Director：多模态智能体如何接管 AIGC 流程",
+    "org": "行业实践",
+    "date": "2026-05-11",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "多模态",
+      "开源模型"
+    ],
+    "minutes": 5,
+    "source_url": ""
+  },
+  {
+    "id": "dataagent-netease",
+    "title": "从 Copilot 到 DataAgent：企业级智能数据开发治理平台的技术演进和实践",
+    "org": "行业实践",
+    "date": "2026-05-11",
+    "tags": [
+      "Agent",
+      "MCP"
+    ],
+    "minutes": 6,
+    "source_url": ""
+  },
+  {
+    "id": "microsoft-research-10-socialreasoning-bench-measuring-whether-ai-agents-act-in-use",
+    "title": "SocialReasoning-Bench: Measuring whether AI agents act in users’ best interests",
+    "org": "Microsoft",
+    "date": "2026-05-11",
+    "tags": [
+      "Microsoft"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/socialreasoning-bench-measuring-whether-ai-agents-act-in-users-best-interests/"
+  },
+  {
+    "id": "colleague-skill",
+    "title": "COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation",
+    "org": "AI 工程实践",
+    "date": "2026-05-10",
+    "tags": [],
+    "minutes": 3,
+    "source_url": ""
+  },
+  {
+    "id": "enterprise-ai-landscape-zhaozhao",
+    "title": "企业 AI 应用全景：从试点热潮到规模落地的真实分水岭",
+    "org": "行业实践",
+    "date": "2026-05-10",
+    "tags": [
+      "Agent",
+      "多模态",
+      "Harness工程",
+      "工具调用"
+    ],
+    "minutes": 5,
+    "source_url": ""
+  },
+  {
+    "id": "hipporag2",
+    "title": "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "mem0-production-agents",
+    "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "长上下文"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "memorylake-second-brain",
+    "title": "构建 AI 的\\\"第二大脑\\\"：大规模多模态记忆平台技术实践",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "可解释性",
+      "多模态",
+      "工具调用"
+    ],
+    "minutes": 4,
+    "source_url": ""
+  },
+  {
+    "id": "memos",
+    "title": "MemOS: A Memory OS for AI System",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "nio-sales-llm",
+    "title": "蔚来销售大模型的工程应用与优化实践",
+    "org": "行业实践",
+    "date": "2026-05-10",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 5,
+    "source_url": ""
+  },
+  {
+    "id": "nuwa-skill",
+    "title": "nuwa-skill：人物思维蒸馏方法论",
+    "org": "AI 工程实践",
+    "date": "2026-05-10",
+    "tags": [
+      "Agent",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": ""
+  },
+  {
+    "id": "second-me",
+    "title": "AI-native Memory 2.0: Second Me",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "RAG/检索",
+      "推理模型",
+      "开源模型"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "titans",
+    "title": "Titans: Learning to Memorize at Test Time",
+    "org": "记忆系统",
+    "date": "2026-05-10",
+    "tags": [
+      "RAG/检索",
+      "长上下文"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "anthropic-research-03-teaching-claude-why",
+    "title": "Teaching Claude why",
+    "org": "Anthropic",
+    "date": "2026-05-08",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 10,
+    "source_url": "https://www.anthropic.com/research/teaching-claude-why"
+  },
+  {
+    "id": "llm-rag-to-agent-exploration",
+    "title": "从LLM+RAG到Agent：我们团队这一年的AI探索",
+    "org": "RAG 研究",
+    "date": "2026-05-08",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "MCP",
+      "Claude Code",
+      "Harness工程"
+    ],
+    "minutes": 4,
+    "source_url": ""
+  },
+  {
+    "id": "teaching-claude-why",
+    "title": "Teaching Claude Why: 为什么教原则比教行为更有效",
+    "org": "Anthropic",
+    "date": "2026-05-08",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "安全/对齐",
+      "工具调用"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/research/teaching-claude-why"
+  },
+  {
+    "id": "anthropic-institute-focus",
+    "title": "Focus areas for The Anthropic Institute（Anthropic Institute 研究方向）",
+    "org": "Anthropic",
+    "date": "2026-05-07",
+    "tags": [
+      "Agent",
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/anthropic-institute-focus"
+  },
+  {
+    "id": "donating-alignment-tool",
+    "title": "Donating our open-source alignment tool（捐赠开源对齐工具 Petri）",
+    "org": "Anthropic",
+    "date": "2026-05-07",
+    "tags": [
+      "Eval/评测",
+      "MCP",
+      "安全/对齐",
+      "Harness工程",
+      "开源模型"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/donating-alignment-tool"
+  },
+  {
+    "id": "kg-llm-future-zhihu",
+    "title": "有了大语言模型后，知识图谱该何去何从？",
+    "org": "RAG 研究",
+    "date": "2026-05-07",
+    "tags": [
+      "RAG/检索",
+      "可解释性"
+    ],
+    "minutes": 1,
+    "source_url": ""
+  },
+  {
+    "id": "pageindex-rag",
+    "title": "PageIndex：一种基于推理的无向量 RAG 新范式",
+    "org": "RAG 研究",
+    "date": "2026-05-07",
+    "tags": [
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "agent-kb-market-landscape",
+    "title": "Agent大潮里，知识库落地走到哪了？",
+    "org": "行业实践",
+    "date": "2026-05-06",
+    "tags": [
+      "Agent",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": ""
+  },
+  {
+    "id": "anthropic-research-02-natural-language-autoencoders-turning-claude-s-thoughts-into",
+    "title": "Natural Language Autoencoders: Turning Claude’s thoughts into text",
+    "org": "Anthropic",
+    "date": "2026-05-06",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 8,
+    "source_url": "https://www.anthropic.com/research/natural-language-autoencoders"
+  },
+  {
+    "id": "claude-code-best-practices",
+    "title": "Claude Code 最佳实践指南（2026年版）",
+    "org": "Anthropic",
+    "date": "2026-05-06",
+    "tags": [
+      "Claude Code"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+  },
+  {
+    "id": "rag-retrieval-optimization-4layers",
+    "title": "阿里Agent岗二面：RAG检索优化四层系统性框架",
+    "org": "RAG 研究",
+    "date": "2026-05-05",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "代码模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://mp.weixin.qq.com/s/ipMjYyYFl3pxbaX9Hl1yaw"
+  },
+  {
+    "id": "demystifying-evals-for-ai-agents",
+    "title": "Demystifying Evals for AI Agents（揭秘 AI Agent 评测体系）",
+    "org": "Anthropic",
+    "date": "2026-05",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code",
+      "Harness工程",
+      "工具调用"
+    ],
+    "minutes": 8,
+    "source_url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+  },
+  {
+    "id": "claude-personal-guidance-usage",
+    "title": "How People Ask Claude for Personal Guidance（人们如何向Claude寻求个人指导）",
+    "org": "Anthropic",
+    "date": "2026-04-30",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/how-people-ask-claude-for-guidance"
+  },
+  {
+    "id": "enterprise-rag-platform",
+    "title": "企业级 RAG 中台怎么做：从文档解析到溯源和评测闭环",
+    "org": "RAG 研究",
+    "date": "2026-04-30",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/2033253724131419834"
+  },
+  {
+    "id": "graphrag-lightrag-advanced",
+    "title": "GraphRAG与LightRAG大厂面试题汇总：完整技术深度解析",
+    "org": "RAG 研究",
+    "date": "2026-04-28",
+    "tags": [
+      "RAG/检索"
+    ],
+    "minutes": 5,
+    "source_url": "https://zhuanlan.zhihu.com/p/2032430219286590896"
+  },
+  {
+    "id": "ragflow-agent-harness-data-layer",
+    "title": "Agent harness 时代的数据底座：RAGFlow 为何而变",
+    "org": "",
+    "date": "2026-04-28",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "RAG/检索",
+      "Harness工程"
+    ],
+    "minutes": 3,
+    "source_url": "https://zhuanlan.zhihu.com/p/2032559018770683864"
+  },
+  {
+    "id": "deepseek-01-deepseek",
+    "title": "DeepSeek",
+    "org": "DeepSeek",
+    "date": "2026-04-27",
+    "tags": [
+      "DeepSeek"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.deepseek.com/en/"
+  },
+  {
+    "id": "deepseek-02-é-æ-åº",
+    "title": "éæåº¦",
+    "org": "DeepSeek",
+    "date": "2026-04-27",
+    "tags": [
+      "DeepSeek"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.deepseek.com/transparency/"
+  },
+  {
+    "id": "graphrag-lightrag-interview",
+    "title": "GraphRAG与LightRAG深度解析（面试向）",
+    "org": "RAG 研究",
+    "date": "2026-04-27",
+    "tags": [
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/2030588141619394080"
+  },
+  {
+    "id": "llm-wiki-graphify-enterprise-rag",
+    "title": "Karpathy的LLM Wiki + Graphify：企业级 RAG 缺的真是知识图谱？",
+    "org": "RAG 研究",
+    "date": "2026-04-27",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/2032126561122514834"
+  },
+  {
+    "id": "election-safeguards-update",
+    "title": "An update on our election safeguards（选举安全防护更新）",
+    "org": "Anthropic",
+    "date": "2026-04-24",
+    "tags": [
+      "Eval/评测"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/election-safeguards-update"
+  },
+  {
+    "id": "project-deal-marketplace",
+    "title": "Project Deal: our Claude-run marketplace experiment",
+    "org": "Anthropic",
+    "date": "2026-04-24",
+    "tags": [
+      "Agent",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/project-deal"
+  },
+  {
+    "id": "anthropic-engineering-05-an-update-on-recent-claude-code-quality-reports",
+    "title": "An update on recent Claude Code quality reports",
+    "org": "Anthropic",
+    "date": "2026-04-23",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 8,
+    "source_url": "https://www.anthropic.com/engineering/april-23-postmortem"
+  },
+  {
+    "id": "claude-code-quality-reports",
+    "title": "An update on recent Claude Code quality reports",
+    "org": "Anthropic",
+    "date": "2026-04-23",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code",
+      "推理模型",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-quality-reports"
+  },
+  {
+    "id": "services-track-partner-hub",
+    "title": "An update on recent Claude Code quality reports",
+    "org": "Anthropic",
+    "date": "2026-04-23",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code",
+      "推理模型",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/services-track-partner-hub"
+  },
+  {
+    "id": "minimax-08-minimax-skills",
+    "title": "MiniMax Skills",
+    "org": "MiniMax",
+    "date": "2026-04-18",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 5,
+    "source_url": "https://github.com/MiniMax-AI/skills"
+  },
+  {
+    "id": "opc-mass-emergence",
+    "title": "\\\"一人公司\\\"，迎来大爆发",
+    "org": "AI 工程实践",
+    "date": "2026-04-18",
+    "tags": [],
+    "minutes": 3,
+    "source_url": ""
+  },
+  {
+    "id": "minimax-09-print-model-parameters",
+    "title": "print model parameters",
+    "org": "MiniMax",
+    "date": "2026-04-15",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 9,
+    "source_url": "https://github.com/MiniMax-AI/VTP"
+  },
+  {
+    "id": "automated-alignment-researchers",
+    "title": "Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight",
+    "org": "Anthropic",
+    "date": "2026-04-14",
+    "tags": [
+      "Eval/评测",
+      "可解释性",
+      "安全/对齐",
+      "多模态"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/automated-alignment-researchers"
+  },
+  {
+    "id": "embrace-agent",
+    "title": "拥抱Agent，卷死其他牛马",
+    "org": "AI 工程实践",
+    "date": "2026-04-14",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "推理模型",
+      "工具调用"
+    ],
+    "minutes": 1,
+    "source_url": "https://zhuanlan.zhihu.com/p/2025676117307138196"
+  },
+  {
+    "id": "minimax-10-minimax-m2-7",
+    "title": "MiniMax-M2.7",
+    "org": "MiniMax",
+    "date": "2026-04-14",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 4,
+    "source_url": "https://github.com/MiniMax-AI/MiniMax-M2.7"
+  },
+  {
+    "id": "harness-era-tang-daosheng",
+    "title": "汤道生：人工智能正式进入 Harness 时代",
+    "org": "",
+    "date": "2026-04-13",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Harness工程",
+      "工具调用"
+    ],
+    "minutes": 2,
+    "source_url": "https://mp.weixin.qq.com/s/腾讯研究院"
+  },
+  {
+    "id": "rag-interview-comprehensive",
+    "title": "字节面试官：RAG完整知识体系（万字图解）",
+    "org": "RAG 研究",
+    "date": "2026-04-13",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "开源模型"
+    ],
+    "minutes": 4,
+    "source_url": "https://mp.weixin.qq.com/s/BqOdWsCjtXoUllUuFVb29w"
+  },
+  {
+    "id": "scaling-managed-agents",
+    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "org": "Anthropic",
+    "date": "2026-04-08",
+    "tags": [
+      "Agent",
+      "MCP",
+      "多模态",
+      "长上下文",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/managed-agents"
+  },
+  {
+    "id": "emotion-concepts",
+    "title": "Emotion Concepts and Their Function in a Large Language Model",
+    "org": "Anthropic",
+    "date": "2026-04-02",
+    "tags": [
+      "interpretability",
+      "可解释性",
+      "安全/对齐",
+      "推理模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/emotion-concepts"
+  },
+  {
+    "id": "agent-skills-last-mile",
+    "title": "Agent Skills：打通可复用专业领域知识的最后一公里",
+    "org": "AI 工程实践",
+    "date": "2026-04-01",
+    "tags": [
+      "Agent",
+      "MCP",
+      "工具调用"
+    ],
+    "minutes": 2,
+    "source_url": "https://mp.weixin.qq.com/s/PonVlfEFbGLkaDt_1oWfdA"
+  },
+  {
+    "id": "australia-claude-usage",
+    "title": "澳大利亚如何使用 Claude：Anthropic Economic Index 发现",
+    "org": "Anthropic",
+    "date": "2026-03-31",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/how-australia-uses-claude"
+  },
+  {
+    "id": "claude-code-auto-mode",
+    "title": "How we built Claude Code auto mode: a safer way to skip permissions",
+    "org": "Anthropic",
+    "date": "2026-03-25",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "安全/对齐",
+      "推理模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-auto-mode"
+  },
+  {
+    "id": "anthropic-engineering-02-how-we-built-claude-code-auto-mode-a-safer-way-to-skip-permi",
+    "title": "How we built Claude Code auto mode: a safer way to skip permissions",
+    "org": "Anthropic",
+    "date": "2026-03-24",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 17,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-auto-mode"
+  },
+  {
+    "id": "anthropic-engineering-03-harness-design-for-long-running-application-development",
+    "title": "Harness design for long-running application development",
+    "org": "Anthropic",
+    "date": "2026-03-24",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 24,
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps"
+  },
+  {
+    "id": "economic-index-learning-curves",
+    "title": "Anthropic Economic Index report: Learning curves",
+    "org": "Anthropic",
+    "date": "2026-03-24",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/economic-index-learning-curves"
+  },
+  {
+    "id": "harness-design-app-dev",
+    "title": "Harness design for long-running application development",
+    "org": "Anthropic",
+    "date": "2026-03-24",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "MCP"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps"
+  },
+  {
+    "id": "spec-is-code",
+    "title": "别再幻想用 Spec 替代写代码",
+    "org": "AI 工程实践",
+    "date": "2026-03-23",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "工具调用"
+    ],
+    "minutes": 2,
+    "source_url": "https://haskellforall.com/2026/03/a-sufficiently-detailed-spec-is-code"
+  },
+  {
+    "id": "anthropic-research-05-what-81-000-peoplewant-from-ai",
+    "title": "What 81,000 peoplewant from AI",
+    "org": "Anthropic",
+    "date": "2026-03-18",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 44,
+    "source_url": "https://www.anthropic.com/81k-interviews"
+  },
+  {
+    "id": "what-people-want-from-ai",
+    "title": "What 81,000 People Want from AI（8万人的AI期望调研）",
+    "org": "Anthropic",
+    "date": "2026-03-18",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "RAG/检索",
+      "经济影响"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/what-people-want-from-ai"
+  },
+  {
+    "id": "diff-tool-ai",
+    "title": "A \\\"diff\\\" tool for AI: 为新模型寻找行为差异（跨架构模型 Diffing）",
+    "org": "Anthropic",
+    "date": "2026-03-13",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐",
+      "推理模型",
+      "代码模型",
+      "开源模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/diff-tool-ai"
+  },
+  {
+    "id": "openclaw-vs-claude-code",
+    "title": "OpenClaw 和 Claude Code 的本质分歧：人本位 vs AI本位",
+    "org": "Anthropic",
+    "date": "2026-03-10",
+    "tags": [
+      "Agent",
+      "Claude Code"
+    ],
+    "minutes": 2,
+    "source_url": "https://mp.weixin.qq.com/s/qa1J3KglD8ITh75NrfbfGA"
+  },
+  {
+    "id": "anthropic-engineering-04-eval-awareness-in-claude-opus-4-6-s-browsecomp-performance",
+    "title": "Eval awareness in Claude Opus 4.6’s BrowseComp performance",
+    "org": "Anthropic",
+    "date": "2026-03-06",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 10,
+    "source_url": "https://www.anthropic.com/engineering/eval-awareness-browsecomp"
+  },
+  {
+    "id": "eval-awareness-browsecomp",
+    "title": "Eval awareness in Claude Opus 4.6's BrowseComp performance",
+    "org": "Anthropic",
+    "date": "2026-03-06",
+    "tags": [
+      "Agent",
+      "Eval/评测"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/eval-awareness-browsecomp"
+  },
+  {
+    "id": "how-to-be-top-agentic-engineer",
+    "title": "如何成为顶级 Agentic 工程师",
+    "org": "AI 工程实践",
+    "date": "2026-03-06",
+    "tags": [
+      "Agent",
+      "安全/对齐"
+    ],
+    "minutes": 2,
+    "source_url": "https://x.com/systematicls/status/2028814227004395561"
+  },
+  {
+    "id": "labor-market-impacts",
+    "title": "AI劳动力市场影响：新指标与早期证据",
+    "org": "Anthropic",
+    "date": "2026-03-05",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/labor-market-impacts"
+  },
+  {
+    "id": "sft-to-rl-decision",
+    "title": "大厂实战中，如何判断SFT到什么程度开始做RL",
+    "org": "AI 工程实践",
+    "date": "2026-02-27",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐",
+      "推理模型"
+    ],
+    "minutes": 1,
+    "source_url": "https://mp.weixin.qq.com/s/DQcrP2iSaGKchEkKbQd9dw"
+  },
+  {
+    "id": "model-deprecation-update",
+    "title": "模型退役承诺更新：Claude Opus 3 案例",
+    "org": "Anthropic",
+    "date": "2026-02-25",
+    "tags": [],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/news/model-deprecation-update"
+  },
+  {
+    "id": "persona-selection-model",
+    "title": "人格选择模型（The Persona Selection Model）",
+    "org": "Anthropic",
+    "date": "2026-02-23",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/persona-selection-model"
+  },
+  {
+    "id": "measuring-agent-autonomy",
+    "title": "Measuring AI Agent Autonomy in Practice（实测AI Agent自主性）",
+    "org": "Anthropic",
+    "date": "2026-02-18",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/measuring-agent-autonomy"
+  },
+  {
+    "id": "india-country-brief",
+    "title": "印度国家简报：Anthropic 经济指数（India Country Brief: The Anthropic Economic Index）",
+    "org": "Anthropic",
+    "date": "2026-02-16",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/india-country-brief"
+  },
+  {
+    "id": "c-compiler-parallel-claudes",
+    "title": "Building a C compiler with a team of parallel Claudes",
+    "org": "Anthropic",
+    "date": "2026-02-05",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "长上下文"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/parallel-claudes-c-compiler"
+  },
+  {
+    "id": "infrastructure-noise-evals",
+    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "org": "Anthropic",
+    "date": "2026-02-05",
+    "tags": [
+      "Agent",
+      "Eval/评测"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
+  },
+  {
+    "id": "anthropic-engineering-01-scaling-managed-agents-decoupling-the-brain-from-the-hands",
+    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "org": "Anthropic",
+    "date": "2026-02-04",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 10,
+    "source_url": "https://www.anthropic.com/engineering/managed-agents"
+  },
+  {
+    "id": "anthropic-engineering-05-quantifying-infrastructure-noise-in-agentic-coding-evals",
+    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "org": "Anthropic",
+    "date": "2026-02-03",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 9,
+    "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
+  },
+  {
+    "id": "ai-coding-skills-impact",
+    "title": "AI辅助如何影响编程技能的形成（How AI Assistance Impacts the Formation of Coding Skills）",
+    "org": "Anthropic",
+    "date": "2026-01-29",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "经济影响"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/ai-coding-skills"
+  },
+  {
+    "id": "ai-resistant-evaluations",
+    "title": "Designing AI-resistant technical evaluations",
+    "org": "Anthropic",
+    "date": "2026-01-21",
+    "tags": [
+      "Eval/评测"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/research/ai-resistant-evaluations"
+  },
+  {
+    "id": "assistant-axis",
+    "title": "助手轴：定位与稳定大语言模型的角色特征",
+    "org": "Anthropic",
+    "date": "2026-01-19",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "可解释性",
+      "安全/对齐",
+      "开源模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/assistant-axis"
+  },
+  {
+    "id": "economic-index-primitives",
+    "title": "Anthropic Economic Index Report: Economic Primitives",
+    "org": "Anthropic",
+    "date": "2026-01-15",
+    "tags": [
+      "RAG/检索",
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/economic-index-primitives"
+  },
+  {
+    "id": "next-gen-constitutional-classifiers",
+    "title": "Next-generation Constitutional Classifiers: 更高效的通用越狱防护",
+    "org": "Anthropic",
+    "date": "2026-01-09",
+    "tags": [
+      "可解释性",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/constitutional-classifiers"
+  },
+  {
+    "id": "rag-2025-year-end-review",
+    "title": "从 RAG 到 Context：2025 年 RAG 技术年终总结",
+    "org": "RAG 研究",
+    "date": "2026-01-05",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "RAG/检索",
+      "MCP",
+      "多模态",
+      "长上下文"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/1984948557493592394"
+  },
+  {
+    "id": "introducing-bloom",
+    "title": "Introducing Bloom: an open source tool for automated behavioral evaluations",
+    "org": "Anthropic",
+    "date": "2025-12-19",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "安全/对齐",
+      "开源模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/introducing-bloom"
+  },
+  {
+    "id": "project-vend-phase2",
+    "title": "Project Vend: Phase two（Project Vend 第二阶段）",
+    "org": "Anthropic",
+    "date": "2025-12-18",
+    "tags": [
+      "Agent",
+      "安全/对齐"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/news/project-vend-phase-two"
+  },
+  {
+    "id": "industrial-rag-fullstack-case",
+    "title": "从 1600+ 份 Word 文档到生产级 RAG：工控行业知识库全链路实战复盘",
+    "org": "RAG 研究",
+    "date": "2025-12-17",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/1984631595169244288"
+  },
+  {
+    "id": "anthropic-interviewer",
+    "title": "Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI",
+    "org": "Anthropic",
+    "date": "2025-12-04",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐",
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/news/anthropic-interviewer"
+  },
+  {
+    "id": "ai-transforming-work-anthropic",
+    "title": "How AI Is Transforming Work at Anthropic",
+    "org": "Anthropic",
+    "date": "2025-12-02",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "多模态",
+      "经济影响",
+      "工具调用"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/research/how-ai-is-transforming-work"
+  },
+  {
+    "id": "disempowerment-patterns",
+    "title": "Effective harnesses for long-running agents（长时运行Agent的有效Harness设计）",
+    "org": "Anthropic",
+    "date": "2025-11-26",
+    "tags": [
+      "Agent",
+      "MCP"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/disempowerment-patterns"
+  },
+  {
+    "id": "effective-harnesses-long-running",
+    "title": "Effective harnesses for long-running agents",
+    "org": "Anthropic",
+    "date": "2025-11-26",
+    "tags": [
+      "Agent",
+      "MCP"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/effective-harnesses-long-running-agents"
+  },
+  {
+    "id": "ai-productivity-gains",
+    "title": "估算 Claude 对话中的 AI 生产力增益（Estimating AI Productivity Gains from Claude Conversations）",
+    "org": "Anthropic",
+    "date": "2025-11-25",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/estimating-ai-productivity-gains"
+  },
+  {
+    "id": "advanced-tool-use-anthropic",
+    "title": "Introducing Advanced Tool Use on the Claude Developer Platform",
+    "org": "Anthropic",
+    "date": "2025-11-24",
+    "tags": [
+      "Agent",
+      "RAG/检索",
+      "MCP",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/advanced-tool-use"
+  },
+  {
+    "id": "anthropic-research-02-economic-research",
+    "title": "Economic Research",
+    "org": "Anthropic",
+    "date": "2025-11-24",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/team/economic-research"
+  },
+  {
+    "id": "shortcuts-to-sabotage",
+    "title": "From shortcuts to sabotage：奖励黑客诱发的自然涌现失对齐",
+    "org": "Anthropic",
+    "date": "2025-11-21",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/shortcuts-to-sabotage"
+  },
+  {
+    "id": "anthropic-research-01-frontier-red-team",
+    "title": "Frontier Red Team",
+    "org": "Anthropic",
+    "date": "2025-11-20",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.anthropic.com/research/team/frontier-red-team"
+  },
+  {
+    "id": "anthropic-research-01-alignment",
+    "title": "Alignment",
+    "org": "Anthropic",
+    "date": "2025-11-07",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/team/alignment"
+  },
+  {
+    "id": "anthropic-research-03-interpretability",
+    "title": "Interpretability",
+    "org": "Anthropic",
+    "date": "2025-11-07",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/team/interpretability"
+  },
+  {
+    "id": "anthropic-research-04-societal-impacts",
+    "title": "Societal Impacts",
+    "org": "Anthropic",
+    "date": "2025-11-07",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/team/societal-impacts"
+  },
+  {
+    "id": "moonshot-kimi-01-kimi-开放平台-新功能发布记录",
+    "title": "Kimi 开放平台：新功能发布记录",
+    "org": "Moonshot AI",
+    "date": "2025-11-07",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 3,
+    "source_url": "https://platform.kimi.com/blog/posts/changelog"
+  },
+  {
+    "id": "moonshot-kimi-02-kimi-k2-thinking-模型发布并开源-全面提升-agent-和推理能力",
+    "title": "Kimi K2 Thinking 模型发布并开源，全面提升 Agent 和推理能力",
+    "org": "Moonshot AI",
+    "date": "2025-11-06",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/k2-think"
+  },
+  {
+    "id": "moonshot-kimi-03-kimi-k2-turbo-api-价格调整通知",
+    "title": "Kimi K2 Turbo API 价格调整通知",
+    "org": "Moonshot AI",
+    "date": "2025-11-06",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/k2-turbo-discount"
+  },
+  {
+    "id": "code-execution-mcp",
+    "title": "Code execution with MCP: Building more efficient agents",
+    "org": "Anthropic",
+    "date": "2025-11-04",
+    "tags": [
+      "Agent",
+      "MCP",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/code-execution-mcp"
+  },
+  {
+    "id": "signs-of-introspection",
+    "title": "Signs of Introspection in Large Language Models（大语言模型中的内省迹象）",
+    "org": "Anthropic",
+    "date": "2025-10-29",
+    "tags": [
+      "可解释性",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/signs-of-introspection"
+  },
+  {
+    "id": "claude-code-sandboxing",
+    "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
+    "org": "Anthropic",
+    "date": "2025-10-20",
+    "tags": [
+      "Agent",
+      "MCP",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/claude-code-sandboxing"
+  },
+  {
+    "id": "agent-skills-official",
+    "title": "Equipping agents for the real world with Agent Skills",
+    "org": "AI 工程实践",
+    "date": "2025-10-16",
+    "tags": [
+      "Agent",
+      "Eval/评测"
+    ],
+    "minutes": 3,
+    "source_url": ""
+  },
+  {
+    "id": "enterprise-rag-10-lessons",
+    "title": "企业级 RAG 系统实战（2万+文档）：10 个项目踩过的坑",
+    "org": "RAG 研究",
+    "date": "2025-10-11",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索",
+      "开源模型"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/1960251424324682438"
+  },
+  {
+    "id": "context-engineering-agents",
+    "title": "Effective context engineering for AI agents",
+    "org": "Anthropic",
+    "date": "2025-09-29",
+    "tags": [
+      "Agent",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/context-engineering"
+  },
+  {
+    "id": "qwen-01-qwen3guard-real-time-safety-for-your-token-stream",
+    "title": "Qwen3Guard: Real-time Safety for Your Token Stream",
+    "org": "阿里巴巴",
+    "date": "2025-09-23",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen3guard/"
+  },
+  {
+    "id": "postmortem-three-issues",
+    "title": "A Postmortem of Three Recent Issues",
+    "org": "Anthropic",
+    "date": "2025-09-17",
+    "tags": [
+      "Eval/评测",
+      "Claude Code"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/april-23-postmortem"
+  },
+  {
+    "id": "moonshot-kimi-04-kimi-k2-官方高速版-api-开启-5-折特惠",
+    "title": "Kimi K2 官方高速版 API 开启 5 折特惠",
+    "org": "Moonshot AI",
+    "date": "2025-09-16",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/k2-prom"
+  },
+  {
+    "id": "writing-effective-tools-agents",
+    "title": "Writing effective tools for agents — with agents",
+    "org": "Anthropic",
+    "date": "2025-09-11",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "Claude Code",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/writing-effective-tools"
+  },
+  {
+    "id": "moonshot-kimi-05-kimi-k2-模型更新-带来更强的代码能力-更快的-api",
+    "title": "Kimi K2 模型更新，带来更强的代码能力、更快的 API",
+    "org": "Moonshot AI",
+    "date": "2025-09-05",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-k2-0905"
+  },
+  {
+    "id": "education-report-educators",
+    "title": "Anthropic教育报告：教育者如何使用Claude",
+    "org": "Anthropic",
+    "date": "2025-08-27",
+    "tags": [
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/education-report-educators"
+  },
+  {
+    "id": "moonshot-kimi-06-kimi-k2-又又又提速了",
+    "title": "Kimi K2 又又又提速了",
+    "org": "Moonshot AI",
+    "date": "2025-08-22",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/k2-turbo-enhance"
+  },
+  {
+    "id": "qwen-02-qwen-image-edit-image-editing-with-higher-quality-and-effici",
+    "title": "Qwen-Image-Edit: Image Editing with Higher Quality and Efficiency",
+    "org": "阿里巴巴",
+    "date": "2025-08-19",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-image-edit/"
+  },
+  {
+    "id": "qwen-03-qwen-image-crafting-with-native-text-rendering",
+    "title": "Qwen-Image: Crafting with Native Text Rendering",
+    "org": "阿里巴巴",
+    "date": "2025-08-04",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-image/"
+  },
+  {
+    "id": "persona-vectors",
+    "title": "Persona Vectors：监控与控制语言模型人格特征",
+    "org": "Anthropic",
+    "date": "2025-08-01",
+    "tags": [
+      "interpretability",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/persona-vectors"
+  },
+  {
+    "id": "qwen-04-gspo-towards-scalable-reinforcement-learning-for-language-mo",
+    "title": "GSPO: Towards Scalable Reinforcement Learning for Language Models",
+    "org": "阿里巴巴",
+    "date": "2025-07-27",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/gspo/"
+  },
+  {
+    "id": "qwen-05-qwen-mt-where-speed-meets-smart-translation",
+    "title": "Qwen-MT: Where Speed Meets Smart Translation",
+    "org": "阿里巴巴",
+    "date": "2025-07-24",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-mt/"
+  },
+  {
+    "id": "qwen-06-qwen3-coder-agentic-coding-in-the-world",
+    "title": "Qwen3-Coder: Agentic Coding in the World",
+    "org": "阿里巴巴",
+    "date": "2025-07-22",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen3-coder/"
+  },
+  {
+    "id": "moonshot-kimi-07-kimi-playground-一站式体验-kimi-k2-的工具调用能力",
+    "title": "Kimi Playground 一站式体验 Kimi K2 的工具调用能力",
+    "org": "Moonshot AI",
+    "date": "2025-07-17",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 3,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-playground"
+  },
+  {
+    "id": "minimax-01-minimax-01",
+    "title": "MiniMax-01",
+    "org": "MiniMax",
+    "date": "2025-07-07",
+    "tags": [
+      "MiniMax",
+      "开源",
+      "技术报告"
+    ],
+    "minutes": 14,
+    "source_url": "https://github.com/MiniMax-AI/MiniMax-01"
+  },
+  {
+    "id": "claude-support-usage",
+    "title": "How People Use Claude for Support, Advice, and Companionship",
+    "org": "Anthropic",
+    "date": "2025-06-27",
+    "tags": [],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/how-people-use-claude-for-support"
+  },
+  {
+    "id": "qwen-07-time-to-speak-some-dialects-qwen-tts",
+    "title": "Time to Speak Some Dialects, Qwen-TTS!",
+    "org": "阿里巴巴",
+    "date": "2025-06-27",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-tts/"
+  },
+  {
+    "id": "mcp-desktop-extensions",
+    "title": "Desktop Extensions: One-click MCP server installation for Claude Desktop",
+    "org": "Anthropic",
+    "date": "2025-06-26",
+    "tags": [
+      "MCP",
+      "Claude Code"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/engineering/desktop-extensions"
+  },
+  {
+    "id": "qwen-08-qwen-vlo-from-understanding-the-world-to-depicting-it",
+    "title": "Qwen VLo: From \\\"Understanding\\\" the World to \\\"Depicting\\\" It",
+    "org": "阿里巴巴",
+    "date": "2025-06-26",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-vlo/"
+  },
+  {
+    "id": "multi-agent-research-system",
+    "title": "How we built our multi-agent research system",
+    "org": "Anthropic",
+    "date": "2025-06-13",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "推理模型",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system"
+  },
+  {
+    "id": "enterprise-rag-sota-challenge",
+    "title": "企业RAG挑战赛 SOTA 方案（赢得全部类别）",
+    "org": "RAG 研究",
+    "date": "2025-06-10",
+    "tags": [
+      "RAG/检索",
+      "推理模型",
+      "开源模型"
+    ],
+    "minutes": 2,
+    "source_url": "https://zhuanlan.zhihu.com/p/1915060185329796001"
+  },
+  {
+    "id": "qwen-09-qwen3-embedding-advancing-text-embedding-and-reranking-throu",
+    "title": "Qwen3 Embedding: Advancing Text Embedding and Reranking Through Foundation Models",
+    "org": "阿里巴巴",
+    "date": "2025-06-05",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen3-embedding/"
+  },
+  {
+    "id": "circuit-tracing-tools",
+    "title": "Open-sourcing circuit tracing tools（开源电路追踪工具）",
+    "org": "Anthropic",
+    "date": "2025-05-29",
+    "tags": [
+      "可解释性",
+      "安全/对齐",
+      "代码模型",
+      "开源模型"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/open-sourcing-circuit-tracing"
+  },
+  {
+    "id": "moonshot-kimi-08-kimi-长思考模型-api-正式发布",
+    "title": "Kimi 长思考模型 API 正式发布",
+    "org": "Moonshot AI",
+    "date": "2025-05-06",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 5,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-thinking"
+  },
+  {
+    "id": "qwen-10-qwen3-think-deeper-act-faster",
+    "title": "Qwen3: Think Deeper, Act Faster",
+    "org": "阿里巴巴",
+    "date": "2025-04-29",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen3/"
+  },
+  {
+    "id": "ai-software-development-impact",
+    "title": "Anthropic Economic Index: AI对软件开发的影响",
+    "org": "Anthropic",
+    "date": "2025-04-28",
+    "tags": [
+      "Agent",
+      "Claude Code",
+      "经济影响"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/ai-software-development"
+  },
+  {
+    "id": "lightrag-paper",
+    "title": "LightRAG: Simple and Fast Retrieval-Augmented Generation（原始论文）",
+    "org": "RAG 研究",
+    "date": "2025-04-28",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 3,
+    "source_url": "https://arxiv.org/abs/2410.05779"
+  },
+  {
+    "id": "values-in-the-wild",
+    "title": "Values in the Wild：真实对话中的 AI 价值观实证研究",
+    "org": "Anthropic",
+    "date": "2025-04-21",
+    "tags": [
+      "Eval/评测",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/values-in-the-wild"
+  },
+  {
+    "id": "education-report-students",
+    "title": "Anthropic 教育报告：大学生如何使用 Claude",
+    "org": "Anthropic",
+    "date": "2025-04-08",
+    "tags": [],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/education-report-students"
+  },
+  {
+    "id": "moonshot-kimi-09-kimi-开放平台产品价格调整通知",
+    "title": "Kimi 开放平台产品价格调整通知",
+    "org": "Moonshot AI",
+    "date": "2025-04-07",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.kimi.com/blog/posts/discount"
+  },
+  {
+    "id": "qwen-11-qvq-max-think-with-evidence",
+    "title": "QVQ-Max: Think with Evidence",
+    "org": "阿里巴巴",
+    "date": "2025-03-28",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qvq-max-preview/"
+  },
+  {
+    "id": "anthropic-economic-index",
+    "title": "Anthropic Economic Index: Insights from Claude 3.7 Sonnet",
+    "org": "Anthropic",
+    "date": "2025-03-27",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "推理模型",
+      "经济影响"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/anthropic-economic-index"
+  },
+  {
+    "id": "qwen-12-qwen2-5-omni-see-hear-talk-write-do-it-all",
+    "title": "Qwen2.5 Omni: See, Hear, Talk, Write, Do It All!",
+    "org": "阿里巴巴",
+    "date": "2025-03-27",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-omni/"
+  },
+  {
+    "id": "tracing-llm-thoughts",
+    "title": "Tracing the Thoughts of a Large Language Model（追踪大语言模型的思维过程）",
+    "org": "Anthropic",
+    "date": "2025-03-27",
+    "tags": [
+      "可解释性",
+      "安全/对齐",
+      "推理模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/tracing-llm-thoughts"
+  },
+  {
+    "id": "qwen-13-qwen2-5-vl-32b-smarter-and-lighter",
+    "title": "Qwen2.5-VL-32B: Smarter and Lighter",
+    "org": "阿里巴巴",
+    "date": "2025-03-24",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-vl-32b/"
+  },
+  {
+    "id": "think-tool-anthropic",
+    "title": "The \\\"think\\\" tool: Enabling Claude to stop and think in complex tool use situations",
+    "org": "Anthropic",
+    "date": "2025-03-20",
+    "tags": [
+      "Eval/评测",
+      "推理模型",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/claude-think-tool"
+  },
+  {
+    "id": "auditing-hidden-objectives",
+    "title": "Auditing language models for hidden objectives",
+    "org": "Anthropic",
+    "date": "2025-03-13",
+    "tags": [
+      "可解释性",
+      "安全/对齐"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/auditing-hidden-objectives"
+  },
+  {
+    "id": "qwen-14-qwq-32b-embracing-the-power-of-reinforcement-learning",
+    "title": "QwQ-32B: Embracing the Power of Reinforcement Learning",
+    "org": "阿里巴巴",
+    "date": "2025-03-06",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwq-32b/"
+  },
+  {
+    "id": "moonshot-kimi-10-技术报告-muon-优化器的首次大规模训练实践",
+    "title": "技术报告：Muon 优化器的首次大规模训练实践",
+    "org": "Moonshot AI",
+    "date": "2025-03-03",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 5,
+    "source_url": "https://platform.kimi.com/blog/posts/moonlight"
+  },
+  {
+    "id": "qwen-15-think-think-qwq-max-preview",
+    "title": "<think>...</think> QwQ-Max-Preview",
+    "org": "阿里巴巴",
+    "date": "2025-02-25",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwq-max-preview/"
+  },
+  {
+    "id": "moonshot-kimi-11-介绍一下-moba-面向长文本大模型的混合块注意力机制",
+    "title": "介绍一下 MoBA：面向长文本大模型的混合块注意力机制",
+    "org": "Moonshot AI",
+    "date": "2025-02-19",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 3,
+    "source_url": "https://platform.kimi.com/blog/posts/moba"
+  },
+  {
+    "id": "moonshot-kimi-12-为什么要推出-kimi-latest-模型",
+    "title": "为什么要推出 Kimi Latest 模型？",
+    "org": "Moonshot AI",
+    "date": "2025-02-17",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 3,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-latest"
+  },
+  {
+    "id": "qwen-16-qwen2-5-max-exploring-the-intelligence-of-large-scale-moe-mo",
+    "title": "Qwen2.5-Max: Exploring the Intelligence of Large-scale MoE Model",
+    "org": "阿里巴巴",
+    "date": "2025-01-28",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-max/"
+  },
+  {
+    "id": "qwen-17-qwen2-5-1m-deploy-your-own-qwen-with-context-length-up-to-1m",
+    "title": "Qwen2.5-1M: Deploy Your Own Qwen with Context Length up to 1M Tokens",
+    "org": "阿里巴巴",
+    "date": "2025-01-27",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-1m/"
+  },
+  {
+    "id": "qwen-18-qwen2-5-vl-qwen2-5-vl-qwen2-5-vl",
+    "title": "Qwen2.5 VL! Qwen2.5 VL! Qwen2.5 VL!",
+    "org": "阿里巴巴",
+    "date": "2025-01-26",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-vl/"
+  },
+  {
+    "id": "qwen-19-global-batch-load-balance-almost-free-lunch-to-improve-your",
+    "title": "Global-batch load balance almost free lunch to improve your MoE LLM training",
+    "org": "阿里巴巴",
+    "date": "2025-01-21",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/global-load-balance/"
+  },
+  {
+    "id": "qwen-20-towards-effective-process-supervision-in-mathematical-reason",
+    "title": "Towards Effective Process Supervision in Mathematical Reasoning",
+    "org": "阿里巴巴",
+    "date": "2025-01-14",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-math-prm/"
+  },
+  {
+    "id": "swe-bench-verified-sonnet",
+    "title": "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet",
+    "org": "Anthropic",
+    "date": "2025-01-06",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "多模态",
+      "Harness工程"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/swe-bench-sonnet"
+  },
+  {
+    "id": "qwen-21-qvq-to-see-the-world-with-wisdom",
+    "title": "QVQ: To See the World with Wisdom",
+    "org": "阿里巴巴",
+    "date": "2024-12-25",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qvq-72b-preview/"
+  },
+  {
+    "id": "lightrag-code-walkthrough",
+    "title": "LightRAG 技术框架解读（代码级）",
+    "org": "RAG 研究",
+    "date": "2024-12-19",
+    "tags": [
+      "RAG/检索"
+    ],
+    "minutes": 3,
+    "source_url": "https://zhuanlan.zhihu.com/p/13261291813"
+  },
+  {
+    "id": "natural-language-autoencoders",
+    "title": "Building Effective Agents（构建有效的 Agent）",
+    "org": "Anthropic",
+    "date": "2024-12-19",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "工具调用"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research/natural-language-autoencoders"
+  },
+  {
+    "id": "building-effective-ai-agents",
+    "title": "Building Effective AI Agents（构建有效的 AI Agent）",
+    "org": "Anthropic",
+    "date": "2024-12",
+    "tags": [
+      "Agent",
+      "Eval/评测",
+      "MCP",
+      "工具调用"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/building-effective-agents"
+  },
+  {
+    "id": "qwen-22-qwq-reflect-deeply-on-the-boundaries-of-the-unknown",
+    "title": "QwQ: Reflect Deeply on the Boundaries of the Unknown",
+    "org": "阿里巴巴",
+    "date": "2024-11-28",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwq-32b-preview/"
+  },
+  {
+    "id": "qwen-23-extending-the-context-length-to-1m-tokens",
+    "title": "Extending the Context Length to 1M Tokens!",
+    "org": "阿里巴巴",
+    "date": "2024-11-15",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-turbo/"
+  },
+  {
+    "id": "qwen-24-qwen2-5-coder-series-powerful-diverse-practical",
+    "title": "Qwen2.5-Coder Series: Powerful, Diverse, Practical.",
+    "org": "阿里巴巴",
+    "date": "2024-11-12",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-coder-family/"
+  },
+  {
+    "id": "contextual-retrieval-anthropic",
+    "title": "Introducing Contextual Retrieval",
+    "org": "Anthropic",
+    "date": "2024-09-19",
+    "tags": [
+      "Eval/评测",
+      "RAG/检索"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/engineering/contextual-retrieval"
+  },
+  {
+    "id": "qwen-25-qwen2-5-a-party-of-foundation-models",
+    "title": "Qwen2.5: A Party of Foundation Models!",
+    "org": "阿里巴巴",
+    "date": "2024-09-19",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5/"
+  },
+  {
+    "id": "qwen-26-qwen2-5-llm-extending-the-boundary-of-llms",
+    "title": "Qwen2.5-LLM: Extending the boundary of LLMs",
+    "org": "阿里巴巴",
+    "date": "2024-09-19",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-llm/"
+  },
+  {
+    "id": "qwen-27-qwen2-5-coder-code-more-learn-more",
+    "title": "Qwen2.5-Coder: Code More, Learn More!",
+    "org": "阿里巴巴",
+    "date": "2024-09-19",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-coder/"
+  },
+  {
+    "id": "qwen-28-qwen2-5-math-the-world-s-leading-open-sourced-mathematical-l",
+    "title": "Qwen2.5-Math: The world's leading open-sourced mathematical LLMs",
+    "org": "阿里巴巴",
+    "date": "2024-09-19",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2.5-math/"
+  },
+  {
+    "id": "moonshot-kimi-13-使用-unreal5-游戏引擎和-kimi-大模型开发交互式游戏",
+    "title": "使用 Unreal5 游戏引擎和 Kimi 大模型开发交互式游戏",
+    "org": "Moonshot AI",
+    "date": "2024-09-02",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.kimi.com/blog/posts/enpower-your-own-ai-agent-inside-unreal5-with-kimi"
+  },
+  {
+    "id": "qwen-29-qwen2-vl-to-see-the-world-more-clearly",
+    "title": "Qwen2-VL: To See the World More Clearly",
+    "org": "阿里巴巴",
+    "date": "2024-08-29",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2-vl/"
+  },
+  {
+    "id": "qwen-30-qwen2-audio-chat-with-your-voice",
+    "title": "Qwen2-Audio: Chat with Your Voice!",
+    "org": "阿里巴巴",
+    "date": "2024-08-09",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2-audio/"
+  },
+  {
+    "id": "qwen-31-introducing-qwen2-math",
+    "title": "Introducing Qwen2-Math",
+    "org": "阿里巴巴",
+    "date": "2024-08-08",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2-math/"
+  },
+  {
+    "id": "moonshot-kimi-14-context-caching-降价通知",
+    "title": "Context Caching 降价通知",
+    "org": "Moonshot AI",
+    "date": "2024-08-07",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/cache-price-reduction"
+  },
+  {
+    "id": "moonshot-kimi-15-kimi-企业级-api-正式发布",
+    "title": "Kimi 企业级 API 正式发布",
+    "org": "Moonshot AI",
+    "date": "2024-08-02",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/key-account-api"
+  },
+  {
+    "id": "moonshot-kimi-16-kimi-开放平台-office-hour-season-1-recap",
+    "title": "Kimi 开放平台 Office Hour Season 1 Recap",
+    "org": "Moonshot AI",
+    "date": "2024-07-23",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 1,
+    "source_url": "https://platform.kimi.com/blog/posts/office-hour-s1"
+  },
+  {
+    "id": "moonshot-kimi-17-kimi-api-助手的氮气加速装置-以-golang-为例实践-context-caching-3",
+    "title": "Kimi API 助手的氮气加速装置 —— 以 Golang 为例实践 Context Caching 3",
+    "org": "Moonshot AI",
+    "date": "2024-07-08",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 7,
+    "source_url": "https://platform.kimi.com/blog/posts/enhance-kimi-api-bot-with-context-caching-3"
+  },
+  {
+    "id": "moonshot-kimi-18-kimi-api-助手的氮气加速装置-以-golang-为例实践-context-caching-2",
+    "title": "Kimi API 助手的氮气加速装置 —— 以 Golang 为例实践 Context Caching 2",
+    "org": "Moonshot AI",
+    "date": "2024-07-02",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 5,
+    "source_url": "https://platform.kimi.com/blog/posts/enhance-kimi-api-bot-with-context-caching-2"
+  },
+  {
+    "id": "moonshot-kimi-19-context-caching-正式公测",
+    "title": "Context Caching 正式公测",
+    "org": "Moonshot AI",
+    "date": "2024-07-01",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 6,
+    "source_url": "https://platform.kimi.com/blog/posts/context-caching"
+  },
+  {
+    "id": "moonshot-kimi-20-context-caching-如何为-kimi-api-助手节省最高-90-的调用成本",
+    "title": "Context Caching 如何为 Kimi API 助手节省最高 90% 的调用成本",
+    "org": "Moonshot AI",
+    "date": "2024-07-01",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 4,
+    "source_url": "https://platform.kimi.com/blog/posts/how-to-save-90-percent-with-context-caching"
+  },
+  {
+    "id": "moonshot-kimi-21-用得起的长文本",
+    "title": "用得起的长文本",
+    "org": "Moonshot AI",
+    "date": "2024-06-19",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.kimi.com/blog/posts/introduction-to-context-caching"
+  },
+  {
+    "id": "qwen-32-hello-qwen2",
+    "title": "Hello Qwen2",
+    "org": "阿里巴巴",
+    "date": "2024-06-07",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen2/"
+  },
+  {
+    "id": "qwen-33-generalizing-an-llm-from-8k-to-1m-context-using-qwen-agent",
+    "title": "Generalizing an LLM from 8k to 1M Context using Qwen-Agent",
+    "org": "阿里巴巴",
+    "date": "2024-06-06",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-agent-2405/"
+  },
+  {
+    "id": "moonshot-kimi-22-kimi-api-还没用起来-请看这篇无门槛快速入门指南",
+    "title": "Kimi API 还没用起来？请看这篇无门槛快速入门指南",
+    "org": "Moonshot AI",
+    "date": "2024-05-30",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 7,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-api-quick-start-guide"
+  },
+  {
+    "id": "moonshot-kimi-23-kimi-大模型-api-更新了-也期待在-亚马逊云科技中国峰会-见到大家-开发者速递",
+    "title": "Kimi 大模型 API 更新了，也期待在「亚马逊云科技中国峰会」见到大家 | 开发者速递",
+    "org": "Moonshot AI",
+    "date": "2024-05-29",
+    "tags": [
+      "Moonshot AI"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.kimi.com/blog/posts/kimi-api-update-amazon-cloud-china-summit"
+  },
+  {
+    "id": "qwen-34-notes-on-qwen-max-0428",
+    "title": "Notes on Qwen-Max-0428",
+    "org": "阿里巴巴",
+    "date": "2024-05-11",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-max-0428/"
+  },
+  {
+    "id": "qwen-35-qwen1-5-110b-the-first-100b-model-of-the-qwen1-5-series",
+    "title": "Qwen1.5-110B: The First 100B+ Model of the Qwen1.5 Series",
+    "org": "阿里巴巴",
+    "date": "2024-04-25",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen1.5-110b/"
+  },
+  {
+    "id": "qwen-36-code-with-codeqwen1-5",
+    "title": "Code with CodeQwen1.5",
+    "org": "阿里巴巴",
+    "date": "2024-04-16",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/codeqwen1.5/"
+  },
+  {
+    "id": "qwen-37-qwen1-5-32b-fitting-the-capstone-of-the-qwen1-5-language-mod",
+    "title": "Qwen1.5-32B: Fitting the Capstone of the Qwen1.5 Language Model Series",
+    "org": "阿里巴巴",
+    "date": "2024-04-02",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen1.5-32b/"
+  },
+  {
+    "id": "qwen-38-qwen1-5-moe-matching-7b-model-performance-with-1-3-activated",
+    "title": "Qwen1.5-MoE: Matching 7B Model Performance with 1/3 Activated Parameters",
+    "org": "阿里巴巴",
+    "date": "2024-03-28",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-moe/"
+  },
+  {
+    "id": "anthropic-engineering-01-research",
+    "title": "Research",
+    "org": "Anthropic",
+    "date": "2024-03-09",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 2,
+    "source_url": "https://www.anthropic.com/research"
+  },
+  {
+    "id": "qwen-39-introducing-qwen1-5",
+    "title": "Introducing Qwen1.5",
+    "org": "阿里巴巴",
+    "date": "2024-02-04",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen1.5/"
+  },
+  {
+    "id": "qwen-40-introducing-qwen-vl",
+    "title": "Introducing Qwen-VL",
+    "org": "阿里巴巴",
+    "date": "2024-01-25",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen-vl/"
+  },
+  {
+    "id": "qwen-41-introducing-qwen",
+    "title": "Introducing Qwen",
+    "org": "阿里巴巴",
+    "date": "2024-01-23",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/qwen/"
+  },
+  {
+    "id": "anthropic-research-04-projectdeal",
+    "title": "projectdeal",
+    "org": "Anthropic",
+    "date": "2023-11-03",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 22,
+    "source_url": "https://www.anthropic.com/features/project-deal"
+  },
+  {
+    "id": "qwen-43-ofasys-enabling-multitask-learning-with-one-line-of-code",
+    "title": "OFASys: Enabling Multitask Learning with One Line of Code!",
+    "org": "阿里巴巴",
+    "date": "2022-12-28",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/ofasys/"
+  },
+  {
+    "id": "qwen-44-chinese-clip-contrastive-vision-language-pretraining-in-chin",
+    "title": "Chinese CLIP: Contrastive Vision-Language Pretraining in Chinese",
+    "org": "阿里巴巴",
+    "date": "2022-12-24",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/chinese-clip/"
+  },
+  {
+    "id": "qwen-42-ofa-towards-building-a-one-for-all-model",
+    "title": "OFA: Towards Building a One-For-All Model",
+    "org": "阿里巴巴",
+    "date": "2022-11-14",
+    "tags": [
+      "阿里巴巴"
+    ],
+    "minutes": 1,
+    "source_url": "https://qwenlm.github.io/blog/ofa/"
+  },
+  {
+    "id": "anthropic-engineering-03-app-unavailable",
+    "title": "App unavailable",
+    "org": "Anthropic",
+    "date": "",
+    "tags": [
+      "Anthropic"
+    ],
+    "minutes": 1,
+    "source_url": "https://www.anthropic.com/docs"
+  }
+]

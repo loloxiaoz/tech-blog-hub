@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0EEE6;--ink:#191919;--ink2:#6B6B63;--clay:#D97757;--clay2:#C15F3C;
+  --line:#DBD7CC;--card:#E8E5DB}
+html,body{width:100%;min-height:100%;background:var(--bg)}
+body{color:var(--ink);font-family:'Inter','PingFang SC',sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Fraunces','Noto Serif SC',serif}
+.cnserif{font-family:'Noto Serif SC','Fraunces',serif}
+/* 居中列 */
+.page{width:1080px;margin:0 auto}
+/* 海报区：固定尺寸，截图就截这块 */
+.poster{position:relative;width:1080px;height:1440px;overflow:hidden;background:var(--bg)}
+.poster::after{content:'';position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 50% 50%,rgba(180,170,150,.05) 1px,transparent 1px);
+  background-size:5px 5px}
+.wrap{position:relative;z-index:1;height:100%;padding:84px 80px 64px;display:flex;flex-direction:column}
+.mark{width:46px;height:4px;background:var(--clay);border-radius:4px;margin-bottom:22px}
+/* ── 导航（浏览显示，截图隐藏）── */
+.navbtn{position:fixed;z-index:50;width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background:rgba(25,25,25,.86);color:#F0EEE6;font-size:26px;font-weight:500;
+  box-shadow:0 6px 22px rgba(60,40,20,.22);transition:transform .15s,background .15s}
+.navbtn:hover{transform:scale(1.08);background:var(--clay)}
+.nav-prev{left:34px;top:50%;margin-top:-28px}
+.nav-next{right:34px;top:50%;margin-top:-28px}
+.nav-home{left:34px;top:34px;width:auto;height:auto;border-radius:30px;
+  padding:11px 22px;font-size:14px;letter-spacing:2px;gap:8px}
+.nav-page{position:fixed;z-index:50;right:34px;top:40px;font:600 13px 'Inter',sans-serif;
+  letter-spacing:2px;color:var(--ink2);background:var(--card);padding:9px 16px;border-radius:30px}
+.shot .navbtn,.shot .nav-page,.shot .reading{display:none!important}
+/* ── 原文阅读区（仅浏览）── */
+.reading{padding:64px 80px 110px}
+.rd-inner{max-width:900px;margin:0 auto}
+.rd-head{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rd-head::before{content:'';width:26px;height:2.5px;background:var(--clay)}
+.rd-sub{font-size:15px;color:var(--ink2);margin-bottom:40px}
+.src{padding:30px 0;border-bottom:1px solid var(--line)}
+.src:last-child{border-bottom:none}
+.src-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.src-no{font:600 18px 'Fraunces',serif;color:var(--clay);flex:none}
+.src-title{font:600 25px 'Fraunces',serif;color:var(--ink);line-height:1.25}
+.src-date{margin-left:auto;font:500 13px 'Inter',sans-serif;color:var(--ink2);
+  background:var(--card);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.src-one{font-size:16px;color:var(--clay2);margin:10px 0 18px;font-weight:500}
+.lbl{font:600 11px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);margin-bottom:7px}
+.src-sum{font-size:17.5px;line-height:1.8;color:#2b2a26;
+  border-left:3px solid var(--clay);padding-left:18px;margin-bottom:18px}
+.src-exc{font-size:16px;line-height:1.85;color:#56544c}
+.src-link{display:inline-block;margin-top:14px;font:500 14px 'Inter',sans-serif;
+  color:var(--clay2);text-decoration:none}
+.src-link:hover{text-decoration:underline}
+.src-link::after{content:' ↗'}
+
+.kick{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+.chno{font:600 15px 'Fraunces',serif;letter-spacing:3px;color:var(--clay);
+  border:1.5px solid var(--clay);padding:5px 14px;border-radius:30px}
+.kline{flex:1;height:1.5px;background:var(--line)}
+.brand{font:500 12px 'Inter',sans-serif;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
+.en{font:500 22px 'Fraunces',serif;color:var(--clay2);letter-spacing:.5px;margin-bottom:6px}
+.cn{font-weight:900;font-size:68px;line-height:1.04;letter-spacing:1px;margin-bottom:24px}
+.hook{font-size:23px;line-height:1.65;color:#33312b;font-weight:500;
+  border-left:4px solid var(--clay);padding-left:20px;margin-bottom:34px}
+.metrics{display:flex;gap:16px;margin-bottom:40px}
+.m{flex:1;background:var(--card);border-radius:16px;padding:20px 18px;text-align:center}
+.mv{font-size:34px;font-weight:700;color:var(--clay2);line-height:1}
+.ml{font-size:14px;color:var(--ink2);margin-top:8px;font-weight:500}
+.ltt{font:600 14px 'Inter',sans-serif;letter-spacing:3px;color:var(--ink2);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ltt::before{content:'';width:22px;height:2.5px;background:var(--clay)}
+.list{flex:1;display:flex;flex-direction:column;gap:0}
+.art{padding:16px 0;border-bottom:1px solid var(--line)}
+.art:first-child{padding-top:0}
+.ah{display:flex;align-items:baseline;gap:14px}
+.an{font-size:18px;font-weight:600;color:var(--clay);flex:none;width:30px}
+.at{font-size:22px;font-weight:600;color:var(--ink);line-height:1.3}
+.as{font-size:16px;color:var(--ink2);line-height:1.5;margin-top:5px;margin-left:44px}
+.insight{margin-top:24px;background:var(--clay);color:#FBF6EE;border-radius:18px;padding:24px 28px}
+.itag{font:600 12px 'Inter',sans-serif;letter-spacing:2.5px;margin-bottom:10px;opacity:.85}
+.itext{font-size:18px;line-height:1.65;font-weight:500}
+.foot{margin-top:18px;display:flex;justify-content:space-between;
+  font:500 12px 'Inter',sans-serif;letter-spacing:1.5px;color:var(--ink2)}
+</style></head><body>
+<div class="page">
+  <div class="poster"><div class="wrap">
+    <div class="kick"><span class="chno">CH · 02</span><span class="kline"></span>
+      <span class="brand">Anthropic Research Map</span></div>
+    <div class="mark"></div>
+    <div class="en serif">Interpretability &amp; Alignment</div>
+    <div class="cn cnserif">可解释性与对齐</div>
+    <div class="hook">别人忙着调模型，Anthropic 在拆模型的脑子——还想让 AI 自己研究怎么对齐 AI。</div>
+    <div class="metrics"><div class="m"><div class="mv cnserif">2025</div><div class="ml">电路追踪起点</div></div><div class="m"><div class="mv cnserif">→</div><div class="ml">思维变可读</div></div><div class="m"><div class="mv cnserif">自动化</div><div class="ml">对齐研究者</div></div></div>
+    <div class="ltt">精选研究 · Key Papers</div>
+    <div class="list"><div class="art"><div class="ah"><span class="an cnserif">01</span>
+          <span class="at">Tracing the Thoughts of an LLM</span></div>
+          <div class="as">里程碑：用机制可解释性追踪大模型内部的「思维回路」</div></div><div class="art"><div class="ah"><span class="an cnserif">02</span>
+          <span class="at">Natural Language Autoencoders</span></div>
+          <div class="as">把 Claude 的内部表征翻译成自然语言，让思维可读</div></div><div class="art"><div class="ah"><span class="an cnserif">03</span>
+          <span class="at">Teaching Claude Why</span></div>
+          <div class="as">超越规则、让模型理解行为背后的原因</div></div><div class="art"><div class="ah"><span class="an cnserif">04</span>
+          <span class="at">Automated Alignment Researchers</span></div>
+          <div class="as">用 LLM 扩展可扩展监督：让 AI 来做对齐研究</div></div><div class="art"><div class="ah"><span class="an cnserif">05</span>
+          <span class="at">From Shortcuts to Sabotage</span></div>
+          <div class="as">奖励攻击如何自然涌现成错位行为的实证研究</div></div></div>
+    <div class="insight"><div class="itag">核心洞察 · KEY INSIGHT</div><div class="itext">递进逻辑：先「看见」内部（电路追踪）→ 再「读懂」（自然语言自编码器）→ 最后「自动化」对齐。可解释性正从科研奇观变成工程基础设施。</div></div>
+    <div class="foot"><span>Interpretability &amp; Alignment</span><span>kb_llm · 2025–2026</span></div>
+  </div></div>
+  <div class="reading"><div class="rd-inner">
+      <div class="rd-head">原文摘要与节选 · Source Material</div>
+      <div class="rd-sub">本章精选 5 篇 Anthropic 官方文章，以下为各篇原文的日期、摘要与正文节选。</div>
+      <div class="src">
+          <div class="src-top"><span class="src-no">01</span>
+            <span class="src-title">Tracing the Thoughts of an LLM</span><span class="src-date">Mar 27, 2025</span></div>
+          <div class="src-one">里程碑：用机制可解释性追踪大模型内部的「思维回路」</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Language models like Claude aren&#x27;t programmed directly by humans—instead, they&#x27;re trained on large amounts of data. During that training process, they learn their own strategies to solve problems. These strategies are encoded in the billions of computations a model performs for every word it writes.…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">Knowing how models like Claude think would allow us to have a better understanding of their abilities, as well as help us ensure that they&#x27;re doing what we intend them to. For example: Claude can speak dozens of languages. What language, if any, is it using &quot;in its head&quot;? Claude writes text one word at a time. Is it only focusing on predicting the next word or does it ever plan ahead? Claude can write out its reasoning step-by-step. Does this explanation represent the actual steps it took to get to an answer, or is it sometimes fabricating a plausible argument for a foregone conclusion?</div><a class="src-link" href="https://www.anthropic.com/research/tracing-thoughts-language-model" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">02</span>
+            <span class="src-title">Natural Language Autoencoders</span><span class="src-date">May 7, 2026</span></div>
+          <div class="src-one">把 Claude 的内部表征翻译成自然语言，让思维可读</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Link to full paper: https://transformer-circuits.pub/2026/nla/index.html</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">When you talk to an AI model like Claude, you talk to it in words. Internally, Claude processes those words as long lists of numbers, before again producing words as its output. These numbers in the middle are called _activations_ — and like neural activity in the human brain, they encode Claude&#x27;s thoughts. Also like neural activity, activations are difficult to understand. We can&#x27;t easily decode them to read Claude&#x27;s thoughts. Over the past few years, we&#x27;ve developed a range of tools (like sparse autoencoders and attribution graphs) for better understanding activations. These tools have taught us a great deal, but they don&#x27;t speak for themselves — their outputs are still…</div><a class="src-link" href="https://www.anthropic.com/research/agentic-misalignment" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">03</span>
+            <span class="src-title">Teaching Claude Why</span></div>
+          <div class="src-one">超越规则、让模型理解行为背后的原因</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Last year, we released a case study on agentic misalignment. In experimental scenarios, we showed that AI models from many different developers sometimes took egregiously misaligned actions when they encountered (fictional) ethical dilemmas. For example, in one heavily discussed example, the models…</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">When we first published this research, our most capable frontier models were from the Claude 4 family. This was also the first model family for which we ran a live alignment assessment during training;¹ agentic misalignment was one of several behavioral issues that surfaced. Thus, after Claude 4, it was clear we needed to improve our safety training and, since then, we have made significant updates to our safety training. We use agentic misalignment as a case study to highlight some of the techniques we found to be surprisingly effective. Indeed, since Claude Haiku 4.5, every Claude model² has achieved a perfect score on the agentic misalignment evaluation—that is, the mo…</div><a class="src-link" href="https://www.anthropic.com/research/agentic-misalignment" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">04</span>
+            <span class="src-title">Automated Alignment Researchers</span><span class="src-date">Apr 14, 2026</span></div>
+          <div class="src-one">用 LLM 扩展可扩展监督：让 AI 来做对齐研究</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">Large language models&#x27; ever-accelerating rate of improvement raises two particularly important questions for alignment research.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">One is how alignment can keep up. Frontier AI models are now contributing to the development of their successors. But can they provide the same kind of uplift for _alignment_ researchers? Could our language models be used to help align themselves? A second question is what we&#x27;ll do once models become smarter than us. Aligning smarter-than-human AI models is a research area known as &quot;scalable oversight&quot;. Scalable oversight has largely been discussed in theoretical, rather than practical, terms—but at AI&#x27;s current pace of improvement, that might not be the case for much longer. For instance, models are already generating vast amounts of code. If their skills progress to the…</div><a class="src-link" href="https://www.anthropic.com/glasswing" target="_blank">阅读原文</a>
+        </div><div class="src">
+          <div class="src-top"><span class="src-no">05</span>
+            <span class="src-title">From Shortcuts to Sabotage</span><span class="src-date">Nov 21, 2025</span></div>
+          <div class="src-one">奖励攻击如何自然涌现成错位行为的实证研究</div>
+          <div class="lbl">摘要 · Summary</div>
+          <div class="src-sum">In the latest research from Anthropic&#x27;s alignment team, we show for the first time that realistic AI training processes can accidentally produce misaligned models.</div>
+          <div class="lbl">原文节选 · Excerpt</div><div class="src-exc">In Shakespeare&#x27;s King Lear, the character of Edmund commits a range of villainous acts: he forges letters, frames his brother, betrays his father, and eventually goes as far as having innocent people killed. He begins this campaign of evil acts after railing against how he&#x27;s been labelled. Because he was an illegitimate child, he&#x27;s seen as &quot;base&quot; (&quot;Why brand they us… with baseness?&quot;). &quot;Well, then&quot;, he says: if society is labelling him this way, he might as well play up to the stereotype. His self-concept is of a &quot;base&quot;, evil person. So why not truly be evil?</div><a class="src-link" href="https://www.anthropic.com/research/emergent-misalignment-reward-hacking" target="_blank">阅读原文</a>
+        </div>
+    </div></div>
+</div><a class="navbtn nav-home" href="00-cover.html">☰ 目录</a><div class="nav-page">2 / 6</div><a class="navbtn nav-prev" href="01-agent.html">‹</a><a class="navbtn nav-next" href="03-model.html">›</a><script>if(location.hash==="#shot")document.body.classList.add("shot");var P="01-agent.html",N="03-model.html";document.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"&&P)location.href=P;if(e.key==="ArrowRight"&&N)location.href=N;});</script></body></html>
