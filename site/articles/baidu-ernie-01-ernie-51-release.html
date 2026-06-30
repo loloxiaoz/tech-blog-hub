@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文心 5.1 正式发布！多榜登顶（ERNIE 5.1 Official Release: Tops Multiple Leaderboards） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>文心 5.1 正式发布！多榜登顶（ERNIE 5.1 Official Release: Tops Multiple Leaderboards）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-09</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">文心</span><span class="tag">模型发布</span><span class="tag">强化学习</span><span class="tag">弹性训练</span></div><a class="source-btn" href="https://yiyan.baidu.com/blog/zh/posts/ernie-5.1-0508-release/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">文心 5.1 基于 Once-for-All 弹性预训练框架从文心 5.0 蒸馏而来，总参数压缩至 1/3、预训练成本仅为同规模模型的 6%，Arena 搜索榜全球第四、国内第一（1223 分），AIME26 得分 99.6。</div></div><div class="prose"><p>今天，文心 5.1 正式上线。充分继承文心 5.0 知识，显著降低预训练成本，将总参数压缩至约 1/3、激活参数压缩至约 1/2，<strong>仅使用业界同规模模型约 6% 的预训练成本，实现同级别模型基础效果领先。</strong></p>
+
+<p>为推动大模型向自主决策智能体进化，我们全新构建了分离式全异步强化学习基础技术，针对性解决了训推偏差、资源利用率低及长尾效应带来的全局优化挑战。在此基础上，通过规模化智能体后训练与环境-专家-融合全链路协同策略，实现了训练效率与模型能力的双重跃升，确保模型在处理复杂长尾任务时依然保持极致的稳定性与卓越表现。</p>
+
+<p>作为当前国产大模型的效价比标杆之一，文心 5.1 在保持旗舰智力的同时，完成了参数效率与训练成本的跨越式优化。性能已通过国际权威榜单验证：5 月 9 日，文心 5.1 以 1223 分斩获 Arena 搜索榜<strong>全球第四、国内第一</strong>。</p>
+
+<img src="/blog/posts/ernie-5.1-0508-release/lmarena-search-ranking.png" alt="文心 5.1 Arena 搜索榜排名">
+
+<h2 id="agent-reasoning-world-knowledge">文心 5.1: Agent、推理能力突出，世界知识能力位列顶尖模型前列</h2>
+
+<p>文心 5.1 在多个业界权威基准测试中表现出色，尤其是<strong>智能体、知识、推理、深度搜索</strong>方面：</p>
+
+<ol>
+  <li><strong>Agent 能力突出，媲美世界顶尖模型：</strong>在 τ³-bench 与 SpreadsheetBench-Verified Agent 评测任务中，文心 5.1 性能超越 DeepSeek-V4-Pro，Agentic 能力接近领先的闭源模型，并在 Search Arena 榜单中表现优异。</li>
+  <li><strong>世界知识与创意写作能力领先：</strong>在 GPQA 和 MMLU-Pro 评测中，文心 5.1 效果接近领先的闭源模型。内部评测中，文心 5.1 的创意写作能力接近 Gemini 3.1 Pro。</li>
+  <li><strong>推理能力接近领先的闭源模型：</strong>在挑战性的数学竞赛评测 AIME26（使用工具）中，文心 5.1 得分 99.6，仅次于 Gemini 3.1 Pro。</li>
+</ol>
+
+<img src="/blog/posts/ernie-5.1-0508-release/benchmark.png" alt="文心 5.1 Benchmark">
+
+<h2 id="technical-features">技术特性</h2>
+
+<h3 id="elastic-pretraining">多维度弹性预训练技术，预训练算力成本仅为业界同规模模型的 6%</h3>
+
+<p>文心 5.1 基于文心 5.0 训练而得，从文心 5.0 子模型矩阵中提取最优子结构，充分继承文心 5.0 知识，显著降低预训练成本。研发团队创新性提出 Once-for-All 的弹性训练框架，传统方法需为不同规模模型分别进行预训练，而文心 5.0 仅在单次预训练中，便可通过动态采样机制，同时优化大量参数各异的子模型，构建出覆盖多种参数规模与计算开销的"子模型矩阵"。在此过程中，模型在三个维度上实现弹性压缩与扩展：</p>
+
+<ul>
+  <li><strong>弹性深度：</strong>训练时随机跳过部分 Transformer 层，使不同深度的子模型共享权重，从而自适应地学习深层与浅层表征的平衡。</li>
+  <li><strong>弹性宽度：</strong>弹性调控 MoE 层实际参与计算的专家池规模，通过随机动态屏蔽部分专家，迫使剩余专家承担更多样化的任务，从而提升专家利用效率。</li>
+  <li><strong>弹性稀疏度：</strong>通过可变的 Top‑k 路由机制，灵活调整模型激活的专家数量。当激活专家较少时，可降低推理成本；当激活专家较多时，则能增强模型能力，实现推理开销与性能之间的动态权衡。</li>
+</ul>
+
+<p>基于该突破，文心 5.1 将总参数量压缩至文心 5.0 的 1/3 左右，激活参数量压缩至约 1/2，预训练算力成本仅为业界同规模模型的 6%，相对文心 5.0 显著降低了推理成本，并在同规模模型中取得了领先的预训练模型效果。</p>
+
+<img src="/blog/posts/ernie-5.1-0508-release/elastic-training.png" alt="文心 5.0 弹性训练示意图">
+
+<h3 id="async-rl-training">分离式全异步强化学习训练，更高效、更稳定、更低成本</h3>
+
+<p>我们基于飞桨构建了一套分离式强化学习基础设施，支撑了文心 5.1 的多阶段强化学习训练。为了更高效、稳定、低成本地完成长程强化学习任务的稳定训练，我们在以下三个方向上做了重点优化：</p>
+
+<ul>
+  <li><strong>分离式全异步架构：</strong>我们设计并研发了以强化学习中控（RL Controller）为核心的分离式架构，将训练、推理、奖励以及智能体循环（agent loop）四大子系统的控制面完全解耦，各子系统之间基于高性能网络的数据组件进行桥接与交互，实现控制流与数据流分离。在该架构下，各子系统可独立部署、独立扩缩容，分别匹配最优的算力形态；同时推理、训练、奖励之间形成天然的流水线，可被充分重叠掩盖，为 Agentic RL 的长程异步训练奠定了高可扩展的底座。</li>
+  <li><strong>FP8 训推一致性优化：</strong>基于飞桨训推一体框架，我们实现了统一的 FP8 低精度算子库，最小化强化学习中训练与推理之间的精度偏差。针对 MoE 模型训推路由偏差问题，我们对 Rollout Router Replay (R3) 技术做了深度优化——通过两阶段的计算–通信掩盖，结合动态比特位的通信量压缩与多级 KVCache 池化技术，实现在开启 R3 后训推耗时几乎无增加的同时，KL 散度下降 50%，为文心 5.1 的长程稳定训练提供了关键保障。</li>
+  <li><strong>资源异构弹性调度：</strong>得益于分离式的架构设计，我们可以非常灵活按需为各个训练、推理、奖励等系统匹配最优的算力配置，充分借助集群的弹性算力降低 Rollout 的端到端耗时。针对 AI 集群中普遍存在的 CPU 资源利用不足问题，我们实现了一种弹性 CPU 池化策略。该弹性机制可充分利用集群中闲置的 CPU 算力，支撑诸如代码沙箱、Verifier 等逻辑密集型计算，提升了资源利用率的同时也缩短训练迭代时间。</li>
+</ul>
+
+<h3 id="opd-pipeline">提出 OPD 为核心的多阶段强化学习训练管线，全面确保模型能力融合</h3>
+
+<p>传统大语言模型（LLMs）的后训练通常为一个串行流程，从监督微调（SFT）到多阶段混合强化学习（Mixed RL）逐步推进训练。然而，随着模型能力的不断扩展，这种串行训练范式日益成为瓶颈，严重阻碍了研发和迭代的效率。同时，试图在单一的训练阶段融合所有能力，会引入严重的多目标优化冲突，使得平衡不同领域任务效果并实现帕累托最优变得极其困难，某项能力的提升往往以另一项能力的退化为代价（即"跷跷板"效应）。</p>
+
+<p>为了克服这些根本性挑战，我们提出了一种以多教师在线策略蒸馏（MOPD）为核心的多阶段强化学习训练流程。该流程通过并行化的专家模型训练显著加速了研发周期，同时确保了全面、无冲突的能力融合。具体而言，文心 5.1 的后训练管线是一个四阶段流程，将专家训练与统一能力融合进行了解耦：</p>
+
+<ul>
+  <li><strong>阶段一：统一监督微调（SFT）。</strong>使用高质量的多领域指令数据进行微调，为模型奠定指令遵循和工具调用的基础能力，作为后续能力扩展的初始化起点。</li>
+  <li><strong>阶段二：领域专家模型训练。</strong>并行训练多个领域的专家模型（如代码、推理、智能体）。每个方向独立定制专属的奖励信号和训练算法，从根本上避免了不同任务间的相互影响。</li>
+  <li><strong>阶段三：在线策略蒸馏（OPD）。</strong>以统一 SFT 模型为学生，多个领域专家模型为教师。学生基于自身策略分布采样，通过令牌级 KL（token-level reverse KL）同时学习多个教师能力，将不同专家的能力高效融合至统一的参数空间。</li>
+  <li><strong>阶段四：通用在线强化学习（General-RL）。</strong>在初次 OPD 阶段之后，专门引入面向通用对话场景的在线强化学习。针对具有高熵分布特征的任务（如开放式聊天或创意写作），放弃蒸馏转而采用在线强化学习，确保指令遵循能力、生成多样性并更好地对齐人类偏好。</li>
+</ul>
+
+<img src="/blog/posts/ernie-5.1-0508-release/post-training-pipeline.png" alt="文心 5.1 后训练管线示意图">
+
+<h2 id="creative-capability">创作能力表现突出</h2>
+
+<p>基于技术架构的迭代优化与核心技术的精准优化，文心 5.1 基础能力全面升级的同时，在创作能力上也有突出表现。无论是创意写作中"灵感-情感-表达"的精准同频、长篇叙事里"逻辑-人物-节奏"的协同把控，还是专业文本中"知识准确性-风格适配性"的双重平衡，文心 5.1 均能在<strong>穿透用户表层需求、捕捉核心意图</strong>的基础上，生成"有温度、有深度、有逻辑"的超越预期之作。这种"意图洞察-内容创作"的闭环能力，被视为"懂用户、懂内容、懂场景"的<strong>标杆性创作好模型</strong>。</p>
+
+<img src="/blog/posts/ernie-5.1-0508-release/creative-capability.png" alt="文心 5.1 创作能力"></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#agent-reasoning-world-knowledge">文心 5.1: Agent、推理能力突出，世界知识能力位列顶尖模型前列</a><a class="lv2" href="#technical-features">技术特性</a><a class="lv3" href="#elastic-pretraining">多维度弹性预训练技术，预训练算力成本仅为业界同规模模型的 6%</a><a class="lv3" href="#async-rl-training">分离式全异步强化学习训练，更高效、更稳定、更低成本</a><a class="lv3" href="#opd-pipeline">提出 OPD 为核心的多阶段强化学习训练管线，全面确保模型能力融合</a><a class="lv2" href="#creative-capability">创作能力表现突出</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-01-ernie-51-release";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

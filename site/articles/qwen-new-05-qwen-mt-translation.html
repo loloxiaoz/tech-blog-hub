@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Qwen-MT: Where Speed Meets Smart Translation（Qwen-MT：速度与智能兼备的机器翻译模型） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#6366F1">Qwen</span><h1>Qwen-MT: Where Speed Meets Smart Translation（Qwen-MT：速度与智能兼备的机器翻译模型）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-08</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Qwen</span><span class="tag">机器翻译</span><span class="tag">多语言</span><span class="tag">MoE</span></div><a class="source-btn" href="https://qwenlm.github.io/blog/qwen-mt/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">Qwen-MT（qwen-mt-turbo）基于 Qwen3 构建，采用轻量 MoE 架构，支持 92 种语言互译，覆盖全球 95% 以上人口；结合强化学习提升翻译精度，API 定价低至 $0.5/百万 token，在自动和人工评测中均超越 GPT-4.1-mini、Gemini-2.5-Flash 等同量级模型。</div></div><div class="prose"><h2 id="introduction">Introduction</h2>
+<p>Here we introduce the latest update of Qwen-MT (<code>qwen-mt-turbo</code>) via Qwen API. This update builds upon the powerful Qwen3, leveraging trillions multilingual and translation tokens to comprehensively enhance the model's multilingual understanding and translation capabilities. By integrating reinforcement learning techniques, the model achieves significant improvements in translation accuracy and linguistic fluency.</p>
+<p>Key Features:</p>
+<ul>
+  <li><strong>Multilingual Support for 92 Languages</strong>: Qwen-MT enables high-quality translation across 92 major official languages and prominent dialects, covering over 95% of the global population to meet diverse cross-lingual communication needs.</li>
+  <li><strong>High Customizability</strong>: The new version provides advanced translation capabilities such as terminology intervention, domain prompts and translation memory. By enabling customizable prompt engineering, it delivers optimized translation performance tailored to complex, domain-specific, and mission-critical application scenarios.</li>
+  <li><strong>Low Latency &amp; Cost Efficiency</strong>: By leveraging a lightweight Mixture of Experts (MoE) architecture, Qwen-MT achieves high translation performance with faster response times and significantly reduced API costs (as low as $0.5 per million output tokens). This is particularly well-suited for high-concurrency environments and latency-sensitive applications.</li>
+</ul>
+
+<h2 id="translation-quality">Translation Quality</h2>
+
+<h3 id="automatic-evaluation">Automatic Evaluation</h3>
+<p>We evaluate Qwen-MT on multi-domain translation benchmark, specifically Chinese-English and English-German translation, as well as WMT24 multilingual translation benchmark. Experimental results demonstrate that Qwen-MT significantly outperforms comparably-sized models including GPT-4.1-mini, Gemini-2.5-Flash, and Qwen3-8B. Notably, even when compared to state-of-the-art large language models such as GPT-4.1, Gemini-2.5-Pro, and Qwen3-235B-A22B, Qwen-MT maintains competitive translation quality while its optimized lightweight architecture enables rapid translation processing.</p>
+<img src="https://qianwen-res.oss-accelerate-overseas.aliyuncs.com/qwen-mt-001.jpeg">
+
+<h3 id="human-evaluation">Human Evaluation</h3>
+<p>Automatic evaluation methods have inherent limitations, we further implemented human evaluation protocols leveraging real-world translation data across ten major languages: Chinese, English, Japanese, Korean, Thai, Arabic, Italian, Russian, Spanish, and French. Our rigorous evaluation framework involved three independent professional translators scoring each test sample, followed by systematic cross-validation procedures to ensure both objectivity and reliability of the assessment outcomes. Notably, Qwen-MT achieved superior performance metrics, demonstrating significant advantages in both acceptance rates and excellence rates, validating its exceptional translation capabilities in practical deployment scenarios.</p>
+<img src="https://qianwen-res.oss-accelerate-overseas.aliyuncs.com/qwen-mt-002.jpeg">
+<img src="https://qianwen-res.oss-accelerate-overseas.aliyuncs.com/qwen-mt-003.png">
+<p>Here are some translation examples:</p>
+<table>
+  <thead>
+    <tr><th>Source Text</th><th>Qwen-MT</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Make your <strong>cubicle</strong> neat, tidy and make it a <strong>homey charm</strong>.</td><td>让你的<strong>隔间</strong>整洁有序，营造出<strong>温馨舒适</strong>的氛围。</td></tr>
+    <tr><td>Little study <strong>hack</strong> for <strong>y'all</strong> … do your homework/assignments the first day it was given to you… NO PROCRASTINATING!!! <strong>the day it was assigned</strong></td><td>给<strong>大家</strong>一个学习小<strong>技巧</strong>……拿到作业/任务的第一天就完成它……千万别拖延！<strong>就在布置的当天完成！</strong></td></tr>
+    <tr><td><strong>Kim</strong> <strong>also</strong> attended her ex's first Donda <strong>listening party</strong> at Atlanta's Mercedes-Benz Stadium on July 22.</td><td><strong>金·卡戴珊也</strong>于7月22日出席了她前男友在亚特兰大的梅赛德斯-奔驰体育场举行的首场《Donda》专辑<strong>试听会</strong>。</td></tr>
+    <tr><td>作为互联网公司搬砖的表示，用结果来推导自己的论点，真是闲得蛋疼，马后炮事后诸葛亮就别分析那么多。</td><td>As a representation of <strong>working hard</strong> at an internet company, it's really <strong>annoying</strong> to use results to deduce one's own arguments. Don't overanalyze things after the fact <strong>like a hindsight expert</strong>.</td></tr>
+    <tr><td>且夫秦欲璧，赵弗予璧，两无所曲直也。入璧而秦弗予城，曲在秦；秦出城而璧归，曲在赵。</td><td>Moreover, if Qin desires the jade, and Zhao refuses to give it, neither side is at fault. If Zhao gives the jade but Qin does not provide the city, the fault lies with Qin; if Qin provides the city but the jade returns to Zhao, the fault lies with Zhao.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="language-support">Language Support</h2>
+<table>
+  <thead>
+    <tr><th>Language Family</th><th>Language Name</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Indo-European</td><td>Afrikaans, Armenian, Assamese, Asturian, Belarusian, Bengali, Bosnian, Bulgarian, Catalan, Croatian, Czech, Danish, Dutch, English, French, Galician, German, Greek, Gujarati, Hindi, Icelandic, Italian, Latvian, Lithuanian, Luxembourgish, Macedonian, Maithili, Marathi, Nepali, Norwegian Bokmål, Norwegian Nynorsk, Occitan, Odia, Polish, Portuguese, Romanian, Russian, Serbian, Sicilian, Sindhi, Sinhala, Slovak, Slovenian, Spanish, Swedish, Tosk Albanian, Ukrainian, Urdu, Venetian, Welsh, Western Persian</td></tr>
+    <tr><td>Sino-Tibetan</td><td>Chinese (Cantonese, Simplified, and Traditional), Burmese</td></tr>
+    <tr><td>Afro-Asiatic</td><td>Arabic (Standard, Egyptian, Mesopotamian, Moroccan, Najdi, North Levantine, South Levantine, Ta'izzi-Adeni, and Tunisian), Hebrew, Maltese</td></tr>
+    <tr><td>Austronesian</td><td>Cebuano, Indonesian, Javanese, Malay, Pangasinan, Tagalog, Waray</td></tr>
+    <tr><td>Dravidian</td><td>Kannada, Tamil, Telugu</td></tr>
+    <tr><td>Turkic</td><td>Kazakh, North Azerbaijani, Northern Uzbek, Turkish</td></tr>
+    <tr><td>Tai-Kadai</td><td>Thai, Lao</td></tr>
+    <tr><td>Uralic</td><td>Estonian, Finnish, Hungarian</td></tr>
+    <tr><td>Austroasiatic</td><td>Khmer, Vietnamese</td></tr>
+    <tr><td>Other</td><td>Basque, Georgian, Japanese, Korean, Swahili</td></tr>
+  </tbody>
+</table>
+
+<h2 id="how-to-use">How to use</h2>
+<p>You can easily use Qwen-MT through Qwen API. Here we take a simple scenario of translating from Chinese to English as an example.</p>
+<pre><code>import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.getenv("DASHSCOPE_API_KEY"),
+    base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+)
+
+messages = [
+    {
+        "role": "user",
+        "content": "我看到这个视频后没有笑"
+    }
+]
+
+translation_options = {
+    "source_lang": "auto",
+    "target_lang": "English"
+}
+
+completion = client.chat.completions.create(
+    model="qwen-mt-turbo",
+    messages=messages,
+    extra_body={
+        "translation_options": translation_options
+    }
+)
+
+print(completion.choices[0].message.content)
+</code></pre>
+<p>Qwen-MT supports features such as terminology intervention, domain prompts, and translation memory. For instance, in a translation scenario involves specialized terms, users can predefine key terminology pairs and inject them as parameters into the model, ensuring consistent application of user-specified lexicon throughout the output.</p>
+<pre><code>import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.getenv("DASHSCOPE_API_KEY"),
+    base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+)
+
+messages = [
+    {
+        "role": "user",
+        "content": "而这套生物传感器运用了石墨烯这种新型材料，它的目标物是化学元素，敏锐的"嗅觉"让它能更深度、准确地体现身体健康状况。"
+    }
+]
+
+translation_options = {
+    "source_lang": "Chinese",
+    "target_lang": "English",
+    "terms": [
+        {"source": "生物传感器", "target": "biological sensor"},
+        {"source": "石墨烯", "target": "graphene"},
+        {"source": "化学元素", "target": "chemical elements"},
+        {"source": "身体健康状况", "target": "health status of the body"}
+    ]
+}
+
+completion = client.chat.completions.create(
+    model="qwen-mt-turbo",
+    messages=messages,
+    extra_body={
+        "translation_options": translation_options
+    }
+)
+
+print(completion.choices[0].message.content)
+# Response:
+# This biological sensor uses graphene, a new material, and its target is chemical elements.
+# Its sensitive "nose" can more deeply and accurately reflect the health status of the body.
+</code></pre>
+<p>Moreover, translation style must adapt to contextual nuances. For example, in legal and official contexts, formal register is imperative, whereas social media communication demands a conversational tone. To ensure appropriate stylistic adaptation, users can provide contextual details and stylistic preferences in natural language alongside their source text.</p>
+<pre><code>translation_options = {
+    "source_lang": "Chinese",
+    "target_lang": "English",
+    "domains": "The sentence is from Ali Cloud IT domain. It mainly involves computer-related software development and usage methods, including many terms related to computer software and hardware. Pay attention to professional troubleshooting terminologies and sentence patterns when translating. Translate into this IT domain style."
+}
+</code></pre>
+<p>For more advanced features, please refer to the <a href="https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&amp;url=https://www.alibabacloud.com/help/en/doc-detail/2840914_2.html&amp;renderType=component&amp;modelId=qwen-mt-turbo">Qwen API documentation</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Qwen-MT is an advanced machine translation model that supports translations among 92 languages. It aims to provide global users with smart, flexible, and efficient translation experience through APIs. While "faithfulness, fluency, and elegance" remains an ongoing journey filled with challenges, we are persistently exploring and improving. Looking ahead, we will continue to enhance translation accuracy and naturalness, expand coverage to more languages, ultimately dismantling language barriers to realize truly borderless communication.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#introduction">Introduction</a><a class="lv2" href="#translation-quality">Translation Quality</a><a class="lv3" href="#automatic-evaluation">Automatic Evaluation</a><a class="lv3" href="#human-evaluation">Human Evaluation</a><a class="lv2" href="#language-support">Language Support</a><a class="lv2" href="#how-to-use">How to use</a><a class="lv2" href="#conclusion">Conclusion</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="qwen-new-05-qwen-mt-translation";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

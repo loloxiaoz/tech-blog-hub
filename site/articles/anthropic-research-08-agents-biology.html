@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Paving the Way for Agents in Biology · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ─────────────────────────────────────────────
+   Anthropic Brand Design Tokens
+   Warm Minimalism: parchment bg + clay orange accent
+   ───────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --bg:#F0EEE6;          /* warm parchment — Anthropic page background */
+  --surface:#FAFAF7;     /* off-white card surface */
+  --surface-2:#E8E5DB;   /* subtle warm fill, tags, code bg */
+  --ink:#191919;         /* near-black primary text */
+  --ink-2:#3D3B33;       /* body text, slightly warm */
+  --muted:#6B6B63;       /* secondary / caption text */
+  --line:#DBD7CC;        /* dividers & borders */
+  --line-2:#C8C4B8;      /* stronger divider on hover */
+
+  /* Accent — Anthropic clay orange */
+  --accent:#D97757;
+  --accent-hover:#C15F3C;
+  --accent-soft:rgba(217,119,87,.10);
+
+  /* Semantic */
+  --success:#3D8B5E;
+  --code-bg:#ECEAE0;
+
+  /* Elevation */
+  --shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);
+  --shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);
+
+  /* Shape */
+  --radius:12px;--radius-sm:8px;--radius-pill:999px;
+
+  /* Typography */
+  --font-serif:'Fraunces','Noto Serif SC',Georgia,serif;
+  --font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── Layout ── */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ── Article page navbar ── */
+.abar{position:sticky;top:0;z-index:40;
+  background:rgba(240,238,230,.93);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);
+  display:flex;align-items:center;gap:12px}
+.back{font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}
+.back:hover{background:var(--surface-2);color:var(--ink)}
+.abar .spacer{flex:1}
+.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);
+  padding:7px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);cursor:pointer;transition:all .15s ease;
+  display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.done:hover{filter:brightness(.92)}
+
+/* ── Article layout ── */
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);
+  max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}
+.article{min-width:0}
+.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);
+  font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}
+.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ahead .m svg{flex-shrink:0}
+.ahead .m a{color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ahead .m a:hover{color:var(--accent-hover)}
+.ahead .m .tag{font-size:11px}
+.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}
+
+/* ── Prose ── */
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}
+.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;
+  margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;
+  border-bottom:2px solid var(--line);padding-bottom:10px}
+.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}
+.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}
+.prose p{margin:14px 0}
+.prose ul,.prose ol{margin:14px 0;padding-left:24px}
+.prose li{margin:6px 0;line-height:1.75}
+.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);
+  transition:border-color .15s,color .15s}
+.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}
+.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--ink-2);font-style:normal}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;
+  font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  color:var(--accent-hover);border:1px solid var(--line)}
+.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);
+  overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}
+.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}
+.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;
+  box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}
+.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;
+  color:var(--ink);letter-spacing:.04em;text-transform:uppercase}
+.prose tr:hover td{background:var(--accent-soft)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+/* ── TOC ── */
+.toc{position:sticky;top:72px;align-self:start;
+  max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;
+  border-left:2px solid var(--line);line-height:1.5;font-size:13px;
+  border-radius:0 4px 4px 0;transition:all .15s ease}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+.toc a.lv3{padding-left:24px;font-size:12px}
+
+/* ── Summary card ── */
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}
+.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-hover);margin-bottom:8px}
+.summary-card .sc-text{font-size:14.5px;line-height:1.8;color:var(--ink-2)}
+
+/* ── Source link button ── */
+.source-btn{display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+  letter-spacing:.02em;transition:background .15s,transform .15s;
+  margin-top:16px;text-decoration:none}
+.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}
+.source-btn svg{flex-shrink:0}
+
+/* ── Prev/Next nav ── */
+.anav{display:flex;justify-content:space-between;gap:14px;
+  margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.anav a{flex:1;padding:16px 18px;border:1.5px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);transition:all .2s ease}
+.anav a:hover{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--shadow-sm)}
+.anav .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.anav .ti{font-size:14px;font-weight:600;color:var(--ink);margin-top:5px;line-height:1.4}
+.anav .next{text-align:right}
+
+/* ── Tags in meta ── */
+.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);
+  padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+
+/* ── Footer ── */
+.foot{text-align:center;color:var(--muted);font-size:12px;
+  padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Responsive ── */
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media(max-width:768px){
+  .ahead h1{font-size:26px}
+  .anav{flex-direction:column}
+}
+</style></head><body>
+    <div class="abar"><div class="abar-in">
+      <a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a>
+      <div class="spacer"></div>
+      <button class="btn" id="readBtn" aria-pressed="false">标记已读</button>
+    </div></div>
+
+    <div class="alayout">
+      <article class="article">
+        <div class="ahead">
+          <span class="badge" style="background:#D97757">Anthropic</span>
+          <h1>Paving the Way for Agents in Biology</h1>
+          <div class="m">
+            <span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-08</span>
+            <span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 12 分钟</span>
+            <span class="tag">Agent</span><span class="tag">生物学</span><span class="tag">AI for Science</span>
+          </div>
+          <a class="source-btn" href="https://www.anthropic.com/research/agents-biology" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a>
+        </div>
+
+        <div class="summary-card">
+          <div class="sc-label">中文摘要</div>
+          <div class="sc-text">
+            Laura Luebbert 与团队通过构建 VirBench 基准（120 条病毒序列查询，覆盖 40 种病原体），测试了六款顶级 AI 智能体在 NCBI Virus 上的数据检索能力。结果显示：无辅助时模型准确率仅为 16.9%–91.3%，同一模型同题三次返回结果差异极大，错误序列集甚至导致埃博拉疫情起始时间被误推至 1922 年。核心论点是：现有生物数据库对智能体不友好（"老城区窄街"），但只需加入确定性检索工具 gget virus，准确率即可提升至 99.7%。最终呼吁：生物数据库的设计者必须将智能体视为一等公民用户。
+          </div>
+        </div>
+
+        <div class="prose">
+
+<h2 id="background">生物数据基础设施：为人类设计的"老城区"</h2>
+
+<p>使用 AI 智能体导航生物数据基础设施，就像驾车穿越一座为步行设计的老城：道路美观且用心，却充满了现代车辆难以通行的窄街弯路（奇特的文件格式、分散的数据库、一次性检索脚本）。你可以加装路标、停车场、偶尔拓宽道路，但基本布局依然难以导航，因为它是为另一种出行方式设计的。</p>
+
+<p>相比之下，软件基础设施天然适合智能体：版本控制、文档完善的 API、包管理器——这些都是为快速、标准化的信息流动而生的系统。编码智能体正因此飞速发展，而生物学智能体却受困于异构信息、隐式约定和浏览器点击流程。</p>
+
+<p>几个月前，Andrej Karpathy 在演讲中抱怨了一个生物研究者早已熟悉的问题：他花了整整一周在浏览器里点点点，因为文档总是说"去这个 URL，点这个下拉菜单"。他的结论是：<strong>没有人应该被迫这样做——我们必须为智能体而建。</strong></p>
+
+<h2 id="click-tax">病毒学中的"点击税"</h2>
+
+<p>生物计算领域早已涌现出 Biopython、Entrez Direct、gget 等工具，试图将生物数据从浏览器界面迁移到可编程环境。但问题在于，生物数据分散在各自为政的数据库网络中，每个都有自己的标识符、约定、格式和过滤逻辑。</p>
+
+<p>病毒学是其中最棘手的领域之一。从疫苗设计到诊断检测，研究工作流往往始于在 NCBI Virus 上检索序列——这个平台整合了 GenBank、RefSeq 和国际 INSDC 生态系统的数据，藏在一个可搜索的 Web 界面之后。在病毒学实验室里，NCBI Virus 的数据集筛选说明往往以长串复杂过滤条件的形式流传，用户必须在界面上手动复现——这正是 Karpathy 所批评的浏览器点击工作流。</p>
+
+<p>2026 年 5 月，刚果民主共和国的 Bundibugyo 病毒埃博拉疫情爆发，提供了一个切实的案例。研究人员迫切需要将新测序的基因组与历史埃博拉序列进行比对，回答三个关键问题：新病毒与已知毒株有多大差异？现有诊断工具还能检测到它吗？现有治疗方案还有效吗？而这些问题的第一步，都依赖于从 NCBI Virus 准确获取序列——这个步骤至今无法可靠地自动化。</p>
+
+<h2 id="virbench">VirBench：当智能体独自应对检索任务</h2>
+
+<p>为了量化这一挑战，研究团队构建了 <strong>VirBench</strong>——包含 120 条真实病毒序列查询（覆盖 40 种病原体，附人工核验真实答案）的基准测试集。测试覆盖病毒监控、诊断检测设计、蛋白质模型训练数据构建等真实场景。</p>
+
+<p>例如，其中一条查询要求：检索 TaxID 3052462（Orthoebolavirus zairense，ZEBOV）的病毒序列，要求宿主为人类、采样地点在非洲、2014 年 1 月至 6 月采集、最短序列长度 15,200 碱基、最多 1,900 个模糊字符（N），排除实验室传代样本。</p>
+
+<p>测试结果令人担忧。在无辅助工具的情况下，六款顶级模型——Claude Sonnet 4、Claude Opus 4.7、Biomni OSS、Edison Analysis、GPT-5.2-pro、GPT-5.5——的平均准确率仅为 <strong>16.9% 到 91.3%</strong>。而对于这类数据检索任务，实际上要求的标准是接近 100%：一条缺失的序列，可能决定诊断检测是否覆盖了流行病毒株；一批时间错误的序列，可能将疫情起始时间推断偏差数周。</p>
+
+<p>更糟糕的是，同一模型面对同一问题三次给出截然不同的答案。以上述 Ebolavirus 查询为例，Sonnet 4 三次分别返回了 106、15、5 条序列（预期为 266 条）。</p>
+
+<h2 id="downstream-errors">错误检索的下游科学后果</h2>
+
+<p>研究团队进一步量化了这种不稳定性对下游分析的影响。</p>
+
+<p><strong>系统发育树与 TMRCA 误判：</strong>基于手动策划的 NCBI 序列集，系统发育分析正确恢复了 2014 年埃博拉疫情的 TMRCA（1 月），与此前文献一致。而使用 Sonnet 4 检索的三组序列集中，两组明显不完整：其中一棵树将 TMRCA 推回至 1922 年；另一棵因遗漏几内亚序列，将疫情起始时间推迟到 4 月——这改变了关于疫情起源时间线的核心结论。</p>
+
+<p><strong>抗体靶点突变分析：</strong>研究人员检索了 Ebolavirus 糖蛋白序列，分析 maftivimab 和 MBP134（两种针对 Zaire 埃博拉病毒的抗体治疗药物，WHO 在本次疫情中的优先候选方案）所结合的表位历史突变情况。Sonnet 4 第一次运行的结果接近手动查询，第二次运行遗漏了大部分突变残基，第三次又突出了一组不同的残基——三次运行产生了三种截然不同的对靶向区域变异性的印象。</p>
+
+<p>这两个例子揭示了一个更宏观的模式：<strong>看似是小小的检索选择，却能改变生物学结论</strong>。智能体往往理解了任务，却缺乏可靠的机器可操作路径来执行、验证和重现它——而得出的答案看起来合理，实则有误，这在序列检索（往往是更长工作流的第一步）中尤为危险。</p>
+
+<h2 id="gget-virus">gget virus：确定性检索层</h2>
+
+<p>为了将病毒数据检索转化为智能体和人类都可以可靠调用的接口，研究团队与 NCBI 研究人员合作开发了 <strong>gget virus</strong>。</p>
+
+<p>这比想象中困难得多。NCBI Virus 是横跨多个底层资源的门户——包括跨美国、欧洲、日本同步维护的国际序列数据库——回答一个看似简单的查询，往往需要从多处拼凑信息。gget virus 必须协调 REST、Datasets 和 E-utilities 三套 API，判断哪些过滤条件可以通过现有 API 应用、哪些必须在本地检查（因为 Web 界面暴露了某些单一程序化端点所不具备的过滤语义）。它处理批量分页，确保 SARS-CoV-2、流感 A 等大规模记录集被完整检索而非任意截断。它返回人机可读的标准化输出，并附有详细日志说明最终结果是如何生成的。</p>
+
+<p>加入 gget virus 后，<strong>所有模型的准确率均超过 90%，GPT-5.5 达到 99.7%</strong>。模型间的性能差距也大幅缩小。换言之，<strong>加入确定性检索层后，模型选择变得远不那么重要</strong>——这对于科学工作流尤为关键，因为可靠的数据集构建不应该依赖最新或最贵的模型，更便宜的模型配合正确的工具，同样可以降低变异性并扩大访问范围。</p>
+
+<h2 id="implications">为智能体设计生物数据基础设施</h2>
+
+<p>gget virus 的经验指向了一个更大的原则：<strong>我们需要将生物数据的底层基础设施——基因标识符、schema、检索逻辑、坐标系统、元数据约定——设计得无聊而可靠（即确定性）</strong>。模型的创造力应该在假说生成、实验设计和机制推断这些层面发挥，而不是消耗在解析异构数据库格式上。</p>
+
+<p>当然，随着模型能力的快速演进，今天的 harness 或许终将过时。如果将上述结果的模型曲线向前延伸，很容易想象一个（很近的）未来：智能体足够强大，能够自行穿越混乱的生物信息学工作流、协调标识符、正确分页、从失败中恢复。</p>
+
+<p>但即便如此，任务被一个模型完成，不代表这个任务应该每次都被（重新）由模型完成。<strong>能做到，不等于应该这样做</strong>。一个能够硬闯混乱生物信息学工作流的模型，对于常规科学工作来说可能仍然太贵、太慢、太难审计、太难信任。而如果智能体最终让今天的 harness 变得多余，生物数据库的结论依然成立：我们需要在思考用户的时候把智能体纳入进来，并为规模化而建。</p>
+
+<h2 id="summary-cn">核心观点</h2>
+
+<ul>
+<li><strong>生物数据基础设施对智能体不友好</strong>：NCBI Virus 等数据库的过滤逻辑藏于 Web 界面，缺乏标准化机器接口，是制约生物学智能体发展的根本瓶颈，而非模型推断能力本身</li>
+<li><strong>VirBench 揭示准确率严重不足</strong>：六款顶级模型无辅助时准确率仅 16.9%–91.3%，且同题三次结果差异巨大；对于科学数据构建，实际要求接近 100%</li>
+<li><strong>错误检索导致严重下游后果</strong>：系统发育树 TMRCA 可被误推至 1922 年，抗体靶点突变分析可产生三组截然不同结论；序列检索是更长工作流的起点，此处错误会级联放大</li>
+<li><strong>确定性检索层是当前阶段的关键设计模式</strong>：gget virus 将所有模型准确率提升至 90% 以上，并消除模型间性能差距——加入确定性工具后，模型选择变得远不那么重要</li>
+<li><strong>生物数据库必须以"智能体为用户"重新设计</strong>：无论模型能力如何演进，生物数据基础设施的设计者都应将大规模自动化访问纳入核心目标，为规模化和可审计性而建</li>
+</ul>
+
+<h2 id="key-terms">关键术语</h2>
+
+<ul>
+<li><strong>VirBench</strong>：包含 120 条真实病毒序列查询的基准测试集，覆盖 40 种病原体，附人工核验答案，用于评估智能体数据检索准确率</li>
+<li><strong>gget virus</strong>：基于 NCBI REST/Datasets/E-utilities API 的确定性病毒序列检索工具，与 NCBI 合作开发</li>
+<li><strong>确定性检索层（Deterministic Retrieval Layer）</strong>：在 AI 智能体上层提供可重复、精确的数据库访问接口，消除 LLM 推断带来的不确定性</li>
+<li><strong>context engine</strong>：为智能体提供可靠、结构化生物数据访问的基础设施层，gget virus 是其典型代表</li>
+<li><strong>NCBI Virus</strong>：美国国家生物技术信息中心维护的病毒序列门户，整合 GenBank、RefSeq 及 INSDC 国际生态系统数据</li>
+<li><strong>TMRCA（最近共同祖先时间）</strong>：系统发育分析中推断病毒暴发根节点时间的关键指标</li>
+<li><strong>click tax</strong>：研究人员在浏览器界面手动重复复杂筛选操作所付出的时间与精力成本</li>
+<li><strong>Bundibugyo virus</strong>：2026 年 5 月在刚果民主共和国引发埃博拉病暴发的病毒，是本文紧迫案例的背景</li>
+<li><strong>maftivimab / MBP134</strong>：针对 Zaire 埃博拉病毒的抗体治疗药物，WHO 2026 年 Bundibugyo 疫情候选方案</li>
+</ul>
+
+        </div>
+
+        <div class="anav">
+          <a class="prev" href="anthropic-research-07-project-fetch-phase2.html">
+            <div class="lbl">‹ 上一篇</div>
+            <div class="ti">Project Fetch: Phase Two</div>
+          </a>
+          <a class="next" href="anthropic-research-09-nday-exploits.html">
+            <div class="lbl">下一篇 ›</div>
+            <div class="ti">Measuring LLMs' Impact on N-day Exploits</div>
+          </a>
+        </div>
+      </article>
+
+      <nav class="toc">
+        <div class="t">本页目录</div>
+        <a class="lv2" href="#background">生物数据基础设施</a>
+        <a class="lv2" href="#click-tax">病毒学中的"点击税"</a>
+        <a class="lv2" href="#virbench">VirBench 基准测试</a>
+        <a class="lv2" href="#downstream-errors">下游科学后果</a>
+        <a class="lv2" href="#gget-virus">gget virus 确定性检索层</a>
+        <a class="lv2" href="#implications">为智能体设计基础设施</a>
+        <a class="lv2" href="#summary-cn">核心观点</a>
+        <a class="lv2" href="#key-terms">关键术语</a>
+      </nav>
+    </div>
+
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+
+    <script>
+    var RK="techblog_read",ID="anthropic-research-08-agents-biology";
+    function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}
+    var btn=document.getElementById("readBtn");
+    btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);
+      localStorage.setItem(RK,JSON.stringify([...s]));paint();});
+    function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+      btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}
+    paint();
+    </script>
+</body></html>

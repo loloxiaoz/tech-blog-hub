@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build Your Own Transaction Foundation Model for Financial Intelligence（构建金融交易基础模型：端到端 GPU 加速方案） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>Build Your Own Transaction Foundation Model for Financial Intelligence（构建金融交易基础模型：端到端 GPU 加速方案）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-18</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 7 分钟</span><span class="tag">金融AI</span><span class="tag">基础模型</span><span class="tag">交易检测</span><span class="tag">NeMo</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/build-your-own-transaction-foundation-model-for-financial-intelligence/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 演示基于 Llama 解码器架构（29M 参数）的交易基础模型全流程：GPU 分词效率提升 3 倍，在 IBM TabFormer 欺诈数据集上，组合模型（原始特征+嵌入）相较 XGBoost 基线 AP 提升 41.76%（0.1238→0.1755）。</div></div><div class="prose"><p>Every swipe, transfer, and payment on a modern financial network encodes a pattern of human behavior. Transaction data is one of the richest signals an enterprise owns. Yet most production use cases for such tabular data still depend on hand-engineered features and rule sets that are brittle, expensive to maintain, and blind to the sequential structure inside a customer history.</p>
+
+<p>Foundation models, pre-trained on large volumes of unlabeled transaction sequences, change this equation by producing general-purpose representations of financial behavior that transfer across a wide array of downstream tasks. A single backbone covers fraud detection, credit scoring, lifetime value prediction, segmentation, personalized recommendations, recurrent-transaction detection, and more.</p>
+
+<p>The industry signal is strong and accelerating. Innovative financial firms are training transformer-based models on billions of transactions, reporting double-digit relative lifts on production-scale tasks while simultaneously streamlining operations. See Stripe's payments foundation model, Nubank's NuFormer, Visa's TransactionGPT, Mastercard's large tabular model, Revolut's PRAGMA, Plaid's transaction foundation model, and more.</p>
+
+<p>The NVIDIA Build Your Own Transaction Model developer example walks through how to build a transaction foundation model end-to-end using accelerated computing.</p>
+
+<p>You will progress through five steps in this workflow:</p>
+<ol>
+  <li>GPU-accelerated data processing with NVIDIA CUDA-X library cuDF</li>
+  <li>Custom tokenization with NVIDIA CUDA-X libraries cuDF and cuML</li>
+  <li>Transformer decoder model pretraining from scratch with NVIDIA NeMo AutoModel open library, part of NVIDIA NeMo framework</li>
+  <li>Extracting learned embeddings</li>
+  <li>Augmenting a downstream fraud classifier with embeddings</li>
+</ol>
+
+<p>By the end, you will reproduce a near-50% lift in Average Precision ("AP") over a strong XGBoost baseline on the IBM TabFormer fraud dataset.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/image2-3.webp" alt="Architecture diagram showing five stages: raw tabular transactions being processed (NVIDIA CUDA-X), a GPU tokenizer converting them into token sequences (NVIDIA CUDA-X), a transaction foundation model being pretrained (NVIDIA NeMo AutoModel), embeddings being extracted, and a variety of downstream models using them for financial use cases">
+<p><em>Figure 1. End-to-end transaction foundation model pipeline: Raw transactions flow through a GPU-accelerated data processing and domain tokenization using NVIDIA CUDA-X libraries, a transaction foundation model pretrained using NeMo AutoModel, and embedding extraction into downstream tabular models</em></p>
+
+<h2 id="why-transformers-fit-transaction-histories">Why transformers fit transaction histories</h2>
+
+<p>Large language models learn from sequences of words. During pretraining, a model sees text and learns that words, phrases, and sentences carry meaning through order and context. A transaction foundation model applies the same principle to financial behavior. A sequence such as "paycheck deposit, grocery purchase, transit fare, recurring subscription, card-present restaurant payment" carries information that no single transaction row can express alone.</p>
+
+<p>Transformers are well suited to this structure because self-attention can connect events that sit far apart in history. A fraudulent transaction may only look suspicious when paired with a recent travel pattern or a sudden burst of small authorizations. Traditional tabular features can approximate these patterns, but engineers must decide which windows, aggregates, and rules to build up front. A pretrained transformer learns those relationships directly from the sequence.</p>
+
+<p>This approach complements other NVIDIA financial AI workflows, including the NVIDIA AI Blueprint for financial fraud detection using graph neural networks (GNNs). GNNs capture relationships across connected entities such as accounts, merchants, devices, and transactions. Transaction foundation models focus on behavioral histories within a customer or account sequence. In practice, both methods produce rich embeddings with complementary information that pair naturally.</p>
+
+<h2 id="load-the-data-and-set-a-baseline">Load the data and set a baseline</h2>
+
+<p>Notebook <code>01_dataset_baseline.ipynb</code> loads the IBM TabFormer dataset, roughly 24.4M synthetic card transactions with a ~0.12% fraud rate, directly into GPU memory with cuDF.</p>
+
+<p>The dataset splits are partitioned temporally by cumulative transaction count: the first 80% of transactions by date is used for training; the next 10% becomes validation; and the final 10% becomes test. These splits therefore occupy disjoint and ordered time windows, preventing data leakage and reflecting real-world production environments.</p>
+
+<p>With the splits in place, the notebook trains an XGBoost classifier utilizing native GPU acceleration with <code>tree_method="hist"</code> and <code>device="cuda"</code> on a 1M-row balanced training sample. Evaluation runs on a 100k stratified holdout that preserves the realistic ~0.1% fraud prevalence.</p>
+
+<p>The baseline numbers set the bar for the rest of the tutorial:</p>
+<ul>
+  <li>Test ROC-AUC: 0.9885</li>
+  <li>Test AP: 0.1238</li>
+</ul>
+
+<p>Pay attention to AP rather than ROC-AUC. Under 0.1% class imbalance, ROC-AUC saturates quickly and hides meaningful differences in high scoring regions. AP measures across the full recall curve and responds to improvements where they matter operationally. Every subsequent model in this tutorial is judged by AP first.</p>
+
+<h2 id="tokenize-transactions-on-the-gpu">Tokenize transactions on the GPU</h2>
+
+<p>General-purpose LLM tokenizers waste capacity on tabular financial data. For example, a byte pair encoding (BPE) tokenizer splits a single transaction into roughly 39 subword tokens, where most encode commas and dollar signs rather than behavior. Notebook <code>02_seq_preproc_tokenization.ipynb</code> introduces a custom domain tokenizer that converts each transaction into roughly 12 semantic tokens with a much smaller vocabulary (6,251 symbols vs. 50,257 from BPE).</p>
+
+<p>In addition to token information density, this efficiency also enables more than 3x the number of transactions for a set token budget. Practically speaking, a model with a context window of 4,092 can fit a history of ~315 transactions from the domain tokenizer and only ~102 transactions from a BPE tokenizer.</p>
+
+<p>The domain tokenizer is implemented in <code>src/tokenizer/financial_pipeline.py</code>. This flexible pipeline handles amount binning, merchant hashing, hour-of-day and day-of-week, month, card identity, chip type, ZIP3 and state, and customer identity. Every step runs on the GPU through cuDF.</p>
+
+<p>The tokenizer can be readily adapted to different transaction schema by adding or replacing individual steps in the modular pipeline. Each step implements a small <code>BaseTokenizer</code> interface, so extending coverage to new fields such as device ID or beneficiary country takes just a short subclass.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/image5.webp" alt="Comparison showing the domain tokenizer at roughly 12 tokens per transaction versus GPT-2 BPE at roughly 39 tokens per transaction">
+<p><em>Figure 2. Token efficiency comparison between the domain tokenizer (~12 tokens per transaction, 6,251-symbol vocabulary) and GPT-2 BPE (~39 tokens per transaction, 50,257-symbol vocabulary) on the same TabFormer records</em></p>
+
+<h2 id="pretrain-with-nemo-automodel">Pretrain with NeMo AutoModel</h2>
+
+<p>NeMo AutoModel is a Pytorch-native open-source training library under the NVIDIA NeMo Framework, designed to streamline and scale training and finetuning for LLMs and VLMs.</p>
+
+<p>Notebook <code>03_foundation_model_training.ipynb</code> pretrains a decoder-only foundation model on the tokenized corpus using causal language modeling. The objective is simple — to predict the next token given every previous token — but the supervision signal is dense. Every position in a sequence contributes a gradient, so a single packed transaction sequence yields thousands of next-event predictions.</p>
+
+<p>The model is a compact Llama decoder defined in <code>configs/pretrain_financial_decoder.yaml</code>:</p>
+<ul>
+  <li>~29M parameters</li>
+  <li>Hidden size 512, 8 transformer layers</li>
+  <li>Grouped-Query Attention with 8 query heads and 2 KV heads</li>
+  <li>8,192-token RoPE context window</li>
+  <li>SwiGLU activation, RMSNorm, domain vocabulary of 6,251 tokens</li>
+</ul>
+
+<p>NeMo AutoModel handles the rest of the stack. Kick off a single-GPU sanity run:</p>
+<pre><code>python scripts/train_decoder_model.py \
+  --config configs/pretrain_financial_decoder.yaml \
+  --step_scheduler.max_steps 30</code></pre>
+
+<p>The 30-step demo drops training loss from <code>ln(6251)≈8.74</code> (the random-guess baseline for this vocabulary) to around 6.0. To scale the same run to eight GPUs, simply prefix the command with <code>torchrun --nproc-per-node=8</code> — no changes to the script or distributed boilerplate required. NeMo AutoModel wires up FSDP2 sharding, mixed precision, gradient accumulation, and checkpoint consolidation from the YAML.</p>
+
+<p>Checkpoints land as standard <code>safetensors</code> files, which means the trained backbone loads with a one-liner anywhere HuggingFace Transformers is installed:</p>
+<pre><code>from transformers import AutoModelForCausalLM
+
+model = AutoModelForCausalLM.from_pretrained("models/decoder-foundation-model")</code></pre>
+
+<p>The repository ships a full checkpoint trained for 3,000 steps. To swap architectures, edit <code>model._target_</code> and <code>model.config._target_</code> in the YAML. Any HuggingFace-compatible decoder is designed to drop in without training-code changes.</p>
+
+<h2 id="extract-embeddings-at-scale">Extract embeddings at scale</h2>
+
+<p>Notebook <code>04_inference_embedding_extraction.ipynb</code> turns the pretrained backbone into a feature extractor. It loads the checkpoint with <code>AutoModelForCausalLM</code>, requests <code>output_hidden_states=True</code>, and pools the final hidden layer down to a 512-dim vector per user history.</p>
+
+<p>For decoder-only models with causal attention, only the final position has observed the entire sequence while earlier positions are blind to later tokens. Last-token pooling therefore picks the most informative location in the sequence. The implementation in <code>src/decoder_inference.py</code> uses the attention mask to find the last non-pad token per row and gathers its hidden state.</p>
+
+<p>The extraction loop is a single call:</p>
+<pre><code>embeddings = inference.extract_embeddings_batched(
+    padded_ids, batch_size=1024, show_progress=True
+)</code></pre>
+
+<p>The notebook extracts and saves train, validation, and test embeddings as .npy files. Additionally, a <code>metadata.json</code> describing shapes and row alignment is saved, which is later used in Notebook 05 to join embeddings back to the associated raw tabular features.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/image6.webp" alt="Three-dimensional scatter plot of transaction embeddings reduced to three dimensions with UMAP, showing distinct clusters corresponding to different merchant industries and user locations">
+<p><em>Figure 3. 3D UMAP projection of 50,000 validation-set transaction embeddings. Points colored by merchant industry and user zip code each show clear behavioral clusters in the learned representation space</em></p>
+
+<h2 id="measure-lift-on-a-downstream-task">Measure lift on a downstream task</h2>
+
+<p>Notebook <code>05_xgboost_fraud_detection.ipynb</code> answers the billion dollar question: Can transaction foundation model embeddings move downstream metrics?</p>
+
+<p>It trains three GPU XGBoost classifiers and evaluates all of them on the same 100k stratified test set:</p>
+<ul>
+  <li><strong>Raw</strong> — 13 hand-engineered tabular features (the baseline from Step 1)</li>
+  <li><strong>Embeddings</strong> — 512-dim foundation-model vectors compressed to 64d with PCA (~78% variance retained)</li>
+  <li><strong>Combined</strong> — raw features concatenated with the 64d embeddings, 77d total</li>
+</ul>
+
+<table>
+  <thead>
+    <tr><th>Model</th><th>Feature dim</th><th>Test ROC-AUC</th><th>Test AP</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Raw (baseline)</td><td>13</td><td>0.9885</td><td>0.1238</td></tr>
+    <tr><td>Embeddings only</td><td>64</td><td>0.8775</td><td>0.0123</td></tr>
+    <tr><td><strong>Combined</strong></td><td>77</td><td><strong>0.9925</strong></td><td><strong>0.1755</strong></td></tr>
+  </tbody>
+</table>
+<p><em>Table 1. Downstream fraud-detection results on the TabFormer temporal test split. The combined model delivers a +0.41% ROC-AUC lift and a +41.76% AP lift over the raw-feature baseline</em></p>
+
+<p>The combined model lifts ROC-AUC by 0.41% and AP by 41.76% over the baseline. That AP delta is the operational win: a review team with fixed daily capacity catches materially more fraud at the same workload.</p>
+
+<p>Embeddings encode the user's transaction history and provide predictive power, but underperform the baseline as lone features. The combined model leverages event-level information from the raw tabular row and sequence-level historical context from embeddings that were learned during pretraining.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/image4-2.webp" alt="Grouped bar chart comparing ROC-AUC and AP for the raw baseline, embeddings-only model, and combined model">
+<p><em>Figure 4. Side-by-side comparison of test ROC-AUC and test AP for the three downstream models. The combined model (raw features + foundation-model embeddings) wins on both metrics</em></p>
+
+<h2 id="customize-the-developer-example">Customize the developer example</h2>
+
+<p>The repository is structured so that each component is swappable independently:</p>
+<ul>
+  <li><strong>Tokenizer:</strong> Adapt the pipeline in <code>src/tokenizer/</code> to any transaction schema by adding or replacing steps. Each step is a small subclass of <code>BaseTokenizer</code>, so supporting new fields such as device fingerprint, beneficiary country, and merchant country is a short addition.</li>
+  <li><strong>Model architecture:</strong> Edit <code>model._target_</code> and <code>model.config._target_</code> in the training YAML to point at any HuggingFace-compatible decoder. The rest of the training pipeline using NeMo (data loader, FSDP2, checkpointing, evaluation) stays put.</li>
+  <li><strong>Downstream task:</strong> Replace XGBoost with any model that consumes fixed-length feature vectors. Churn prediction, customer segmentation, lifetime value regression, next-best-action ranking, and credit scoring all fit the same embedding-plus-head pattern.</li>
+</ul>
+
+<p>The developer example is designed to extend to labels other than fraud as well, exhibiting foundational capabilities. Swap <code>Is Fraud?</code> in Step 5 for any event label that aligns with the user histories encoded by the backbone.</p>
+
+<h2 id="get-started">Get started</h2>
+
+<p>You now have a reference path from raw transaction logs to a pretrained foundation model that augments a downstream classifier, accelerated end-to-end with NVIDIA. The three components — a custom tokenizer, a transformer decoder backbone, and an embedding-driven XGBoost head — together deliver a near-50% AP lift over a strong industry standard baseline on the TabFormer fraud benchmark.</p>
+
+<p>Visit <a href="https://build.nvidia.com/nvidia/build-your-own-transaction-foundation-model">build.nvidia.com</a> to deploy the notebook in a GPU-accelerated environment via NVIDIA Launchable or your own environment via the <a href="https://github.com/NVIDIA-AI-Blueprints/transaction-foundation-model">GitHub repository</a>.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#why-transformers-fit-transaction-histories">Why transformers fit transaction histories</a><a class="lv2" href="#load-the-data-and-set-a-baseline">Load the data and set a baseline</a><a class="lv2" href="#tokenize-transactions-on-the-gpu">Tokenize transactions on the GPU</a><a class="lv2" href="#pretrain-with-nemo-automodel">Pretrain with NeMo AutoModel</a><a class="lv2" href="#extract-embeddings-at-scale">Extract embeddings at scale</a><a class="lv2" href="#measure-lift-on-a-downstream-task">Measure lift on a downstream task</a><a class="lv2" href="#customize-the-developer-example">Customize the developer example</a><a class="lv2" href="#get-started">Get started</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-10-transaction-foundation-model";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

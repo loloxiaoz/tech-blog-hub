@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inside NVIDIA Halos for Robotics: A Full-Stack Functional Safety System for Physical AI（NVIDIA Halos 机器人全栈功能安全系统） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>Inside NVIDIA Halos for Robotics: A Full-Stack Functional Safety System for Physical AI（NVIDIA Halos 机器人全栈功能安全系统）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-28</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">机器人</span><span class="tag">功能安全</span><span class="tag">Physical AI</span><span class="tag">边缘计算</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/inside-nvidia-halos-for-robotics-a-full-stack-functional-safety-system-for-physical-ai/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 发布 Halos for Robotics 平台，基于 18,000 工程人年和 210 亿安全晶体管的 AV 安全积累，将全栈功能安全延伸至工业机器人、人形机器人和 AMR；IGX Thor 提供 IEC 61508 SIL 3 级别安全岛，外部视觉感知蓝图实现"由外到内"安全监控。</div></div><div class="prose"><p><a href="https://www.nvidia.com/en-us/glossary/generative-physical-ai/">Physical AI</a>—robots working autonomously alongside people in factories, warehouses, hospitals, and homes—is arriving faster than most expected. Traditional safety which was built for structured environments can not work anymore as the spaces become more unstructured and robots move out of cages. AI-driven safety is the key.</p>
+
+<p>Marking a major milestone in the arrival of physical AI, NVIDIA is today announcing the launch of <a href="https://www.nvidia.com/en-us/ai-trust-center/halos/robotics/">NVIDIA Halos for Robotics</a> which brings together powerful AI compute and safety in one single platform. NVIDIA Halos OS is a comprehensive, full-stack safety system built on years of NVIDIA investing in <a href="https://developer.nvidia.com/drive">autonomous vehicle (AV)</a> safety, now extended into the world of industrial robots, humanoids, and autonomous mobile robots (AMRs). <a href="https://developer.nvidia.com/blog/nvidia-igx-thor-powers-industrial-medical-and-robotics-edge-ai-applications/">NVIDIA IGX Thor</a> and NVIDIA Halos OS are the foundational hardware and software platform of NVIDIA Halos.</p>
+
+<p>Agility, maker of the humanoid robot Digit, is incorporating NVIDIA IGX Thor and Halos OS into its proprietary safe human detection system—and joining the NVIDIA Halos AI Systems Inspection Lab—to accelerate the development of safe humanoids for industrial environments.</p>
+
+<h2 id="how_is_nvidia_extending_a_proven_safety_stack_from_avs_to_robotics">How is NVIDIA extending a proven safety stack from AVs to robotics?</h2>
+
+<p>NVIDIA has a deep and long-standing investment in functional safety. The company has accumulated over <strong>18,000 engineering years</strong> on vehicle safety, assessed more than <strong>21 billion safety transistors</strong>, and produced over <strong>7 million lines of safety-assessed code</strong>. More than 22,000 platform safety monitors have been developed, 330+ research papers on AV safety published, and 30+ certificates and assessment reports issued.</p>
+
+<p>This body of work was built for AVs, one of the most demanding safety domains in engineering. The key insight behind Halos OS is that this proven foundation doesn't need to be rebuilt for robotics. It can be extended.</p>
+
+<p>The same safety development processes, the same development tools with proven confidence in use, and the same foundational functional safety standards (ISO 26262 → IEC 61508, ISO 13849) are shared across the AV and robotics stacks. Third-party assessments by TÜV SÜD and TÜV Rheinland confirm compliance across both domains.</p>
+
+<p>NVIDIA is helping shape the future of robotics safety through its convenorship of IEC 61508 and <a href="https://www.iec.ch/blog/iec-and-iso-launch-working-group-advance-functional-safety-ai-systems">ISO/IEC TS 22440</a>, an emerging standard for functional safety and AI.</p>
+
+<h2 id="what_is_nvidia_halos_for_robotics">What is NVIDIA Halos for Robotics?</h2>
+
+<p>NVIDIA Halos for Robotics is organized into the same full-stack comprehensive safety system that unifies safety elements from platform hardware and software across three layers similar to NVIDIA Halos for AVs.</p>
+
+<p>At the foundation of the Halos stack is hardware platform safety: for robotics, that is provided by the NVIDIA IGX Thor platform and NVIDIA Holoscan Sensor Bridge (HSB). Building on that foundation, Halos OS is a safety software stack running on IGX Thor for robots and AMRs.</p>
+
+<p>It includes Halos Core, the base safety operating system for developing and deploying safety applications and a collection of Blueprints including NVIDIA Halos Outside-In Safety Blueprint to extend robot perception with external worksite cameras and AI agents to dynamically control robot behavior.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-halos-outside-in-safety-blueprint-architecture-625x495.png" alt="Hierarchical diagram showing the Halos safety system layered architecture">
+<p><em>Figure 1. NVIDIA Halos layered architecture</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th><strong>Autonomous vehicles</strong></th>
+      <th><strong>Robotics</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Platform safety</strong></td>
+      <td>NVIDIA DRIVE AGX, NVIDIA DRIVE Hyperion</td>
+      <td>NVIDIA IGX Thor and NVIDIA Holoscan Sensor Bridge</td>
+    </tr>
+    <tr>
+      <td><strong>Halos OS</strong></td>
+      <td colspan="2">Halos Core and Halos applications and blueprints</td>
+    </tr>
+    <tr>
+      <td><strong>Ecosystem safety</strong></td>
+      <td colspan="2">Halos AI Systems Inspection Lab – 43 members: 16 AV, 23 Robotics, 4 spanning both</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="nvidia_igx_thor_provides_platform_safety">NVIDIA IGX Thor provides platform safety</h3>
+
+<p>NVIDIA IGX Thor is an industrial-grade AI compute module that combines AI perception performance with built-in functional safety hardware—all in a single platform. Up to <strong>2,070 FP4 TFLOPs</strong> of AI performance, <strong>14x Neoverse ARM CPU cores</strong>, and <strong>128 GB of memory at 273 GB/s bandwidth</strong>. This gives IGX the headroom to run demanding real-time robotics workloads alongside safety monitoring functions.</p>
+
+<p>Built-in hardware safety distinguishes IGX from general-purpose compute platforms. This hardware includes:</p>
+
+<ul>
+  <li><strong>IEC 61508 SIL 3 capable Safety Island (FSI)</strong>: A dedicated functional safety island with up to 12K DMIPs, its own I/O, power, and clocks—physically isolated from the main compute domain</li>
+  <li><strong>High diagnostic coverage</strong>: Over 22,000 safety mechanisms provide diagnostic coverage across the SoC</li>
+  <li><strong>IEC 61508 SC 3 systematics</strong>: All IPs supported for safety usage are developed with SC 3 capability per IEC 61508</li>
+  <li><strong>Diversity and redundancy</strong>: Multiple engines and interfaces can be paired for ASIL and SIL decomposition (GPU/CPU, GPU/PVA, CCPLEX CPU/FSI CPU)</li>
+  <li><strong>In-System Test (IST)</strong>: Logic and Memory BIST across the whole SoC for latent fault coverage</li>
+  <li><strong>Freedom from Interference (FFI) and Dependent Failure Initiator (DFI) support</strong>: Rich features including SMMU in CCPLEX and GPU, GFX execution watchdog, hardware Context Switch in GPU, NOC firewalls, and clock/voltage/thermal monitors</li>
+</ul>
+
+<p>The IGX built-in hardware safety features are controlled by the Safety Extension Package (SEP) service of Halos Core. SEP is a collection and dispatch mechanism for hardware errors to the FSI and Safety MCU (SMCU), including FSI and SMCU reference firmware, an Error Propagation Layer (EPL), and the Edge Safety Link safety protocol.</p>
+
+<h3 id="nvidia_holoscan_sensor_bridge_extends_functional_safety_capabilities">NVIDIA Holoscan Sensor Bridge extends functional safety capabilities</h3>
+
+<p>HSB connects sensors and actuators to IGX over Ethernet, extending the safety chain all the way to the sensor edge. Key capabilities include:</p>
+
+<ul>
+  <li><strong>Low latency:</strong> ConnectX RDMA and RTX GPU Direct enable real-time sensor streaming</li>
+  <li><strong>Scalable:</strong> Easily scales to hundreds of sensors and hundreds of Gbit/s</li>
+  <li><strong>Multimodal:</strong> Domain-agnostic protocol supports any sensor or actuator type</li>
+  <li><strong>Safe and secure:</strong> MACsec for device authentication and encrypted data flow, plus end-to-end IEC 61508 SIL 2 safety protocol, watermarking, and camera testing support services included in Halos Core</li>
+</ul>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-holoscan-sensor-bridge-data-flow.webp" alt="Block diagram showing Holoscan Sensor Bridge data flow from camera through FPGA IP to host GPU processing">
+<p><em>Figure 2. NVIDIA Holoscan Sensor Bridge data flow from the camera through FPGA IP to host GPU processing</em></p>
+
+<h3 id="ecosystem_support_for_platform_safety">Ecosystem support for platform safety</h3>
+
+<p>The platform safety is supported by a growing ecosystem of partners including IGX ODM partners including Advantech, Nexcobot, Inventec, and Connect Tech. Safety MCU and sensor partners include Infineon, NXP Semiconductors, and Texas Instruments. HSB chip partners include Texas Instruments, STMicroelectronics, NXP Semiconductors, and Lattice Semiconductor.</p>
+
+<h2 id="the_halos_os_for_robotics_software_safety_environment">The Halos OS for robotics software safety environment</h2>
+
+<p>NVIDIA Halos OS sits between the hardware and your application, giving robotics teams the certified building blocks they need — currently Halos Core (the safety OS) and Halos Applications (safety blueprints like Outside-In Safety). Robotics middleware and Halos Infra tools are available but not yet for safety applications.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-halos-os-for-igx.webp" alt="Layered diagram of NVIDIA Halos OS for IGX showing Safety Applications, Safety Middleware, and Halos Core above a hypervisor base">
+<p><em>Figure 3. NVIDIA Halos OS for robotics stack on NVIDIA IGX</em></p>
+
+<h3 id="the_safety_operating_system_halos_core">The safety operating system: Halos Core</h3>
+
+<p>At the foundation of NVIDIA Halos OS is Halos Core, which is the next generation of NVIDIA DriveOS and certified to automotive safety standards. The software layer runs on IGX Thor. Two configurations are currently available: <strong>Halos Core Linux</strong> and <strong>Halos Core Linux plus QNX</strong>.</p>
+
+<p>Halos Core Linux provides a complete safe software foundation: a Linux runtime for application and compute workloads, the SEP for hardware error collection and dispatch, the Edge Safety Link safety communication protocol, FSI RTOS, and Safety MCU RTOS firmware.</p>
+
+<p>Halos Core Linux and QNX adds an NV Hypervisor layer that partitions IGX into isolated virtual machines: a Linux VM for AI and application workloads, and a QNX VM for safety-critical functions. QNX is a real-time operating system with a long pedigree in certified safety systems, and its inclusion enables stronger software partitioning for higher safety integrity use cases.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-halos-core-configurations-1.webp" alt="Two side-by-side stack diagrams comparing Halos Core Linux and Halos Core Linux and QNX configurations">
+<p><em>Figure 4. Halos Core configurations include Linux-only (left) and Linux plus QNX with NV Hypervisor (right)</em></p>
+
+<h2 id="developing_functional_safety_agents_with_nvidia_halos_os">Developing functional safety agents with NVIDIA Halos OS</h2>
+
+<p>As part of the NVIDIA Halos OS application layer, NVIDIA has reference blueprints for developers building functional safety agents.</p>
+
+<h3 id="outside-in_safety">Outside-in safety</h3>
+
+<p><a href="https://github.com/NVIDIA/halos-outside-in-safety">NVIDIA Halos Outside-In Safety Blueprint</a> extends robot perception beyond onboard sensors. It uses external infrastructure cameras, AI perception, and safety logic to accelerate development of real-time, functional safety solutions that also maximize operational throughput.</p>
+
+<p>Running on NVIDIA IGX and available as open source, it enables robots to safely operate alongside workers at higher efficiency while dynamically adapting to complex environments. It also provides documentation support for AI functional safety standards such as ISO/IEC TR 5469 and the upcoming ISO/IEC TS 22440.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/halos-outside-in-safety-blueprint-three-domain-architecture.webp" alt="Three-domain architecture diagram showing facility cameras, robots, and workers feeding into a Halos Outside-In Safety agent running on IGX Thor">
+<p><em>Figure 5. Halos Outside-In Safety Blueprint spans industrial facility, AI safety pipeline, and digital twin validation</em></p>
+
+<p>The blueprint provides several customizable components to implement outside-in safety agents:</p>
+
+<ul>
+  <li><strong>Sensor Input Processing Pipeline (SIPP):</strong> NVIDIA Metropolis Blueprint for video search and summarization (VSS), the reference perception stack, is used to ingest all camera streams from facility infrastructure and convert them into actionable events and analytic data. VSS is an AI-based perception pipeline that detects and tracks objects of interest across cameras, outputting location, speed, and trajectory of each tracked object.</li>
+  <li><strong>Safety AI Monitor (SAIM):</strong> Continuously monitors the perception pipeline for conditions that could compromise detection accuracy—including out-of-distribution inputs, camera blockage, connectivity drops, and image anomalies. When inputs become out-of-distribution (OOD), the SAIM detects and flags the condition, causing the Safety Decision Maker to fall back to a safe operating state until conditions recover.</li>
+  <li><strong>Safety Event Integrator (SEI):</strong> Fuses events from multiple camera perspectives and ensures they meet a high confidence threshold before forwarding them to the Safety Decision Maker. Events arriving with significant delay based on their timestamps are discarded as stale.</li>
+  <li><strong>Safety Decision Maker (SDM):</strong> Runs a finite state machine on IGX's dedicated Functional Safety Island—isolated from the main AI compute domain—to act on integrated events, sending safe stop signals, adjusting robot operating speed, or temporarily muting onboard safety constraints when the outside-in system confirms the area is clear.</li>
+  <li><strong>Digital twin integration:</strong> Running on NVIDIA RTX Pro with NVIDIA Isaac Sim, this domain generates synthetic camera streams for testing and hardware-in-the-loop validation.</li>
+</ul>
+
+<h2 id="automated_trailer_loading_reference_use_case">Automated trailer loading reference use case</h2>
+
+<p>The automated trailer loading (ATL) example is a safety concept inspected by TÜV Rheinland built using NVIDIA Halos Outside-In Safety Blueprint to tackle one of the most common pain points in warehouse automation: getting autonomous forklifts to load trailers efficiently without constant safety stops.</p>
+
+<p>Current inside-out systems often can't operate freely inside trailers due to space limitations and onboard sensor detection mistakes such as misunderstanding cargo and trailer walls as obstacles. This can limit the forklift's movement to a crawl or stopping entirely. Muting onboard safety can bring back operation efficiency inside the trailer, but doing so safely and intelligently becomes critical. That's where outside-in safety comes in.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/dual-camera-view-warehouse-loading.webp" alt="Two simulated warehouse camera feeds showing bounding boxes around a forklift, worker, and boxes in a loading area">
+<p><em>Figure 6. Dual-camera view of a warehouse loading area with object detection active, tracking a forklift and workers within a defined region of interest</em></p>
+
+<p>When the forklift is inside the trailer and no workers are present in the loading area, the SDM temporarily mutes the forklift's onboard safety system, enabling it to operate at full efficiency. The moment a worker steps into the loading area, the ROI entry event propagates through the SEI to the SDM, which fully reactivates the forklift's safety system.</p>
+
+<p>If the SAIM detects that camera conditions have degraded—a light goes out, steam obscures a camera—it sends an additional out-of-distribution event and the SDM responds accordingly. The result is higher throughput <em>and</em> more reliable safety coverage than inside-out alone can provide. Safety and productivity are no longer in tension.</p>
+
+<h2 id="ecosystem_safety_the_nvidia_halos_ai_systems_inspection_lab">Ecosystem safety: The NVIDIA Halos AI Systems Inspection Lab</h2>
+
+<p>Safety certification is not something any single company can do alone. The <a href="https://www.nvidia.com/en-us/ai-trust-center/physical-ai/safety-certification/">NVIDIA Halos AI Systems Inspection Lab</a> is an ANAB-accredited ISO/IEC 17020 Inspection Body—the first worldwide program accredited for AI and functional safety in both autonomous vehicles and robotics—providing a structured pathway from design to certificate.</p>
+
+<p>This process works as follows: a Partner/ODM asks the Lab to inspect the correct integration of Halos safety, AI safety and cybersecurity requirements in their product. The NVIDIA pool of safety and regulatory experts assesses the system against preassessed Halos stack elements (IGX SoM, Halos Core, and Halos Applications) and issues an Inspection Certificate and Inspection Report. The partner then takes this NVIDIA Inspection Certificate to a third-party Certification Agency—TÜV Rheinland, TÜV SÜD, SGS, exida, CERTX, or UL Solutions—to obtain final system certification.</p>
+
+<p>Because the Halos elements and their integration with the end product are preassessed, partners don't need to reevaluate the platform from scratch. They can focus their certification effort on their own application logic, dramatically reducing time and cost to certification.</p>
+
+<p>Agility is using the Lab to inspect how the Digit safety-related software, AI components, and cybersecurity protections meet rigorous standards including IEC 61508, ISO 13849, and ISO/IEC TR 5469 before final third-party certification.</p>
+
+<p>The Halos AI Systems Inspection Lab member ecosystem spans over <strong>43 companies</strong> and is growing. New members joining include Agility, Lyte AI, Neurealm, Ouster, and Peer Robotics. They joined existing members including Boston Dynamics, KION Group, Infineon, Texas Instruments, NXP Semiconductors, Lattice Semiconductor, Synapticon, Reynolds &amp; Moore, SecEdge (cybersecurity), and FORT Robotics.</p>
+
+<h2 id="get_started_with_nvidia_halos_for_robotics">Get started with NVIDIA Halos for Robotics</h2>
+
+<p>To get started developing safety applications for robotics on NVIDIA IGX, <a href="https://developer.nvidia.com/halos-core-for-igx-access">register for NVIDIA Halos Core early access</a>.</p>
+
+<p>To start building outside-in safety agents, visit <a href="https://github.com/NVIDIA/halos-outside-in-safety/tree/develop/">NVIDIA/halos-outside-in-safety</a> on GitHub. Developers can now use two agent skills—<code>warehouse-deploy</code> and <code>halos-deploy</code>—to build and run outside-in safety agents with a single prompt. These skills handle prerequisites, NGC downloads, configuration, and the NVIDIA VSS Blueprint for warehouse operations plus Halos SIL deployment automatically.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#how_is_nvidia_extending_a_proven_safety_stack_from_avs_to_robotics">How is NVIDIA extending a proven safety stack from AVs to robotics?</a><a class="lv2" href="#what_is_nvidia_halos_for_robotics">What is NVIDIA Halos for Robotics?</a><a class="lv3" href="#nvidia_igx_thor_provides_platform_safety">NVIDIA IGX Thor provides platform safety</a><a class="lv3" href="#nvidia_holoscan_sensor_bridge_extends_functional_safety_capabilities">NVIDIA Holoscan Sensor Bridge extends functional safety capabilities</a><a class="lv2" href="#the_halos_os_for_robotics_software_safety_environment">The Halos OS for robotics software safety environment</a><a class="lv2" href="#developing_functional_safety_agents_with_nvidia_halos_os">Developing functional safety agents with NVIDIA Halos OS</a><a class="lv2" href="#automated_trailer_loading_reference_use_case">Automated trailer loading reference use case</a><a class="lv2" href="#ecosystem_safety_the_nvidia_halos_ai_systems_inspection_lab">Ecosystem safety: The NVIDIA Halos AI Systems Inspection Lab</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-08-halos-robotics";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

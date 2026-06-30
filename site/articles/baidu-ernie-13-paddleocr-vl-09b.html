@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PaddleOCR-VL: 0.9B 超紧凑视觉语言模型增强多语种文档解析（Boosting Multilingual Document Parsing via Ultra-Compact VLM） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>PaddleOCR-VL: 0.9B 超紧凑视觉语言模型增强多语种文档解析（Boosting Multilingual Document Parsing via Ultra-Compact VLM）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-02-15</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 3 分钟</span><span class="tag">OCR</span><span class="tag">轻量模型</span><span class="tag">多语种</span><span class="tag">视觉语言模型</span></div><a class="source-btn" href="https://ernie.baidu.com/blog/zh/posts/paddleocr-vl/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">百度发布 PaddleOCR-VL，核心为 0.9B 参数的 VLM，融合 NaViT 动态分辨率编码器与 ERNIE-4.5-0.3B，支持 109 种语言，在页级文档解析与元素级识别上达 SOTA，显著优于同类流水线方案。</div></div><div class="prose"><p><a href="https://huggingface.co/spaces/PaddlePaddle/PaddleOCR-VL_Online_Demo">演示</a> | <a href="https://github.com/PaddlePaddle/PaddleOCR">GitHub</a> | <a href="https://huggingface.co/PaddlePaddle">Hugging Face</a> | <a href="/blog/publication/PaddleOCR-VL_Technical_Report.pdf">技术报告</a></p>
+
+<h2 id="paddleocr-vl-简介">PaddleOCR-VL 简介</h2>
+<p>PaddleOCR-VL 是一款面向文档解析的 SOTA 且资源高效的模型。其核心组件为 PaddleOCR-VL-0.9B，这是一种紧凑而强大的视觉语言模型（VLM），它由 NaViT 风格的动态分辨率视觉编码器与 ERNIE-4.5-0.3B 语言模型组成，以实现精准的元素识别。该创新模型高效支持 109 种语言，并在识别复杂元素（如文本、表格、公式和图表）方面表现出色，同时保持极低的资源消耗。通过在广泛使用的公开基准与内部基准上的全面评测，PaddleOCR-VL 在页级文档解析与元素级识别两方面均达到 SOTA 表现。它显著优于现有方案，对比顶级 VLM 亦具强竞争力，并具备快速的推理速度。</p>
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/benchmark.png" alt="PaddleOCR-VL 的性能">
+
+<h2 id="核心特性">核心特性</h2>
+<ol>
+  <li><strong>紧凑而强大的视觉-语言模型（VLM）架构：</strong>提出了一种新颖的 VLM 架构，专为资源高效的推理而设计，并在元素识别任务中实现卓越性能。通过将 NaViT 风格的动态高分辨率视觉编码器与轻量级 ERNIE-4.5-0.3B 语言模型相集成，显著提升了模型的识别能力和解码效率。在保持高精度的同时有效降低了计算需求，非常适合高效、实用的文档处理应用。</li>
+  <li><strong>文档解析领域的 SOTA 性能：</strong>在页面级文档解析和元素级识别两方面均达到行业领先（SOTA）的性能。显著优于现有的基于流水线的解决方案，并在文档解析方面展现出与主流 VLM 相比强劲的竞争力。在识别复杂的文档元素（如文本、表格、公式和图表）方面表现出色，能应对手写文本和历史文献等各种具有挑战性的内容类型。</li>
+  <li><strong>多语言支持：</strong>支持 109 种语言，覆盖全球主要语种，包括中文、英文、日文、拉丁语、韩语，以及俄语（西里尔字母）、阿拉伯语、印地语（天城体）和泰语等不同书写系统和结构的语言。这种广泛的语言覆盖，极大地增强了系统在多语言和全球化文档处理场景中的适用性。</li>
+</ol>
+
+<h2 id="架构">架构</h2>
+<p>PaddleOCR-VL 将复杂的文档解析任务分解为两个阶段。第一阶段 <strong>PP-DocLayoutV2</strong> 负责版面分析，定位语义区域并预测其阅读顺序。随后，第二阶段 <strong>PaddleOCR-VL-0.9B</strong> 基于这些版面预测，对文本、表格、公式和图表等多样化内容进行细粒度识别。最后，轻量级后处理模块聚合两阶段输出，并将最终文档格式化为结构化的 Markdown 和 JSON。</p>
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/architecture.png" alt="PaddleOCR-VL 的架构">
+
+<h2 id="案例展示">案例展示</h2>
+<p>以下给出了若干使用 PaddleOCR-VL 的完整文档解析案例。更多示例请参阅技术报告或试用在线演示。</p>
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/overview1.jpg" alt="案例1">
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/overview2.jpg" alt="案例2">
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/overview3.jpg" alt="案例3">
+<img src="https://ernie.baidu.com/blog/posts/paddleocr-vl/overview4.jpg" alt="案例4">
+
+<h2 id="快速开始">快速开始</h2>
+
+<h3 id="安装依赖">安装依赖</h3>
+<p>安装 PaddlePaddle 和 PaddleOCR：</p>
+<pre><code>python -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
+python -m pip install -U "paddleocr[doc-parser]"
+python -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl</code></pre>
+
+<h3 id="基本用法">基本用法</h3>
+<p>CLI：</p>
+<pre><code>paddleocr doc_parser -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/pp_ocr_vl_demo.png</code></pre>
+<p>Python API：</p>
+<pre><code>from paddleocr import PaddleOCRVL
+
+pipeline = PaddleOCRVL()
+output = pipeline.predict("https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/pp_ocr_vl_demo.png")
+for res in output:
+    res.print()
+    res.save_to_json(save_path="output")
+    res.save_to_markdown(save_path="output")</code></pre>
+
+<h3 id="使用-vllm-加速-vlm">使用 vLLM 加速 VLM</h3>
+<p>1. 启动 VLM 推理服务器（默认端口 <code>8080</code>）：</p>
+<pre><code>docker run \
+    --rm \
+    --gpus all \
+    --network host \
+    ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddlex-genai-vllm-server</code></pre>
+<p>2. 调用 PaddleOCR CLI 或 Python API：</p>
+<pre><code>paddleocr doc_parser \
+    -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/pp_ocr_vl_demo.png \
+    --vl_rec_backend vllm-server \
+    --vl_rec_server_url http://127.0.0.1:8080</code></pre>
+<pre><code>from paddleocr import PaddleOCRVL
+
+pipeline = PaddleOCRVL(vl_rec_backend="vllm-server", vl_rec_server_url="http://127.0.0.1:8080")
+output = pipeline.predict("https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/pp_ocr_vl_demo.png")
+for res in output:
+    res.print()
+    res.save_to_json(save_path="output")
+    res.save_to_markdown(save_path="output")</code></pre>
+
+<h2 id="许可协议">许可协议</h2>
+<p>PaddleOCR-VL 模型基于 Apache License 2.0 发布。</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#paddleocr-vl-简介">PaddleOCR-VL 简介</a><a class="lv2" href="#核心特性">核心特性</a><a class="lv2" href="#架构">架构</a><a class="lv2" href="#案例展示">案例展示</a><a class="lv2" href="#快速开始">快速开始</a><a class="lv3" href="#安装依赖">安装依赖</a><a class="lv3" href="#基本用法">基本用法</a><a class="lv3" href="#使用-vllm-加速-vlm">使用 vLLM 加速 VLM</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-13-paddleocr-vl-09b";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

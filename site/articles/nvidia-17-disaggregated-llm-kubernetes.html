@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deploying Disaggregated LLM Inference Workloads on Kubernetes（在 Kubernetes 上部署分离式 LLM 推理工作负载） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>Deploying Disaggregated LLM Inference Workloads on Kubernetes（在 Kubernetes 上部署分离式 LLM 推理工作负载）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-30</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 7 分钟</span><span class="tag">推理部署</span><span class="tag">Kubernetes</span><span class="tag">分离式推理</span><span class="tag">GPU调度</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 介绍如何在 Kubernetes 上部署分离式 LLM 推理：将 Prefill、Decode、Router 拆分为独立服务，通过 Gang 调度、层级 Gang 调度与拓扑感知放置优化 GPU 利用率，并对比 LeaderWorkerSet 与 NVIDIA Grove（PodCliqueSet）两种编排方式的扩缩容与生命周期管理能力。</div></div><div class="prose"><p>As large language model (LLM) inference workloads grow in complexity, a single monolithic serving process starts to hit its limits. Prefill and decode stages have fundamentally different compute profiles, yet traditional deployments force them onto the same hardware, leaving GPUs underutilized and scaling inflexible.</p>
+
+<p><a href="https://www.nvidia.com/en-us/glossary/disaggregated-serving/">Disaggregated serving</a> addresses this by splitting the inference pipeline into distinct stages such as prefill, decode, and routing, each running as an independent service that can be resourced and scaled on its own terms.</p>
+
+<p>This post will give an overview of how disaggregated inference gets deployed on Kubernetes, explore different ecosystem solutions and how they execute on a cluster, and evaluate what they provide out of the box.</p>
+
+<h2 id="how_do_aggregated_and_disaggregated_inference_differ">How do aggregated and disaggregated inference differ?</h2>
+
+<p>Before diving into Kubernetes manifests, it helps to understand the two inference deployment modes for LLMs: In aggregated serving, a single process (or tightly coupled group of processes) handles the entire inference lifecycle from input to output. Disaggregated serving splits the pipeline into distinct stages such as prefill, decode, and routing, each running as independent services (see Figure 1, below).</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/image2-12.webp" alt="The diagram shows the difference between aggregated and disaggregated inference. The figure on the left shows aggregated inference: input into a multi-GPU box, which then filters through a context prefill and generation decode. On the right, the figure showing disaggregated inference shows dedicated GPUs to improve context efficiency.">
+
+<p><em>Figure 1. Comparing aggregated and disaggregated serving</em></p>
+
+<h3 id="aggregated_inference">Aggregated inference</h3>
+
+<p>In a traditional aggregated setup, a single model server (or coordinated group of servers in a parallel configuration) handles the full request lifecycle. A user prompt comes in, the server tokenizes it, runs prefill to build context, generates output tokens autoregressively (decode), and returns the response. Everything happens in a single process or tightly coupled pod group.</p>
+
+<p>This is conceptually simple and works well for many use cases. But it means your hardware alternates between two fundamentally different workloads: Prefill is compute-intensive and benefits from high floating point operations (FLOPS), while decode is memory-bandwidth-bound and benefits from large, fast memory.</p>
+
+<h3 id="disaggregated_inference">Disaggregated inference</h3>
+
+<p>Disaggregated architectures separate these stages into distinct services:</p>
+
+<ul>
+  <li><strong>Prefill workers</strong> process the input prompt. This is compute-heavy. You want to maximize your GPUs for high-throughput and can parallelize aggressively.</li>
+  <li><strong>Decode workers</strong> generate output tokens one at a time. This is memory-bandwidth-bound because of the autoregressive nature of LLMs. You want GPUs with fast high bandwidth memory (HBM) access.</li>
+  <li><strong>Router/gateway</strong> directs incoming requests, manages Key-Value (KV) cache routing between prefill and decode stages, and handles load balancing of requests across your workers.</li>
+</ul>
+
+<p>Why disaggregate? Three reasons stand out:</p>
+
+<ol>
+  <li><strong>Different resource and optimization profiles per stage:</strong> With disaggregation, you can match GPU resources, model sharding techniques, and batch sizes to each stage's needs rather than compromise on a single approach.</li>
+  <li><strong>Independent scaling:</strong> Prefill and decode traffic patterns differ. A long-context prompt creates a large prefill burst but a steady decode stream. Scaling each stage independently lets you respond to actual demand.</li>
+  <li><strong>Better GPU utilization:</strong> Separating stages lets each saturate its target resource (compute for prefill, memory bandwidth for decode) rather than alternating between both.</li>
+</ol>
+
+<p>Frameworks like <a href="https://github.com/ai-dynamo/dynamo">NVIDIA Dynamo</a> and <a href="https://github.com/llm-d/llm-d">llm-d</a>, implement this pattern. The question becomes: How do you orchestrate it on Kubernetes?</p>
+
+<h2 id="why_scheduling_is_the_key_to_multi-pod_inference_performance_on_kubernetes">Why scheduling is the key to multi-pod inference performance on Kubernetes</h2>
+
+<p>Deploying a multi-pod inference workload (either model-parallel aggregated models or disaggregated models) is only half the story. How the scheduler places pods across the cluster directly impacts performance; placing a Tensor Parallel (TP) group's pods on the same rack with high-bandwidth <a href="https://www.nvidia.com/en-us/data-center/nvlink/">NVIDIA NVLink</a> interconnects can mean the difference between fast inference and a network bottleneck. Three scheduling capabilities matter the most here:</p>
+
+<ul>
+  <li><a href="https://developer.nvidia.com/blog/enable-gang-scheduling-and-workload-prioritization-in-ray-with-nvidia-kai-scheduler/"><strong>Gang scheduling</strong></a> ensures all pods in a group are placed with all-or-nothing semantics, preventing partial deployments that waste GPUs.</li>
+  <li><strong>Hierarchical gang scheduling</strong> extends basic gang scheduling to multi-level workloads. In disaggregated inference, you need nested minimum guarantees per component or role: each Tensor Parallel group (e.g., four pods forming one decode instance) must be scheduled atomically, and the full system (at least <em>n</em> prefill instances + at least <em>m</em> decode instances + router) also needs system-level coordination. Without this, one role can consume all available GPUs while the other waits indefinitely—a partial deployment that holds resources but can't serve requests.</li>
+  <li><strong>Topology-aware placement</strong> colocates tightly coupled pods on nodes with high-bandwidth interconnects, minimizing inter-node communication latency.</li>
+</ul>
+
+<p>These three capabilities determine how an AI scheduler, such as <a href="https://github.com/NVIDIA/KAI-Scheduler">KAI Scheduler</a>, places pods based on the application's scheduling constraints. Additionally, it is also important for the AI orchestration layer to determine <em>what</em> needs to be gang-scheduled, and <em>when</em>. For example, when prefill scales independently, something needs to decide that the new pods form a gang with a minimum availability guarantee, without disrupting existing decode pods. As a result, the orchestration layer and the scheduler need to work closely for the entire application lifecycle, handling multi-level auto-scaling, rolling updates, and more, to ensure optimal runtime conditions for AI workloads.</p>
+
+<p>This is where higher-level workload abstractions come in. APIs like <a href="https://lws.sigs.k8s.io/docs/overview/">LeaderWorkerSet</a> (LWS) and <a href="https://developer.nvidia.com/grove">NVIDIA Grove</a> allow users to declaratively express the structure of their inference application: which roles exist, how they relate to each other, how they should scale, and what topology constraints matter. The API's operator translates that application-level intent into concrete scheduling constraints (including PodGroups, gang requirements, topology hints) that determine what gangs to create and when.</p>
+
+<p><a href="https://github.com/NVIDIA/KAI-Scheduler">KAI Scheduler</a> then plays the critical role of satisfying those constraints, solving the how: gang scheduling, hierarchical gang scheduling, and topology-aware placement.</p>
+
+<h2 id="deploying_disaggregated_inference">Deploying disaggregated inference</h2>
+
+<p>Disaggregated architectures have multiple roles each with different resource profiles and scaling needs. Since each role in a disaggregated pipeline is a distinct workload, a natural approach with LWS is to create a separate resource for each role.</p>
+
+<p>Prefill workers (four replicas, 2-degree Tensor Parallelism):</p>
+
+<pre><code>apiVersion: leaderworkerset.x-k8s.io/v1
+kind: LeaderWorkerSet
+metadata:
+  name: prefill-workers
+spec:
+  replicas: 4
+  leaderWorkerTemplate:
+    size: 2
+    restartPolicy: RecreateGroupOnPodRestart
+    leaderTemplate:
+      metadata:
+        labels:
+          role: prefill-leader
+      spec:
+        containers:
+        - name: prefill
+          image: &lt;model-server-image&gt;
+          args: ["--role=prefill", "--tensor-parallel-size=2"]
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+    workerTemplate:
+      spec:
+        containers:
+        - name: prefill
+          image: &lt;model-server-image&gt;
+          args: ["--role=prefill"]
+          resources:
+            limits:
+              nvidia.com/gpu: "1"</code></pre>
+
+<p>Decode workers (two replicas, 4-degree Tensor Parallelism):</p>
+
+<pre><code>apiVersion: leaderworkerset.x-k8s.io/v1
+kind: LeaderWorkerSet
+metadata:
+  name: decode-workers
+spec:
+  replicas: 2
+  leaderWorkerTemplate:
+    size: 4
+    restartPolicy: RecreateGroupOnPodRestart
+    leaderTemplate:
+      metadata:
+        labels:
+          role: decode-leader
+      spec:
+        containers:
+        - name: decode
+          image: &lt;model-server-image&gt;
+          args: ["--role=decode", "--tensor-parallel-size=4"]
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+    workerTemplate:
+      spec:
+        containers:
+        - name: decode
+          image: &lt;model-server-image&gt;
+          args: ["--role=decode"]
+          resources:
+            limits:
+              nvidia.com/gpu: "1"</code></pre>
+
+<p>Router (a standard deployment—no leader-worker topology needed):</p>
+
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: router
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: router
+  template:
+    metadata:
+      labels:
+        app: router
+    spec:
+      containers:
+      - name: router
+        image: &lt;router-image&gt;
+        env:
+        - name: PREFILL_ENDPOINT
+          value: "prefill-workers"
+        - name: DECODE_ENDPOINT
+          value: "decode-workers"</code></pre>
+
+<p>Each role is managed as its own resource. You can scale, prefill, and decode independently, and update them on different schedules.</p>
+
+<p>It's important to note that the scheduler treats prefill workers and decode-workers as independent workloads. The scheduler will place them successfully, but it has no knowledge that they form a single inference pipeline. In practice, this means a few things:</p>
+
+<ul>
+  <li>Topology coordination between prefill and decode (placing them on the same rack for fast KV cache transfer) requires manually adding pod affinity rules that reference labels across the two LWS resources.</li>
+  <li>Scaling one role doesn't automatically account for the other: If a burst of long-context requests requires more prefill capacity, you scale prefill-workers, but the new prefill pods aren't guaranteed to land near existing decode pods unless you've configured affinity yourself.</li>
+  <li>Rolling out a new model version means coordinating updates across three independent resources—LWS's partition update mechanism supports staged rollouts per-resource, but synchronizing across resources is managed externally.</li>
+</ul>
+
+<p>That last point is worth calling out. Inference frameworks move fast and don't always guarantee backwards compatibility between versions, so prefill pods on the old version and decode pods on the new version may not be able to communicate. Models also take time to load, and prefill and decode workers frequently become ready at different rates. During an unsynchronized rollout, this can create a temporary imbalance, where many new decode pods are ready but very few new prefill pods are (or vice versa). This can create a bottleneck in your inference pipeline until everything catches up.</p>
+
+<p>These patterns work. The coordination just happens outside of Kubernetes primitives: in the inference framework's routing layer, in custom autoscalers, bespoke operators, or even manually. Another option would be using <a href="https://developer.nvidia.com/blog/streamline-complex-ai-inference-on-kubernetes-with-nvidia-grove/">Grove's API</a>, which takes a different approach by moving that coordination into the Kubernetes resource itself.</p>
+
+<p>It expresses all roles in a single PodCliqueSet:</p>
+
+<pre><code>apiVersion: grove.io/v1alpha1
+kind: PodCliqueSet
+metadata:
+  name: inference-disaggregated
+spec:
+  replicas: 1
+  template:
+    cliqueStartupType: CliqueStartupTypeExplicit
+    terminationDelay: 30s
+
+    cliques:
+    - name: router
+      spec:
+        roleName: router
+        replicas: 2
+        podSpec:
+          schedulerName: kai-scheduler
+          containers:
+          - name: router
+            image: &lt;router-image&gt;
+            resources:
+              requests:
+                cpu: 100m
+
+    - name: prefill
+      spec:
+        roleName: prefill
+        replicas: 4
+        startsAfter: [router]
+        podSpec:
+          schedulerName: kai-scheduler
+          containers:
+          - name: prefill
+            image: &lt;model-server-image&gt;
+            args: ["--role=prefill", "--tensor-parallel-size=2"]
+            resources:
+              limits:
+                nvidia.com/gpu: "1"
+        autoScalingConfig:
+          maxReplicas: 8
+          metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              target:
+                type: Utilization
+                averageUtilization: 70
+
+    - name: decode
+      spec:
+        roleName: decode
+        replicas: 2
+        startsAfter: [router]
+        podSpec:
+          schedulerName: kai-scheduler
+          containers:
+          - name: decode
+            image: &lt;model-server-image&gt;
+            args: ["--role=decode", "--tensor-parallel-size=4"]
+            resources:
+              limits:
+                nvidia.com/gpu: "1"
+        autoScalingConfig:
+          maxReplicas: 6
+          metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              target:
+                type: Utilization
+                averageUtilization: 80
+
+    topologyConstraint:
+      packDomain: rack</code></pre>
+
+<p>The Grove operator manages PodCliques for each role and coordinates scheduling, startup, and lifecycle across all of them. A few things to note in the YAML:</p>
+
+<ul>
+  <li><code>startsAfter: [router]</code> on prefill and decode tells the operator to gate their startup until the router is ready. This is expressed declaratively and enforced through init containers. When you first deploy, router pods start and become ready first, then prefill and decode pods start in parallel (since both depend on the router).</li>
+  <li><code>autoScalingConfig</code> on each clique lets you define per-role scaling policies. The operator creates an horizontal pod autoscaler (HPA) for each, so prefill and decode scale independently based on their own metrics.</li>
+  <li><code>topologyConstraint</code> with <code>packDomain: rack</code> tells the KAI Scheduler to pack all cliques within the same rack, optimizing KV cache transfer between prefill and decode stages over high-bandwidth interconnects.</li>
+</ul>
+
+<h2 id="scaling_disaggregated_workloads">Scaling disaggregated workloads</h2>
+
+<p>Once a disaggregated workload is running, scaling becomes the central operational challenge. Prefill and decode have different bottlenecks; teams might want to autoscale prefill workers based on time to first token (TTFT) and decode workers based on inter-token latency (ITL) independently, to meet service level agreements (SLAs) while minimizing GPU costs.</p>
+
+<p>In practice, disaggregated scaling operates at three levels:</p>
+
+<ol>
+  <li><strong>Per-role scaling:</strong> adding or removing pods within a single role (e.g. scaling prefill from 4 to 6 replicas)</li>
+  <li><strong>Per-TP-group scaling:</strong> scaling complete Tensor Parallel groups as atomic units, since you can't add half a TP group.</li>
+  <li><strong>Cross-role coordination:</strong> when you add prefill capacity, you may also need to scale the router to handle increased throughput, or scale decode to consume the extra prefill output.</li>
+</ol>
+
+<h2 id="how_inference_frameworks_coordinate_scaling">How inference frameworks coordinate scaling</h2>
+
+<p>Inference frameworks address scaling at the application level with custom autoscalers that have visibility into inference-specific metrics. llm-d's workload variant autoscaler (WVA) monitors per-pod KV cache utilization and queue depth via <a href="https://llm-d.ai/docs/usage/monitoring">Prometheus</a>, using a spare-capacity model to determine when replicas should be added or removed. Rather than scaling deployments directly, WVA emits target replica counts as Prometheus metrics that standard HPA/Kubernetes-based event-driven autoscaling (KEDA) act on—keeping the scaling actuation within Kubernetes-native primitives.</p>
+
+<p>The NVIDIA Dynamo planner takes a different approach: It natively understands disaggregated serving, running separate prefill and decode scaling loops that target TTFT and ITL SLAs respectively. It predicts upcoming demand using time-series models, computes replica requirements from profiled per-GPU throughput curves, and enforces a global GPU budget across both roles.</p>
+
+<p>This global visibility matters because in practice there's an optimal ratio between prefill and decode that shifts with request patterns. Scale prefill 3x without scaling decode and the extra output has nowhere to go—decode bottlenecks and KV cache transfer queues up. Application-level autoscalers handle this because they can see the full pipeline; Kubernetes-native HPA targeting individual resources doesn't inherently maintain cross-resource ratios.</p>
+
+<h3 id="scaling_with_separate_lws_resources">Scaling with separate LWS resources</h3>
+
+<p>With one LWS per role, you scale each independently:</p>
+
+<pre><code>kubectl scale lws prefill-workers --replicas=6
+kubectl scale lws decode-workers --replicas=3</code></pre>
+
+<p>Standard HPA can target each LWS separately, or an external autoscaler (like the Dynamo planner or llm-d's autoscaler) makes coordinated decisions and updates both. The coordination logic lives in the autoscaler, not in the Kubernetes resources themselves.</p>
+
+<h3 id="scaling_with_grove">Scaling with Grove</h3>
+
+<p>Grove brings per-role scaling into a single resource. Each PodClique has its own replica count and optional <code>autoScalingConfig</code>, so HPAs can manage roles independently based on per-role metrics:</p>
+
+<pre><code>kubectl scale pclq inference-disaggregated-0-prefill --replicas=6</code></pre>
+
+<p>The operator creates additional prefill pods while leaving the router and decode untouched. Six prefill pods, two router pods, two decode pods—only prefill changed.</p>
+
+<p>For roles that use multi-node Tensor Parallelism internally, PodCliqueScalingGroup ensures multiple PodCliques scale together as a unit while preserving the replica ratio between them. For example, in a configuration where each prefill instance consists of one leader pod and four worker pods:</p>
+
+<pre><code>podCliqueScalingGroups:
+   - name: prefill
+     cliqueNames: [pleader, pworker]
+     replicas: 2
+     minAvailable: 1
+     scaleConfig:
+       maxReplicas: 4</code></pre>
+
+<p>With <code>replicas: 2</code>, this creates two complete prefill instances: 2 x (1 leader + 4 workers) = 10 pods total. The <code>minAvailable: 1</code> guarantee means the system won't scale below one complete Tensor Parallel group.</p>
+
+<p>Scaling the group from two to three replicas adds a third complete instance while preserving the 1:4 leader-to-worker ratio:</p>
+
+<pre><code>$ kubectl scale pcsg inference-disaggregated-0-prefill --replicas=3</code></pre>
+
+<p>Both the leader and worker cliques scaled together as a unit, the new replica (prefill-2) has one <code>pleader</code> pod and four <code>pworker</code> pods, matching the ratio. A new PodGang was created for the third replica to ensure it gets gang-scheduled.</p>
+
+<h2 id="getting_started">Getting started</h2>
+
+<p>Whether you're running a single disaggregated pipeline or operating dozens across your cluster, the building blocks for this are emerging and the community is building them in the open. Each approach in this blog represents a different point on the spectrum between simplicity and integrated coordination.</p>
+
+<p>The right choice depends on your workload, your team's operational model, and how much lifecycle management you want the platform to handle versus the application layer.</p>
+
+<p>Check out these resources for more information:</p>
+
+<ul>
+  <li><a href="https://github.com/ai-dynamo/grove">NVIDIA Grove</a></li>
+  <li><a href="https://github.com/NVIDIA/KAI-Scheduler">KAI Scheduler</a></li>
+  <li><a href="https://github.com/ai-dynamo/dynamo">NVIDIA Dynamo</a></li>
+</ul></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#how_do_aggregated_and_disaggregated_inference_differ">How do aggregated and disaggregated inference differ?</a><a class="lv3" href="#aggregated_inference">Aggregated inference</a><a class="lv3" href="#disaggregated_inference">Disaggregated inference</a><a class="lv2" href="#why_scheduling_is_the_key_to_multi-pod_inference_performance_on_kubernetes">Why scheduling is the key to multi-pod inference performance on Kubernetes</a><a class="lv2" href="#deploying_disaggregated_inference">Deploying disaggregated inference</a><a class="lv2" href="#scaling_disaggregated_workloads">Scaling disaggregated workloads</a><a class="lv2" href="#how_inference_frameworks_coordinate_scaling">How inference frameworks coordinate scaling</a><a class="lv2" href="#getting_started">Getting started</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-17-disaggregated-llm-kubernetes";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to Optimize Transformer-Based Models for Low-Precision Training（Transformer 模型低精度训练优化指南） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>How to Optimize Transformer-Based Models for Low-Precision Training（Transformer 模型低精度训练优化指南）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-16</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 5 分钟</span><span class="tag">训练优化</span><span class="tag">FP8</span><span class="tag">Transformer</span><span class="tag">GEMM</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/how-to-optimize-transformer-based-models-for-low-precision-training/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 介绍如何将 Transformer 配置转换为具体 GEMM 形状并跨精度基准测试：NVFP4 在自动量化模式下相对 BF16 提速 1.98x，在预量化模式下可达 3.48x，实际大型 GEMM（如 MLP Down）对比 MXFP8 提速 1.66x，小型 GEMM（Attn Out）仅 1.05x。</div></div><div class="prose"><p>Transformer architectures are the backbone of many modern large language and generative AI models. As these models grow in size, training runs consume more GPU hours and more engineering iteration time. Accelerating transformers is therefore not just a performance optimization, but directly affects how quickly teams can experiment and how large a model they can afford to train. <a href="https://www.nvidia.com/en-us/data-center/technologies/hopper-architecture/">NVIDIA Hopper</a> and <a href="https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/">NVIDIA Blackwell</a> GPUs help solve this problem by introducing low-precision operator support including FP8 and <a href="https://developer.nvidia.com/blog/introducing-nvfp4-for-efficient-and-accurate-low-precision-inference/">NVFP4</a>.</p>
+
+<p>Transformers spend much of their training time in GEMMs, and low-precision formats speed up training mainly by making those matrix multiplications faster and cheaper. However, your transformer config does not tell you which GEMMs are actually running in your model. If you want to understand where training time goes, you need to turn your transformer config and batch size into the exact M×K×N matrix shapes your model executes, then benchmark those shapes across precisions. This will help you determine the optimal precision for your architecture before committing to a more expensive training run.</p>
+
+<p><a href="https://github.com/NVIDIA/TransformerEngine">NVIDIA Transformer Engine (TE)</a> can handle quantization and kernel dispatch unlocking low precision formats. This post shows you how to move from high-level model settings to concrete GEMM workloads, profile them with a microbenchmark, and estimate where lower precision will actually translate into speedups to help you accelerate your transformer-based models.</p>
+
+<h2 id="model-configuration-and-training-inputs">Model Configuration and Training Inputs</h2>
+
+<p>Suppose you're working with a 5B-parameter model. It will have a config such as:</p>
+
+<pre><code>hidden_size: 4096
+intermediate_size: 16384
+num_attention_heads: 32
+num_hidden_layers: 24
+</code></pre>
+
+<p>Your training configuration is:</p>
+
+<pre><code>micro_batch_size: 31
+sequence_length: 512
+</code></pre>
+
+<p>The benchmark tool can then take these hyperparameters directly and then use a single command to derive GEMM shapes, benchmark them across precisions, and compute the full speedup analysis:</p>
+
+<pre><code>python benchmark.py \
+  --hidden_size 4096 \
+  --intermediate_size 16384 \
+  --num_attention_heads 32 \
+  --num_hidden_layers 24 \
+  --micro_batch_size 31 \
+  --sequence_length 512 \
+  -o ./images/b300_model_config_speedup.png
+</code></pre>
+
+<p>Note: To disable Blackwell-specific flags, add <code>--no-fp8 --no-fp4</code>. This provides BF16 plus the three FP8 recipes that work on Hopper.</p>
+
+<ul>
+<li><code>--no-fp8</code> disables MXFP8</li>
+<li><code>--no-fp4</code> disables NVFP4</li>
+</ul>
+
+<h2 id="using-autocast-mode-versus-prequantizing">Using Autocast Mode versus Prequantizing</h2>
+
+<p>By default, the tool runs in <strong>autocast mode</strong>, which is what TE does during training: inputs are dynamically quantized to the target precision before each GEMM, so the measured time includes both the quantization cost and the GEMM kernel itself. This provides you with the realistic per-GEMM picture during a training step.</p>
+
+<p>The tool computes M = 31 × 512 = 15,872 tokens, derives all 12 GEMM shapes, benchmarks each across enabled precisions, and prints the full results. Fprop, Dgrad, and Wgrad shapes are all benchmarked separately to capture the impact of different matrix aspect ratios on kernel selection.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/per-layer-gemm-time-nvidia-b300-autocast-mode-1.webp" alt="A grouped bar chart showing per-layer GEMM time in milliseconds across five precisions on NVIDIA B300. BF16 has the tallest bars at about 12.8 ms total, with NVFP4 the shortest at about 6.5 ms total — showing roughly a 2× speedup from BF16 to NVFP4.">
+
+<p><em>Figure 1. Per-layer GEMM time on NVIDIA B300 SXM6 AC in autocast mode, broken down by precision (BF16, FP8 Current, FP8 Delayed, MXFP8, NVFP4) and stage (Fprop+Dgrad and Wgrad)</em></p>
+
+<p>To isolate raw GEMM kernel performance, add <code>--pre-quantize</code>. This prequantizes all inputs once before the timed loop, so the measured time reflects only the GEMM kernel execution—no dynamic quantization, no block scaling computation, no format conversion during the timed region.</p>
+
+<p>Note that FP8 DelayedScaling always runs in autocast mode, even with <code>--pre-quantize</code>, because it relies on an amax history that requires dynamic quantization. Its times are therefore not directly comparable to other precisions in prequantized mode.</p>
+
+<pre><code>python benchmark.py \
+  --hidden_size 4096 \
+  --intermediate_size 16384 \
+  --num_attention_heads 32 \
+  --num_hidden_layers 24 \
+  --micro_batch_size 31 \
+  --sequence_length 512 \
+  --pre-quantize \
+  -o ./images/b300_model_config_speedup_prequant.png
+</code></pre>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/per-layer-gemm-time-nvidia-b300-prequantized-mode.webp" alt="A grouped bar chart showing per-layer GEMM time in milliseconds across five precisions on NVIDIA B300 in pre-quantized mode. NVFP4 is dramatically faster — about 3.8 ms total compared to BF16's 13.1 ms.">
+
+<p><em>Figure 2. Per-layer GEMM time on NVIDIA B300 SXM6 AC in prequantized mode, isolating raw kernel throughput without dynamic quantization overhead</em></p>
+
+<p>Comparing the autocast and prequantized speedups tells you exactly how much quantization overhead costs: NVFP4 versus BF16 goes from <strong>1.98x (autocast) to 3.48x (kernel-only)</strong>. The gap between these two numbers is the overhead from dynamic quantization, Hadamard transforms, and block scaling that occurs in each training step.</p>
+
+<p>Use autocast results for predicting real training speedups. Use prequantized results to understand whether quantization overhead is the bottleneck, or to compare raw tensor core throughput across precisions independent of the quantization implementation.</p>
+
+<h2 id="interpreting-the-results-for-a-real-model">Interpreting the Results for a Real Model</h2>
+
+<p>Using the same 5B config, the full model config benchmark on NVIDIA B300 shows per-shape NVFP4 versus MXFP8 speedups from Fprop results:</p>
+
+<pre><code>QKV proj:   0.579 / 0.392  =  1.48x
+Attn out:   0.269 / 0.256  =  1.05x  (barely faster — overhead nearly matches GEMM gain)
+MLP up:     0.924 / 0.635  =  1.46x
+MLP down:   1.076 / 0.649  =  1.66x
+</code></pre>
+
+<p>Key observations:</p>
+
+<ul>
+<li><strong>Attention output GEMM receives minimal benefit.</strong> Only a 1.05x speedup versus MXFP8 baseline. This is the smallest weight matrix in the layer (4096×4096)—barely large enough for lower precision to overcome the overhead. By contrast, the much larger MLP Down GEMM delivers 1.66x NVFP4 over MXFP8.</li>
+<li><strong>Large GEMMs show real but subtheoretical gains.</strong> FP4 tensor cores deliver 1.46x to 1.66x over MXFP8 on the large GEMMs. This is well short of the theoretical 2x to 3x from the hardware spec. The blended Fprop speedup drops to 1.47x when the attention output GEMM is included.</li>
+<li><strong>FP8 DelayedScaling is surprisingly competitive on NVIDIA Blackwell.</strong> At 7.80 ms/layer in autocast mode, it outperforms both FP8 CurrentScaling (9.15 ms) and MXFP8 (8.98 ms). In prequantized mode FP8 CurrentScaling pulls ahead (6.81 ms versus 8.12 ms).</li>
+<li><strong>Prequantized results reveal the true kernel potential.</strong> NVFP4 versus BF16 jumps from 1.98x (autocast) to 3.48x (kernel-only), showing the FP4 tensor cores are delivering real speedups—it's the quantization overhead in autocast mode that narrows the gap.</li>
+<li><strong>Fprop versus Dgrad comparison reveals asymmetry.</strong> BF16 Dgrad is within 2% of Fprop, but quantized formats show 5–13% slower Dgrad. The QKV Proj Dgrad is 33–51% slower than Fprop for FP8/FP4 because swapping K (4096) and N (12288) dramatically changes the matrix aspect ratio and kernel selection.</li>
+</ul>
+
+<p>Once you have the estimated GEMM-only speedup, compare it against your observed end-to-end training speedup:</p>
+
+<ul>
+<li><strong>GEMM speedup ≈ training speedup</strong>: GEMMs dominate the step, everything is working as expected</li>
+<li><strong>GEMM speedup &gt;&gt; training speedup</strong>: Overhead outside of GEMMs is eating the gains. For NVFP4 in particular, this includes Random Hadamard transforms on Wgrad inputs, stochastic rounding on gradients, 2D block scaling for weights, and the extra memory pass for per-tensor amax computation.</li>
+<li><strong>GEMM speedup ≈ 1.0</strong> even in the microbenchmark: The FP4 kernels aren't actually faster at these shapes, or they're silently falling back to FP8.</li>
+</ul>
+
+<p>The last case is especially worth checking. Set <code>NVTE_LOG_LEVEL=1</code> or inspect with <a href="https://developer.nvidia.com/nsight-systems">NVIDIA Nsight Systems</a> to confirm that TE is actually dispatching FP4 kernels. TE can silently fall back to FP8 or BF16 for layers or ops that don't support FP4 yet.</p>
+
+<h2 id="get-started-benchmarking-your-model-for-low-precision-training">Get Started Benchmarking Your Model for Low-Precision Training</h2>
+
+<p>Low-precision training speedups are highly dependent on the actual GEMM shapes your model runs and running in low precision does not automatically translate into end-to-end training gains, especially when quantization overhead, kernel selection, and non-GEMM operations are included. By turning a transformer config into concrete M×K×N workloads, you can benchmark BF16, MXFP8, and NVFP4 on the shapes that matter for your model before committing to a full training run.</p>
+
+<p>To get started, check out the <a href="https://github.com/NVIDIA/TransformerEngine/blob/main/benchmarks/gemm/benchmark_gemm.py">benchmark script</a>. For the full documentation and to understand how these shapes are derived, see the <a href="https://nvidia.github.io/TransformerEngine/examples/gemm_profiling/gemm_profiling.html">GEMM profiling tutorial</a> in the Transformer Engine documentation.</p>
+
+<p>Use this benchmark to:</p>
+
+<ul>
+<li>Autocast results to set realistic training-speedup expectations</li>
+<li>Prequantize results to know whether you're bottlenecked on kernels or on quantization</li>
+<li>Run candidate model configs through the tool before committing to a training run, as the tool is a useful architecture co-design instrument</li>
+</ul></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#model-configuration-and-training-inputs">Model Configuration and Training Inputs</a><a class="lv2" href="#using-autocast-mode-versus-prequantizing">Using Autocast Mode versus Prequantizing</a><a class="lv2" href="#interpreting-the-results-for-a-real-model">Interpreting the Results for a Real Model</a><a class="lv2" href="#get-started-benchmarking-your-model-for-low-precision-training">Get Started Benchmarking Your Model for Low-Precision Training</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-12-transformer-low-precision-training";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

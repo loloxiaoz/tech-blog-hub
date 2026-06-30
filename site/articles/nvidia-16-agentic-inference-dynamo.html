@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Full-Stack Optimizations for Agentic Inference with NVIDIA Dynamo（NVIDIA Dynamo：面向 Agent 推理的全栈优化） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>Full-Stack Optimizations for Agentic Inference with NVIDIA Dynamo（NVIDIA Dynamo：面向 Agent 推理的全栈优化）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-02</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">推理优化</span><span class="tag">Dynamo</span><span class="tag">Agent推理</span><span class="tag">KV缓存</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/full-stack-optimizations-for-agentic-inference-with-nvidia-dynamo/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA Dynamo 针对 Agent 推理的写一读多（WORM）特征，从前端 API、路由器、KV 缓存三层优化：KV 感知路由实现 170M ops/s，自定义路由使 p50 TTFT 降低 4 倍，token 范围保留与四层缓存层次结构解决跨 worker 共享问题。</div></div><div class="prose"><p>Coding agents are starting to write production code at scale. <a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents">Stripe's agents generate 1,300+ PRs per week</a>. <a href="https://www.infoq.com/news/2026/01/ramp-coding-agent-platform/">Ramp attributes 30% of merged PRs to agents</a>. <a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1">Spotify reports 650+ agent-generated PRs per month</a>. Tools like Claude Code and Codex make hundreds of API calls per coding session, each carrying the full conversation history. Behind every one of these workflows is an inference stack under significant KV cache pressure.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/cumulative-reads-writes.webp" alt="Line chart showing cumulative KV cache reads increasing significantly faster than writes in agentic inference workloads.">
+
+<p>After the first API call that writes the conversation prefix to KV cache, every subsequent call to the same worker hits 85–97% cache. Agent teams (or swarms) push this further with 97.2% aggregate cache hit rate across 4 Opus teammates. An 11.7x read/write ratio means the system reads from cache nearly 12 times for every token it writes. This is a write-once-read-many (WORM) access pattern: the system prompt and growing conversation prefix are computed once, then served from cache on every subsequent call.</p>
+
+<p>Throughout this post, three terms are used consistently:</p>
+<ul>
+  <li><strong>Harness</strong>: Agent framework that drives the workflow (Claude Code, Codex, OpenClaw, OpenCode, etc.)</li>
+  <li><strong>Orchestrator</strong>: Dynamo's routing, scheduling, and cache management layer</li>
+  <li><strong>Runtime</strong>: Inference engine that executes the model and owns the KV cache manager (SGLang, vLLM, TRT-LLM)</li>
+</ul>
+
+<h2 id="layer-1-the-frontend">Layer 1: The Frontend</h2>
+
+<h3 id="multi-protocol-support">Multi-protocol Support</h3>
+
+<p>Agent harnesses are increasingly adopting <code>v1/responses</code> and <code>v1/messages</code> over <code>v1/chat/completions</code> to cleanly handle new patterns including interleaved thinking and tool calls. In <code>v1/chat/completions</code>, message content is a flat string and tool calls are bolted on as a separate field. The <code>v1/responses</code> and <code>v1/messages</code> APIs use typed content blocks, so a single assistant turn can contain thinking, tool calls, and text as distinct objects. This matters for inference because the orchestrator can see block boundaries, perform prompt optimizations, and apply different cache and scheduling policies per block type. Dynamo serves all three endpoints through a common internal representation, so a single deployment can act as the inference backend for any harness.</p>
+
+<img src="https://files.buildwithfern.com/dynamo.docs.buildwithfern.com/dynamo/7140ae782b4da98d32855f75782fe2f93f4ea4d9a9977ee221a365283b955ba1/blogs/agentic-inference/protocol-stack.svg" alt="Two side-by-side diagrams comparing agentic system stacks today vs. with Dynamo, showing the nvext inference infrastructure layer added to standardize access to GPU-backed runtimes.">
+
+<h3 id="agent-hints-the-harness-orchestrator-interface">Agent Hints: The Harness–Orchestrator Interface</h3>
+
+<p>Today, inference servers see anonymous tokenized requests. But agent harnesses have global context that the infrastructure never sees: which agents are blocked on tool calls, which just spawned, how many turns remain in a session, and whether the current call is a quick lookup or a long synthesis. Dynamo's new agent hints extension allows any harness to attach structured hints to a request across all three API endpoints, giving the router and runtime the context needed to make agent-aware scheduling and caching decisions.</p>
+
+<pre><code>{
+  "model": "MiniMaxAI/MiniMax-M2.5",
+  "messages": [...],
+  "tools": [...],
+  "nvext": {
+    "agent_hints": {
+      "osl": 256,
+      "speculative_prefill": true,
+      "priority": 10
+    },
+    "cache_control": {
+      "type": "ephemeral",
+      "ttl": "1h"
+    }
+  }
+}</code></pre>
+
+<p>The <code>agent_hints</code> fields:</p>
+<ul>
+  <li><strong><code>priority</code></strong> controls scheduling across both the router and engine. Higher values mean "more important" at the Dynamo API level.</li>
+  <li><strong><code>osl</code></strong> (output sequence length) is the harness's estimate of how many tokens this request will generate. The router uses this to gauge how long a worker will be occupied, improving load balancing.</li>
+  <li><strong><code>speculative_prefill</code></strong> signals the orchestrator to begin caching this request's prefix on a likely worker before the full request is ready.</li>
+</ul>
+
+<p>The <code>cache_control</code> field tells the orchestrator to pin the computed prefix on the worker for the specified TTL, protecting it from eviction during tool call gaps.</p>
+
+<h2 id="layer-2-the-router">Layer 2: The Router</h2>
+
+<p>A coding agent follows a sequential pattern: long prefill, tool call, extend prefix, repeat. Default round-robin routing is blind to cache locality, request priority, or session structure. Dynamo's router closes this gap with three mechanisms: KV-aware placement, priority scheduling, and extensible routing strategies.</p>
+
+<h3 id="kv-aware-placement">KV-Aware Placement</h3>
+
+<p>Without cache-aware routing, turn 2 of a conversation has a ~1/N chance of landing on the same worker as turn 1. Every miss is a full prefix recomputation — a significant performance bottleneck. Dynamo's router maintains a global index of which KV cache blocks exist on which workers. The Flash Indexer reaches <strong>170M ops/s</strong> (planetary-scale KV routing). On every request, the router queries the index for per-worker overlap scores and selects the worker that minimizes the combined cost of cache miss and current decode load.</p>
+
+<h3 id="priority-scheduling">Priority Scheduling</h3>
+
+<p><code>priority</code> is the single user-facing scheduling knob. Higher values mean "more important" at the Dynamo API level. Dynamo uses that hint at both layers:</p>
+<ul>
+  <li>At the <strong>router</strong>, higher-priority requests are shifted earlier in the queue when <code>--router-queue-threshold</code> is enabled.</li>
+  <li>At the <strong>engine</strong>, Dynamo normalizes backend-specific polarity and forwards the request for queue ordering, preemption, and KV cache eviction.</li>
+</ul>
+
+<img src="https://files.buildwithfern.com/dynamo.docs.buildwithfern.com/dynamo/ce124d2d668c26783acf93061654456e7d8b8d140fa506be8b2d6b8309229b5e/blogs/agentic-inference/two-gates.svg" alt="Diagram showing request routing and prioritization in agentic inference, where latency-sensitive tasks are dispatched first.">
+
+<h3 id="agentic-workload-routing-strategies">Agentic Workload Routing Strategies</h3>
+
+<p>Teams with domain-specific workloads can use the router's Python bindings to implement custom routing strategies. The core <code>KvRouter</code> class provides <code>best_worker()</code> for querying routing decisions, <code>get_potential_loads()</code> for per-worker load inspection, and <code>generate()</code> for routing + dispatch in one call.</p>
+
+<p>The NeMo Agent Toolkit (NAT) team used these APIs to build a custom online-learning agentic router using a Thompson Sampling bandit-style cost function. Compared to Dynamo's default routing, they measured <strong>4x reduction in p50 TTFT</strong> and <strong>1.5x increase in p50 tokens-per-second</strong>. Priority tagging of latency-sensitive requests achieved up to <strong>63% p50 TTFT reduction</strong> under moderate memory pressure.</p>
+
+<h2 id="layer-3-kv-cache-management">Layer 3: KV Cache Management</h2>
+
+<p>Agentic workloads produce blocks with vastly different reuse value — system prompts reused every turn, reasoning tokens never reused again — but default LRU eviction treats all blocks identically. A 2–30 second tool call pause can age out an agent's entire prefix, forcing full recomputation when it resumes.</p>
+
+<h3 id="the-problem-with-uniform-eviction">The Problem with Uniform Eviction</h3>
+
+<table>
+  <thead>
+    <tr><th>Block Type</th><th>Reuse Pattern</th><th>Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>System prompt + tool definitions</td><td>Every turn</td><td>Highest</td></tr>
+    <tr><td>Conversation history</td><td>Subsequent turns, growing monotonically</td><td>High</td></tr>
+    <tr><td>Thinking/reasoning tokens</td><td>Typically zero reuse after reasoning loop closes</td><td>Near-zero</td></tr>
+    <tr><td>Subagent KV</td><td>Multiple turns then agent dies. No need to retain</td><td>Near-zero</td></tr>
+  </tbody>
+</table>
+
+<h3 id="kv-cache-as-a-shared-resource">KV Cache as a Shared Resource</h3>
+
+<p>Today, KV cache is treated as a local, ephemeral resource on each worker. When a lead agent spawns 4 subagents, each with overlapping tool definitions, that shared prefix is recomputed 4 times if the subagents land on different workers. In analysis of Claude Code team sessions, teammates averaged <strong>79.4% cache hit rate</strong> vs. <strong>91.3%</strong> for the lead agent's explore subagents, with the gap driven almost entirely by cold-start writes on each teammate's first call.</p>
+
+<img src="https://files.buildwithfern.com/dynamo.docs.buildwithfern.com/dynamo/39d782302bce25c14ef629e1d593c67606c0fa5508628c4aac0546dfc66a5354/blogs/agentic-inference/kv-memory-hierarchy.svg" alt="Diagram showing a four-tier KV cache memory hierarchy spanning GPU, CPU, local NVMe, and remote storage.">
+
+<p>SGLang's HiCache and Dynamo's KV Block Manager (KVBM) are building toward a 4-tier memory hierarchy: GPU HBM → CPU pinned DRAM → local NVMe → remote cluster-wide storage. Blocks follow a write-through path and are deduplicated by sequence hash in a global registry. Once a block is registered, it is immutable and addressable by any worker. Four redundant prefill computations become one compute and three loads.</p>
+
+<img src="https://files.buildwithfern.com/dynamo.docs.buildwithfern.com/dynamo/9b35b71748bc859615eecd6e09c72fc663c1563bb455a2098148a3ee2a8409ba/blogs/agentic-inference/tool-call-offload-prefetch.svg" alt="Diagram illustrating KV cache prefetch in agentic inference, where blocks are offloaded after an initial call and proactively prefetched ahead of subsequent requests.">
+
+<h3 id="selective-cache-retention">Selective Cache Retention</h3>
+
+<p>SGLang and vLLM both support priority-based eviction via a priority heap. TensorRT-LLM takes this further with <code>TokenRangeRetentionConfig</code>, which allows per-region control within a single request. The harness can express "system prompt blocks are evicted last (priority: 100); conversation context survives a 30-second tool call (duration: 45s); decode tokens are first to go (priority: 1)" without the engine needing to understand why.</p>
+
+<p>Dynamo's <code>cache_control</code> API brings Anthropic-style prompt caching semantics to self-hosted inference. When a request includes <code>cache_control: { type: "ephemeral", ttl: "1h" }</code>, the router pins the matching prefix nodes in the worker's radix tree for that TTL, protecting them from eviction in the worker's L2 storage.</p>
+
+<h3 id="agent-lifecycle-awareness">Agent Lifecycle Awareness</h3>
+
+<p>In a typical Claude Code session, the lead agent runs for 20+ turns while spawning explore subagents that each run 1–3 turns and terminate. It might also spawn a team of 4 specialists that work in parallel and then terminate. Midway through, the agent may hit a context limit and summarize its history, compressing ~175K tokens down to ~40K. Reasoning models amplify ephemeral KV: <code>&lt;think&gt;...&lt;/think&gt;</code> blocks account for <strong>~40% of generated tokens</strong> but become ephemeral the moment the reasoning loop closes.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/Figure-6.-Agent-workflow-showing-KV-cache-usage-across-lifecycle-stages-separating-persistent-context-from-ephemeral-blocks-created-and-discarded-during-subagent-tool-and-reasoning-steps.webp" alt="Agent workflow showing KV cache behavior across lifecycle stages.">
+
+<p>If the harness can tag a subagent's requests as belonging to a session and mark that session's KV as ephemeral, the evictor can target those blocks first and skip writing them to shared storage entirely. The same mechanism applies to thinking tokens: the engine can detect <code>&lt;think&gt;</code> boundaries during generation and tag those blocks as ephemeral at insertion time.</p>
+
+<h2 id="closing-the-gap">Closing the Gap</h2>
+
+<p>The biggest optimization surface in agentic inference is the gap between what the harness knows and what the infrastructure can see. <code>nvext.agent_hints</code> is the first cut at closing that gap: a small set of structured signals that let the orchestrator make informed routing, scheduling, and cache management decisions instead of treating every request as anonymous tokens. This is a v1 API actively evolving with community feedback.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#layer-1-the-frontend">Layer 1: The Frontend</a><a class="lv3" href="#multi-protocol-support">Multi-protocol Support</a><a class="lv3" href="#agent-hints-the-harness-orchestrator-interface">Agent Hints: The Harness–Orchestrator Interface</a><a class="lv2" href="#layer-2-the-router">Layer 2: The Router</a><a class="lv3" href="#kv-aware-placement">KV-Aware Placement</a><a class="lv3" href="#priority-scheduling">Priority Scheduling</a><a class="lv2" href="#layer-3-kv-cache-management">Layer 3: KV Cache Management</a><a class="lv3" href="#selective-cache-retention">Selective Cache Retention</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-16-agentic-inference-dynamo";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

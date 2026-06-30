@@ -22,6 +22,20 @@
     "source_url": ""
   },
   {
+    "id": "nvidia-12-transformer-low-precision-training",
+    "title": "How to Optimize Transformer-Based Models for Low-Precision Training（Transformer 模型低精度训练优化指南）",
+    "org": "NVIDIA",
+    "date": "2026-06-16",
+    "tags": [
+      "训练优化",
+      "FP8",
+      "Transformer",
+      "GEMM"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/how-to-optimize-transformer-based-models-for-low-precision-training/"
+  },
+  {
     "id": "minimax-03-minimax-m3",
     "title": "MiniMax-M3",
     "org": "MiniMax",
@@ -33,6 +47,20 @@
     ],
     "minutes": 3,
     "source_url": "https://github.com/MiniMax-AI/MiniMax-M3"
+  },
+  {
+    "id": "anthropic-engineering-07-context-engineering-new",
+    "title": "Effective Context Engineering for AI Agents（AI 智能体的有效上下文工程）",
+    "org": "Anthropic",
+    "date": "2026-06-15",
+    "tags": [
+      "Context Engineering",
+      "Agent",
+      "工程实践",
+      "LLM"
+    ],
+    "minutes": 6,
+    "source_url": "https://www.anthropic.com/engineering/context-engineering"
   },
   {
     "id": "minimax-04-minimax-code",
@@ -59,6 +87,47 @@
     "source_url": "https://www.microsoft.com/en-us/research/blog/ire-identifies-another-lotuslite-specimen/"
   },
   {
+    "id": "nvidia-13-fp8-quantization-tensorrt",
+    "title": "Model Quantization: Turn FP8 Checkpoints into High-Performance Inference Engines with NVIDIA TensorRT（FP8 量化检查点转高性能推理引擎）",
+    "org": "NVIDIA",
+    "date": "2026-06-12",
+    "tags": [
+      "量化",
+      "FP8",
+      "TensorRT",
+      "推理优化"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/model-quantization-turn-fp8-checkpoints-into-high-performance-inference-engines-with-nvidia-tensorrt/"
+  },
+  {
+    "id": "nvidia-06-cccl-runtime-cuda",
+    "title": "CCCL Runtime: A Modern C++ Runtime for CUDA（现代 C++ CUDA 运行时：CCCL Runtime 详解）",
+    "org": "NVIDIA",
+    "date": "2026-06-10",
+    "tags": [
+      "CUDA",
+      "C++",
+      "系统软件"
+    ],
+    "minutes": 6,
+    "source_url": "https://developer.nvidia.com/blog/cccl-runtime-a-modern-c-runtime-for-cuda/"
+  },
+  {
+    "id": "anthropic-engineering-08-writing-tools-new",
+    "title": "Writing Effective Tools for Agents — with Agents（用 Agent 为 Agent 编写高效工具）",
+    "org": "Anthropic",
+    "date": "2026-06-10",
+    "tags": [
+      "工具调用",
+      "Agent",
+      "ACI",
+      "评估"
+    ],
+    "minutes": 6,
+    "source_url": "https://www.anthropic.com/engineering/writing-effective-tools"
+  },
+  {
     "id": "eval-guide-for-pm",
     "title": "Eval 正在取代 PRD？产品经理的 Eval 入门到落地指南",
     "org": "",
@@ -82,6 +151,20 @@
     ],
     "minutes": 4,
     "source_url": "https://github.com/MiniMax-AI/cli"
+  },
+  {
+    "id": "nvidia-15-ptq-model-optimizer",
+    "title": "Model Quantization: Post-Training Quantization Using NVIDIA Model Optimizer（使用 NVIDIA Model Optimizer 进行训练后量化）",
+    "org": "NVIDIA",
+    "date": "2026-06-08",
+    "tags": [
+      "量化",
+      "PTQ",
+      "Model Optimizer",
+      "FP8"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/model-quantization-post-training-quantization-using-nvidia-model-optimizer/"
   },
   {
     "id": "claude-code-best-practices-official",
@@ -119,6 +202,20 @@
     ],
     "minutes": 2,
     "source_url": "https://www.anthropic.com/research/making-claude-a-chemist"
+  },
+  {
+    "id": "nvidia-02-agentic-coding-performance",
+    "title": "NVIDIA Achieves Leading Agentic Coding Performance（NVIDIA 在首个智能体 AI 基准测试中取得领先编码性能）",
+    "org": "NVIDIA",
+    "date": "2026-06-05",
+    "tags": [
+      "Agent",
+      "Benchmark",
+      "Inference",
+      "Coding"
+    ],
+    "minutes": 4,
+    "source_url": "https://developer.nvidia.com/blog/nvidia-achieves-leading-agentic-coding-performance-on-first-agentic-ai-benchmark/"
   },
   {
     "id": "anthropic-engineering-02-policy",
@@ -167,6 +264,20 @@
     "source_url": "https://www.anthropic.com/news/expanding-project-glasswing"
   },
   {
+    "id": "nvidia-16-agentic-inference-dynamo",
+    "title": "Full-Stack Optimizations for Agentic Inference with NVIDIA Dynamo（NVIDIA Dynamo：面向 Agent 推理的全栈优化）",
+    "org": "NVIDIA",
+    "date": "2026-06-02",
+    "tags": [
+      "推理优化",
+      "Dynamo",
+      "Agent推理",
+      "KV缓存"
+    ],
+    "minutes": 6,
+    "source_url": "https://developer.nvidia.com/blog/full-stack-optimizations-for-agentic-inference-with-nvidia-dynamo/"
+  },
+  {
     "id": "anthropic-s1-filing",
     "title": "Anthropic 向 SEC 秘密提交 S-1 草案（Anthropic confidentially submits draft S-1 to the SEC）",
     "org": "Anthropic",
@@ -176,6 +287,20 @@
     ],
     "minutes": 1,
     "source_url": "https://www.anthropic.com/news/anthropic-s1-filing"
+  },
+  {
+    "id": "google-deepmind-01-introducing-gemini-omni",
+    "title": "Introducing Gemini Omni（Gemini Omni 发布：从任意输入生成高质量视频）",
+    "org": "Google DeepMind",
+    "date": "2026-06-01",
+    "tags": [
+      "Gemini",
+      "多模态",
+      "模型发布",
+      "视频生成"
+    ],
+    "minutes": 3,
+    "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni/"
   },
   {
     "id": "openai-models-amazon-bedrock",
@@ -190,6 +315,20 @@
     ],
     "minutes": 12,
     "source_url": "https://cookbook.openai.com/examples/partners/AWS/openai_models_with_amazon_bedrock"
+  },
+  {
+    "id": "nvidia-17-disaggregated-llm-kubernetes",
+    "title": "Deploying Disaggregated LLM Inference Workloads on Kubernetes（在 Kubernetes 上部署分离式 LLM 推理工作负载）",
+    "org": "NVIDIA",
+    "date": "2026-05-30",
+    "tags": [
+      "推理部署",
+      "Kubernetes",
+      "分离式推理",
+      "GPU调度"
+    ],
+    "minutes": 7,
+    "source_url": "https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/"
   },
   {
     "id": "anthropic-series-h",
@@ -233,6 +372,34 @@
     ],
     "minutes": 1,
     "source_url": "https://www.microsoft.com/en-us/research/blog/data-formulator-0-7-ai-powered-data-analytics-for-enterprise-data/"
+  },
+  {
+    "id": "nvidia-08-halos-robotics",
+    "title": "Inside NVIDIA Halos for Robotics: A Full-Stack Functional Safety System for Physical AI（NVIDIA Halos 机器人全栈功能安全系统）",
+    "org": "NVIDIA",
+    "date": "2026-05-28",
+    "tags": [
+      "机器人",
+      "功能安全",
+      "Physical AI",
+      "边缘计算"
+    ],
+    "minutes": 8,
+    "source_url": "https://developer.nvidia.com/blog/inside-nvidia-halos-for-robotics-a-full-stack-functional-safety-system-for-physical-ai/"
+  },
+  {
+    "id": "microsoft-research-11-electric-grid-dataset",
+    "title": "Building Realistic Electric Transmission Grid Dataset at Scale（大规模构建真实输电网数据集）",
+    "org": "Microsoft Research",
+    "date": "2026-05-28",
+    "tags": [
+      "电网AI",
+      "数据集",
+      "基础设施",
+      "AC-OPF"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/building-realistic-electric-transmission-grid-dataset-at-scale-a-pipeline-from-open-dataset/"
   },
   {
     "id": "anthropic-milan-office",
@@ -309,6 +476,34 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/engineering/how-we-contain-claude"
+  },
+  {
+    "id": "nvidia-04-run-diffusion-gemma",
+    "title": "Run DiffusionGemma on NVIDIA（在 NVIDIA 上运行扩散式文本生成模型）",
+    "org": "NVIDIA",
+    "date": "2026-05-25",
+    "tags": [
+      "扩散模型",
+      "推理部署",
+      "Gemma",
+      "高吞吐量"
+    ],
+    "minutes": 4,
+    "source_url": "https://developer.nvidia.com/blog/run-diffusiongemma-on-nvidia-for-developer-ready-high-throughput-text-generation/"
+  },
+  {
+    "id": "nvidia-18-distributed-inference-performance",
+    "title": "Enhancing Distributed Inference Performance with the NVIDIA Inference Transfer Library（NIXL：统一分布式推理数据传输的开源库）",
+    "org": "NVIDIA",
+    "date": "2026-05-25",
+    "tags": [
+      "分布式推理",
+      "性能优化",
+      "NIM",
+      "KV Cache"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/enhancing-distributed-inference-performance-with-the-nvidia-inference-transfer-library/"
   },
   {
     "id": "opc-methodology-easy",
@@ -390,6 +585,20 @@
     "source_url": "https://www.anthropic.com/news/project-glasswing-initial"
   },
   {
+    "id": "nvidia-09-ai-agents-ar-glasses",
+    "title": "Building AI Agents for AR Glasses and XR Devices with NVIDIA XR AI（用 NVIDIA XR AI 为 AR 眼镜构建智能体）",
+    "org": "NVIDIA",
+    "date": "2026-05-22",
+    "tags": [
+      "Agent",
+      "AR",
+      "XR AI",
+      "多模态"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/building-ai-agents-for-ar-glasses-and-xr-devices-with-nvidia-xr-ai/"
+  },
+  {
     "id": "microsoft-research-04-magenticlite-magenticbrain-fara1-5-an-agentic-experience-opt",
     "title": "MagenticLite, MagenticBrain, Fara1.5: An agentic experience optimized for small models",
     "org": "Microsoft",
@@ -421,6 +630,74 @@
     "source_url": ""
   },
   {
+    "id": "google-deepmind-02-securing-future-ai-agents",
+    "title": "Securing the Future of AI Agents（AI 智能体安全防线：深度防御框架）",
+    "org": "Google DeepMind",
+    "date": "2026-05-20",
+    "tags": [
+      "Agent",
+      "AI安全",
+      "Multi-Agent"
+    ],
+    "minutes": 4,
+    "source_url": "https://deepmind.google/blog/securing-the-future-of-ai-agents/"
+  },
+  {
+    "id": "google-deepmind-09-gemma-4-12b",
+    "title": "Introducing Gemma 4 12B: a unified, encoder-free multimodal model（Gemma 4 12B：无编码器统一多模态模型）",
+    "org": "Google DeepMind",
+    "date": "2026-05-20",
+    "tags": [
+      "Gemma",
+      "多模态",
+      "开源",
+      "端侧推理"
+    ],
+    "minutes": 3,
+    "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b/"
+  },
+  {
+    "id": "nvidia-05-nemotron-3-ultra",
+    "title": "NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents（Nemotron 3 Ultra：面向长时运行智能体的高效推理）",
+    "org": "NVIDIA",
+    "date": "2026-05-20",
+    "tags": [
+      "Nemotron",
+      "推理加速",
+      "长上下文",
+      "MoE"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents/"
+  },
+  {
+    "id": "nvidia-19-gpu-utilization-runai-nim",
+    "title": "Maximizing GPU Utilization with NVIDIA Run:ai and NIM（用 Run:ai 与 NIM 最大化 GPU 利用率）",
+    "org": "NVIDIA",
+    "date": "2026-05-20",
+    "tags": [
+      "GPU调度",
+      "Run:ai",
+      "NIM",
+      "推理优化"
+    ],
+    "minutes": 7,
+    "source_url": "https://developer.nvidia.com/blog/maximizing-gpu-utilization-with-nvidia-runai-and-nvidia-nim/"
+  },
+  {
+    "id": "anthropic-research-06-agentic-coding-expertise",
+    "title": "Agentic Coding and Persistent Returns to Expertise（智能体编程中专业知识的持续回报）",
+    "org": "Anthropic",
+    "date": "2026-05-20",
+    "tags": [
+      "Agent",
+      "Coding",
+      "经济研究"
+    ],
+    "minutes": 8,
+    "source_url": "https://www.anthropic.com/research/agentic-coding-expertise"
+  },
+  {
     "id": "openai-macro-evals-agentic-systems",
     "title": "Macro Evals for Agentic Systems",
     "org": "OpenAI",
@@ -448,6 +725,20 @@
     "source_url": "https://www.anthropic.com/news/widening-frontier-ai-conversation"
   },
   {
+    "id": "nvidia-10-transaction-foundation-model",
+    "title": "Build Your Own Transaction Foundation Model for Financial Intelligence（构建金融交易基础模型：端到端 GPU 加速方案）",
+    "org": "NVIDIA",
+    "date": "2026-05-18",
+    "tags": [
+      "金融AI",
+      "基础模型",
+      "交易检测",
+      "NeMo"
+    ],
+    "minutes": 7,
+    "source_url": "https://developer.nvidia.com/blog/build-your-own-transaction-foundation-model-for-financial-intelligence/"
+  },
+  {
     "id": "microsoft-research-06-further-notes-on-our-recent-research-on-ai-delegation-and-lo",
     "title": "Further Notes on Our Recent Research on AI Delegation and Long-Horizon Reliability",
     "org": "Microsoft",
@@ -457,6 +748,90 @@
     ],
     "minutes": 1,
     "source_url": "https://www.microsoft.com/en-us/research/blog/further-notes-on-our-recent-research-on-ai-delegation-and-long-horizon-reliability/"
+  },
+  {
+    "id": "google-deepmind-04-investing-multi-agent-safety",
+    "title": "Investing in Multi-Agent AI Safety Research（多智能体 AI 安全研究：最高1000万美元资助计划）",
+    "org": "Google DeepMind",
+    "date": "2026-05-15",
+    "tags": [
+      "Multi-Agent",
+      "AI安全",
+      "研究",
+      "资助计划"
+    ],
+    "minutes": 3,
+    "source_url": "https://deepmind.google/blog/investing-in-multi-agent-ai-safety-research/"
+  },
+  {
+    "id": "google-deepmind-12-gemini-for-science",
+    "title": "Gemini for Science: AI experiments and tools for a new era of discovery（Gemini 科学套件：面向新发现时代的 AI 实验工具）",
+    "org": "Google DeepMind",
+    "date": "2026-05-15",
+    "tags": [
+      "Gemini",
+      "科学AI",
+      "研究工具",
+      "多智能体"
+    ],
+    "minutes": 3,
+    "source_url": "https://blog.google/innovation-and-ai/technology/research/gemini-for-science-io-2026/"
+  },
+  {
+    "id": "nvidia-11-on-device-ai-companions-ace",
+    "title": "Build On-Device AI Companions with NVIDIA ACE（用 NVIDIA ACE 构建端侧 AI 游戏伙伴）",
+    "org": "NVIDIA",
+    "date": "2026-05-15",
+    "tags": [
+      "游戏AI",
+      "ACE",
+      "Unreal Engine",
+      "RAG"
+    ],
+    "minutes": 4,
+    "source_url": "https://developer.nvidia.com/blog/build-on-device-ai-companions-with-the-nvidia-ace-game-agent-sdk-and-unreal-engine-5-plugins/"
+  },
+  {
+    "id": "nvidia-20-personal-ai-agents-windows",
+    "title": "Build Personal AI Agents on Windows PCs（在 Windows PC 上构建本地个人 AI 智能体）",
+    "org": "NVIDIA",
+    "date": "2026-05-15",
+    "tags": [
+      "Edge AI",
+      "Windows",
+      "Personal Agent",
+      "推理加速"
+    ],
+    "minutes": 5,
+    "source_url": "https://developer.nvidia.com/blog/build-personal-ai-agents-on-windows-pcs-with-new-tools-from-microsoft-and-nvidia/"
+  },
+  {
+    "id": "qwen-new-03-qwen-image-native-text",
+    "title": "Qwen-Image: Crafting with Native Text Rendering（原生文字渲染的图像生成基础模型）",
+    "org": "Qwen",
+    "date": "2026-05-15",
+    "tags": [
+      "Qwen",
+      "图像生成",
+      "文字渲染",
+      "多模态"
+    ],
+    "minutes": 4,
+    "source_url": "https://qwenlm.github.io/blog/qwen-image/"
+  },
+  {
+    "id": "anthropic-research-07-project-fetch-phase2",
+    "title": "Project Fetch: Phase Two（机器人任务第二阶段：Claude 自主完成速度超人类20倍）",
+    "org": "Anthropic",
+    "date": "2026-05-15",
+    "tags": [
+      "Agent",
+      "研究项目",
+      "机器人",
+      "自主编程"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/research/project-fetch-phase-two"
   },
   {
     "id": "2028-ai-leadership-scenarios",
@@ -721,6 +1096,34 @@
     "source_url": ""
   },
   {
+    "id": "google-deepmind-05-diffusion-gemma",
+    "title": "DiffusionGemma: 4x Faster Text Generation（扩散 Gemma：速度提升4倍）",
+    "org": "Google DeepMind",
+    "date": "2026-05-10",
+    "tags": [
+      "Gemma",
+      "扩散模型",
+      "文本生成",
+      "MoE"
+    ],
+    "minutes": 3,
+    "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/"
+  },
+  {
+    "id": "qwen-new-04-gspo-scalable-rl",
+    "title": "GSPO: Towards Scalable Reinforcement Learning for Language Models（面向可扩展强化学习的序列级策略优化）",
+    "org": "Qwen",
+    "date": "2026-05-10",
+    "tags": [
+      "强化学习",
+      "GSPO",
+      "训练算法",
+      "MoE"
+    ],
+    "minutes": 3,
+    "source_url": "https://qwenlm.github.io/blog/gspo/"
+  },
+  {
     "id": "openai-using-goals-in-codex",
     "title": "Using Goals in Codex",
     "org": "OpenAI",
@@ -732,6 +1135,20 @@
     ],
     "minutes": 6,
     "source_url": "https://cookbook.openai.com/examples/codex/using_goals_in_codex"
+  },
+  {
+    "id": "baidu-ernie-01-ernie-51-release",
+    "title": "文心 5.1 正式发布！多榜登顶（ERNIE 5.1 Official Release: Tops Multiple Leaderboards）",
+    "org": "Baidu ERNIE",
+    "date": "2026-05-09",
+    "tags": [
+      "文心",
+      "模型发布",
+      "强化学习",
+      "弹性训练"
+    ],
+    "minutes": 4,
+    "source_url": "https://yiyan.baidu.com/blog/zh/posts/ernie-5.1-0508-release/"
   },
   {
     "id": "anthropic-research-03-teaching-claude-why",
@@ -772,6 +1189,20 @@
     ],
     "minutes": 4,
     "source_url": "https://www.anthropic.com/research/teaching-claude-why"
+  },
+  {
+    "id": "qwen-new-05-qwen-mt-translation",
+    "title": "Qwen-MT: Where Speed Meets Smart Translation（Qwen-MT：速度与智能兼备的机器翻译模型）",
+    "org": "Qwen",
+    "date": "2026-05-08",
+    "tags": [
+      "Qwen",
+      "机器翻译",
+      "多语言",
+      "MoE"
+    ],
+    "minutes": 4,
+    "source_url": "https://qwenlm.github.io/blog/qwen-mt/"
   },
   {
     "id": "openai-migrate-claude-sdk-to-openai-agents-sdk",
@@ -899,6 +1330,20 @@
     "source_url": "https://mp.weixin.qq.com/s/ipMjYyYFl3pxbaX9Hl1yaw"
   },
   {
+    "id": "google-deepmind-07-ai-learning-sierra-leone",
+    "title": "Measuring the impact of learning with AI in Sierra Leone（AI辅助学习在塞拉利昂的影响测量）",
+    "org": "Google DeepMind",
+    "date": "2026-05-05",
+    "tags": [
+      "AI for Good",
+      "教育AI",
+      "研究",
+      "LearnLM"
+    ],
+    "minutes": 4,
+    "source_url": "https://deepmind.google/blog/measuring-the-impact-of-learning-with-ai-in-sierra-leone-and-beyond/"
+  },
+  {
     "id": "openai-building-reliable-agents-memory-compaction",
     "title": "Building Reliable Agents with Memory and Compaction",
     "org": "OpenAI",
@@ -926,6 +1371,20 @@
     ],
     "minutes": 8,
     "source_url": "https://developers.openai.com/blog/building-workspace-agents-in-chatgpt"
+  },
+  {
+    "id": "google-deepmind-11-gemini-35",
+    "title": "Gemini 3.5: Frontier Intelligence with Action（前沿智能与行动力：Gemini 3.5 系列发布）",
+    "org": "Google DeepMind",
+    "date": "2026-05-01",
+    "tags": [
+      "Gemini",
+      "模型发布",
+      "AI Agent",
+      "推理"
+    ],
+    "minutes": 4,
+    "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/"
   },
   {
     "id": "demystifying-evals-for-ai-agents",
@@ -1003,8 +1462,8 @@
     "source_url": "https://www.deepseek.com/en/"
   },
   {
-    "id": "deepseek-02-é-æ-åº",
-    "title": "éæåº¦",
+    "id": "deepseek-02-transparency",
+    "title": "透明度",
     "org": "DeepSeek",
     "date": "2026-04-27",
     "tags": [
@@ -1035,6 +1494,19 @@
     ],
     "minutes": 2,
     "source_url": "https://zhuanlan.zhihu.com/p/2032126561122514834"
+  },
+  {
+    "id": "anthropic-research-08-agents-biology",
+    "title": "Paving the Way for Agents in Biology（智能体进入生物学：Claude 加速生物医学研究范式）",
+    "org": "Anthropic",
+    "date": "2026-04-25",
+    "tags": [
+      "Agent",
+      "生物学",
+      "AI for Science"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.anthropic.com/research/agents-biology"
   },
   {
     "id": "election-safeguards-update",
@@ -1101,6 +1573,33 @@
     "source_url": "https://www.anthropic.com/news/services-track-partner-hub"
   },
   {
+    "id": "baidu-ernie-05-paddleocr-vl-15",
+    "title": "PaddleOCR-VL-1.5：面向真实场景文档解析的多任务视觉语言模型",
+    "org": "Baidu ERNIE",
+    "date": "2026-04-20",
+    "tags": [
+      "OCR",
+      "文档解析",
+      "VLM",
+      "多任务学习"
+    ],
+    "minutes": 4,
+    "source_url": "https://yiyan.baidu.com/blog/zh/posts/paddleocr-vl-1.5/"
+  },
+  {
+    "id": "anthropic-research-11-measuring-llm-exploits",
+    "title": "Measuring LLMs' Ability to Develop Exploits（衡量大模型开发漏洞利用的能力）",
+    "org": "Anthropic",
+    "date": "2026-04-20",
+    "tags": [
+      "AI安全",
+      "网络安全",
+      "Eval/评测"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.anthropic.com/research/measuring-llm-exploits"
+  },
+  {
     "id": "minimax-08-minimax-skills",
     "title": "MiniMax Skills",
     "org": "MiniMax",
@@ -1148,6 +1647,34 @@
     ],
     "minutes": 9,
     "source_url": "https://github.com/MiniMax-AI/VTP"
+  },
+  {
+    "id": "microsoft-research-12-nsdi-2026",
+    "title": "Microsoft at NSDI 2026（微软大规模网络系统研究：11篇顶会论文）",
+    "org": "Microsoft Research",
+    "date": "2026-04-15",
+    "tags": [
+      "网络系统",
+      "NSDI",
+      "分布式系统",
+      "云计算"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.microsoft.com/en-us/research/blog/microsoft-at-nsdi-2026-advances-in-large-scale-networked-systems/"
+  },
+  {
+    "id": "anthropic-research-09-nday-exploits",
+    "title": "Measuring LLMs' Impact on N-day Exploits（衡量大语言模型对 N-day 漏洞利用的影响）",
+    "org": "Anthropic",
+    "date": "2026-04-15",
+    "tags": [
+      "AI安全",
+      "网络安全",
+      "漏洞利用",
+      "红队评估"
+    ],
+    "minutes": 7,
+    "source_url": "https://www.anthropic.com/research/n-day-exploits"
   },
   {
     "id": "openai-what-makes-great-chatgpt-app",
@@ -1231,6 +1758,20 @@
     "source_url": "https://mp.weixin.qq.com/s/BqOdWsCjtXoUllUuFVb29w"
   },
   {
+    "id": "google-deepmind-17-genetic-cellular-aging",
+    "title": "Fast-tracking Genetic Leads to Reverse Cellular Aging（利用 AI 加速逆转细胞衰老的基因研究）",
+    "org": "Google DeepMind",
+    "date": "2026-04-10",
+    "tags": [
+      "AI for Good",
+      "生命科学",
+      "基因研究",
+      "Co-Scientist"
+    ],
+    "minutes": 2,
+    "source_url": "https://deepmind.google/blog/fast-tracking-genetic-leads-to-reverse-cellular-aging/"
+  },
+  {
     "id": "openai-15-lessons-chatgpt-apps",
     "title": "15 lessons learned building ChatGPT Apps",
     "org": "OpenAI",
@@ -1259,6 +1800,20 @@
     "source_url": "https://www.anthropic.com/engineering/managed-agents"
   },
   {
+    "id": "google-deepmind-18-liver-disease-mechanisms",
+    "title": "Accelerating Discovery of Liver Disease Mechanisms（AI加速肝病机制发现）",
+    "org": "Google DeepMind",
+    "date": "2026-04-08",
+    "tags": [
+      "AI for Good",
+      "生命科学",
+      "肝病研究",
+      "Co-Scientist"
+    ],
+    "minutes": 2,
+    "source_url": "https://deepmind.google/blog/accelerating-discovery-of-liver-disease-mechanisms/"
+  },
+  {
     "id": "openai-migrate-legacy-codebase-sandbox-agents",
     "title": "Migrate a Legacy Codebase with Sandbox Agents",
     "org": "OpenAI",
@@ -1271,6 +1826,34 @@
     ],
     "minutes": 12,
     "source_url": "https://cookbook.openai.com/examples/agents_sdk/sandboxed-code-migration/sandboxed_code_migration_agent"
+  },
+  {
+    "id": "google-deepmind-19-aging-research",
+    "title": "Opening New Paths in Aging Research（用 AI Co-Scientist 探索衰老研究的新路径）",
+    "org": "Google DeepMind",
+    "date": "2026-04-05",
+    "tags": [
+      "AI for Good",
+      "生命科学",
+      "老龄化研究",
+      "Co-Scientist"
+    ],
+    "minutes": 2,
+    "source_url": "https://deepmind.google/blog/opening-new-paths-in-aging-research/"
+  },
+  {
+    "id": "anthropic-engineering-06-infra-noise-evals-new",
+    "title": "Quantifying Infrastructure Noise in Agentic Coding Evals（量化 Agent 编程评测中的基础设施噪声）",
+    "org": "Anthropic",
+    "date": "2026-04-05",
+    "tags": [
+      "Eval/评测",
+      "Agent",
+      "基础设施",
+      "工程实践"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
   },
   {
     "id": "emotion-concepts",
@@ -1314,6 +1897,34 @@
     "source_url": "https://mp.weixin.qq.com/s/PonVlfEFbGLkaDt_1oWfdA"
   },
   {
+    "id": "google-deepmind-20-liver-fibrosis-medicines",
+    "title": "Uncovering Repurposed Medicines to Fight Liver Fibrosis（用 AI 发现老药新用，对抗肝纤维化）",
+    "org": "Google DeepMind",
+    "date": "2026-04-01",
+    "tags": [
+      "AI for Good",
+      "药物研发",
+      "肝纤维化",
+      "药物重定向"
+    ],
+    "minutes": 2,
+    "source_url": "https://deepmind.google/blog/uncovering-repurposed-medicines-to-fight-liver-fibrosis/"
+  },
+  {
+    "id": "baidu-ernie-16-ernie-45-opensource",
+    "title": "ERNIE 4.5 模型系列正式开源（文心4.5：10款MoE+稠密模型全面开源）",
+    "org": "Baidu ERNIE",
+    "date": "2026-04-01",
+    "tags": [
+      "文心",
+      "开源",
+      "MoE",
+      "多模态"
+    ],
+    "minutes": 4,
+    "source_url": "https://ernie.baidu.com/blog/zh/posts/ernie4.5/"
+  },
+  {
     "id": "australia-claude-usage",
     "title": "澳大利亚如何使用 Claude：Anthropic Economic Index 发现",
     "org": "Anthropic",
@@ -1351,6 +1962,20 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/engineering/claude-code-auto-mode"
+  },
+  {
+    "id": "anthropic-research-10-coding-agents-social-sciences",
+    "title": "Coding Agents in the Social Sciences（编码智能体进入社会科学：调查与分析）",
+    "org": "Anthropic",
+    "date": "2026-03-25",
+    "tags": [
+      "Agent",
+      "社会科学",
+      "Coding",
+      "研究生产力"
+    ],
+    "minutes": 5,
+    "source_url": "https://www.anthropic.com/research/coding-agents-social-sciences"
   },
   {
     "id": "anthropic-engineering-02-how-we-built-claude-code-auto-mode-a-safer-way-to-skip-permi",
@@ -1426,6 +2051,20 @@
     "source_url": "https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4"
   },
   {
+    "id": "google-deepmind-13-co-scientist",
+    "title": "Co-Scientist: A Multi-Agent AI Partner to Accelerate Research（Co-Scientist：加速科学研究的多智能体 AI 伙伴）",
+    "org": "Google DeepMind",
+    "date": "2026-03-20",
+    "tags": [
+      "Multi-Agent",
+      "科学AI",
+      "研究加速",
+      "药物重定向"
+    ],
+    "minutes": 5,
+    "source_url": "https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/"
+  },
+  {
     "id": "anthropic-research-05-what-81-000-peoplewant-from-ai",
     "title": "What 81,000 peoplewant from AI",
     "org": "Anthropic",
@@ -1449,6 +2088,20 @@
     ],
     "minutes": 2,
     "source_url": "https://www.anthropic.com/research/what-people-want-from-ai"
+  },
+  {
+    "id": "baidu-ernie-04-ernie-50-omnimodal",
+    "title": "文心 5.0 (ERNIE 5.0)：2.4万亿参数原生全模态大模型",
+    "org": "Baidu ERNIE",
+    "date": "2026-03-15",
+    "tags": [
+      "文心",
+      "全模态",
+      "MoE",
+      "自回归"
+    ],
+    "minutes": 4,
+    "source_url": "https://yiyan.baidu.com/blog/zh/posts/ernie5.0/"
   },
   {
     "id": "diff-tool-ai",
@@ -1502,6 +2155,20 @@
     ],
     "minutes": 2,
     "source_url": "https://mp.weixin.qq.com/s/qa1J3KglD8ITh75NrfbfGA"
+  },
+  {
+    "id": "kimi-15-unreal5-interactive-game",
+    "title": "使用 Unreal5 游戏引擎和 Kimi 大模型开发交互式游戏（Empowering AI Agents in Unreal5 with Kimi）",
+    "org": "Kimi",
+    "date": "2026-03-10",
+    "tags": [
+      "游戏AI",
+      "Unreal5",
+      "Agent应用",
+      "AIGC"
+    ],
+    "minutes": 2,
+    "source_url": "https://platform.moonshot.cn/blog/posts/enpower-your-own-ai-agent-inside-unreal5-with-kimi"
   },
   {
     "id": "openai-using-skills-accelerate-oss",
@@ -1576,6 +2243,34 @@
     ],
     "minutes": 12,
     "source_url": "https://cookbook.openai.com/examples/Realtime_eval_guide"
+  },
+  {
+    "id": "baidu-ernie-11-ernie-45-vl-thinking",
+    "title": "ERNIE-4.5-VL-28B-A3B-Thinking（文心多模态推理模型：仅3B激活参数媲美顶级旗舰）",
+    "org": "Baidu ERNIE",
+    "date": "2026-03-01",
+    "tags": [
+      "文心",
+      "多模态",
+      "Thinking",
+      "MoE"
+    ],
+    "minutes": 5,
+    "source_url": "https://ernie.baidu.com/blog/zh/posts/ernie-4.5-vl-28b-a3b-thinking/"
+  },
+  {
+    "id": "baidu-ernie-14-ernie-45-inference-speedup",
+    "title": "ERNIE 4.5 的推理速度升级（PLAS 稀疏注意力：长文本推理提速 48%）",
+    "org": "Baidu ERNIE",
+    "date": "2026-02-28",
+    "tags": [
+      "推理加速",
+      "文心",
+      "PLAS",
+      "稀疏注意力"
+    ],
+    "minutes": 3,
+    "source_url": "https://ernie.baidu.com/blog/zh/posts/plas/"
   },
   {
     "id": "sft-to-rl-decision",
@@ -1668,6 +2363,20 @@
     "source_url": "https://www.anthropic.com/research/persona-selection-model"
   },
   {
+    "id": "baidu-ernie-15-fastdeploy-20",
+    "title": "FastDeploy 2.0：原生支持文心4.5的大模型推理部署框架",
+    "org": "Baidu ERNIE",
+    "date": "2026-02-20",
+    "tags": [
+      "推理部署",
+      "FastDeploy",
+      "文心",
+      "量化"
+    ],
+    "minutes": 5,
+    "source_url": "https://ernie.baidu.com/blog/zh/posts/fastdeploy2.0/"
+  },
+  {
     "id": "measuring-agent-autonomy",
     "title": "Measuring AI Agent Autonomy in Practice（实测AI Agent自主性）",
     "org": "Anthropic",
@@ -1690,6 +2399,20 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/research/india-country-brief"
+  },
+  {
+    "id": "baidu-ernie-13-paddleocr-vl-09b",
+    "title": "PaddleOCR-VL: 0.9B 超紧凑视觉语言模型增强多语种文档解析（Boosting Multilingual Document Parsing via Ultra-Compact VLM）",
+    "org": "Baidu ERNIE",
+    "date": "2026-02-15",
+    "tags": [
+      "OCR",
+      "轻量模型",
+      "多语种",
+      "视觉语言模型"
+    ],
+    "minutes": 3,
+    "source_url": "https://ernie.baidu.com/blog/zh/posts/paddleocr-vl/"
   },
   {
     "id": "openai-shell-skills-compaction-agents",
@@ -1915,6 +2638,20 @@
     ],
     "minutes": 2,
     "source_url": "https://developers.openai.com/blog/updates-for-developers-building-with-voice"
+  },
+  {
+    "id": "kimi-12-muon-optimizer-large-scale",
+    "title": "Muon is Scalable for LLM Training（Muon 优化器的首次大规模训练实践）",
+    "org": "Kimi",
+    "date": "2025-12-20",
+    "tags": [
+      "优化器",
+      "Muon",
+      "训练技术",
+      "MoE"
+    ],
+    "minutes": 4,
+    "source_url": "https://platform.moonshot.cn/blog/posts/moonlight"
   },
   {
     "id": "introducing-bloom",
@@ -2760,6 +3497,20 @@
     "source_url": "https://platform.kimi.com/blog/posts/moba"
   },
   {
+    "id": "kimi-13-moba-mixed-block-attention",
+    "title": "MoBA：混合块注意力机制（Mixture of Block Attention for Long-Context LLMs）",
+    "org": "Kimi",
+    "date": "2025-02-19",
+    "tags": [
+      "注意力机制",
+      "MoBA",
+      "长上下文",
+      "稀疏注意力"
+    ],
+    "minutes": 4,
+    "source_url": "https://platform.moonshot.cn/blog/posts/moba"
+  },
+  {
     "id": "moonshot-kimi-12-为什么要推出-kimi-latest-模型",
     "title": "为什么要推出 Kimi Latest 模型？",
     "org": "Moonshot AI",
@@ -3295,16 +4046,5 @@
     ],
     "minutes": 1,
     "source_url": "https://qwenlm.github.io/blog/ofa/"
-  },
-  {
-    "id": "anthropic-engineering-03-app-unavailable",
-    "title": "App unavailable",
-    "org": "Anthropic",
-    "date": "",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 1,
-    "source_url": "https://www.anthropic.com/docs"
   }
 ]

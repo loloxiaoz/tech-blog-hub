@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents（Nemotron 3 Ultra：面向长时运行智能体的高效推理） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents（Nemotron 3 Ultra：面向长时运行智能体的高效推理）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-20</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 5 分钟</span><span class="tag">Nemotron</span><span class="tag">推理加速</span><span class="tag">长上下文</span><span class="tag">MoE</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 发布 550B 参数（55B 激活）的 MoE 模型 Nemotron 3 Ultra，采用混合 Mamba-Transformer 架构、NVFP4 量化（吞吐量提升最高 5x）、多教师在线蒸馏（MOPD），在 Ruler@1M 长上下文达 95%，SWE-bench 任务成本降低 30%。</div></div><div class="prose"><p>Single-turn chatbots are evolving into long-running <a href="https://www.nvidia.com/en-us/glossary/ai-agents/">agents</a> that can reason, maintain context, use tools, and run efficiently across many turns to complete complex workflows.</p>
+
+<p>However, these <a href="https://www.nvidia.com/en-us/glossary/multi-agent-systems/">multi-agent</a> workflows cause token counts to grow quickly. Agents plan, call tools, invoke sub-agents, receive information, and then pass history, outputs, and <a href="https://www.nvidia.com/en-us/glossary/ai-reasoning/">reasoning</a> steps back into the model continuously. As tasks run longer, this constant communication increases costs and the risk of goal drift.</p>
+
+<p>Developers can solve this using a system of models: <a href="https://www.nvidia.com/en-us/glossary/frontier-models/">frontier reasoning models</a> for orchestration and complex planning, and efficient models for high-volume execution, validation, and tool calling.</p>
+
+<p>NVIDIA is releasing NVIDIA Nemotron 3 Ultra, an open model built to help long-running agents complete tasks faster while lowering cost.</p>
+
+<h2 id="nemotron_3_ultra_for_agent_orchestration">Nemotron 3 Ultra for agent orchestration</h2>
+
+<p>Nemotron 3 Ultra is a 550B-parameter Mixture-of-Experts model with 55B active parameters, built for frontier reasoning and orchestration in agentic systems.</p>
+
+<p>Within any agent workflow, most calls are routine, but a critical subset demands deeper reasoning. Nemotron 3 Ultra is built to handle these hard calls: sustaining architectural decisions across coding sessions, synthesizing contradictory evidence across hundreds of research sources, or verifying chip designs across thousands of constraints.</p>
+
+<table>
+<thead>
+<tr><th></th><th>Nemotron 3 Ultra (550B)</th><th>GLM 5.1 (744B)</th><th>Kimi K2.6 (1T)</th><th>Qwen3.5 (397B)</th></tr>
+</thead>
+<tbody>
+<tr><td>PinchBench (Agent Productivity)</td><td><strong>91%</strong></td><td>84%</td><td><strong>91%</strong></td><td>89%</td></tr>
+<tr><td>EnterpriseOps-Gym (Long-horizon Planning)</td><td>33%</td><td><strong>40%</strong></td><td>29%</td><td>30%</td></tr>
+<tr><td>Terminal-Bench 2.0 (Coding)</td><td>54%</td><td>64%</td><td><strong>67%</strong></td><td>53%</td></tr>
+<tr><td>IFBench (Instruction Following)</td><td><strong>82%</strong></td><td>77%</td><td>74%</td><td>78%</td></tr>
+<tr><td>GDPVal-AA (Knowledge Work)</td><td>1,448</td><td><strong>1,594</strong></td><td>1,508</td><td>1,192</td></tr>
+<tr><td>ProfBench Search (Professional Work)</td><td><strong>56%</strong></td><td>46%</td><td><strong>56%</strong></td><td>53%</td></tr>
+<tr><td>Ruler @1M (Long Context)</td><td><strong>95%</strong></td><td>N/A (max 256K)</td><td>N/A (max 256K)</td><td>90%</td></tr>
+</tbody>
+</table>
+
+<p>Nemotron 3 Ultra is also fast. It achieves 5x higher throughput compared to other open models in its class, enabling long-running agents to complete tasks faster and more efficiently.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/5x-Inference-1.webp" alt="The chart shows frontier open models on an accuracy v. output speed benchmark from Artificial Analysis. Nemotron 3 Ultra is 5x faster and the only model in the most attractive quadrant.">
+
+<p>Nemotron 3 Ultra is also built for efficiency. In experiments on the SWE-bench and Terminal bench 2.0, it completed benchmarks using fewer total tokens and fewer tokens per turn than comparable models. This lowers the cost for agentic tasks by up to 30%.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/Cost-Completion.webp" alt="The chart plots Pareto curves of open models on Accuracy v. Cost to Task Completion. Nemotron 3 Ultra delivers 30% cost savings to complete SWE Bench verified benchmark.">
+
+<h2 id="breakthroughs_powering_nemotron_3_ultra">Breakthroughs powering Nemotron 3 Ultra</h2>
+
+<p>To mitigate the typical efficiency-accuracy tradeoffs for high-capacity reasoning models, the Nemotron models introduce architectural innovations:</p>
+
+<p><strong>Post-trained for agent harness</strong><br>
+Nemotron Ultra is post-trained to deliver consistent accuracy across top harnesses. The model is trained using the NVIDIA <a href="https://github.com/nvidia-nemo/rl">NeMo RL</a> and <a href="https://github.com/NVIDIA-NeMo/gym">Gym</a> open libraries with one of the largest suites of long-running, task-solving, tool-using datasets in the world.</p>
+
+<p>Ultra is optimized for agent-led open harnesses, not just single-turn chat, and is designed to work within workflows where agents plan, call tools, read observations, delegate to sub-agents, validate outputs, and recover from errors across many turns.</p>
+
+<p><strong>Hybrid Mamba transformer</strong><br>
+Mamba layers improve sequence efficiency for long-context workloads, while Transformer layers preserve precise recall when agents need to retrieve specific facts from large context windows.</p>
+
+<p><strong>NVFP4 precision</strong><br>
+The same NVFP4 checkpoint runs on NVIDIA Hopper, NVIDIA Blackwell, and Ampere GPUs. Developers can use one checkpoint across all NVIDIA GPU architectures thanks to specialized NVFP4 quantization kernels. NVFP4 also delivers up to 5x higher throughput per GPU at the same interactivity compared to BF16 on Blackwell.</p>
+
+<p><strong>LatentMoE</strong><br>
+LatentMoE supports more efficient expert routing, enabling the model to handle workflows spanning reasoning, code generation, tool calls, and domain-specific logic.</p>
+
+<p><strong>Multi-token prediction</strong><br>
+Multi-token prediction (MTP) helps reduce generation time by predicting multiple future tokens in a single forward pass, improving throughput for long outputs and multi-turn workflows.</p>
+
+<h2 id="nemotron_3_ultra_adds_multi-teacher_on-policy_distillation">Nemotron 3 Ultra adds Multi-Teacher On-Policy Distillation</h2>
+
+<p>Multi-Teacher On-Policy Distillation (MOPD) is a training method in which Ultra learns from multiple specialized teacher models while generating its own attempts during training. More than 10 specialized teacher models are trained, each with its own domain-specific training pipeline. Each teacher scores the model in its area of expertise, helping Ultra improve reasoning across domains more efficiently.</p>
+
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/MOPD.webp" alt="The image describes the phases, and specific teacher and checkpoint interaction used for Nemotron 3 Ultra MOPD phase.">
+
+<p>During MOPD, the student model generates rollouts across domains and receives dense reward signals from the corresponding teacher models. To maximize efficiency, MOPD runs asynchronously, with student rollout generation, teacher scoring, and student optimization fully pipelined.</p>
+
+<p>MOPD is also iterative. After producing an MOPD-trained checkpoint, new rounds of teacher training are initialized from the updated student model, and the improvements are merged into the next MOPD stage.</p>
+
+<p>This co-evolution between students and teachers enables continuous capability improvement and progressively stronger specialization across domains. Users can try <a href="https://github.com/NVIDIA-NeMo/RL/blob/ultra-v3/docs/guides/nemotron-3-ultra.md">MOPD recipes</a> through NeMo-RL, the library that trained the Ultra model.</p>
+
+<h2 id="training_data_for_stronger_agent_reasoning">Training data for stronger agent reasoning</h2>
+
+<p>As with all Nemotron open model launches, much of the training data pipeline is released as permissively as possible. For partners in enterprise and sovereign AI development, training data transparency and provenance matter as much as capability.</p>
+
+<p><strong>Domain-specific pre-training data</strong></p>
+
+<p>Building on a 10T token pre-training foundation, Nemotron 3 Ultra adds 212B new tokens targeting three high-value domain gaps:</p>
+
+<ul>
+<li><strong>4B tokens</strong> of synthetic legal data, increasing the proxy LegalBench average from 64.6% to 74.7%</li>
+<li><strong>35B tokens</strong> of synthesized Wiki-based data, boosting proxy SimpleQA from 40.2% to 50.2%</li>
+<li><strong>173B refreshed GitHub tokens</strong> through Sept. 30, 2025</li>
+</ul>
+
+<p><strong>Post-training data and RL environments</strong></p>
+
+<p>This launch is also releasing 10M new SFT samples, 1M new RL tasks across multiple domains, and 15 net-new RL environments, bringing the cumulative Nemotron open data totals to 50M SFT samples, 2M RL tasks, and 55 RL environments.</p>
+
+<p>The result is SWEBench Verified scores between 65% and 70.4% across Pi, OpenHands, Hermes, OpenCode, and Mini SWE Agent—consistent performance regardless of which framework you deploy.</p>
+
+<p><strong>Finetune for your domain</strong></p>
+
+<p>Nemotron 3 Ultra can be fine-tuned using LoRA, SFT, and reinforcement learning using the NVIDIA <a href="https://github.com/NVIDIA-NeMo">NeMo libraries</a>.</p>
+
+<p>Nemotron 3 Ultra Recipes:</p>
+<ul>
+<li>SFT LoRA: NeMo Automodel (<a href="https://github.com/NVIDIA-NeMo/Automodel/blob/main/examples/llm_finetune/nemotron/nemotron_ultra_v3_hellaswag_peft.yaml">H100 Recipe</a>, <a href="https://github.com/NVIDIA-NeMo/Automodel/blob/main/examples/llm_finetune/nemotron/nemotron_ultra_v3_hellaswag_peft_gb200.yaml">GB200 Recipe</a>)</li>
+<li>Full SFT: NeMo Megatron Bridge <a href="https://github.com/NVIDIA-NeMo/Megatron-Bridge/tree/nemotron_3_ultra/examples/models/nemotron/nemotron_3/ultra">Recipes</a></li>
+<li>Reinforcement Learning: NeMo RL <a href="https://github.com/NVIDIA-NeMo/RL/blob/ultra-v3/docs/guides/nemotron-3-ultra.md">GRPO recipe</a>, <a href="https://github.com/NVIDIA-NeMo/Nemotron/tree/main/usage-cookbook/Nemotron-3-Ultra">GRPO LoRA recipe</a>, <a href="https://github.com/NVIDIA-NeMo/RL/blob/ultra-v3/docs/guides/nemotron-3-ultra.md">MOPD recipe</a></li>
+</ul>
+
+<p><strong>Deployment</strong></p>
+
+<p>Deploy Nemotron Ultra using <a href="https://github.com/ai-dynamo/dynamo/tree/main/recipes/nemotron-3-ultra">Dynamo Recipes</a>, for KV-aware routing, multi-token prediction (MTP), and disaggregated prefill/decode.</p>
+
+<h2 id="see_it_in_action">See it in action</h2>
+
+<p>This walkthrough shows how to spin up and run an autoresearch flow using Hermes Agent powered by Nemotron 3 Ultra on <a href="https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b">build.nvidia.com</a>.</p>
+
+<h2 id="run_agents_more_safely_with_nvidia_nemoclaw_and_nvidia_openshell">Run agents more safely with NVIDIA NemoClaw and NVIDIA OpenShell</h2>
+
+<p>Nemotron models integrate with leading open agent frameworks. To build a secure, always-on agentic system, it is important to understand the reference stack:</p>
+
+<ul>
+<li><strong>Hermes Agent and OpenClaw:</strong> These are popular agent harnesses that provide the orchestration loops, memory, and tools for multi-turn workflows. Hermes Agent is now officially available and fully supported for use with Nemotron.</li>
+<li><strong>NVIDIA OpenShell:</strong> Available now in early preview, OpenShell is the secure runtime environment (part of the NVIDIA Agent Toolkit) where autonomous agents and their generated code execute.</li>
+<li><strong>NVIDIA NemoClaw:</strong> This is the open-source blueprint that ties the environment together. With a single command, NemoClaw installs the OpenShell runtime—providing a secure environment for running autonomous agents like Hermes Agent more safely alongside open-source models like Nemotron.</li>
+</ul>
+
+<h2 id="build_safer_and_voice-enabled_agents">Build safer and voice-enabled agents</h2>
+
+<p>Two new Nemotron models are also launching:</p>
+
+<p><strong>Nemotron 3.5 Content Safety</strong><br>
+For teams building safer enterprise AI, <a href="https://huggingface.co/nvidia/Nemotron-3.5-Content-Safety">Nemotron 3.5 Content Safety</a> is an open, efficient 4B guardrail model for classifying unsafe, disallowed, or policy-violating content across text, images, and combined inputs.</p>
+
+<p>Covering 23 safety categories and 12 languages, it can be used as an inference-time guardrail, as a judge for LLM safety testing and evaluation, or with the accompanying training dataset to post-train models for safer behavior.</p>
+
+<p><strong>Nemotron 3.5 ASR</strong><br>
+For voice-native agents, <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-ASR-Streaming-Multilingual-0.6b">Nemotron 3.5 ASR</a> uses the same cache-aware streaming architecture as its English predecessor, Nemotron 3 ASR, to process audio deltas instantly. Eliminating redundant buffered compute ensures sub-100 ms latency for natural, real-time voice orchestration for your agentic swarms.</p>
+
+<p>The English model has seen strong developer adoption, including powering the voice input feature in <a href="https://aka.ms/FL_BUILD_2026">Microsoft GitHub Copilot CLI</a>, used by more than 20M developers. An independent benchmark of <a href="https://arxiv.org/html/2604.14493v2">50+ on-device ASR</a> configurations identified Nemotron 3 ASR as the strongest candidate for real-time English streaming on resource-constrained hardware. Now, that same architecture goes multilingual with support for 40+ languages in a single checkpoint.</p>
+
+<h2 id="updated_open_licensing_for_broader_adoption">Updated open licensing for broader adoption</h2>
+
+<p>Nemotron model releases are moving to OpenMDW-1.1, the Linux Foundation's permissive license purpose-built for open AI model distributions. OpenMDW is designed to cover the full set of model materials, including architecture, parameters, documentation, software, and other related artifacts, under a single framework.</p>
+
+<p>This gives developers and enterprises clearer terms for using, modifying, redistributing, and deploying Nemotron models, while reducing the licensing ambiguity that can slow evaluation and adoption of open models.</p>
+
+<h2 id="start_building_today">Start building today</h2>
+
+<p>Nemotron 3 Ultra is fully open—including weights, data, and recipes—so developers can adapt the models to domain-specific workflows and deploy them anywhere. It is available across leading inference platforms, and packaged as an NVIDIA NIM microservice, can run anywhere.</p>
+
+<p>Try it on <a href="https://www.perplexity.ai/">Perplexity</a> with a Pro subscription or through API, <a href="https://openrouter.ai/nvidia/nemotron-3-ultra-550b-a55b:free">OpenRouter</a>, <a href="https://www.anaconda.com/blog/nvidia-nemotron-3-ultra-available-anaconda">Anaconda</a>, or <a href="https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b">build.nvidia.com</a>.</p>
+
+<p>Download the weights from <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4">Hugging Face</a>, launch an optimized instance through NVIDIA NIM, or start with the cookbooks to get running in minutes.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#nemotron_3_ultra_for_agent_orchestration">Nemotron 3 Ultra for agent orchestration</a><a class="lv2" href="#breakthroughs_powering_nemotron_3_ultra">Breakthroughs powering Nemotron 3 Ultra</a><a class="lv2" href="#nemotron_3_ultra_adds_multi-teacher_on-policy_distillation">Nemotron 3 Ultra adds Multi-Teacher On-Policy Distillation</a><a class="lv2" href="#training_data_for_stronger_agent_reasoning">Training data for stronger agent reasoning</a><a class="lv2" href="#see_it_in_action">See it in action</a><a class="lv2" href="#run_agents_more_safely_with_nvidia_nemoclaw_and_nvidia_openshell">Run agents more safely with NVIDIA NemoClaw and NVIDIA OpenShell</a><a class="lv2" href="#build_safer_and_voice-enabled_agents">Build safer and voice-enabled agents</a><a class="lv2" href="#updated_open_licensing_for_broader_adoption">Updated open licensing for broader adoption</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-05-nemotron-3-ultra";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

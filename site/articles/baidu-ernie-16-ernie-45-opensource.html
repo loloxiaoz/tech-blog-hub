@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ERNIE 4.5 模型系列正式开源（文心4.5：10款MoE+稠密模型全面开源） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>ERNIE 4.5 模型系列正式开源（文心4.5：10款MoE+稠密模型全面开源）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-04-01</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">文心</span><span class="tag">开源</span><span class="tag">MoE</span><span class="tag">多模态</span></div><a class="source-btn" href="https://ernie.baidu.com/blog/zh/posts/ernie4.5/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">百度开源文心4.5系列共10款模型，含47B/3B激活参数MoE模型（最大总参424B）及0.3B稠密模型；Base版在28项基准中22项超越DeepSeek-V3；预训练MFU达47%；Apache 2.0协议。</div></div><div class="prose"><h2 id="ernie-45-简介">ERNIE 4.5 简介</h2>
+<p>文心4.5系列开源模型共10款，涵盖了激活参数规模分别为47B和3B的混合专家（MoE）模型（最大的模型总参数量为424B），以及0.3B的稠密参数模型。针对MoE架构，我们提出了一种创新性的<strong>多模态异构模型结构</strong>，通过跨模态参数共享机制实现模态间知识融合，同时为各单一模态保留专用参数空间。此架构非常适用于从大语言模型向多模态模型的持续预训练范式，在保持甚至提升文本任务性能的基础上，显著增强多模态理解能力。文心4.5系列模型均使用<a href="https://github.com/PaddlePaddle/Paddle">飞桨深度学习框架</a>进行高效训练、推理和部署。在大语言模型的预训练中，模型FLOPs利用率（MFU）达到47%。我们的模型在多个文本和多模态数据集上取得了SOTA的性能，尤其是在指令遵循、世界知识记忆、视觉理解和多模态推理方面。模型权重按照Apache 2.0协议开源，支持开展学术研究和产业应用。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/overview.png" alt="The overview of ERNIE 4.5 family.">
+
+<h2 id="ernie-45-技术亮点">ERNIE 4.5 技术亮点</h2>
+<p>ERNIE 4.5 系列模型优越的性能主要来源于以下几个关键技术点：</p>
+<ol>
+<li><strong>多模态混合专家模型预训练：</strong> 文心4.5通过在文本和视觉两种模态上进行联合训练，更好地捕捉多模态信息中的细微差别。提出了多模态异构混合专家模型结构，结合多维旋转位置编码，并在损失函数计算时增强不同专家间的正交性，同时对不同模态间的词元进行平衡优化，达到多模态相互促进提升的目的。</li>
+<li><strong>高效训练推理框架：</strong> 提出异构混合并行和多层级负载均衡策略。通过节点内专家并行、显存友好的流水线调度、FP8混合精度训练和细粒度重计算等多项技术，显著提升了预训练吞吐。推理方面，提出多专家并行协同量化方法和卷积编码量化算法，实现效果接近无损的4-bit量化和2-bit量化。此外，还实现了动态角色转换的预填充、解码分离部署技术。</li>
+<li><strong>针对模态的后训练：</strong> 对预训练模型进行针对模态的精调，大语言模型针对通用语言理解和生成进行优化，多模态大模型侧重于视觉语言理解，支持思考和非思考模式。每个模型采用了SFT、DPO或UPO（Unified Preference Optimization，统一偏好优化技术）的多阶段后训练。</li>
+</ol>
+
+<h2 id="性能和基准测试结果">性能和基准测试结果</h2>
+<p><strong>ERNIE-4.5-300B-A47B-Base</strong> 在28个基准测试中的22个超越了DeepSeek-V3-671B-A37B-Base，在泛化能力、推理和知识密集型任务方面有显著提升。<strong>ERNIE-4.5-21B-A3B-Base</strong> 总参数量为210亿（约为Qwen3-30B的70%），在包括BBH和CMATH在内的多个数学和推理基准上效果优于Qwen3-30B-A3B-Base。</p>
+<p>经过后训练的ERNIE-4.5-300B-A47B在IFEval、Multi-IF、SimpleQA和ChineseSimpleQA等基准测试中取得业界领先效果。轻量级模型ERNIE-4.5-21B-A3B尽管总参数量减少约30%，但与Qwen3-30B-A3B相比仍具竞争力。</p>
+<p>在多模态方面，ERNIE-4.5-VL在视觉感知、文档与图表理解以及视觉知识方面效果突出。其思考模式在MathVista、MMMU和VisualPuzzle等高难度基准上实现了与OpenAI-o1的差距缩小甚至性能超越。</p>
+
+<h3 id="文心45预训练模型">文心4.5预训练模型</h3>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/base_model_benchmark.png" alt="文心4.5预训练模型">
+
+<h3 id="ernie-45-300b-a47b-后训练模型">ERNIE-4.5-300B-A47B 后训练模型</h3>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/chat_model_benchmark1.png" alt="ERNIE-4.5-300B-A47B 后训练模型">
+
+<h3 id="ernie-45-21b-a3b-后训练模型">ERNIE-4.5-21B-A3B 后训练模型</h3>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/chat_model_benchmark2.png" alt="ERNIE-4.5-21B-A3B 后训练模型">
+
+<h3 id="多模态后训练模型支持思考">多模态后训练模型（支持思考）</h3>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/vl_model_thinking_benchmark.png" alt="多模态后训练模型（支持思考）">
+
+<h3 id="多模态后训练模型关闭思考">多模态后训练模型（关闭思考）</h3>
+<img src="https://ernie.baidu.com/blog/posts/ernie4.5/vl_model_nonthinking_benchmark.png" alt="多模态后训练模型（关闭思考）">
+
+<h2 id="ernie-45使用入门">ERNIE 4.5 使用入门</h2>
+<p>ERNIE 4.5模型使用<a href="https://github.com/PaddlePaddle/Paddle">飞桨（PaddlePaddle）框架</a>进行训练。对于使用PyTorch的开发者，ERNIE 4.5模型也提供PyTorch格式的模型。</p>
+
+<h3 id="erniekit精调与对齐">ERNIEKit：精调与对齐</h3>
+<p><a href="https://github.com/PaddlePaddle/ERNIE">ERNIEKit</a> 是一个面向ERNIE 4.5的产业级开发套件，提供预训练、SFT、LoRA、DPO、量化感知训练（QAT）和训练后量化（PTQ）等功能。</p>
+<pre><code># Download model
+huggingface-cli download baidu/ERNIE-4.5-300B-A47B-Base-Paddle \
+    --local-dir baidu/ERNIE-4.5-300B-A47B-Base-Paddle
+# SFT
+erniekit train examples/configs/ERNIE-4.5-300B-A47B/sft/run_sft_wint8mix_lora_8k.yaml \
+    model_name_or_path=baidu/ERNIE-4.5-300B-A47B-Base-Paddle
+# DPO
+erniekit train examples/configs/ERNIE-4.5-300B-A47B/dpo/run_dpo_wint8mix_lora_8k.yaml \
+    model_name_or_path=baidu/ERNIE-4.5-300B-A47B-Base-Paddle</code></pre>
+
+<h3 id="fastdeploy高效模型部署">FastDeploy：高效模型部署</h3>
+<p><a href="https://github.com/PaddlePaddle/FastDeploy">FastDeploy</a> 是基于飞桨的大模型高效部署套件，使用接口兼容vLLM和OpenAI协议，支持丰富的低比特量化推理、上下文缓存、投机解码等加速技术。</p>
+<pre><code>from fastdeploy import LLM, SamplingParams
+
+prompt = "Write me a poem about large language model."
+sampling_params = SamplingParams(temperature=0.8, top_p=0.95)
+
+llm = LLM(model="baidu/ERNIE-4.5-0.3B-Paddle", max_model_len=32768)
+
+outputs = llm.generate(prompt, sampling_params)</code></pre>
+
+<h2 id="许可证">许可证</h2>
+<p>ERNIE 4.5模型在<strong>Apache License 2.0</strong>许可下提供，允许商业使用。</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#ernie-45-简介">ERNIE 4.5 简介</a><a class="lv2" href="#ernie-45-技术亮点">ERNIE 4.5 技术亮点</a><a class="lv2" href="#性能和基准测试结果">性能和基准测试结果</a><a class="lv3" href="#文心45预训练模型">文心4.5预训练模型</a><a class="lv3" href="#ernie-45-300b-a47b-后训练模型">ERNIE-4.5-300B-A47B 后训练模型</a><a class="lv3" href="#多模态后训练模型支持思考">多模态后训练模型（支持思考）</a><a class="lv2" href="#ernie-45使用入门">ERNIE 4.5 使用入门</a><a class="lv2" href="#许可证">许可证</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-16-ernie-45-opensource";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

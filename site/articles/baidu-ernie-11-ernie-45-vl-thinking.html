@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ERNIE-4.5-VL-28B-A3B-Thinking（文心多模态推理模型：仅3B激活参数媲美顶级旗舰） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>ERNIE-4.5-VL-28B-A3B-Thinking（文心多模态推理模型：仅3B激活参数媲美顶级旗舰）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-03-01</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 5 分钟</span><span class="tag">文心</span><span class="tag">多模态</span><span class="tag">Thinking</span><span class="tag">MoE</span></div><a class="source-btn" href="https://ernie.baidu.com/blog/zh/posts/ernie-4.5-vl-28b-a3b-thinking/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">百度发布ERNIE-4.5-VL-28B-A3B-Thinking，基于MoE架构仅激活30亿参数，结合GSPO与IcePop强化学习策略，在视觉推理、STEM、Grounding及图像思考能力上达到接近Gemini-2.5-Pro的性能。</div></div><div class="prose"><h2 id="模型亮点">模型亮点</h2>
+<p>基于强大的 <strong>ERNIE-4.5-VL-28B-A3B</strong> 架构，全新升级的 <strong>ERNIE-4.5-VL-28B-A3B-Thinking</strong> 在多模态推理能力上实现了显著飞跃。在扩展的中期训练阶段中，模型吸收了大规模且高度多样化的高质量视觉-语言推理数据语料。这一阶段显著增强了模型的表征能力，并进一步深化了视觉与语言模态之间的语义对齐，从而在细粒度视觉-文本推理任务中展现出前所未有的表现力。</p>
+<p>模型在可验证任务上引入了先进的多模态强化学习技术，结合 <strong>GSPO</strong> 与 <strong>IcePop</strong> 策略，有效稳定了 <strong>MoE（Mixture of Experts）</strong> 的训练过程，并通过动态难度采样机制显著提升了学习效率。针对社区反馈与实际需求，模型在 <strong>视觉定位（Grounding）</strong> 能力上进行了全面增强，同时优化了 <strong>指令理解与执行能力</strong>，使视觉定位与指令交互功能更易调用、更可靠。此外，全新的 <strong>"Think with Image"</strong> 模式支持模型在推理过程中结合图像放大与图像检索等工具，实现对细粒度视觉细节的更精准理解，并能够覆盖更广泛的长尾视觉知识。</p>
+<p>这些改进共同构成了构建高级多模态智能体的核心基础，为开发者与研究人员提供了强大的工具支持，使其能够探索并构建新一代视觉-语言理解系统，推动多模态人工智能在复杂推理与应用场景中的边界持续拓展。</p>
+
+<h2 id="核心能力">核心能力</h2>
+<p>作为一款仅激活 <strong>30亿参数</strong> 的轻量级模型，<strong>ERNIE-4.5-VL-28B-A3B-Thinking</strong> 在多项权威基准测试中展现出接近业界顶级旗舰模型的性能表现。凭借高效的参数利用率与优化的推理架构，模型在视觉任务上实现了接近 <strong>SOTA</strong>（state-of-the-art）的表现，同时保持了出色的计算效率。</p>
+<ul>
+  <li><strong>视觉推理</strong>：得益于大规模强化学习训练，模型在复杂视觉任务中展现出卓越的多步推理、图表分析与因果推理能力，其表现已可与 <strong>Gemini-2.5-Pro</strong> 相媲美。</li>
+  <li><strong>STEM 推理</strong>：凭借强大的视觉理解能力，模型在 STEM 类任务（如求解图片中的物理、数学问题）中实现了性能跃升，能够轻松应对复杂题目。</li>
+  <li><strong>视觉定位（Grounding）</strong>：具备更高精度的定位能力与灵活的指令执行机制，可在复杂的工业级场景中快速触发 Grounding 功能，大幅提升效率。</li>
+  <li><strong>图像思考（Thinking with Images）</strong>：模型能够像人类一样"带着图像思考"，可自由放大与缩小画面，从细节中获取完整信息，实现对视觉内容的深层理解。</li>
+  <li><strong>工具使用</strong>：依托强大的工具调用能力，模型可即时使用图像搜索等功能，高效识别长尾知识，实现全面的信息检索与整合。</li>
+  <li><strong>视频理解</strong>：模型具备出色的时间感知与事件定位能力，能够精准识别视频不同时间片段中的内容变化，使视频分析更智能、更高效。</li>
+</ul>
+
+<h2 id="案例展示">案例展示</h2>
+
+<h3 id="视觉推理">视觉推理</h3>
+<p>在本案例中，模型接收到一张展示每周不同时段客流强度的"高峰提示"图表。用户请求模型在 <strong>2025 年 11 月 8 日至 12 日</strong> 期间，结合图表内容，找出避开高峰时段与业务高峰日的最合适来访时间。ERNIE-4.5-VL-28B-A3B-Thinking 首先确定了用户给定日期对应的星期，对图表进行结构化解析，识别出低客流时段（12:00–14:00），并结合日期与业务规律进行逻辑匹配，最终输出清晰的时间建议结果。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA1.png" alt="视觉推理案例">
+
+<h3 id="stem-推理">STEM 推理</h3>
+<p>在本案例中，用户输入一个结构复杂的桥式电路，并要求模型计算 <strong>A、B 两点间的等效电阻</strong>。该问题无法通过简单的串并联化简求解，需要应用 <strong>欧姆定律（Ohm's Law）</strong> 与 <strong>基尔霍夫电流定律（KCL）</strong> 进行完整的多步分析。ERNIE-4.5-VL-28B-A3B-Thinking 首先理解电路结构，确定各节点关系，建立电流方程。随后，模型设定各支路电流变量，根据KCL写出节点方程，并结合欧姆定律列出电压方程，最终得出正确结果 <strong>R = 7/5 Ω（约 1.4 Ω）</strong>，并进行了正确性检验。推理过程逻辑严谨、层次清晰。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA2.png" alt="STEM推理案例">
+
+<h3 id="视觉定位grounding">视觉定位（Grounding）</h3>
+<p>在本案例中，模型接收到一张包含多个人物的超现实场景图像，以及指令："图中有多少个穿西服的人，请用 JSON 格式输出以上物体的坐标和 bbox_2d 位置。"ERNIE-4.5-VL-28B-A3B-Thinking 严格遵循指令，准确检测出所有目标人物，并输出包含精确数值坐标的完整边界框列表。该输出结果体现了模型在 <strong>视觉 Grounding</strong> 方面的能力——能够将语言指令与图像区域正确对应，同时在结构化结果生成中保持高度的指令遵循性。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA3.png" alt="Grounding案例1">
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA3_2.jpg" alt="Grounding案例2">
+
+<h3 id="图像思考thinking-with-images">图像思考（Thinking with Images）</h3>
+<p>在本案例中，用户提出问题："在人行道旁墙上的蓝底标牌上写的是什么？"ERNIE-4.5-VL-28B-A3B-Thinking 首先分析整张图像，定位蓝底标牌位置，并自主调用 <strong>图像放大工具（image zoom-in tool）</strong> 对标牌细节进行进一步观察。模型在放大后的画面中准确识别出蓝底白字内容为 <strong>"HOTEL BUZA"</strong>。该案例展示了模型通过调用图片放大功能，聚焦细节区域完成细粒度视觉推理的 <strong>图像思考（Think with Images）</strong> 能力。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA4.png" alt="图像思考案例">
+
+<h3 id="工具调用">工具调用</h3>
+<p>在本案例中，模型接收到一张黄色卡通小鸡的图片，并被询问："这是什么？"ERNIE-4.5-VL-28B-A3B-Thinking 判断仅依靠内部知识无法给出确定答案，于是自主调用 <strong>图像搜索工具（image search tool）</strong>，从网络中检索相似图片及相关商品信息。模型对比多组候选结果的外观特征与上下文线索，最终推断该角色为 <strong>"Dundun"</strong>，即与 MINISO（名创优品）品牌相关的毛绒玩偶形象。该案例展示了模型能够进行多步推理、即时自主调用外部工具输出连贯可靠结论的 <strong>工具调用（Tool Utilization）</strong> 能力。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA6.png" alt="工具调用案例">
+
+<h3 id="视频理解">视频理解</h3>
+<p>在本案例中，模型接收到一段视频，并完成了两项相关的视频理解任务。首先，模型提取出视频中出现的所有字幕文本及其对应的 <strong>时间戳</strong>，并进行结构化输出。随后，当被询问"视频中哪些片段是在桥上拍摄的"时，模型通过分析桥梁结构、光照与视角等视觉线索，准确识别出约 <strong>17 秒、37 秒与 47 秒</strong> 的相关片段。该案例展示了 ERNIE-4.5-VL-28B-A3B-Thinking 在 <strong>视频文字提取</strong>、<strong>时间推理</strong> 与 <strong>时空场景理解</strong> 方面的综合能力。</p>
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA5_1.png" alt="视频理解案例1">
+<img src="https://ernie.baidu.com/blog/posts/ernie-4.5-vl-28b-a3b-thinking/fig/QA5_2.png" alt="视频理解案例2">
+
+<h2 id="quickstart">Quickstart</h2>
+
+<h3 id="使用-transformers-库">使用 transformers 库</h3>
+<p>以下示例展示了如何使用 <code>transformers</code> 库进行推理：</p>
+<pre><code>import torch
+from transformers import AutoProcessor, AutoTokenizer, AutoModelForCausalLM
+
+model_path = 'baidu/ERNIE-4.5-VL-28B-A3B-Thinking'
+model = AutoModelForCausalLM.from_pretrained(
+    model_path,
+    device_map="auto",
+    dtype=torch.bfloat16,
+    trust_remote_code=True
+)
+
+processor = AutoProcessor.from_pretrained(model_path, trust_remote_code=True)
+model.add_image_preprocess(processor)
+
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What color clothes is the girl in the picture wearing?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": "https://paddlenlp.bj.bcebos.com/datasets/paddlemix/demo_images/example1.jpg"
+                }
+            },
+        ]
+    },
+]
+
+text = processor.tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+)
+image_inputs, video_inputs = processor.process_vision_info(messages)
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+
+device = next(model.parameters()).device
+inputs = inputs.to(device)
+
+generated_ids = model.generate(
+    inputs=inputs['input_ids'].to(device),
+    **inputs,
+    max_new_tokens=1024,
+    use_cache=False
+    )
+output_text = processor.decode(generated_ids[0][len(inputs['input_ids'][0]):])
+print(output_text)</code></pre>
+
+<h3 id="vllm-推理">vLLM 推理</h3>
+<p>安装 vLLM 主分支：</p>
+<pre><code>pip install uv
+uv pip install -U vllm --pre \
+  --extra-index-url https://wheels.vllm.ai/nightly \
+  --extra-index-url https://download.pytorch.org/whl/cu129 \
+  --index-strategy unsafe-best-match</code></pre>
+<p>运行 vLLM（使用 reasoning-parser 与 tool-call-parser）：</p>
+<pre><code># 80G*1 GPU，如出现错误，可添加参数 --gpu-memory-utilization 0.95 后重试
+vllm serve baidu/ERNIE-4.5-VL-28B-A3B-Thinking --trust-remote-code \
+ --reasoning-parser ernie45  \
+ --tool-call-parser ernie45  \
+ --enable-auto-tool-choice</code></pre>
+
+<h3 id="fastdeploy-推理">FastDeploy 推理</h3>
+<p>可以使用 FastDeploy 快速部署服务。<strong>注意：</strong>单卡部署至少需要 80GB 显存。</p>
+<pre><code>fastdeploy serve --model baidu/ERNIE-4.5-VL-28B-A3B-Thinking \
+  --max-model-len 131072 \
+  --max-num-seqs 32 \
+  --port 8180 \
+  --quantization wint8 \
+  --reasoning-parser ernie-45-vl-thinking \
+  --tool-call-parser ernie-45-vl-thinking \
+  --mm-processor-kwargs '{"image_max_pixels": 12845056 }'</code></pre>
+
+<h3 id="使用-erniekit-微调">使用 ERNIEKit 微调</h3>
+<p><a href="https://github.com/PaddlePaddle/ERNIE">ERNIEKit</a> 是基于 PaddlePaddle 的训练工具套件，面向 ERNIE 系列开源大模型设计，支持指令微调（SFT、LoRA）与对齐训练（DPO）等场景。</p>
+<pre><code># 下载模型
+huggingface-cli download baidu/ERNIE-4.5-VL-28B-A3B-Thinking --local-dir baidu/ERNIE-4.5-VL-28B-A3B-Thinking
+# SFT
+erniekit train examples/configs/ERNIE-4.5-VL-28B-A3B-Thinking/sft/run_sft_lora_8k.yaml
+# SFT (Function Call)
+erniekit train examples/configs/ERNIE-4.5-VL-28B-A3B-Thinking/sft_function_call/run_sft_8k.yaml</code></pre>
+
+<h2 id="许可证">许可证</h2>
+<p>ERNIE 4.5 模型依据 <strong>Apache License 2.0</strong> 协议发布，允许商业用途。版权归 <strong>Baidu, Inc.</strong> 所有，© 2025 Baidu, Inc. 保留所有权利。</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#模型亮点">模型亮点</a><a class="lv2" href="#核心能力">核心能力</a><a class="lv2" href="#案例展示">案例展示</a><a class="lv3" href="#视觉推理">视觉推理</a><a class="lv3" href="#stem-推理">STEM 推理</a><a class="lv3" href="#图像思考thinking-with-images">图像思考（Thinking with Images）</a><a class="lv3" href="#工具调用">工具调用</a><a class="lv2" href="#quickstart">Quickstart</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-11-ernie-45-vl-thinking";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

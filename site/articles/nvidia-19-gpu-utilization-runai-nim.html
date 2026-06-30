@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maximizing GPU Utilization with NVIDIA Run:ai and NIM（用 Run:ai 与 NIM 最大化 GPU 利用率） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>Maximizing GPU Utilization with NVIDIA Run:ai and NIM（用 Run:ai 与 NIM 最大化 GPU 利用率）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-20</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 7 分钟</span><span class="tag">GPU调度</span><span class="tag">Run:ai</span><span class="tag">NIM</span><span class="tag">推理优化</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/maximizing-gpu-utilization-with-nvidia-runai-and-nvidia-nim/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">本文介绍 NVIDIA Run:ai 与 NIM 联合调度方案：GPU 分片+装箱可将同等工作负载从 3 块 H100 压缩至 1.5 块；动态分片在高并发下提升 1.4x 吞吐、降低 1.7x 延迟；GPU 内存交换比冷启动快 44–61 倍首 Token 响应时间。</div></div><div class="prose"><p>Organizations deploying LLMs are challenged by inference workloads with different resource requirements. A small embedding model might use only a few gigabytes of GPU memory, while a 70B+ parameter LLM could require multiple GPUs. This diversity often leads to low average GPU utilization, high compute costs, and unpredictable latency.</p>
+<p>The problem isn't just about packing more workloads onto GPUs but about scheduling them intelligently. Without orchestration that understands inference workload patterns, organizations face a choice between overprovisioning (wasting resources) and underprovisioning (degrading performance).</p>
+<p>This blog post covers:</p>
+<ul>
+  <li><strong>The inference utilization problem</strong>: Why traditional scheduling underutilizes GPU resources.</li>
+  <li><strong>How NVIDIA NIM delivers production inference</strong>: The role of containerized microservices in standardizing model deployment.</li>
+  <li><strong>NVIDIA Run:ai's intelligent scheduling strategies</strong>: Four key capabilities that enhance performance (lower latency, increase TPS/GPU) while increasing GPU utilization and reducing compute costs.</li>
+  <li><strong>Benchmarking results</strong>: ~2x GPU utilization improvement with minimal throughput loss, up to ~1.4x higher throughput under heavy concurrency with dynamic fractions, and 44-61x faster first-request latency with GPU memory swap.</li>
+  <li><strong>How to get started</strong>: Practical guidance for implementing these strategies with NIM on NVIDIA Run:ai.</li>
+</ul>
+
+<h2 id="the_inference_utilization_problem">The Inference Utilization Problem</h2>
+<p>GPU utilization determines how many workloads can be run on a given cluster, and at what cost. In practice, most inference deployments leave significant GPU capacity idle as each model is assigned a full GPU "just to be safe" or because naive sharing without memory isolation causes out-of-memory (OOM) conditions and latency spikes under traffic.</p>
+<p>Without intelligent orchestration, teams are forced to choose between overprovisioning (waste) and underprovisioning (performance risk).</p>
+
+<h2 id="how_nvidia_nim_delivers_production_inference">How NVIDIA NIM Delivers Production Inference</h2>
+<p>NVIDIA NIM packages optimize inference engines as containerized microservices with:</p>
+<ul>
+  <li><strong>Packaged inference engines</strong>: Inference runtimes pre-configured for improved throughput/latency</li>
+  <li><strong>Industry-standard APIs</strong>: OpenAI-compatible endpoints for integration</li>
+  <li><strong>Model optimization</strong>: Automatic selection of quantization, batching, and acceleration techniques.</li>
+  <li><strong>Production-ready containers</strong>: Pre-built with dependencies, tested at scale</li>
+  <li><strong>Security and compliance</strong>: Enterprise-grade security controls and container signing for deployments</li>
+  <li><strong>Enterprise support</strong>: NVIDIA support and maintenance for production deployments</li>
+</ul>
+<p>NIM standardizes the deployment layer, but maximizing GPU utilization requires intelligent orchestration. This is where NVIDIA Run:ai's scheduling capabilities become essential.</p>
+
+<h2 id="how_nvidia_runai_unlocks_efficient_resource_management_for_nvidia_nim">How NVIDIA Run:ai Unlocks Efficient Resource Management for NVIDIA NIM</h2>
+<p>Inference utilization is more than just scheduling—it's about adapting to how workloads behave. With NVIDIA Run:ai, NIM deployments get inference-first prioritization, GPU fractions with full memory isolation, smarter placement based on workload needs, dynamic memory management, and autoscaling (including replica scaling and scale-to-zero). This enables users to follow traffic and give back GPUs when models are idle.</p>
+
+<h3 id="inference_priority_protects_user-facing_workloads">Inference Priority Protects User-Facing Workloads</h3>
+<p>NVIDIA Run:ai automatically assigns inference workloads the highest default priority, ensuring training jobs never preempt them. Why this matters:</p>
+<ul>
+  <li><strong>Inference serves users</strong>: Latency spikes and downtime impact the user experience and SLA compliance.</li>
+  <li><strong>Training can tolerate interruption</strong>: Model training can checkpoint and resume; inference requests cannot wait.</li>
+</ul>
+<p>This automatic priority assignment eliminates manual tuning in most environments. For organizations running mixed workloads, this ensures training jobs flex around inference demands rather than competing with them. GPUs can train when inference load is low, automatically yielding resources when user-facing requests arrive.</p>
+
+<h3 id="gpu_fractions_with_bin_packing_for_multiple_small_models_on_a_gpu">GPU Fractions with Bin Packing for Multiple Small Models on a GPU</h3>
+<p>Many NIM workloads, like embeddings, rerankers, and small LLMs, rarely need an entire GPU. When used with GPU fractions, NVIDIA Run:ai's bin packing strategy fills GPUs before allocating new ones, maximizing utilization across the cluster.</p>
+<p><strong>How GPU fractions with bin packing work:</strong></p>
+<ul>
+  <li>GPU fractions provide true memory isolation (not soft limits). Each model gets a guaranteed memory allocation.</li>
+  <li>Bin packing scores GPUs by current utilization and prioritizes filling partially used GPUs before allocating fresh ones.</li>
+  <li>Scheduler prioritizes partially-used GPUs for new workloads</li>
+</ul>
+<p><strong>Benchmarking results:</strong></p>
+<p>The approach was tested by simulating a scenario with three NIM models (a 7B LLM, a 12B VLM, and a 30B MoE) on NVIDIA H100 GPUs:</p>
+<ul>
+  <li><strong>Scenario A</strong>: Three GPUs with one H100 GPU per NIM (baseline)</li>
+  <li><strong>Scenario B</strong>: Three NIM on 1.5 H100 GPUs using NVIDIA Run:ai fractions, keeping NIM configurations and client load patterns constant</li>
+</ul>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/GPU-Consolidation-e1772061895207.webp" alt="Diagram comparing GPU allocation: baseline uses three dedicated H100 GPUs (one NIM per GPU), while NVIDIA Run:ai GPU fractions consolidate the same workloads onto ~1.5 GPUs, retaining 91–100% throughput and freeing ~50% capacity.">
+<p><em>Figure 1. Three NIM microservices consolidated from three dedicated H100 GPUs to ~1.5 H100 GPUs using GPU fractions and bin packing, retaining 91–100% of baseline throughput</em></p>
+<p>Exercising short and long-context prompts, the key findings include:</p>
+<ul>
+  <li>Each NIM retained about 91–100% of its single-GPU throughput, with modest increases in time-to-first-token (TTFT) and end-to-end (E2E) latency.</li>
+  <li>Mistral-7B matched its dedicated-GPU throughput at 834 token/s with long-context input (100%).</li>
+  <li>Nemotron-3-Nano-30B retained 95% (582 vs. 614 token/s).</li>
+  <li>Nemotron-Nano-12B-v2-VL retained 91% (658 vs. 723 token/s) at short-context input.</li>
+</ul>
+<p>Three NIM microservices that previously required three dedicated H100s were consolidated onto ≈1.5 H100s, freeing the remaining capacity for other workloads.</p>
+
+<h3 id="dynamic_gpu_fractions_maintain_performance_under_heavy_concurrent_requests">Dynamic GPU Fractions Maintain Performance Under Heavy Concurrent Requests</h3>
+<p>Static GPU fractions guarantee memory isolation, but they impose a rigid ceiling that creates "standard capacity". As concurrent requests increase, each NIM's KV-cache grows dynamically to track active sequences. When that growth hits the fixed fraction boundary, throughput plateaus, and latency degrades. This bottleneck forces a difficult trade-off: over-allocate fractions (wasting GPU capacity) or cap concurrency to stay within the fixed memory budget.</p>
+<p>NVIDIA Run:ai's dynamic GPU fractions solve this by replacing fixed allocations with a request/limit model, borrowing Kubernetes resource semantics for GPU memory:</p>
+<ul>
+  <li><strong>Request</strong>: The guaranteed minimum fraction, always reserved for the workload.</li>
+  <li><strong>Limit</strong>: The burstable upper bound, enabling the NIM to spread into available GPU memory when on-demand KV-cache or compute pressure increases.</li>
+</ul>
+<p>When a NIM operates its request, the unused headroom between the request and limit remains available to co-located workloads. When concurrent traffic spikes occur, the NIM bursts toward its limit, claiming that memory and converting it into active throughput. This state transition between request and limit is handled automatically.</p>
+<p><strong>Benchmarking results:</strong></p>
+<p>Using the same three NIM models and 1.5 H100 GPU footprint from Experiment 1, static fractions were replaced with dynamic fractions to measure performance under increasing concurrency:</p>
+<ul>
+  <li>Mistral-7B NIM (Request: 0.3, Limit: 0.4)</li>
+  <li>Nemotron-Nano-12B-v2-VL NIM (Request: 0.4, Limit: 0.5)</li>
+  <li>Nemotron-3-Nano-30B NIM (Request: 0.65, Limit: 0.75)</li>
+</ul>
+<p><strong>Scenarios compared:</strong></p>
+<ul>
+  <li><strong>Scenario A (static fractions + bin packing)</strong>: The fixed-fraction deployment where each NIM has a hard memory ceiling with full isolation.</li>
+  <li><strong>Scenario B (dynamic fractions + bin packing)</strong>: Same bin-packed layout on ≈1.5 H100 GPUs, but each NIM uses a request/limit pair instead of a fixed allocation.</li>
+</ul>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/NIM-Nemotron.webp" alt="Scatter-line chart of throughput vs. p50 E2E latency for Nemotron-3-Nano-30B on H100 GPUs. Static fractions stall at c=4. Dynamic fractions scale to c=256.">
+<p><em>Figure 2. Throughput vs. p50 end-to-end latency for Nemotron-3-Nano-30B on H100 GPUs with 2,048 input tokens</em></p>
+<p>As concurrency ramped up, static fractions hit a performance wall, throughput stalled, and latency spiked because models couldn't access additional memory for growing KV caches. With dynamic fractions, NIM microservices absorbed the pressure by bursting toward their limits during traffic peaks and releasing memory back when the load subsided.</p>
+<p>Across all three NVIDIA NIM microservices, dynamic fractions delivered up to 1.4x higher throughput and 1.7x lower latency, scaling cleanly with concurrency. For example:</p>
+<ul>
+  <li>Nemotron-3-Nano-30B sustained 1,025 token/s at 256 concurrent requests with dynamic fractions compared to a static-fraction ceiling of 721 token/s at just four concurrent requests before instability (1.4x).</li>
+  <li>Mistral-7B-Instruct-v0.3 p50 end-to-end latency dropped from 5,235 ms to 3,098 ms at 64 concurrent 2,048-token requests (1.7x).</li>
+</ul>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/Mistral.webp" alt="Scatter-line chart of throughput vs. p50 E2E latency for Mistral-7B-Instruct-v0.3 on H100 GPUs. Dynamic fractions reach c=256.">
+<p><em>Figure 3. Throughput vs. p50 end-to-end latency for Mistral-7B-Instruct-v0.3 on H100 GPUs with 2,048 input tokens</em></p>
+<p><strong>Key takeaway:</strong></p>
+<ul>
+  <li><strong>Static fractions + bin packing</strong>: Predictable traffic, low-to-moderate concurrency, models with stable memory footprints</li>
+  <li><strong>Dynamic GPU fractions + bin packing</strong>: Variable traffic, high concurrency, models with significant KV-cache growth</li>
+</ul>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/Nemotron-Nano-NIM.webp" alt="Scatter-line chart of throughput vs. p50 E2E latency for Nemotron-Nano-12B-v2-VL on ~1.5 H100 GPUs. Dynamic fractions reach c=256 versus c=64 for static fractions, delivering up to 1.3x higher throughput and 1.7x lower latency.">
+<p><em>Figure 4. Throughput vs. p50 end-to-end latency for Nemotron-Nano-12B-v2-VL on H100 GPUs with 2,048 input tokens</em></p>
+
+<h3 id="gpu_memory_swap_efficiently_serving_rarely-used_models">GPU Memory Swap: Efficiently Serving Rarely-Used Models</h3>
+<p>Organizations serving LLMs face a fundamental trade-off between latency and cost. Scaling an LLM from zero means full container initialization, loading model weights from disk, and allocating GPU memory; a process that can take tens of seconds to minutes. Because this cold-start latency is unacceptable for user-facing applications, most organizations choose to overprovision, keeping multiple replicas always-on with dedicated GPUs even during low-traffic or idle periods.</p>
+<p>This guarantees low latency but wastes GPU capacity, paying for hardware that sits idle just to avoid the risk of a cold start. Scale-to-zero (the Kubernetes pattern of shutting down idle replicas completely and restarting them on demand) can free the GPUs, but the cold-start penalty makes it impractical for latency-sensitive inference workloads.</p>
+<p><strong>How GPU memory swap works:</strong></p>
+<p>With GPU memory swap, models are kept in CPU memory and dynamically swap model weights between CPU and GPU as requests arrive. Only the active model's weights reside in GPU memory at any moment. When a request targets an idle model, NVIDIA Run:ai's GPU memory swap moves the currently loaded model's weights to CPU RAM and loads the requested model into GPU memory, keeping it warm for a configurable window. The model never leaves memory entirely; it just moves between GPU and CPU, eliminating the need for container restarts, disk I/O, and cold-start initialization.</p>
+<p>GPU memory swap works across single-GPU, multi-GPU, and fractional GPU workloads. Previous benchmarking with single-GPU deployments showed up to 66x improvements in time to first token (TTFT) compared to scale-from-zero.</p>
+<p><strong>Benchmarking results:</strong></p>
+<p>Latency between GPU memory swap and scale-from-zero for the same three NIM deployments was compared:</p>
+<ul>
+  <li><strong>Scenario A (scale-from-zero)</strong>: Each NIM cold-starts from scratch on a dedicated H100 GPU when traffic arrives (three GPUs in total).</li>
+  <li><strong>Scenario B (GPU memory swap)</strong>: The three NVIDIA NIM microservices share 1.5 H100 GPUs (with the same fractions from previous experiments), with swap-in/swap-out between GPU and CPU memory.</li>
+</ul>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/Short-Contexxt.webp" alt="A bar chart comparing TTFT for short 128-token prompts between scale-from-zero and GPU memory swap across three NIM models on 1.5 H100 GPUs. Short context (128 tokens): memory swap delivers 55-61x faster TTFT.">
+<p><em>Figure 5. GPU memory swap vs. scale-from-zero TTFT on an H100 GPU with 128-token prompts</em></p>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/Long-Context.webp" alt="Bar chart comparing TTFT for longer 2048-token prompts between scale-from-zero and GPU memory swap across three NIM models on 1.5 H100 GPUs. Long context (2048 tokens): memory swap delivers 44x faster TTFT.">
+<p><em>Figure 6. GPU memory swap vs. scale-from-zero TTFT on H100 GPUs with longer 2048-token prompts</em></p>
+<p>At 128-token input, cold-start TTFT ranged from 75.3 s (Mistral-7B) to 92.7 s (Nemotron-3-Nano-30B), while GPU memory swap reduced these to 1.23–1.61 s – a 55–61x improvement. At 2,048-token input, cold-start TTFT of 158.3–180.2 s dropped to 3.52–4.02 s with swap, a consistent ~44x reduction.</p>
+<p><strong>Key takeaway</strong>: GPU memory swap delivers 44-61x faster TTFT than scale-from-zero while using fewer resources when combined with GPU fractions, eliminating the cold-start penalty for infrequently accessed models, whether deployed on dedicated or fractional GPUs.</p>
+
+<h2 id="get_started_with_nvidia_runai_and_nvidia_nim">Get Started with NVIDIA Run:ai and NVIDIA NIM</h2>
+<p>Check out the <a href="https://run-ai-docs.nvidia.com/self-hosted/workloads-in-nvidia-run-ai/using-inference/nim-inference">deployment guide</a> to get started with deploying NVIDIA NIM as a native inference workload on NVIDIA Run:ai. Watch the <a href="https://www.nvidia.com/en-us/events/elevate-your-ai-operations-with-simplified-workload-management-nvidia-run-ai/">webinar</a> to see how teams manage growing AI workloads with intelligent scheduling, fine-grained GPU controls, Kubernetes-native traffic balancing, and autoscaling—while new platform updates improve access control, endpoint management, and visibility.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#the_inference_utilization_problem">The Inference Utilization Problem</a><a class="lv2" href="#how_nvidia_nim_delivers_production_inference">How NVIDIA NIM Delivers Production Inference</a><a class="lv2" href="#how_nvidia_runai_unlocks_efficient_resource_management_for_nvidia_nim">How NVIDIA Run:ai Unlocks Efficient Resource Management for NIM</a><a class="lv3" href="#inference_priority_protects_user-facing_workloads">Inference Priority Protects User-Facing Workloads</a><a class="lv3" href="#gpu_fractions_with_bin_packing_for_multiple_small_models_on_a_gpu">GPU Fractions with Bin Packing for Multiple Small Models</a><a class="lv3" href="#dynamic_gpu_fractions_maintain_performance_under_heavy_concurrent_requests">Dynamic GPU Fractions Under Heavy Concurrent Requests</a><a class="lv3" href="#gpu_memory_swap_efficiently_serving_rarely-used_models">GPU Memory Swap: Efficiently Serving Rarely-Used Models</a><a class="lv2" href="#get_started_with_nvidia_runai_and_nvidia_nim">Get Started with NVIDIA Run:ai and NVIDIA NIM</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-19-gpu-utilization-runai-nim";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

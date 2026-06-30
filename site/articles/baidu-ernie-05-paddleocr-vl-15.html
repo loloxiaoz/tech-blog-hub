@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PaddleOCR-VL-1.5：面向真实场景文档解析的多任务视觉语言模型 · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>PaddleOCR-VL-1.5：面向真实场景文档解析的多任务视觉语言模型</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-04-20</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">OCR</span><span class="tag">文档解析</span><span class="tag">VLM</span><span class="tag">多任务学习</span></div><a class="source-btn" href="https://yiyan.baidu.com/blog/zh/posts/paddleocr-vl-1.5/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">PaddleOCR-VL-1.5 以 0.9B 超紧凑 VLM 在 OmniDocBench v1.5 达到 94.5% SOTA 准确率，新增印章识别与文本检测识别一体化任务，并提出 Real5-OmniDocBench 基准覆盖扫描、倾斜、弯折等五类真实畸变场景。</div></div><div class="prose"><p><a href="https://huggingface.co/spaces/PaddlePaddle/PaddleOCR-VL-1.5_Online_Demo">Demo</a> | <a href="https://github.com/PaddlePaddle/PaddleOCR">GitHub</a> | <a href="https://huggingface.co/PaddlePaddle">Hugging Face</a> | <a href="https://arxiv.org/abs/2601.21957">Technical Report</a> | <a href="https://aistudio.baidu.com/paddleocr">Official Website</a></p>
+
+<img src="/blog/posts/paddleocr-vl-1.5/paddleocr-vl-1.5_metrics.png" alt="metrics">
+
+<h2 id="引言">引言</h2>
+
+<p><strong>PaddleOCR-VL-1.5 是 PaddleOCR-VL 的一次重要升级，在 OmniDocBench v1.5 上达到了 94.5% 的全新 SOTA 准确率</strong>。为了系统性评估模型在真实世界物理畸变条件下的鲁棒性（包括扫描伪影、倾斜、弯折、屏幕拍照以及光线变化），我们提出了 <strong>Real5-OmniDocBench</strong> 基准。实验结果表明，该增强模型在这一全新构建的基准上同样取得了 SOTA 表现。此外，我们在保持 <strong>0.9B 超紧凑 VLM 与高推理效率</strong> 的前提下，进一步扩展了模型能力，引入了 <strong>印章识别（Seal Recognition）</strong> 与 <strong>文本检测识别一体化（Text Spotting）</strong> 等任务。</p>
+
+<h3 id="paddleocr-vl-15-的核心能力">PaddleOCR-VL-1.5 的核心能力</h3>
+
+<ol>
+  <li>在仅 <strong>0.9B 参数规模</strong> 下，PaddleOCR-VL-1.5 在 OmniDocBench v1.5 上取得 <strong>94.5% 准确率</strong>，超越此前的 SOTA 模型 PaddleOCR-VL，并在 <strong>表格、公式与文本识别</strong> 等任务上取得显著提升。</li>
+  <li>提出了一种 <strong>支持不规则形状定位的文档解析新范式</strong>，能够在文档倾斜、弯折等复杂条件下进行精确的多边形检测。在扫描、倾斜、弯折、屏幕拍照与光线变化五类真实场景评测中，整体性能显著优于主流开源与商用模型。</li>
+  <li>新增 <strong>文本检测识别一体化（文本行级定位 + 识别）</strong> 与 <strong>印章识别</strong> 能力，并在对应任务指标上均刷新 SOTA。</li>
+  <li>在 <strong>专业场景与多语言识别能力</strong> 上进一步增强：针对 <strong>古籍文本、多语言表格、下划线与复选框</strong> 的识别效果显著提升，并新增对 <strong>藏文与孟加拉文</strong> 的语言支持。</li>
+  <li>支持 <strong>跨页表格自动合并</strong> 与 <strong>跨页段落标题识别</strong>，有效缓解 <strong>长文档解析</strong> 中的内容割裂问题。</li>
+</ol>
+
+<h3 id="模型架构">模型架构</h3>
+
+<img src="/blog/posts/paddleocr-vl-1.5/architecture.png" alt="architecture">
+
+<h2 id="使用方法">使用方法</h2>
+
+<h3 id="安装依赖">安装依赖</h3>
+
+<p>安装 PaddlePaddle 与 PaddleOCR：</p>
+
+<pre><code># The following command installs the PaddlePaddle version for CUDA 12.6.
+python -m pip install paddlepaddle-gpu==3.2.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
+python -m pip install -U "paddleocr[doc-parser]"</code></pre>
+
+<blockquote><p><strong>请确保安装 PaddlePaddle 3.2.1 或更高版本，并搭配特殊版本的 safetensors。</strong> macOS 用户请使用 Docker 搭建环境。</p></blockquote>
+
+<h3 id="基础用法">基础用法</h3>
+
+<p>CLI：</p>
+<pre><code>paddleocr doc_parser -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/paddleocr_vl_demo.png</code></pre>
+
+<p>Python API：</p>
+<pre><code>from paddleocr import PaddleOCRVL
+pipeline = PaddleOCRVL()
+output = pipeline.predict("https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/paddleocr_vl_demo.png")
+for res in output:
+    res.print()
+    res.save_to_json(save_path="output")
+    res.save_to_markdown(save_path="output")</code></pre>
+
+<h3 id="通过优化推理服务加速-vlm-推理">通过优化推理服务加速 VLM 推理</h3>
+
+<p>启动 VLM 推理服务（vLLM 方式）：</p>
+<pre><code>docker run \
+  --rm \
+  --gpus all \
+  --network host \
+  ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-genai-vllm-server:latest-nvidia-gpu \
+  paddleocr genai_server --model_name PaddleOCR-VL-1.5-0.9B --host 0.0.0.0 --port 8080 --backend vllm</code></pre>
+
+<h3 id="使用-transformers-库推理">使用 transformers 库推理 PaddleOCR-VL-1.5-0.9B</h3>
+
+<p>当前 PaddleOCR-VL-1.5-0.9B 支持通过 <code>transformers</code> 库进行无缝推理，覆盖 <strong>文本检测识别一体化</strong>，以及公式、表格、图表与印章等复杂元素识别。</p>
+
+<pre><code>from PIL import Image
+import torch
+from transformers import AutoProcessor, AutoModelForImageTextToText
+
+model_path = "PaddlePaddle/PaddleOCR-VL-1.5"
+image_path = "test.png"
+task = "ocr"  # Options: 'ocr' | 'table' | 'chart' | 'formula' | 'spotting' | 'seal'
+
+PROMPTS = {
+    "ocr": "OCR:",
+    "table": "Table Recognition:",
+    "formula": "Formula Recognition:",
+    "chart": "Chart Recognition:",
+    "spotting": "Spotting:",
+    "seal": "Seal Recognition:",
+}
+
+model = AutoModelForImageTextToText.from_pretrained(model_path, torch_dtype=torch.bfloat16).to("cuda").eval()
+processor = AutoProcessor.from_pretrained(model_path)
+# ... (see full example in docs)</code></pre>
+
+<h2 id="性能表现">性能表现</h2>
+
+<h3 id="omnidocbench-v15">1. OmniDocBench v1.5</h3>
+
+<p>PaddleOCR-VL-1.5 在 OmniDocBench v1.5 的整体指标、文本、公式、表格与阅读顺序等维度上均取得 SOTA 表现。</p>
+
+<img src="/blog/posts/paddleocr-vl-1.5/omnidocbenchv1.5_metrics.png" alt="omnidocbenchv1.5_metrics">
+
+<blockquote><p>性能指标来自 OmniDocBench 官方排行榜，其中 Gemini-3 Pro、Qwen3-VL-235B-A22B-Instruct 以及 PaddleOCR-VL-1.5 为独立评测。</p></blockquote>
+
+<h3 id="real5-omnidocbench">2. Real5-OmniDocBench</h3>
+
+<p>在扫描、形变、屏幕拍摄、光照与倾斜五类复杂场景上，PaddleOCR-VL-1.5 持续刷新 SOTA 纪录。</p>
+
+<img src="/blog/posts/paddleocr-vl-1.5/real5omnidocbench.png" alt="real5omnidocbench">
+
+<blockquote><p>Real5-OmniDocBench 是一个面向真实世界场景的全新基准，基于 OmniDocBench v1.5 数据集构建，包含五类场景：扫描、弯折、屏幕拍照、光线变化与倾斜。</p></blockquote>
+
+<h3 id="推理性能">推理性能</h3>
+
+<img src="/blog/posts/paddleocr-vl-1.5/inference_performance.png" alt="inference_performance">
+
+<blockquote><p>OmniDocBench v1.5 上的端到端推理性能对比。PDF 文档在单张 NVIDIA A100 GPU 上以 batch size=512 进行推理。</p></blockquote>
+
+<h2 id="可视化示例">可视化示例</h2>
+
+<p>以下是一些 <strong>真实场景文档解析</strong> 示例。</p>
+
+<p><strong>光线变化</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/light.jpg" alt="light">
+
+<p><strong>倾斜</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/skew.jpg" alt="skew">
+
+<p><strong>屏幕拍摄</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/screen.jpg" alt="screen">
+
+<p><strong>扫描</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/scaning.jpg" alt="scaning">
+
+<p><strong>弯折</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/curving.jpg" alt="curving">
+
+<p><strong>文本检测识别一体化</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/spotting.jpg" alt="spotting">
+
+<p><strong>印章识别</strong></p>
+<img src="/blog/posts/paddleocr-vl-1.5/seal.jpg" alt="seal">
+
+<h2 id="致谢">致谢</h2>
+
+<p>感谢 <a href="https://github.com/PaddlePaddle/PaddleFormers">PaddleFormers</a>、<a href="https://github.com/Kwai-Keye/Keye">Keye</a>、<a href="https://github.com/opendatalab/MinerU">MinerU</a>、<a href="https://github.com/opendatalab/OmniDocBench">OmniDocBench</a> 提供宝贵的代码、模型权重与基准。也感谢社区的每一位贡献者！</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#引言">引言</a><a class="lv3" href="#paddleocr-vl-15-的核心能力">PaddleOCR-VL-1.5 的核心能力</a><a class="lv3" href="#模型架构">模型架构</a><a class="lv2" href="#使用方法">使用方法</a><a class="lv2" href="#性能表现">性能表现</a><a class="lv3" href="#omnidocbench-v15">OmniDocBench v1.5</a><a class="lv3" href="#real5-omnidocbench">Real5-OmniDocBench</a><a class="lv2" href="#可视化示例">可视化示例</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-05-paddleocr-vl-15";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

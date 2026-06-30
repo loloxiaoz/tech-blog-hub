@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Writing Effective Tools for Agents — with Agents（用 Agent 为 Agent 编写高效工具） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#D97757">Anthropic</span><h1>Writing Effective Tools for Agents — with Agents（用 Agent 为 Agent 编写高效工具）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-10</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">工具调用</span><span class="tag">Agent</span><span class="tag">ACI</span><span class="tag">评估</span></div><a class="source-btn" href="https://www.anthropic.com/engineering/writing-effective-tools" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">Anthropic 工程实践：用评估驱动 + Claude Code 自动优化的方式构建 Agent 工具，涵盖命名空间、token 效率（精简响应仅用详细响应 1/3 token）、工具描述 prompt 工程等原则，精细调整工具描述后 Claude Sonnet 3.5 在 SWE-bench Verified 达到 SOTA。</div></div><div class="prose"><p>The <a href="https://modelcontextprotocol.io/docs/getting-started/intro">Model Context Protocol (MCP)</a> can empower LLM agents with potentially hundreds of tools to solve real-world tasks. But how do we make those tools maximally effective?</p>
+
+<p>In this post, we describe our most effective techniques for improving performance in a variety of agentic AI systems.</p>
+
+<p>We begin by covering how you can:</p>
+<ul>
+  <li>Build and test prototypes of your tools</li>
+  <li>Create and run comprehensive evaluations of your tools with agents</li>
+  <li>Collaborate with agents like Claude Code to automatically increase the performance of your tools</li>
+</ul>
+
+<p>We conclude with key principles for writing high-quality tools we've identified along the way:</p>
+<ul>
+  <li>Choosing the right tools to implement (and not to implement)</li>
+  <li>Namespacing tools to define clear boundaries in functionality</li>
+  <li>Returning meaningful context from tools back to agents</li>
+  <li>Optimizing tool responses for token efficiency</li>
+  <li>Prompt-engineering tool descriptions and specs</li>
+</ul>
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Fcdc027ad2730e4732168bb198fc9363678544f99-1920x1080.png&w=3840&q=75" alt="This is an image depicting how an engineer might use Claude Code to evaluate the efficacy of agentic tools.">
+
+<h2 id="what-is-a-tool">What is a tool?</h2>
+
+<p>In computing, deterministic systems produce the same output every time given identical inputs, while <em>non-deterministic</em> systems—like agents—can generate varied responses even with the same starting conditions.</p>
+
+<p>When we traditionally write software, we're establishing a contract between deterministic systems. For instance, a function call like <code>getWeather("NYC")</code> will always fetch the weather in New York City in the exact same manner every time it is called.</p>
+
+<p>Tools are a new kind of software which reflects a contract between deterministic systems and non-deterministic agents. When a user asks "Should I bring an umbrella today?," an agent might call the weather tool, answer from general knowledge, or even ask a clarifying question about location first. Occasionally, an agent might hallucinate or even fail to grasp how to use a tool.</p>
+
+<p>This means fundamentally rethinking our approach when writing software for agents: instead of writing tools and <a href="https://modelcontextprotocol.io/">MCP servers</a> the way we'd write functions and APIs for other developers or systems, we need to design them for agents.</p>
+
+<p>Our goal is to increase the surface area over which agents can be effective in solving a wide range of tasks by using tools to pursue a variety of successful strategies. Fortunately, in our experience, the tools that are most "ergonomic" for agents also end up being surprisingly intuitive to grasp as humans.</p>
+
+<h2 id="how-to-write-tools">How to write tools</h2>
+
+<p>In this section, we describe how you can collaborate with agents both to write and to improve the tools you give them. Start by standing up a quick prototype of your tools and testing them locally. Next, run a comprehensive evaluation to measure subsequent changes. Working alongside agents, you can repeat the process of evaluating and improving your tools until your agents achieve strong performance on real-world tasks.</p>
+
+<h3 id="building-a-prototype">Building a prototype</h3>
+
+<p>It can be difficult to anticipate which tools agents will find ergonomic and which tools they won't without getting hands-on yourself. Start by standing up a quick prototype of your tools. If you're using <a href="https://www.anthropic.com/claude-code">Claude Code</a> to write your tools (potentially in one-shot), it helps to give Claude documentation for any software libraries, APIs, or SDKs (including potentially the <a href="https://modelcontextprotocol.io/docs/sdk">MCP SDK</a>) your tools will rely on. LLM-friendly documentation can commonly be found in flat <code>llms.txt</code> files on official documentation sites.</p>
+
+<p>Wrapping your tools in a <a href="https://modelcontextprotocol.io/docs/develop/connect-local-servers">local MCP server</a> or Desktop extension (DXT) will allow you to connect and test your tools in Claude Code or the Claude Desktop app.</p>
+
+<p>To connect your local MCP server to Claude Code, run <code>claude mcp add &lt;name&gt; &lt;command&gt; [args...]</code>.</p>
+
+<p>Tools can also be passed directly into <a href="https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview">Anthropic API</a> calls for programmatic testing.</p>
+
+<p>Test the tools yourself to identify any rough edges. Collect feedback from your users to build an intuition around the use-cases and prompts you expect your tools to enable.</p>
+
+<h3 id="running-an-evaluation">Running an evaluation</h3>
+
+<p>Next, you need to measure how well Claude uses your tools by running an evaluation. Start by generating lots of evaluation tasks, grounded in real world uses. We recommend collaborating with an agent to help analyze your results and determine how to improve your tools.</p>
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F6e810aee67f3f3c955832fb7bf9033ffb0102000-1920x1080.png&w=3840&q=75" alt="This graph measures the test set accuracy of human-written vs. Claude-optimized Slack MCP servers.">
+
+<p><strong>Generating evaluation tasks</strong></p>
+
+<p>With your early prototype, Claude Code can quickly explore your tools and create dozens of prompt and response pairs. Prompts should be inspired by real-world uses and be based on realistic data sources and services. We recommend you avoid overly simplistic or superficial "sandbox" environments that don't stress-test your tools with sufficient complexity. Strong evaluation tasks might require multiple tool calls—potentially dozens.</p>
+
+<p>Here are some examples of <strong>strong tasks</strong>:</p>
+<ul>
+  <li>Schedule a meeting with Jane next week to discuss our latest Acme Corp project. Attach the notes from our last project planning meeting and reserve a conference room.</li>
+  <li>Customer ID 9182 reported that they were charged three times for a single purchase attempt. Find all relevant log entries and determine if any other customers were affected by the same issue.</li>
+  <li>Customer Sarah Chen just submitted a cancellation request. Prepare a retention offer. Determine: (1) why they're leaving, (2) what retention offer would be most compelling, and (3) any risk factors we should be aware of before making an offer.</li>
+</ul>
+
+<p>And here are some <strong>weaker tasks</strong>:</p>
+<ul>
+  <li>Schedule a meeting with jane@acme.corp next week.</li>
+  <li>Search the payment logs for <code>purchase_complete</code> and <code>customer_id=9182</code>.</li>
+  <li>Find the cancellation request by Customer ID 45892.</li>
+</ul>
+
+<p>Each evaluation prompt should be paired with a verifiable response or outcome. Your verifier can be as simple as an exact string comparison between ground truth and sampled responses, or as advanced as enlisting Claude to judge the response. Avoid overly strict verifiers that reject correct responses due to spurious differences like formatting, punctuation, or valid alternative phrasings.</p>
+
+<p><strong>Running the evaluation</strong></p>
+
+<p>We recommend running your evaluation programmatically with direct LLM API calls. Use simple agentic loops (<code>while</code>-loops wrapping alternating LLM API and tool calls): one loop for each evaluation task. Each evaluation agent should be given a single task prompt and your tools.</p>
+
+<p>In your evaluation agents' system prompts, we recommend instructing agents to output not just structured response blocks (for verification), but also reasoning and feedback blocks. Instructing agents to output these <em>before</em> tool call and response blocks may increase LLMs' effective intelligence by triggering chain-of-thought (CoT) behaviors.</p>
+
+<p>If you're running your evaluation with Claude, you can turn on <a href="https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking#interleaved-thinking">interleaved thinking</a> for similar functionality "off-the-shelf". This will help you probe why agents do or don't call certain tools and highlight specific areas of improvement in tool descriptions and specs.</p>
+
+<p>As well as top-level accuracy, we recommend collecting other metrics like the total runtime of individual tool calls and tasks, the total number of tool calls, the total token consumption, and tool errors.</p>
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F3f1f47e80974750cd924bc51e42b6df1ad997fab-1920x1080.png&w=3840&q=75" alt="This graph measures the test set accuracy of human-written vs. Claude-optimized Asana MCP servers.">
+
+<p><strong>Analyzing results</strong></p>
+
+<p>Agents are your helpful partners in spotting issues and providing feedback on everything from contradictory tool descriptions to inefficient tool implementations and confusing tool schemas. However, keep in mind that what agents omit in their feedback and responses can often be more important than what they include.</p>
+
+<p>Observe where your agents get stumped or confused. Read through your evaluation agents' reasoning and feedback (or CoT) to identify rough edges. Review the raw transcripts (including tool calls and tool responses) to catch any behavior not explicitly described in the agent's CoT.</p>
+
+<p>Analyze your tool calling metrics. Lots of redundant tool calls might suggest some rightsizing of pagination or token limit parameters is warranted; lots of tool errors for invalid parameters might suggest tools could use clearer descriptions or better examples. When we launched Claude's web search tool, we identified that Claude was needlessly appending <code>2025</code> to the tool's <code>query</code> parameter, biasing search results and degrading performance.</p>
+
+<h3 id="collaborating-with-agents">Collaborating with agents</h3>
+
+<p>You can even let agents analyze your results and improve your tools for you. Simply concatenate the transcripts from your evaluation agents and paste them into Claude Code. Claude is an expert at analyzing transcripts and refactoring lots of tools all at once—for example, to ensure tool implementations and descriptions remain self-consistent when new changes are made.</p>
+
+<p>In fact, most of the advice in this post came from repeatedly optimizing our internal tool implementations with Claude Code. Our evaluations were created on top of our internal workspace, mirroring the complexity of our internal workflows, including real projects, documents, and messages.</p>
+
+<p>We relied on held-out test sets to ensure we did not overfit to our "training" evaluations. These test sets revealed that we could extract additional performance improvements even beyond what we achieved with "expert" tool implementations—whether those tools were manually written by our researchers or generated by Claude itself.</p>
+
+<h2 id="principles-for-writing-effective-tools">Principles for writing effective tools</h2>
+
+<p>In this section, we distill our learnings into a few guiding principles for writing effective tools.</p>
+
+<h3 id="choosing-the-right-tools-for-agents">Choosing the right tools for agents</h3>
+
+<p>More tools don't always lead to better outcomes. A common error we've observed is tools that merely wrap existing software functionality or API endpoints—whether or not the tools are appropriate for agents. This is because agents have distinct "affordances" to traditional software—that is, they have different ways of perceiving the potential actions they can take with those tools.</p>
+
+<p>LLM agents have limited "context" (that is, there are limits to how much information they can process at once), whereas computer memory is cheap and abundant. Consider the task of searching for a contact in an address book. Traditional software programs can efficiently store and process a list of contacts one at a time, checking each one before moving on. However, if an LLM agent uses a tool that returns ALL contacts and then has to read through each one token-by-token, it's wasting its limited context space on irrelevant information.</p>
+
+<p>We recommend building a few thoughtful tools targeting specific high-impact workflows, which match your evaluation tasks and scaling up from there. In the address book case, you might choose to implement a <code>search_contacts</code> or <code>message_contact</code> tool instead of a <code>list_contacts</code> tool.</p>
+
+<p>Tools can consolidate functionality, handling potentially <em>multiple</em> discrete operations (or API calls) under the hood. Here are some examples:</p>
+<ul>
+  <li>Instead of implementing a <code>list_users</code>, <code>list_events</code>, and <code>create_event</code> tools, consider implementing a <code>schedule_event</code> tool which finds availability and schedules an event.</li>
+  <li>Instead of implementing a <code>read_logs</code> tool, consider implementing a <code>search_logs</code> tool which only returns relevant log lines and some surrounding context.</li>
+  <li>Instead of implementing <code>get_customer_by_id</code>, <code>list_transactions</code>, and <code>list_notes</code> tools, implement a <code>get_customer_context</code> tool which compiles all of a customer's recent &amp; relevant information all at once.</li>
+</ul>
+
+<p>Make sure each tool you build has a clear, distinct purpose. Tools should enable agents to subdivide and solve tasks in much the same way that a human would, given access to the same underlying resources, and simultaneously reduce the context that would have otherwise been consumed by intermediate outputs.</p>
+
+<h3 id="namespacing-your-tools">Namespacing your tools</h3>
+
+<p>Your AI agents will potentially gain access to dozens of MCP servers and hundreds of different tools–including those by other developers. When tools overlap in function or have a vague purpose, agents can get confused about which ones to use.</p>
+
+<p>Namespacing (grouping related tools under common prefixes) can help delineate boundaries between lots of tools; MCP clients sometimes do this by default. For example, namespacing tools by service (e.g., <code>asana_search</code>, <code>jira_search</code>) and by resource (e.g., <code>asana_projects_search</code>, <code>asana_users_search</code>), can help agents select the right tools at the right time.</p>
+
+<p>We have found selecting between prefix- and suffix-based namespacing to have non-trivial effects on our tool-use evaluations. Effects vary by LLM and we encourage you to choose a naming scheme according to your own evaluations.</p>
+
+<h3 id="returning-meaningful-context-from-your-tools">Returning meaningful context from your tools</h3>
+
+<p>Tool implementations should take care to return only high signal information back to agents. They should prioritize contextual relevance over flexibility, and eschew low-level technical identifiers (for example: <code>uuid</code>, <code>256px_image_url</code>, <code>mime_type</code>). Fields like <code>name</code>, <code>image_url</code>, and <code>file_type</code> are much more likely to directly inform agents' downstream actions and responses.</p>
+
+<p>Agents also tend to grapple with natural language names, terms, or identifiers significantly more successfully than they do with cryptic identifiers. We've found that merely resolving arbitrary alphanumeric UUIDs to more semantically meaningful and interpretable language (or even a 0-indexed ID scheme) significantly improves Claude's precision in retrieval tasks by reducing hallucinations.</p>
+
+<p>In some instances, agents may require the flexibility to interact with both natural language and technical identifiers outputs. You can enable both by exposing a simple <code>response_format</code> enum parameter in your tool, allowing your agent to control whether tools return <code>"concise"</code> or <code>"detailed"</code> responses.</p>
+
+<pre><code>enum ResponseFormat {
+   DETAILED = "detailed",
+   CONCISE = "concise"
+}</code></pre>
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F5ed0d30526bf68624f335d075b8c1541be3bb595-1920x1006.png&w=3840&q=75" alt="This code snippet depicts an example of a detailed tool response.">
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Fd4f649a66482efb5a80cf14ea85e84974ede1c49-1920x725.png&w=3840&q=75" alt="This code snippet depicts a concise tool response.">
+
+<p>In this example, <code>"concise"</code> tool responses use approximately 1/3 of the tokens compared to <code>"detailed"</code> responses (72 tokens vs 206 tokens). Even your tool response structure—for example XML, JSON, or Markdown—can have an impact on evaluation performance: there is no one-size-fits-all solution.</p>
+
+<h3 id="optimizing-tool-responses-for-token-efficiency">Optimizing tool responses for token efficiency</h3>
+
+<p>Optimizing the quality of context is important. But so is optimizing the <em>quantity</em> of context returned back to agents in tool responses.</p>
+
+<p>We suggest implementing some combination of pagination, range selection, filtering, and/or truncation with sensible default parameter values for any tool responses that could use up lots of context. For Claude Code, we restrict tool responses to 25,000 tokens by default.</p>
+
+<p>If you choose to truncate responses, be sure to steer agents with helpful instructions. You can directly encourage agents to pursue more token-efficient strategies, like making many small and targeted searches instead of a single, broad search for a knowledge retrieval task. Similarly, if a tool call raises an error (for example, during input validation), you can prompt-engineer your error responses to clearly communicate specific and actionable improvements, rather than opaque error codes or tracebacks.</p>
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Fe440d6a69d0ca80e71f3bec5c2d00906ff03ce6d-1920x1162.png&w=3840&q=75" alt="This image depicts an example of a truncated tool response.">
+
+<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F810661bd44a35fb273806ae95160040155978c3e-1920x850.png&w=3840&q=75" alt="This image depicts an example of a helpful error response.">
+
+<h3 id="prompt-engineering-your-tool-descriptions">Prompt-engineering your tool descriptions</h3>
+
+<p>We now come to one of the most effective methods for improving tools: prompt-engineering your tool descriptions and specs. Because these are loaded into your agents' context, they can collectively steer agents toward effective tool-calling behaviors.</p>
+
+<p>When writing tool descriptions and specs, think of how you would describe your tool to a new hire on your team. Consider the context that you might implicitly bring—specialized query formats, definitions of niche terminology, relationships between underlying resources—and make it explicit. Avoid ambiguity by clearly describing (and enforcing with strict data models) expected inputs and outputs. In particular, input parameters should be unambiguously named: instead of a parameter named <code>user</code>, try a parameter named <code>user_id</code>.</p>
+
+<p>With your evaluation you can measure the impact of your prompt engineering with greater confidence. Even small refinements to tool descriptions can yield dramatic improvements. <strong>Claude Sonnet 3.5 achieved state-of-the-art performance on the <a href="https://www.anthropic.com/engineering/swe-bench-sonnet">SWE-bench Verified</a> evaluation after we made precise refinements to tool descriptions, dramatically reducing error rates and improving task completion.</strong></p>
+
+<h2 id="looking-ahead">Looking ahead</h2>
+
+<p>To build effective tools for agents, we need to re-orient our software development practices from predictable, deterministic patterns to non-deterministic ones.</p>
+
+<p>Through the iterative, evaluation-driven process we've described in this post, we've identified consistent patterns in what makes tools successful: Effective tools are intentionally and clearly defined, use agent context judiciously, can be combined together in diverse workflows, and enable agents to intuitively solve real-world tasks.</p>
+
+<p>In the future, we expect the specific mechanisms through which agents interact with the world to evolve—from updates to the MCP protocol to upgrades to the underlying LLMs themselves. With a systematic, evaluation-driven approach to improving tools for agents, we can ensure that as agents become more capable, the tools they use will evolve alongside them.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#what-is-a-tool">What is a tool?</a><a class="lv2" href="#how-to-write-tools">How to write tools</a><a class="lv3" href="#building-a-prototype">Building a prototype</a><a class="lv3" href="#running-an-evaluation">Running an evaluation</a><a class="lv3" href="#collaborating-with-agents">Collaborating with agents</a><a class="lv2" href="#principles-for-writing-effective-tools">Principles for writing effective tools</a><a class="lv3" href="#choosing-the-right-tools-for-agents">Choosing the right tools for agents</a><a class="lv3" href="#prompt-engineering-your-tool-descriptions">Prompt-engineering your tool descriptions</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="anthropic-engineering-08-writing-tools-new";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

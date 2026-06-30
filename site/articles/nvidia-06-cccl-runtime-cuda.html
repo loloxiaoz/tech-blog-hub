@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CCCL Runtime: A Modern C++ Runtime for CUDA（现代 C++ CUDA 运行时：CCCL Runtime 详解） · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#76B900">NVIDIA</span><h1>CCCL Runtime: A Modern C++ Runtime for CUDA（现代 C++ CUDA 运行时：CCCL Runtime 详解）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-06-10</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">CUDA</span><span class="tag">C++</span><span class="tag">系统软件</span></div><a class="source-btn" href="https://developer.nvidia.com/blog/cccl-runtime-a-modern-c-runtime-for-cuda/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">NVIDIA 在 CUDA 13.2 中推出 CCCL Runtime，以现代 C++ 强类型、显式依赖和异步优先的设计替代传统 CUDA Runtime API，提供流管理、内存池分配、类型安全内核启动等核心抽象，并与已有代码完全互操作。</div></div><div class="prose"><p>The <a href="https://github.com/NVIDIA/cccl">NVIDIA CUDA Core Compute Libraries (CCCL)</a> provides delightful and efficient abstractions for CUDA developers in C++ and Python. It features:</p>
+<ol>
+  <li><strong>Parallel algorithms</strong> – Host-launched algorithms including sort, scan and reduce that remove the need to write custom kernels for common operations</li>
+  <li><strong>Cooperative algorithms</strong> – Device-side algorithms such as block-wide or warp-wide reductions or scans that simplify custom kernel development</li>
+  <li><strong>Language idiomatic CUDA abstractions</strong> – Fundamental abstractions for CUDA-specific operations including memory allocation, resource management, and hardware features</li>
+</ol>
+<p>This post introduces a new group of functionality in CCCL that provides modernized C++ abstractions for fundamental CUDA programming model concepts that make CUDA C++ development safer and more convenient.</p>
+
+<h2 id="what_is_cccl_runtime">What is CCCL runtime?</h2>
+<p>NVIDIA CCCL runtime is a new set of idiomatic C++ APIs available starting in CUDA 13.2 that implement core CUDA functionality: stream management, memory allocation, kernel launches, and more.</p>
+<p>The familiar NVIDIA CUDA runtime was originally developed as a convenience layer on top of the CUDA driver API. The new CCCL runtime aims to be an alternative with the same goal, but with an updated design aligned with modern C++. Figure 1, below, shows the relationship between the three CUDA API surfaces mentioned above:</p>
+<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/image1-9.webp" alt="Both CCCL runtime API and CUDA runtime API are built on top of the CUDA driver API. Both runtimes are also easily interoperable with each other">
+<p><em>Figure 1. Stack diagram of different CUDA API surfaces</em></p>
+<p>CCCL runtime is a collection of headers within CCCL, such as <code>&lt;cuda/stream&gt;</code>, <code>&lt;cuda/buffer&gt;</code>, and <code>&lt;cuda/launch&gt;</code>. It leverages modern C++ features to provide more convenient and robust abstractions than what was possible within the C source compatibility constraints of the traditional CUDA runtime API.</p>
+<p>We also took the opportunity to incorporate lessons learned over 20 years of CUDA evolution into the API design. Even with all these changes, CCCL runtime provides compatibility helpers that let developers adopt it incrementally without rewriting surrounding code that uses the CUDA runtime API.</p>
+<p>As CUDA programs grow more complex, with multiple libraries sharing devices, streams, and memory, the need for APIs that compose cleanly and make dependencies explicit becomes more pressing. That is the space CCCL runtime is designed to fill.</p>
+
+<h2 id="the_code">The code</h2>
+<p>Here is the classic <code>vectorAdd</code> example implemented with the new CCCL runtime APIs. If you've written CUDA before, the overall structure will be familiar: Focus on what's different. Don't try to understand everything at once, the rest of this post will walk through this example to explain the semantics and design choices behind CCCL runtime.</p>
+<pre><code>#include &lt;cuda/buffer&gt;
+#include &lt;cuda/devices&gt;
+#include &lt;cuda/launch&gt;
+#include &lt;cuda/memory_pool&gt;
+#include &lt;cuda/std/span&gt;
+#include &lt;cuda/stream&gt;
+
+struct kernel {
+  template &lt;typename Config&gt;
+  __device__ void operator()(Config config,
+                             cuda::std::span&lt;const int&gt; A,
+                             cuda::std::span&lt;const int&gt; B,
+                             cuda::std::span&lt;int&gt; C) {
+    auto tid = cuda::gpu_thread.rank(cuda::grid, config);
+    if (tid &lt; A.size())
+      C[tid] = A[tid] + B[tid];
+  }
+};
+
+int main() {
+  // 1. Devices and streams
+  cuda::device_ref device = cuda::devices[0];
+  cuda::stream stream{device};
+
+  // 2. Memory allocation
+  auto pool = cuda::device_default_memory_pool(device);
+
+  int num_elements = 1000;
+  auto A = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, 1);
+  auto B = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, 2);
+  auto C = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, cuda::no_init);
+
+  // 3. Kernel launch
+  constexpr int threads_per_block = 256;
+  auto config = cuda::distribute&lt;threads_per_block&gt;(num_elements);
+
+  cuda::launch(stream, config, kernel{}, A, B, C);
+
+  // Make the CPU thread wait for the GPU work to finish.
+  stream.sync();
+  return 0;
+}</code></pre>
+
+<h2 id="1_devices_and_streams">1.) Devices and streams</h2>
+<p>Consider the creation of a stream using the CUDA Runtime API as the following code snippet shows.</p>
+<pre><code>cudaStream_t stream;
+cudaStreamCreate(&amp;stream); // associated with whichever device happens to be "current"</code></pre>
+<p>Note this creates a stream, but the stream is associated with whichever device is current when <code>cudaStreamCreate</code> is called. Based on this call alone, you don't know which device the stream is associated with.</p>
+<p>Contrast that with using CCCL runtime API as illustrated by the code snippet that follows.</p>
+<pre><code>cuda::device_ref device = cuda::devices[0];
+cuda::stream stream{device};</code></pre>
+<p>The above code snippet shows how to create a stream on a specific device. The first line illustrates a core design principle: CCCL runtime uses dedicated types instead of raw identifiers. A device is a <code>device_ref</code>, not a plain integer; a stream is an object, not an opaque pointer. Strong typing across the API helps catch mistakes at compile time rather than chasing them at runtime.</p>
+<p>The second line illustrates another principle: making dependencies explicit. In both CCCL runtime and the CUDA runtime API, a stream is associated with a device. The difference is how. Here, the <code>cuda::stream</code> constructor takes the device as an explicit argument whereas with the CUDA runtime API the stream is associated with whichever device is active when the stream is created.</p>
+<p>Explicit dependencies enable local reasoning. You can read a function and understand what it does without tracking the global state. They also improve composability: When multiple libraries are used, none of them need to save and restore implicit state across calls to avoid interfering with each other.</p>
+<p>A related consequence is that CCCL runtime doesn't expose the default stream. Managing the meaning of the default stream requires tracking the current device, which is exactly the kind of implicit state we are moving away from. While a default stream from the CUDA runtime API can still be wrapped into CCCL runtime types, its usage is discouraged; anything involving the default stream should be handled through the CUDA runtime API directly. With no default stream in the API, the notion of a "blocking stream" no longer applies, so all CCCL runtime streams are created as non-blocking.</p>
+
+<h3 id="resource_ownership_owning_types_and_refs">Resource ownership: Owning types and refs</h3>
+<p>Following the example of <code>std::string</code> and <code>std::string_view</code>, many CUDA objects have two types in CCCL runtime: an owning type and a non-owning type with a <code>_ref</code> suffix; <code>cuda::stream</code> owns the underlying <code>cudaStream_t</code> handle and destroys it in its destructor. The <code>cuda::stream_ref</code> holds the handle without managing its lifetime and is trivially copyable.</p>
+<p>The <code>_ref</code> types are essential for composability with existing code. If a stream handle's lifetime is managed elsewhere, <code>cudaStream_t</code> implicitly converts to <code>cuda::stream_ref</code>, and the raw handle can be retrieved with <code>.get()</code>. To transfer ownership, <code>cuda::stream::from_native_handle</code> wraps a raw handle into the owning type, and <code>.release()</code> relinquishes ownership back.</p>
+<pre><code>void stream_type_example(cudaStream_t handle) {
+  cuda::stream_ref non_owning{handle};
+  assert(handle == non_owning.get());
+
+  cuda::stream owning = cuda::stream::from_native_handle(handle);
+  assert(handle == owning.get());
+  assert(handle == owning.release());
+}</code></pre>
+<p>The same pattern applies to events, memory pools, and other CUDA objects: <code>cuda::device_ref</code> has no owning counterpart because there is no device state to own.</p>
+
+<h2 id="2_memory_allocation_">2.) Memory allocation</h2>
+<pre><code>auto pool = cuda::device_default_memory_pool(device);
+
+auto A = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, 1);
+auto B = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, 2);
+auto C = cuda::make_buffer&lt;int&gt;(stream, pool, num_elements, cuda::no_init);</code></pre>
+<p>The next section demonstrates asynchronously allocating and initializing device memory. Here we see the next design principle: APIs are asynchronous by default. Rather than distinguishing synchronous and asynchronous variants by name, CCCL runtime uses a simple convention: If an API takes a stream as its first argument, it operates in stream order. We don't plan to provide synchronous counterparts for APIs that have both variants in the CUDA runtime API.</p>
+<p>Memory allocation is where this matters most in practice. Stream-ordered memory management via memory pools has been available since CUDA 11.2, and CUDA 13.0 expanded it to managed and host memory. Memory pooling and less frequent synchronization points are in most cases essential to reach maximum performance, and stream-ordered memory management composes naturally with the rest of the asynchronous programming model. To convey those guidelines, CCCL runtime makes memory pools and stream-ordered allocation the default.</p>
+<p>In the snippet above, we first query the default memory pool for a given device, passing it as an explicit argument rather than relying on <code>cudaMallocAsync</code>'s implicit device selection. The example uses the default pool which should be preferred where possible, but CCCL runtime also allows creating separate pool objects when different pool settings are needed.</p>
+<p>The pool reference is then used to create three buffers using the new <code>cuda::make_buffer</code>. It takes a stream as its first argument to signal stream-ordered operation. Each buffer submits three operations to that stream: allocation from the specified pool, initialization, and eventually deallocation when the buffer goes out of scope.</p>
+<p>Initialization is mandatory unless explicitly opted out with <code>cuda::no_init</code>, as with buffer C which will be overwritten by the kernel. Uninitialized device memory is a common source of hard-to-diagnose bugs, so we chose to require an explicit opt-out rather than making it the silent default.</p>
+
+<h3 id="buffer_lifetime_and_deallocation">Buffer lifetime and deallocation</h3>
+<p>The stream passed to <code>make_buffer</code> is stored inside the buffer and used for deallocation when the buffer is destroyed. This means the buffer should generally hold the stream that corresponds to its usage, so that computation is properly ordered with deallocation. It is possible to change the stream later with <code>.set_stream()</code> or manually trigger destruction on a specific stream with <code>.destroy()</code>, but the default behavior is designed to do the right thing in the common case.</p>
+<pre><code>{
+  auto pool = cuda::device_default_memory_pool(device);
+  // Equivalent to cudaMallocFromPoolAsync on the stream, possibly along with initialization pushed into the stream as well. Saves the stream for future deallocation
+  auto buffer = cuda::make_buffer(allocation_stream, pool, /*... */);
+
+  // buffer usage...
+}
+// Closing bracket will call cudaFreeAsync on allocation_stream, there is also buffer.destroy(which_stream) to keep the behavior explicit</code></pre>
+
+<h2 id="3_kernel_launch">3.) Kernel launch</h2>
+<pre><code>struct kernel {
+  template &lt;typename Config&gt;
+  __device__ void operator()(Config config,
+                             cuda::std::span&lt;const int&gt; A,
+                             cuda::std::span&lt;const int&gt; B,
+                             cuda::std::span&lt;int&gt; C) {
+    auto tid = cuda::gpu_thread.rank(cuda::grid, config);
+    if (tid &lt; A.size())
+      C[tid] = A[tid] + B[tid];
+  }
+};
+
+// ...
+
+constexpr int threads_per_block = 256;
+auto config = cuda::distribute&lt;threads_per_block&gt;(num_elements);
+
+cuda::launch(stream, config, kernel{}, A, B, C);</code></pre>
+<p>The final section demonstrates configuring and launching the kernel on the GPU with <code>cuda::launch</code>.</p>
+<p><code>cuda::launch</code> takes three groups of arguments:</p>
+<ol>
+  <li>The stream to run on</li>
+  <li>A configuration object that encodes the thread hierarchy (block and grid sizes) along with other launch options. Here, <code>cuda::distribute</code> creates a configuration that launches at least <code>num_elements</code> threads grouped into blocks of <code>threads_per_block</code>. This replaces the common pattern many CUDA developers are familiar with of <code>(N + block_size - 1) / block_size</code></li>
+  <li>The kernel and its arguments</li>
+</ol>
+
+<h2 id="compile-time_configuration_flow">Compile-time configuration flow</h2>
+<p>The most novel aspect of <code>cuda::launch</code> is how it moves compile-time information from the host launch site into device code through the type system. For example, notice how the block size is provided as a template argument to <code>cuda::distribute</code>, which means it is encoded in the configuration object's type.</p>
+<p>When the kernel accepts that configuration as its first argument, <code>cuda::launch</code> passes it through automatically. Inside the kernel, this static information is available when we compute the rank of the calling thread inside the grid:</p>
+<pre><code>auto tid = cuda::gpu_thread.rank(cuda::grid, config);</code></pre>
+<p>Because the block size is known at compile time, the rank calculation can use only the <code>x</code> dimension and skip the runtime block-size query entirely. This is a simple example, but the mechanism generalizes. The CCCL documentation shows further cases where configuration-embedded information is used to specialize device code.</p>
+<p>Sometimes kernel implementation makes assumptions about the exact shape of the grid and/or block. Compile time information in the configuration object allows kernel authors to implement checks to ensure alignment of the kernel and the call site in those cases.</p>
+<pre><code>template &lt;typename Config&gt;
+__global__ void kernel(Config conf) {
+    // Make sure the block is one dimensional with 256 threads
+    static_assert(cuda::gpu_thread.static_dims(cuda::block, conf).x == 256);
+    static_assert(cuda::gpu_thread.static_dims(cuda::block, conf).y == 1);
+    static_assert(cuda::gpu_thread.static_dims(cuda::block, conf).z == 1);
+}</code></pre>
+
+<h2 id="kernel_functors">Kernel functors</h2>
+<p>You may have noticed the kernel is a struct with a <code>__device__ operator()</code> rather than a <code>__global__</code> function. While <code>cuda::launch</code> supports existing <code>__global__</code> functions, we also introduced kernel functors: types with a <code>__device__</code>-annotated call operator. The practical advantage is that template arguments are deduced automatically, whereas <code>__global__</code> functions used with <code>cuda::launch</code> require explicit instantiation.</p>
+<pre><code>template &lt;typename T&gt;
+__global__ void kernel_function(T input) {
+  // body ...
+}
+
+struct kernel_functor {
+  template &lt;typename T&gt;
+  __device__ void operator()(T input) {
+  // body ...
+  }
+};
+
+// explicit template instantiation is required with a __global__ function
+cuda::launch(stream, config, kernel_function&lt;int&gt;, 42);
+// deduction from arguments for a functor with __device__ call operator
+cuda::launch(stream, config, kernel_functor{}, 42);</code></pre>
+<p>This is what makes the compile-time configuration flow work. The <code>config</code> template parameter is deduced from the configuration object passed by <code>cuda::launch</code>. Kernel functors also cover device lambdas and have additional features described in the <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/launch.html#launch">CCCL documentation</a>.</p>
+
+<h2 id="automatic_argument_transformation">Automatic argument transformation</h2>
+<p><code>cuda::buffer</code> owns its underlying allocation, but CUDA kernels can only accept trivially copyable arguments. When a buffer is passed to <code>cuda::launch</code>, it is automatically transformed to <code>cuda::std::span</code>. There is no need to manually construct the span or extract a raw pointer. The kernel signature reflects how the data is actually used on the device side.</p>
+
+<h2 id="whats_next">What's next</h2>
+<p>This post covered the core ideas behind CCCL runtime: explicit dependencies, strong typing, asynchronous-by-default APIs, and clean interoperability with existing CUDA code. But a walkthrough of one example can only show so much.</p>
+<p>The CCCL documentation has more detailed coverage of each API, including <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/buffer.html#construction">additional buffer initialization modes</a>, <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/event.html#events">event management</a>, <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/algorithm.html#algorithm">data movement</a>, and advanced kernel launch features like <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/launch.html#id5">dynamic shared memory</a> and <a href="https://nvidia.github.io/cccl/unstable/libcudacxx/runtime/launch.html#launch-options">other launch attributes</a>. The CCCL runtime APIs are available in CCCL 3.2 and newer, which ships with CUDA Toolkit 13.2 and newer.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#what_is_cccl_runtime">What is CCCL runtime?</a><a class="lv2" href="#the_code">The code</a><a class="lv2" href="#1_devices_and_streams">1.) Devices and streams</a><a class="lv3" href="#resource_ownership_owning_types_and_refs">Resource ownership: Owning types and refs</a><a class="lv2" href="#2_memory_allocation_">2.) Memory allocation</a><a class="lv3" href="#buffer_lifetime_and_deallocation">Buffer lifetime and deallocation</a><a class="lv2" href="#3_kernel_launch">3.) Kernel launch</a><a class="lv2" href="#compile-time_configuration_flow">Compile-time configuration flow</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="nvidia-06-cccl-runtime-cuda";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

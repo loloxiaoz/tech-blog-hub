@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FastDeploy 2.0：原生支持文心4.5的大模型推理部署框架 · AI 技术博客 · 知识库精选</title><style>
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#F0EEE6;--surface:#FAFAF7;--surface-2:#E8E5DB;--ink:#191919;--ink-2:#3D3B33;--muted:#6B6B63;--line:#DBD7CC;--line-2:#C8C4B8;--accent:#D97757;--accent-hover:#C15F3C;--accent-soft:rgba(217,119,87,.10);--success:#3D8B5E;--code-bg:#ECEAE0;--shadow-sm:0 1px 3px rgba(25,20,10,.07),0 1px 2px rgba(25,20,10,.04);--shadow-md:0 4px 18px rgba(25,20,10,.09),0 2px 6px rgba(25,20,10,.05);--radius:12px;--radius-sm:8px;--radius-pill:999px;--font-serif:'Fraunces','Noto Serif SC',Georgia,serif;--font-sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}a{color:var(--accent);text-decoration:none;cursor:pointer}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.abar{position:sticky;top:0;z-index:40;background:rgba(240,238,230,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.abar-in{max-width:1200px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}.back{font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:var(--radius-sm);transition:all .15s ease}.back:hover{background:var(--surface-2);color:var(--ink)}.abar .spacer{flex:1}.btn{font-size:13px;font-weight:600;font-family:var(--font-sans);padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--line-2);background:var(--surface-2)}.btn.done{background:var(--success);color:#fff;border-color:var(--success)}.btn.done:hover{filter:brightness(.92)}
+.alayout{display:grid;grid-template-columns:1fr 248px;gap:clamp(32px,5vw,64px);max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,32px) 100px}.article{min-width:0}.ahead{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}.ahead h1{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.15;margin:14px 0 16px;letter-spacing:-.03em;color:var(--ink)}.ahead .m{font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ahead .m .tag{font-size:11px}.badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);text-transform:uppercase}.tag{font-size:10.5px;font-weight:600;color:var(--muted);background:var(--surface-2);padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.02em}
+.source-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s;margin-top:16px;text-decoration:none}.source-btn:hover{background:var(--accent-hover);transform:translateY(-1px);color:#fff}.source-btn svg{flex-shrink:0}
+.summary-card{background:var(--accent-soft);border:1px solid rgba(217,119,87,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px}.summary-card .sc-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover);margin-bottom:6px}.summary-card .sc-text{font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.prose{font-size:16.5px;line-height:1.9;color:var(--ink-2)}.prose h2{font-family:var(--font-serif);font-size:clamp(19px,2.5vw,24px);font-weight:700;margin:44px 0 16px;color:var(--ink);letter-spacing:-.02em;border-bottom:2px solid var(--line);padding-bottom:10px}.prose h3{font-size:clamp(16px,2vw,19px);font-weight:700;margin:32px 0 12px;color:var(--ink)}.prose h4{font-size:16px;font-weight:600;margin:24px 0 10px}.prose p{margin:14px 0}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin:6px 0;line-height:1.75}.prose a{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);transition:border-color .15s,color .15s}.prose a:hover{color:var(--accent-hover);border-color:var(--accent-hover)}.prose blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 20px;margin:22px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-2);font-style:normal}.prose code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.875em;font-family:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;color:var(--accent-hover);border:1px solid var(--line)}.prose pre{background:#1C1917;color:#D6D3D1;padding:20px 22px;border-radius:var(--radius);overflow-x:auto;margin:22px 0;box-shadow:var(--shadow-sm)}.prose pre code{background:none;padding:0;color:inherit;font-size:13.5px;line-height:1.65;border:none}.prose img{max-width:100%;border-radius:var(--radius);margin:20px 0;box-shadow:var(--shadow-sm);border:1px solid var(--line)}.prose table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.prose th,.prose td{border:1px solid var(--line);padding:10px 14px;text-align:left}.prose th{background:var(--surface-2);font-weight:700;font-size:12.5px;color:var(--ink);letter-spacing:.04em;text-transform:uppercase}.prose tr:hover td{background:var(--accent-soft)}.prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.toc .t{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}.toc .t::after{content:'';flex:1;height:1px;background:var(--line)}.toc a{display:block;color:var(--muted);padding:5px 8px 5px 12px;border-left:2px solid var(--line);line-height:1.5;font-size:13px;border-radius:0 4px 4px 0;transition:all .15s ease}.toc a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}.toc a.lv3{padding-left:24px;font-size:12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:36px 0 56px;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
+</style></head><body>
+    <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#2932E1">Baidu ERNIE</span><h1>FastDeploy 2.0：原生支持文心4.5的大模型推理部署框架</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-02-20</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 5 分钟</span><span class="tag">推理部署</span><span class="tag">FastDeploy</span><span class="tag">文心</span><span class="tag">量化</span></div><a class="source-btn" href="https://ernie.baidu.com/blog/zh/posts/fastdeploy2.0/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">百度 FastDeploy 2.0 基于飞桨框架，支持文心4.5系列模型高效推理，输入/输出吞吐达56K/21K TPS；2-bit量化将300B模型权重从600GB压缩至89GB，单卡可完成千亿参数模型部署，W4A8量化较8bit计算QPS提升约40%。</div></div><div class="prose"><h2 id="fastdeploy-20-简介">FastDeploy 2.0 简介</h2>
+<p>随着文心 4.5 系列等大模型的陆续开源，围绕其推理性能与部署效率的研究与应用不断增长。基于此，FastDeploy 2.0 依托<a href="https://github.com/PaddlePaddle/Paddle">飞桨框架</a>，提供大模型高效部署及高性能推理全栈能力。目前，FastDeploy 2.0 已支持多个主流开源大模型的部署，并提供基于 EP 并行与 PD 分离架构的高性能推理方案。在实际测试中，FastDeploy 2.0 在文心 4.5 模型上的输入/输出吞吐分别可达 56K/21K，支持近无损精度的 2-bit 量化方案，可在单卡条件下完成千亿参数模型的部署。FastDeploy 2.0 旨在降低大模型部署难度，提高推理效率和资源使用率，为研究机构与企业在大模型应用中的快速落地提供支持。</p>
+
+<h2 id="fastdeploy-20-技术亮点">FastDeploy 2.0 技术亮点</h2>
+<p>FastDeploy 2.0 能够极致高效地推理部署 ERNIE 4.5 系列模型，主要依托以下技术实现：</p>
+<ul>
+<li><strong>统一操作接口</strong>：FastDeploy 2.0 兼容了 OpenAI 协议，完全对齐 vLLM 使用接口，并且支持本地和服务化两种推理方式，使该工具非常易于使用。</li>
+<li><strong>多种高性能优化融合</strong>：通过各类量化高性能算子、CUDA Graph、投机解码、上下文缓存、分段预填充、PD 分离等高性能优化，使得 ERNIE 4.5 系列模型表现出优越的推理性能。</li>
+<li><strong>丰富的量化方法</strong>：权重/激活/KV Cache 支持 8-bit、4-bit、甚至极低的 2-bit 量化压缩，单卡即可部署千亿级模型。</li>
+<li><strong>针对多种硬件优化</strong>：支持英伟达系列 GPU、昆仑芯 P800、天数 BI-V150、海光 K100AI、燧原 S60 等众多硬件上的高效推理。</li>
+<li><strong>工业级部署方案</strong>：针对工业部署场景，提供了实时负载感知、分布式负载均衡的流量调度方案。</li>
+</ul>
+
+<h2 id="部署性能和测试结果">部署性能和测试结果</h2>
+<p>除了基础部署能力，FastDeploy 2.0 还包含了多种量化技术，可以用一行命令开启 Weight Only 的 8/4-bit 及 FP8 在线量化推理，同时支持 W4A8 静态量化。基于 CUTLASS 深度优化算子性能，针对不同硬件和模型支持灵活选择最优的方案。</p>
+<p>与此同时，FastDeploy 2.0 还实现了高性能、插拔式的投机解码框架，并通过融合 Kernel 加速前后处理、动态批处理、并行验证、虚拟 Padding 加速验证等手段进行性能优化，同时兼容上下文缓存、PD 分离、EP 并行、Chunked-Prefill。针对 MTP 推理，通过 MTP 模块的 Cache KV 进行逻辑、物理地址分离，以支持 Target 模型与 MTP 的多种层级下的上下文缓存功能；通过对 MTP 采取 PD 分离减少通讯量，加速了端到端推理性能。</p>
+<p>FastDeploy 2.0 还优化了 CUDA Graph，支持通过飞桨动转静技术进行图捕获，同时兼容动态图进行整图捕获，在文心轻量级模型上的测试中，解码速度普遍能够提升 2 倍以上。</p>
+
+<h3 id="单机部署-ernie-45-300b-a47b-模型">单机部署 ERNIE-4.5-300B-A47B 模型</h3>
+<p>FastDeploy 支持 Weight Only 4-bit 推理，支持在精度近乎无损的条件下将最小部署的 GPU 数量减少到 4 张。在单机部署 ERNIE-4.5-300B-A47B 模型时，其性能相比整体权重 8bit 计算的 QPS 提升了约 23%，提效的同时还降低了硬件资源需求。此外，针对 MoE 量化还引入 W4A8 量化和 KV Cache 的 8-bit 量化，QPS 进一步提升约 40%，在单机 H800 上，TPS 数据领先 vLLM 上单机 8 卡 WINT4 DeepSeek 198%。</p>
+<img src="/blog/posts/fastdeploy2.0/TPS_CN.png">
+
+<h3 id="单机部署-ernie-45-轻量级模型">单机部署 ERNIE-4.5 轻量级模型</h3>
+<p>在数据集输入长度 1.1K，A3B 模型在 H800 上约束 TPOT 不超过 25ms，0.3B 及 0.6B 模型在 A30 上约束 TPOT 不超过 16ms 的测试条件下，对比参数规模接近的 Qwen3 模型性能时：相同模型 FastDeploy 较 vLLM 性能领先达 5%、12%，ERNIE 4.5 轻量级 MoE 模型分别比 QWEN3 对应轻量模型性能快 99%、118%，FastDeploy 仍表现出了优异的性能。</p>
+<img src="/blog/posts/fastdeploy2.0/TPS_CN_2.png">
+
+<h3 id="2-bit-量化方案">2-bit 量化方案</h3>
+<p>飞桨 2-bit 量化方案将 MoE 权重从 BF16 量化到 2-bit，从而降低推理时显存占用和推理部署的资源门槛。对于参数量为 300B 的 ERNIE-4.5 模型，2-bit 量化将权重从 600GB 压缩至 89GB，使量化后的模型支持 141GB GPU 单卡部署。飞桨 2-bit 量化是一种<a href="https://arxiv.org/abs/2507.07145">基于卷积编码的量化方法</a>，FastDeploy 沿用了 Trellis Code Quantization 和 Bitshift Trellis 的思想，并对码本空间和编码算法做了深入改进，不仅减少了量化损失，还提升了推理性能。飞桨 2-bit 量化方法比传统的标量量化方法有更好的效果，比传统向量量化有更快的推理速度。经该方案量化压缩的 ERNIE-4.5-300B-A47B 模型，在多个数据集上的精度表现接近无损。</p>
+<table>
+<thead>
+<tr><th>Test Set</th><th>IFEval</th><th>BBH</th><th>DROP</th><th>GSM8K</th><th>CMath</th><th>CMMLU</th></tr>
+</thead>
+<tbody>
+<tr><td>WINT4</td><td>88.17</td><td>94.43</td><td>91.17</td><td>96.21</td><td>96.50</td><td>89.92</td></tr>
+<tr><td>WINT2</td><td>85.40</td><td>92.02</td><td>89.97</td><td>95.98</td><td>96.00</td><td>86.22</td></tr>
+</tbody>
+</table>
+
+<h3 id="大规模分布式推理">大规模分布式推理</h3>
+<p>FastDeploy 通过专家并行（Expert Parallel）以支持 MoE 的大规模分布式推理，目前已支持 ERNIE-4.5-300B-A47B 大规模分离式部署。FastDeploy 使用 DeepEP 执行卡间、机间的 Dispatch 和 Combine 操作，还对 DeepEP 的低时延模式进行了两阶段改进并进行了细致的优化，通信性能可提升 2 倍。</p>
+<img src="/blog/posts/fastdeploy2.0/inf_CN.png">
+<p>该方案可以简单表述为，当命中本机的专家索引时，直接使用 NVLINK 进行传输；当命中其他机器的专家索引时，采用两阶段传输，第一阶段使用 RDMA 传输到目标机器的相同 rank 上，第二阶段使用 NVLINK 在目标机器传输到目标卡上。FastDeploy 针对无元信息，在 kernel 中通过 3 级、共 7 种原子化的信号量映射完成了无元信息的传输设计，针对内存一致性控制，在各个阶段精细使用 SM 层、GPU 层、系统层内存一致性模型控制内存序。</p>
+<p>针对 KVCache 传输，自研了一套基于 RDMA 的传输库，部署简单轻量，仅需基础的 RDMA 运行环境即可使用。此传输库支持 NVIDIA GPU，也支持昆仑芯 XPU。在 Mellanox ConnectX-7 400G 网卡上测试，单压力线程场景下，与 Mooncake 传输引擎相比，性能提升 1.1 倍到 6.9 倍。ERNIE-4.5-300B-A47B 模型经过 W4A8 量化、KVCache 量化、通信优化、KV Cache 传输优化、MTP 投机解码推理等优化，输入 2K 输出 400 的数据集，在 H800 硬件上保持 TPOT 50ms，输入/输出 TPS 高达 56K/21K，相比 ERNIE 4.5 技术报告中输出 TPS 再提升 17%。</p>
+<img src="/blog/posts/fastdeploy2.0/trans_CN.png">
+
+<h3 id="实时负载感知分布式负载均衡调度">实时负载感知、分布式负载均衡调度</h3>
+<p>FastDeploy 基于专用缓存服务器实现了实时感知全局负载、分布式负载均衡调度策略，无需单独部署，直接通过启动参数开启，可以进一步优化集群吞吐和 TTFT 指标。</p>
+<ul>
+<li><strong>PD 混合部署场景</strong>：调度器基于推理实例主动拉取+Work Stealing 策略进行负载均衡，每个推理实例在缓存拥有一个任务队列，集群中的空闲节点会窃取高负载节点的任务进行推理，可以解决集群中的负载长尾问题，提升服务整体性能表现。</li>
+<li><strong>PD 分离场景</strong>：调度器实现为分布式调度器，推理实例通过缓存注册实例信息并周期性上报实时负载来更新存活状态，调度器通过缓存实时感知集群负载。调度过程中，首先根据推理请求的输入 token 数量来动态划定低负载节点集合，然后从中随机选择一个节点进行调度，这样可以缓解一个同步周期内不同的调度器将请求调度到同一实例上引起的负载波动。</li>
+</ul>
+<img src="/blog/posts/fastdeploy2.0/token_CN.png">
+
+<h3 id="多硬件推理部署">多硬件推理部署</h3>
+<p>目前开源社区的大模型部署工具大多针对 NVIDIA GPU 和 AMD GPU 提供支持，而 FastDeploy 除了充分考虑 NVIDIA GPU 的优化特性外，充分考虑多硬件的部署需求：提供了 FastDeploy 硬件适配层，具备屏蔽不同硬件间的差异、统一模型调用接口、高效适配多种设备后端、Kernel 支持 CUDA/Triton/C++ 多种不同实现。目前已支持昆仑芯 P800、天数 BI-V150、海光 K100AI、燧原 S60 等众多硬件的高性能推理。</p>
+
+<h2 id="开始使用-fastdeploy-20">开始使用 FastDeploy 2.0</h2>
+
+<h3 id="本地离线推理示例">本地离线推理示例</h3>
+<pre><code>from fastdeploy import LLM, SamplingParams
+sampling_params = SamplingParams(top_p=0.95)
+llm = LLM(model="ERNIE-4.5-0.3B")
+outputs = llm.chat(messages=[{"role": "user", "content": "把李白的静夜思改写为现代诗"}], sampling_params)
+</code></pre>
+
+<h3 id="服务化推理部署示例">服务化推理部署示例</h3>
+<p>通过一行命令快速启动服务：</p>
+<pre><code>python -m fastdeploy.entrypoints.openai.api_server --model baidu/ERNIE-4.5-0.3B-Paddle --max-model-len 32768
+</code></pre>
+<p>在服务启动后，即可用以下方式请求服务：</p>
+<pre><code>curl -X POST "http://0.0.0.0:8180/v1/chat/completions" \
+-H "Content-Type: application/json" \
+-d '{"messages": [{"role": "user", "content": "把李白的静夜思改写为现代诗"}]}'
+</code></pre>
+<p>启动并运行服务后，即可通过 FastDeploy 2.0 中与 OpenAI 兼容的 API，轻松与现有工具和工作流集成。更多详细文档、安装指南和高级配置选项，请参阅 FastDeploy 2.0 <a href="https://github.com/PaddlePaddle/FastDeploy">仓库</a>及<a href="https://paddlepaddle.github.io/FastDeploy/">文档</a>。</p>
+
+<h3 id="多硬件快速部署示例">多硬件快速部署示例</h3>
+<p>以在昆仑芯 P800 部署 ERNIE-4.5-300B-A47B-Paddle 模型为例，通过如下步骤即可快速完成部署：</p>
+<pre><code># 步骤1. 基于预编译镜像创建并进入容器
+mkdir Work
+cd Work
+docker pull ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/fastdeploy-xpu:2.0.0
+docker run --name fastdeploy-xpu --net=host -itd --privileged -v $PWD:/Work -w /Work \
+    ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/fastdeploy-xpu:2.0.0 \
+    /bin/bash
+docker exec -it fastdeploy-xpu /bin/bash
+
+# 步骤2. 基于 ERNIE-4.5-300B-A47B-Paddle 模型启动 OpenAI API 协议兼容服务
+export XPU_VISIBLE_DEVICES="0,1,2,3" 或 "4,5,6,7"
+python -m fastdeploy.entrypoints.openai.api_server \
+    --model baidu/ERNIE-4.5-300B-A47B-Paddle \
+    --port 8188 \
+    --tensor-parallel-size 4 \
+    --max-model-len 32768 \
+    --max-num-seqs 64 \
+    --quantization "wint4" \
+    --gpu-memory-utilization 0.9
+
+# 步骤3. 使用 curl 发送示例请求
+curl -X POST "http://0.0.0.0:8188/v1/chat/completions" \
+-H "Content-Type: application/json" \
+-d '{"messages": [{"role": "user", "content": "Where is the capital of China?"}]}'
+</code></pre>
+
+<h2 id="资源">资源</h2>
+<ul>
+<li><a href="https://github.com/PaddlePaddle/FastDeploy">FastDeploy 2.0 GitHub 仓库</a></li>
+<li><a href="https://huggingface.co/baidu/models">文心4.5 开源模型</a></li>
+</ul></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#fastdeploy-20-简介">FastDeploy 2.0 简介</a><a class="lv2" href="#fastdeploy-20-技术亮点">FastDeploy 2.0 技术亮点</a><a class="lv2" href="#部署性能和测试结果">部署性能和测试结果</a><a class="lv3" href="#单机部署-ernie-45-300b-a47b-模型">单机部署 ERNIE-4.5-300B-A47B 模型</a><a class="lv3" href="#2-bit-量化方案">2-bit 量化方案</a><a class="lv3" href="#大规模分布式推理">大规模分布式推理</a><a class="lv3" href="#实时负载感知分布式负载均衡调度">实时负载感知、分布式负载均衡调度</a><a class="lv3" href="#多硬件推理部署">多硬件推理部署</a></nav></div>
+    <div class="foot">AI 技术博客 · 知识库精选</div>
+    <script>var RK="techblog_read",ID="baidu-ernie-15-fastdeploy-20";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>
