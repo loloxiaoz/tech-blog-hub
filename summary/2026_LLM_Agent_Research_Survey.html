@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 大模型 Agent 研究进展综述</title>
+<style>
+  :root {
+    --primary: #1a365d;
+    --primary-light: #2c5282;
+    --accent: #c53030;
+    --accent-light: #e53e3e;
+    --bg: #ffffff;
+    --bg-alt: #f7fafc;
+    --bg-code: #1e293b;
+    --text: #1a202c;
+    --text-light: #4a5568;
+    --border: #e2e8f0;
+    --quote-bg: #f0f4f8;
+    --quote-border: #2c5282;
+    --link: #2c5282;
+    --link-hover: #1a365d;
+    --paper-tag: #c53030;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg-alt);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* ===== Header ===== */
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 50%;
+  }
+
+  header h1 {
+    font-size: 2.2em;
+    font-weight: 800;
+    margin-bottom: 20px;
+    position: relative;
+    letter-spacing: 1px;
+  }
+
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    position: relative;
+  }
+
+  .meta-chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.85em;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ===== Layout ===== */
+  .container {
+    max-width: 900px;
+    margin: -30px auto 40px;
+    background: var(--bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content {
+    padding: 40px 50px;
+  }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: var(--bg-alt);
+    border-left: 4px solid var(--primary-light);
+    border-radius: 8px;
+    padding: 25px 30px;
+    margin-bottom: 40px;
+  }
+
+  .toc h3 {
+    color: var(--primary);
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .toc ul {
+    list-style: none;
+    columns: 2;
+    column-gap: 30px;
+  }
+
+  .toc li {
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+
+  .toc a {
+    color: var(--link);
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: color 0.2s, padding-left 0.2s;
+    display: inline-block;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+    padding-left: 6px;
+  }
+
+  /* ===== Typography ===== */
+  h2 {
+    color: var(--primary);
+    font-size: 1.6em;
+    font-weight: 700;
+    margin: 50px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--border);
+    position: relative;
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  h3 {
+    color: var(--primary-light);
+    font-size: 1.25em;
+    font-weight: 600;
+    margin: 35px 0 15px;
+  }
+
+  h4 {
+    color: var(--text);
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 20px 0 10px;
+  }
+
+  p {
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  a:hover {
+    border-bottom-color: var(--link);
+  }
+
+  strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* ===== Paper Cards ===== */
+  .paper-card {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--quote-border);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 22px;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .paper-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .paper-card .paper-title {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.05em;
+    line-height: 1.5;
+  }
+
+  .paper-card .paper-meta {
+    color: var(--text-light);
+    font-size: 0.88em;
+    margin: 6px 0 8px;
+  }
+
+  .paper-card .paper-meta .tag {
+    display: inline-block;
+    background: var(--paper-tag);
+    color: white;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.85em;
+    margin-right: 6px;
+    font-family: monospace;
+  }
+
+  .paper-card .paper-contrib {
+    color: var(--text);
+    font-size: 0.92em;
+    line-height: 1.7;
+  }
+
+  .paper-card .paper-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.88em;
+    color: var(--link);
+    font-family: monospace;
+  }
+
+  /* ===== Code Blocks (ASCII Art) ===== */
+  pre {
+    background: var(--bg-code);
+    color: #e2e8f0;
+    padding: 25px 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 25px 0;
+    font-size: 0.78em;
+    line-height: 1.5;
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+    box-shadow: var(--shadow);
+  }
+
+  pre code {
+    white-space: pre;
+  }
+
+  /* ===== Lists ===== */
+  ol, ul {
+    margin: 12px 0 16px 24px;
+  }
+
+  ol li, ul li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+  }
+
+  /* ===== References ===== */
+  .references {
+    counter-reset: ref;
+  }
+
+  .references .ref-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92em;
+    line-height: 1.6;
+    padding-left: 30px;
+    position: relative;
+  }
+
+  .references .ref-item::before {
+    counter-increment: ref;
+    content: "[" counter(ref) "]";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  .references .ref-item em {
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .references h3 {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+    margin-top: 35px;
+  }
+
+  /* ===== Horizontal Rule ===== */
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 45px 0;
+  }
+
+  /* ===== Conclusion boxes ===== */
+  .trend-box {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8edf3 100%);
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+  }
+
+  .trend-box h4 {
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: var(--primary);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 0.85em;
+  }
+
+  .footer p { margin-bottom: 5px; }
+
+  /* ===== Section anchors ===== */
+  .section-anchor {
+    display: block;
+    padding-top: 20px;
+    margin-top: -20px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    header { padding: 40px 16px 35px; }
+    header h1 { font-size: 1.5em; }
+    .meta-bar { gap: 8px; }
+    .meta-chip { font-size: 0.78em; padding: 4px 12px; }
+    .container { margin: -20px 10px 20px; border-radius: 8px; }
+    .content { padding: 25px 20px; }
+    h2 { font-size: 1.35em; }
+    h3 { font-size: 1.1em; }
+    .toc ul { columns: 1; }
+    pre { font-size: 0.65em; padding: 15px 10px; }
+    .paper-card { padding: 12px 16px; }
+  }
+
+  @media (max-width: 480px) {
+    pre { font-size: 0.55em; }
+    .content { padding: 20px 14px; }
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    body { background: white; font-size: 12px; }
+    .container { box-shadow: none; margin: 0; max-width: 100%; }
+    .content { padding: 20px; }
+    header { background: var(--primary); -webkit-print-color-adjust: exact; }
+    pre { background: #f5f5f5; color: #333; }
+    .paper-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>2026 大模型 Agent 研究进展综述</h1>
+  <div class="meta-bar">
+    <span class="meta-chip">研究团队：深度研究团队（5 名课题研究员 + 1 名主编）</span>
+    <span class="meta-chip">覆盖时间：2022–2026</span>
+    <span class="meta-chip">论文总数：59 篇</span>
+    <span class="meta-chip">引用格式：APA</span>
+    <span class="meta-chip">报告语言：中文（技术术语保留英文）</span>
+  </div>
+</header>
+
+<div class="container">
+<div class="content">
+
+<!-- ===== TOC ===== -->
+<nav class="toc">
+  <h3>目录</h3>
+  <ul>
+    <li><a href="#intro">引言</a></li>
+    <li><a href="#ch1">第 1 章：经典范式演进</a></li>
+    <li><a href="#ch2">第 2 章：记忆机制</a></li>
+    <li><a href="#ch3">第 3 章：多智能体系统</a></li>
+    <li><a href="#ch4">第 4 章：Harness — 工具编排与框架</a></li>
+    <li><a href="#ch5">第 5 章：评测基准</a></li>
+    <li><a href="#conclusion">结论与展望</a></li>
+    <li><a href="#refs">完整参考文献</a></li>
+  </ul>
+</nav>
+
+<!-- ===== 引言 ===== -->
+<section id="intro" class="section-anchor">
+<h2>引言</h2>
+
+<p>大语言模型（LLM）Agent 研究自 2022 年底以来经历了从概念验证到工程落地的快速演进，已发展成为 AI 领域最活跃的研究方向之一。当 OpenAI 发布 ChatGPT 引发全球关注后，研究社区迅速意识到：单纯的语言模型虽具备强大的推理与生成能力，但要实现真正的智能体（Agent），还需要推理范式、记忆架构、多智能体协作、工具编排和评测体系的全面支撑。</p>
+
+<p>本综述围绕五大核心方向系统梳理这一领域的全貌：</p>
+
+<ol>
+  <li><strong>经典范式演进</strong>：从 Chain-of-Thought 的线性推理到 Tree of Thoughts 的树搜索，从 ReAct 的推理-行动交错到 LATS 的统一框架，Agent 推理范式的演进是整个领域最基础的理论线索。</li>
+  <li><strong>记忆机制</strong>：记忆是 Agent 从"无状态文本生成器"蜕变为"持续自适应智能体"的核心基础设施。从 MemGPT 的虚拟内存管理到 A-MEM 的自主记忆组织，记忆架构沿"短期→长期""被动存储→主动组织"两条主线快速演进。</li>
+  <li><strong>多智能体系统</strong>：通过角色分工与交互涌现解决复杂问题。从 CAMEL 的角色扮演到 MetaGPT 的 SOP 编码协作，从多智能体辩论到规模效应与涌现行为研究，多智能体系统正从概念验证迈向工程成熟。</li>
+  <li><strong>Harness（工具编排与框架）</strong>：沿"工具调用 → 框架编排 → 计算机操作 → 开放协议"四阶段演进，从 ToolLLM 的海量 API 调用到 MCP/A2A 的标准化互操作，Agent 生态正从"各自为政"走向开放协作。</li>
+  <li><strong>评测基准</strong>：从 AgentBench 的综合环境到 GDPval 的经济价值衡量，Agent 评测经历了从单一任务到多维度综合、从学术合成到真实世界、从功能正确性到可靠性与经济价值的系统性演进。</li>
+</ol>
+
+<p><strong>总体趋势</strong>：2025–2026 年 Agent 研究正从"能力展示"转向"工程可靠性"和"经济价值创造"，从封闭框架转向开放协议（MCP/AGENTS.md/A2A），从单 Agent 转向多 Agent 协作，从学术 benchmark 转向真实世界经济任务评测。以下逐章展开分析。</p>
+</section>
+
+<hr>
+
+<!-- ===== 第 1 章 ===== -->
+<section id="ch1" class="section-anchor">
+<h2>第 1 章：经典范式演进</h2>
+
+<h3>1.1 引言</h3>
+<p>大语言模型（LLM）作为智能体（Agent）的核心推理引擎，其推理与行动范式的演进是 Agent 研究领域最基础的理论线索。从 2022 年 Wei 等人提出 Chain-of-Thought（思维链）提示方法以来，Agent 范式经历了从线性推理到树/图结构搜索、从单一提示到工具增强与自我反思、从被动执行到自主规划的深刻变革。本章沿时间线梳理这一演进历程，分析 12 篇代表性工作，揭示范式间的逻辑继承与创新突破。</p>
+
+<h3>1.2 线性推理范式的奠基（2022）</h3>
+
+<div class="paper-card">
+  <div class="paper-title">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</div>
+  <div class="paper-meta">Wei et al., 2022, NeurIPS 2022 <span class="tag">arXiv: 2201.11903</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>首次证明在足够大的语言模型中，通过少样本思维链示例提示，可显著提升模型在算术、常识和符号推理任务上的表现，奠定了 LLM 推理范式的基石。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2201.11903">→ 论文链接</a>
+</div>
+
+<p>Chain-of-Thought（CoT）的核心思想是让模型在给出最终答案前，先生成一系列中间推理步骤。Wei 等人发现，这种"展示推理过程"的提示策略在规模足够大的模型（如 540B 参数的 PaLM）上涌现出强大的推理能力。CoT 的意义不仅在于性能提升，更在于它确立了"以自然语言为推理载体"的研究范式，后续几乎所有 Agent 推理工作都建立在 CoT 的基础之上。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Self-Consistency Improves Chain of Thought Reasoning in Language Models</div>
+  <div class="paper-meta">Wang et al., 2022, ICLR 2023 <span class="tag">arXiv: 2203.11171</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出自一致性解码策略，通过采样多条推理路径并对最终答案进行多数投票，显著提升了 CoT 推理的可靠性和准确性。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2203.11171">→ 论文链接</a>
+</div>
+
+<p>Self-Consistency 是对 CoT 的重要补充。Wang 等人观察到，对于同一问题，模型可能生成不同的推理路径，但正确答案往往在多数路径中一致出现。该方法通过替代贪婪解码，以多路径投票机制降低了单条推理链出错的风险，成为提升推理鲁棒性的经典策略。</p>
+
+<div class="paper-card">
+  <div class="paper-title">ReAct: Synergizing Reasoning and Acting in Language Models</div>
+  <div class="paper-meta">Yao et al., 2022, ICLR 2023 <span class="tag">arXiv: 2210.03629</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>首次将推理（Reasoning）与行动（Acting）交错结合，使 Agent 能在使用外部工具的同时保持推理链，成为后续 Agent 架构的范式基石。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2210.03629">→ 论文链接</a>
+</div>
+
+<p>ReAct 的核心创新在于引入"思考-行动-观察"（Thought-Action-Observation）的循环结构。模型在每一步先生成内部推理（Thought），然后决定执行何种行动（Action，如查询搜索引擎），再根据外部环境返回的观察结果（Observation）继续推理。这一范式弥合了纯推理与交互式决策之间的鸿沟，被广泛视为 LLM Agent 领域的奠基性工作。</p>
+
+<h3>1.3 工具增强与自我改进（2023 上半年）</h3>
+
+<div class="paper-card">
+  <div class="paper-title">Toolformer: Language Models Can Teach Themselves to Use Tools</div>
+  <div class="paper-meta">Schick et al., 2023, NeurIPS 2023 <span class="tag">arXiv: 2302.04761</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出一种自监督方法，使语言模型能自主学习在生成过程中何时、如何调用外部工具（如搜索引擎、计算器、日历 API），无需大量人工标注。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2302.04761">→ 论文链接</a>
+</div>
+
+<p>Toolformer 将工具使用从提示层面下沉到模型微调层面。Schick 等人设计了一种自监督流程：模型先生成包含工具调用的候选文本，再通过过滤保留有用的工具调用进行微调。这一方法使模型内化了工具使用能力，区别于 ReAct 等依赖提示工程的方法。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Reflexion: Language Agents with Verbal Reinforcement Learning</div>
+  <div class="paper-meta">Shinn et al., 2023, NeurIPS 2023 <span class="tag">arXiv: 2303.11366</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出"语言强化学习"机制，将环境反馈转化为自然语言形式的自我反思，使 Agent 能从失败中学习并改进后续决策。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2303.11366">→ 论文链接</a>
+</div>
+
+<p>Reflexion 的核心创新在于用语言反馈替代传统的标量奖励信号。Agent 在任务失败后，会生成一段自然语言的反思总结，将其存入记忆并在后续尝试中作为参考。这种"语言层面的强化学习"无需更新模型参数，即可实现跨试次的学习与改进。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Self-Refine: Iterative Refinement with Self-Feedback</div>
+  <div class="paper-meta">Madaan et al., 2023, NeurIPS 2023 <span class="tag">arXiv: 2303.17651</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出迭代自精炼框架，让 LLM 对自身输出生成反馈并据此修订，无需外部模型或额外训练即可逐步提升输出质量。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2303.17651">→ 论文链接</a>
+</div>
+
+<p>Self-Refine 与 Reflexion 都利用了自我反馈机制，但侧重点不同：Reflexion 强调跨试次的反思学习，Self-Refine 则聚焦于单次任务内的迭代优化。Madaan 等人证明，即使是最先进的模型（如 GPT-4），也能通过"生成-反馈-修订"的循环进一步提升输出质量。</p>
+
+<h3>1.4 结构化搜索与规划（2023 年中后期）</h3>
+
+<div class="paper-card">
+  <div class="paper-title">Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models</div>
+  <div class="paper-meta">Wang et al., 2023, ACL 2023 <span class="tag">arXiv: 2305.04091</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出"先规划后执行"的零样本提示策略，将复杂问题分解为子任务计划再逐步求解，显著减少了零样本 CoT 中的推理遗漏错误。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2305.04091">→ 论文链接</a>
+</div>
+
+<p>Plan-and-Solve 将显式规划引入提示策略。不同于 CoT 的逐步推理，它首先要求模型制定整体计划，将任务拆分为子任务，再按计划执行。这一方法在零样本设置下取得了与少样本 CoT 相当甚至更优的效果。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Tree of Thoughts: Deliberate Problem Solving with Large Language Models</div>
+  <div class="paper-meta">Yao et al., 2023, NeurIPS 2023 <span class="tag">arXiv: 2305.10601</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>将 CoT 的线性推理扩展为树结构搜索，允许模型在中间推理步骤进行分支、评估和回溯，实现了类似人类"深思熟虑"的问题求解过程。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2305.10601">→ 论文链接</a>
+</div>
+
+<p>Tree of Thoughts（ToT）是推理范式从线性到结构化的关键跃迁。Yao 等人将每个推理步骤视为树的节点，通过 LLM 生成多个候选下一步（分支），使用评估函数对状态打分，并结合 BFS/DFS 搜索策略探索解空间。ToT 在 24 点游戏和创意写作等任务上大幅超越 CoT。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Graph of Thoughts: Solving Elaborate Problems with Large Language Models</div>
+  <div class="paper-meta">Besta et al., 2023, AAAI 2024 <span class="tag">arXiv: 2308.09687</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>将推理结构从树进一步泛化为任意图，支持推理节点的合并、回环和任意拓扑，使 LLM 能处理需要信息融合与多路推理交汇的复杂问题。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2308.09687">→ 论文链接</a>
+</div>
+
+<p>Graph of Thoughts（GoT）将推理结构的表达力推向极致。Besta 等人指出，许多复杂任务（如文档合并、集合操作）的推理过程天然不是树形的，而需要将多条推理路径的中间结果进行融合。GoT 通过图结构支持聚合和回环操作，在排序和摘要等任务上展现了优势。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models</div>
+  <div class="paper-meta">Zhou et al., 2023, ICML 2024 <span class="tag">arXiv: 2310.04406</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>首次将推理、行动和规划统一到 MCTS（蒙特卡洛树搜索）框架中，通过外部反馈和经验学习实现 Agent 的 deliberate 搜索，是经典范式的集大成之作。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2310.04406">→ 论文链接</a>
+</div>
+
+<p>LATS（Language Agent Tree Search）将经典搜索算法引入 Agent 框架。Zhou 等人将 ReAct 的行动能力、ToT 的树搜索和 Reflexion 的反思机制整合为统一框架：使用 MCTS 探索 Agent 轨迹空间，以环境反馈作为价值函数，并通过反思机制实现经验积累。LATS 在 HotpotQA 和 WebShop 等代理任务上取得了显著提升。</p>
+
+<h3>1.5 自主代理与新推理范式（2023–2025）</h3>
+
+<div class="paper-card">
+  <div class="paper-title">Auto-GPT for Online Decision Making: Benchmarks and Additional Findings</div>
+  <div class="paper-meta">Wang et al., 2023 <span class="tag">arXiv: 2306.02224</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>对 Auto-GPT 风格的自主代理在在线决策任务中进行系统基准测试，揭示了其在真实场景中的能力边界与局限，为自主代理研究提供了重要实证依据。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2306.02224">→ 论文链接</a>
+</div>
+
+<p>AutoGPT 代表了 Agent 从任务级推理向自主循环执行的范式拓展。Wang 等人对 Auto-GPT 风格的代理在模拟真实场景的决策任务中进行了全面基准测试，发现虽然自主代理展现了任务分解和工具调用的能力，但在长程规划和一致性方面仍存在显著局限。该工作为理解自主代理的实际能力提供了实证基础。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Search-o1: Agentic Search-Enhanced Large Reasoning Models</div>
+  <div class="paper-meta">Li et al., 2025, EMNLP 2025 <span class="tag">arXiv: 2501.05366</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>将代理式检索增强生成（RAG）机制嵌入大型推理模型的推理过程，在推理遇到知识不确定点时动态触发检索，实现了 o1 式推理与工具使用的有机融合。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2501.05366">→ 论文链接</a>
+</div>
+
+<p>Search-o1 代表了 2025 年推理范式的新方向：将强化学习训练的大型推理模型（LRM）与代理式搜索相结合。Li 等人设计了"推理中检索"机制和"文档中推理"模块，使模型在长链推理过程中能动态访问外部知识。这一工作标志着 Agent 范式从提示工程向模型内化推理能力与外部工具深度融合的新阶段演进。</p>
+
+<h3>1.6 范式演进脉络总结</h3>
+
+<p>纵观 2022–2025 年的范式演进，可归纳为四条主线：</p>
+<ol>
+  <li><strong>推理结构从线性到图论的泛化</strong>：CoT（线性链）→ ToT（树结构）→ GoT（任意图），推理表达能力逐步增强。</li>
+  <li><strong>从纯推理到推理-行动-反思的闭环</strong>：ReAct 融合推理与行动，Reflexion 和 Self-Refine 引入自我反思，LATS 最终将三者统一于搜索框架。</li>
+  <li><strong>从提示工程到模型内化</strong>：Toolformer 将工具使用微调进模型，Search-o1 将检索融入推理模型本身，范式从外部提示策略向模型能力内化演进。</li>
+  <li><strong>从任务级到自主循环</strong>：AutoGPT 开启了自主代理范式，搜索增强推理模型（如 Search-o1）则代表了 RL 训练推理与 Agent 能力融合的前沿方向。</li>
+</ol>
+
+<p>这些演进并非线性替代，而是层层累积——LATS 同时使用了 ReAct 的行动机制、ToT 的搜索结构和 Reflexion 的反思策略，体现了范式的组合式创新。</p>
+
+<h3>1.7 范式演进脉络图</h3>
+
+<pre><code>╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                大模型 Agent 经典推理-行动范式演进脉络 (2022-2025)                  ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+
+ ┌─ Phase I: 线性推理奠基 (2022) ──────────────────────────────────────────────────┐
+ │                                                                                  │
+ │   ┌──────────────┐     ┌──────────────────┐          ┌──────────────┐          │
+ │   │     CoT      │────▶│ Self-Consistency │          │    ReAct     │          │
+ │   │  01/2022     │     │    03/2022       │          │   10/2022    │          │
+ │   │ 线性思维链    │     │  多路径投票       │          │ 推理+行动交错 │          │
+ │   └──────┬───────┘     └────────┬─────────┘          └──────┬───────┘          │
+ │          │                      │                           │                  │
+ │       推理基础                可靠性增强                    行动能力             │
+ └──────────┼──────────────────────┼───────────────────────────┼──────────────────┘
+            ▼                      ▼                           ▼
+ ┌─ Phase II: 工具增强与自我改进 (2023 H1) ────────────────────────────────────────┐
+ │                                                                                  │
+ │   ┌──────────────┐     ┌──────────────────┐          ┌──────────────┐          │
+ │   │  Toolformer  │     │    Reflexion     │          │  Self-Refine │          │
+ │   │  02/2023     │     │    03/2023       │          │   03/2023    │          │
+ │   │ 自学工具使用  │     │  语言反思强化     │          │ 迭代自精炼   │          │
+ │   └──────┬───────┘     └────────┬─────────┘          └──────┬───────┘          │
+ │          │                      │                           │                  │
+ │       工具内化                反思机制                     自我改进             │
+ └──────────┼──────────────────────┼───────────────────────────┼──────────────────┘
+            ▼                      ▼                           ▼
+ ┌─ Phase III: 结构化搜索与规划 (2023 H2) ─────────────────────────────────────────┐
+ │                                                                                  │
+ │   ┌──────────────┐     ┌──────────────────┐          ┌──────────────┐          │
+ │   │ Plan&Solve   │     │       ToT        │          │      GoT     │          │
+ │   │  05/2023     │     │    05/2023       │          │   08/2023    │          │
+ │   │ 先规划后执行  │     │  树结构搜索       │          │ 图结构推理   │          │
+ │   └──────┬───────┘     └────────┬─────────┘          └──────┬───────┘          │
+ │          │                      │                           │                  │
+ │       显式规划                树搜索                       图泛化               │
+ │          │                      │                           │                  │
+ │          └──────────────────────┼───────────────────────────┘                  │
+ │                                 ▼                                              │
+ │                       ┌──────────────────┐                                     │
+ │                       │       LATS       │                                     │
+ │                       │    10/2023       │                                     │
+ │                       │ MCTS统一框架      │                                     │
+ │                       │ 推理+行动+规划    │                                     │
+ │                       └────────┬─────────┘                                     │
+ └────────────────────────────────┼───────────────────────────────────────────────┘
+                                  ▼
+ ┌─ Phase IV: 自主代理与新范式 (2023-2025) ────────────────────────────────────────┐
+ │                                                                                  │
+ │   ┌──────────────┐                               ┌──────────────┐              │
+ │   │   AutoGPT    │                               │   Search-o1  │              │
+ │   │  06/2023     │                               │   01/2025    │              │
+ │   │ 自主代理基准  │                               │ RL推理+搜索  │              │
+ │   └──────────────┘                               └──────────────┘              │
+ │                                                                                  │
+ │   ◆ 范式演进四主线 ◆                                                            │
+ │   ① 推理结构: 线性(CoT) → 树(ToT) → 图(GoT)                                    │
+ │   ② 闭环形成: 推理 → +行动(ReAct) → +反思(Reflexion) → 统一(LATS)             │
+ │   ③ 内化路径: 提示工程 → 微调内化(Toolformer) → RL推理(Search-o1)             │
+ │   ④ 自主性:   任务级 → 自主循环(AutoGPT) → RL训练推理Agent                    │
+ └──────────────────────────────────────────────────────────────────────────────────┘</code></pre>
+
+</section>
+
+<hr>
+
+<!-- ===== 第 2 章 ===== -->
+<section id="ch2" class="section-anchor">
+<h2>第 2 章：记忆机制</h2>
+
+<p>记忆（Memory）是 LLM Agent 从"无状态文本生成器"蜕变为"持续自适应智能体"的核心基础设施。固定上下文窗口使模型天然具备短期记忆，但跨会话的经验积累、个性化交互和长期推理则依赖外部记忆架构。自 2023 年以来，Agent 记忆研究沿"短期→长期""被动存储→主动组织"两条主线快速演进，形成了从认知架构理论到工程落地的完整图谱。</p>
+
+<h3>2.1 认知架构与记忆分类框架</h3>
+
+<p>早期工作从认知科学汲取灵感，为 Agent 记忆建立统一概念框架。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Cognitive Architectures for Language Agents (CoALA)</div>
+  <div class="paper-meta">Sumers et al., 2023, TMLR 2024 <span class="tag">arXiv: 2309.02427</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>借鉴符号 AI 与认知科学传统，提出语言 Agent 的认知架构框架，将记忆分为语义记忆、情景记忆与程序性记忆，系统化整合推理、接地与学习过程。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2309.02427">→ 论文链接</a>
+</div>
+
+<p>CoALA 框架将 Agent 内部结构划分为记忆模块、决策过程与动作空间，明确了"检索—推理—学习"的决策循环 (<a href="https://arxiv.org/abs/2309.02427">Sumers et al., 2023</a>)。随后，Zhang 等人对 LLM Agent 记忆机制进行了首次全面综述：</p>
+
+<div class="paper-card">
+  <div class="paper-title">A Survey on the Memory Mechanism of Large Language Model based Agents</div>
+  <div class="paper-meta">Zhang et al., 2024 <span class="tag">arXiv: 2404.13501</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>系统梳理 Agent 记忆的"是什么—为什么—怎么做"，从记忆来源、形式、操作和评测四个维度构建统一分类体系，覆盖短期/长期、语义/情景等类型。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2404.13501">→ 论文链接</a>
+</div>
+
+<p>该综述指出，Agent 记忆可按来源（外部环境 vs. 内部推理）、形式（文本/向量/结构化）和操作（写入/检索/更新/遗忘）进行系统分类 (<a href="https://arxiv.org/abs/2404.13501">Zhang et al., 2024</a>)，为后续研究提供了概念坐标。</p>
+
+<h3>2.2 分层记忆与虚拟内存管理</h3>
+
+<p>突破上下文窗口限制是记忆架构设计的首要驱动力。MemGPT 将操作系统的内存管理思想引入 LLM：</p>
+
+<div class="paper-card">
+  <div class="paper-title">MemGPT: Towards LLMs as Operating Systems</div>
+  <div class="paper-meta">Packer et al., 2023 <span class="tag">arXiv: 2310.08560</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>借鉴 OS 虚拟内存管理，设计分层记忆架构（main context / external archival），通过 LLM 自主调度读写中断突破固定上下文窗口限制，实现长程多轮对话。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2310.08560">→ 论文链接</a>
+</div>
+
+<p>MemGPT 将上下文窗口视为"主存"，将外部存储视为"外存"，由 LLM 自主决定何时将信息在两级之间分页交换 (<a href="https://arxiv.org/abs/2310.08560">Packer et al., 2023</a>)，这一"LLM as OS"范式启发了后续大量分层记忆工作。</p>
+
+<h3>2.3 情景记忆、经验学习与技能积累</h3>
+
+<p>另一条脉络聚焦于如何从交互经验中提取可复用知识。Generative Agents 构建了模拟社会环境中的 Agent 记忆系统：</p>
+
+<div class="paper-card">
+  <div class="paper-title">Generative Agents: Interactive Simulacra of Human Behavior</div>
+  <div class="paper-meta">Park et al., 2023, UIST 2023 <span class="tag">arXiv: 2304.03442</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>构建 25 个 Agent 的虚拟小镇，采用情景记忆流（memory stream）+ 反思（reflection）+ 检索（retrieval）三阶段架构，使 Agent 能基于记忆自主生成 believable 行为。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2304.03442">→ 论文链接</a>
+</div>
+
+<p>其记忆流以自然语言记录事件并附时间戳与重要性分数，检索时综合近期性、重要性与相关性排序 (<a href="https://arxiv.org/abs/2304.03442">Park et al., 2023</a>)。"反思"机制允许 Agent 定期将低层观察综合为高层洞察，实现从情景记忆到语义记忆的跃迁。</p>
+
+<div class="paper-card">
+  <div class="paper-title">ExpeL: LLM Agents Are Experiential Learners</div>
+  <div class="paper-meta">Zhao et al., 2023, AAAI 2024 <span class="tag">arXiv: 2308.10144</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出经验学习 Agent 框架，通过自主收集训练任务经验、提取 insight 并构建经验池，无需参数更新即可在评估任务上持续提升性能。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2308.10144">→ 论文链接</a>
+</div>
+
+<p>ExpeL 将成功与失败轨迹进行对比归纳，形成可复用的经验性知识库 (<a href="https://arxiv.org/abs/2308.10144">Zhao et al., 2023</a>)。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Voyager: An Open-Ended Embodied Agent with Large Language Models</div>
+  <div class="paper-meta">Wang et al., 2023, NVIDIA <span class="tag">arXiv: 2305.16291</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>构建终身学习 embodied agent，通过自动课程、可执行技能库（skill library）和迭代提示机制实现开放式探索，技能以代码形式持久化并复用。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2305.16291">→ 论文链接</a>
+</div>
+
+<p>Voyager 的技能库本质上是程序性记忆（procedural memory），Agent 将成功技能写入代码库并在新任务中检索调用 (<a href="https://arxiv.org/abs/2305.16291">Wang et al., 2023</a>)。</p>
+
+<h3>2.4 主动组织、思维存储与遗忘机制</h3>
+
+<p>随着研究深入，记忆不再被视为被动"存储仓库"，而演变为主动组织、动态更新的系统。</p>
+
+<div class="paper-card">
+  <div class="paper-title">Think-in-Memory: Recalling and Post-thinking Enable LLMs with Long-Term Memory</div>
+  <div class="paper-meta">Liu et al., 2023 <span class="tag">arXiv: 2311.08719</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>将 LLM 的推理结果（思维）而非原始历史存入记忆，通过"回忆—生成—后思考"两阶段框架消除重复推理导致的不一致性，并以 insert/forget/merge 操作动态维护记忆。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2311.08719">→ 论文链接</a>
+</div>
+
+<p>TiM 的后思考阶段将新思维与历史思维整合更新，并通过局部敏感哈希（LSH）实现高效检索 (<a href="https://arxiv.org/abs/2311.08719">Liu et al., 2023</a>)。</p>
+
+<div class="paper-card">
+  <div class="paper-title">MemoryBank: Enhancing Large Language Models with Long-Term Memory</div>
+  <div class="paper-meta">Zhong et al., 2023 <span class="tag">arXiv: 2305.10250</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>基于 Ebbinghaus 遗忘曲线理论设计记忆更新机制，模拟人类遗忘规律选择性保留记忆，结合对话摘要与用户画像实现长期个性化交互。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2305.10250">→ 论文链接</a>
+</div>
+
+<div class="paper-card">
+  <div class="paper-title">A-MEM: Agentic Memory for LLM Agents</div>
+  <div class="paper-meta">Xu et al., 2025, NeurIPS 2025 <span class="tag">arXiv: 2502.12110</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>受 Zettelkasten 笔记法启发，为每条记忆自动生成结构化笔记（关键词、标签、上下文描述），并动态建立记忆间链接，实现无需预设操作的自主记忆组织。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2502.12110">→ 论文链接</a>
+</div>
+
+<p>A-MEM 打破了传统"写入—检索"的静态操作范式，记忆系统自身具备"思考"能力，能根据语义关联主动建立和调整记忆网络 (<a href="https://arxiv.org/abs/2502.12110">Xu et al., 2025</a>)。</p>
+
+<h3>2.5 RAG 与 Agent 记忆的融合</h3>
+
+<p>检索增强生成（RAG）与 Agent 记忆在 2024–2025 年呈现深度融合趋势。</p>
+
+<div class="paper-card">
+  <div class="paper-title">MemoRAG: Boosting Long Context Processing with Global Memory-Enhanced Retrieval Augmentation</div>
+  <div class="paper-meta">Qian et al., 2024, theWebConf 2025 <span class="tag">arXiv: 2409.05591</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出双系统架构——轻量长程系统以 KV 压缩建立全局记忆并生成检索线索，高表达力系统基于检索结果生成最终答案，突破传统 RAG 对明确查询和结构化知识的依赖。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2409.05591">→ 论文链接</a>
+</div>
+
+<div class="paper-card">
+  <div class="paper-title">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</div>
+  <div class="paper-meta">Chhikara et al., 2025 <span class="tag">arXiv: 2504.19413</span></div>
+  <div class="paper-contrib"><strong>核心贡献：</strong>提出可扩展记忆中心架构，动态提取、整合与检索对话中的关键信息，图记忆增强版本捕捉复杂关系结构，在 LOCOMO 基准上全面超越现有记忆系统，p95 延迟降低 91%。</div>
+  <a class="paper-link" href="https://arxiv.org/abs/2504.19413">→ 论文链接</a>
+</div>
+
+<h3>2.6 演进脉络总结</h3>
+
+<p>纵观 2023–2025 年的记忆机制研究，可清晰识别三条演进轴线：</p>
+<ol>
+  <li><strong>时间跨度</strong>：从固定上下文窗口的短期记忆（MemGPT 的分页机制），到跨会话长期记忆（MemoryBank、TiM），再到终身学习型记忆（Voyager 的技能库）。</li>
+  <li><strong>组织方式</strong>：从被动写入—检索（早期 RAG、Generative Agents 的记忆流），到主动反思与综合（ExpeL 的 insight 提取、Generative Agents 的 reflection），再到自主组织与链接（A-MEM 的 Zettelkasten 式网络、Mem0 的图记忆）。</li>
+  <li><strong>存储内容</strong>：从原始文本/对话历史（MemoryBank），到结构化笔记（A-MEM），再到思维本身（TiM）和可执行技能代码（Voyager），存储粒度从"记录"升级为"知识"。</li>
+</ol>
+
+<p>记忆的遗忘与冲突解决也逐渐受到关注——MemoryBank 引入遗忘曲线，TiM 设计 forget/merge 操作，而 MemoryAgentBench 等评测基准揭示多跳冲突解决仍是未解难题。未来，记忆机制研究将从"存得多"转向"记得准、忘得对、用得好"，与个性化、安全性和可解释性深度结合。</p>
+
+<h3>2.7 记忆机制演进脉络图</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────────────────────┐
+│              LLM Agent 记忆机制演进脉络 (2023-2025)                      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  短期/被动                          长期/主动                            │
+│  ◄──────────────────────────────────────────────────────────►           │
+│                                                                         │
+│  ┌──────────┐    ┌───────────┐    ┌───────────┐    ┌───────────┐       │
+│  │ 固定上下文 │───►│ 分层虚拟内存│───►│ 经验技能库 │───►│ 自主记忆网络│       │
+│  │(Context)  │    │ (MemGPT)  │    │(Voyager/  │    │(A-MEM/    │       │
+│  │           │    │           │    │ ExpeL)    │    │ Mem0)     │       │
+│  └──────────┘    └───────────┘    └───────────┘    └───────────┘       │
+│                         │                │                │             │
+│                    ┌────▼────┐      ┌───▼────┐     ┌────▼────┐         │
+│                    │情景记忆流│      │思维存储 │     │图结构记忆│         │
+│                    │(Gen.    │      │(TiM)   │     │(Mem0)   │         │
+│                    │Agents)  │      │        │     │         │         │
+│                    └────┬────┘      └───┬────┘     └─────────┘         │
+│                         │               │                              │
+│                    ┌────▼────┐      ┌───▼────┐                         │
+│                    │反思综合 │      │遗忘机制 │                         │
+│                    │(Reflect)│      │(Memory-│                         │
+│                    │         │      │ Bank)  │                         │
+│                    └─────────┘      └────────┘                         │
+│                                                                         │
+│  框架层:  CoALA (2023) ─────► Memory Survey (2024) ──► 统一分类体系     │
+│                                                                         │
+│  RAG融合: 传统RAG ─────► MemoRAG (2024) ─────────► Mem0 (2025)         │
+│                                                                         │
+│  存储内容: 原始文本 ─────► 结构化笔记 ─────────► 思维/技能代码          │
+│           (记录)         (知识)              (可执行知识)                │
+└─────────────────────────────────────────────────────────────────────────┘</code></pre>
+
+</section>
+
+<hr>
+
+<!-- ===== 第 3 章 ===== -->
+<section id="ch3" class="section-anchor">
+<h2>第 3 章：多智能体系统</h2>
+
+<h3>引言</h3>
+
+<p>随着大语言模型（LLM）在推理、规划和工具使用方面能力的持续提升，研究者的关注点已从单一智能体优化转向多智能体系统（Multi-Agent Systems, MAS）。多智能体系统通过将复杂任务分解为多个具备不同角色、专长和视角的智能体协作，在软件开发、科学推理、社会模拟等领域展现出超越单一智能体的潜力。自 2023 年 CAMEL 和 Multi-agent Debate 开创性地探索 LLM 驱动的多智能体协作以来，该领域已迅速发展出角色扮演、辩论、层次化协作和涌现行为研究等多条技术路线。本章按协作模式分类梳理代表性工作（共 11 篇），并总结多智能体系统的演进脉络。</p>
+
+<h3>3.1 角色扮演与分工协作</h3>
+
+<p>角色扮演是多智能体系统中最自然的协作范式之一，其核心思想是为每个智能体分配特定角色（如程序员、测试员、产品经理），通过角色间的交互完成任务。</p>
+
+<p><a href="https://arxiv.org/abs/2303.17760">CAMEL: Communicative Agents for "Mind" Exploration of Large Scale Language Model Society</a>（Li et al., 2023, NeurIPS, arXiv: 2303.17760）是多智能体角色扮演的开创性工作。该框架通过 "inception prompting" 机制引导两个智能体分别扮演用户和助手，实现自主协作完成指定任务而无需人类干预。CAMEL 还揭示了角色扮演过程中智能体展现的服从性行为和认知过程，为后续多智能体研究奠定了概念基础。</p>
+
+<p><a href="https://arxiv.org/abs/2307.07924">ChatDev: Communicative Agents for Software Development</a>（Qian et al., 2023, ACL 2024, arXiv: 2307.07924）将角色扮演范式应用于软件开发全流程。该框架将软件开发分解为设计、编码、测试和文档等阶段，由扮演 CEO、CTO、程序员和测试员的智能体通过自然语言对话协作完成。ChatDev 展示了多智能体协作在复杂工程任务中的可行性，能够在数分钟内生成完整的软件项目。</p>
+
+<p><a href="https://arxiv.org/abs/2308.00352">MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework</a>（Hong et al., 2023, ICLR 2024, arXiv: 2308.00352）进一步引入了标准化操作流程（SOP）的概念。MetaGPT 借鉴人类软件团队的工程实践，通过 SOP 约束智能体的输出格式和交互流程，有效减少了多智能体协作中的错误级联和幻觉传播问题。在 HumanEval 基准上，MetaGPT 相较 GPT-4 实现了 28.2% 的相对提升，验证了结构化协作流程对系统性能的显著贡献。</p>
+
+<h3>3.2 多智能体辩论</h3>
+
+<p>与角色扮演的分工模式不同，多智能体辩论通过让多个智能体对同一问题提出并论证各自的观点，在对抗性交互中提升答案的事实准确性和推理质量。</p>
+
+<p><a href="https://arxiv.org/abs/2305.14325">Improving Factuality and Reasoning in Language Models through Multiagent Debate</a>（Du et al., 2023, arXiv: 2305.14325）由 MIT 和 Google DeepMind 团队提出，是多智能体辩论范式的奠基之作。该工作让多个 LLM 实例独立生成初始答案，随后在多轮辩论中审阅和修正彼此的回答。实验表明，辩论过程能显著提升模型在数学推理和事实性问答上的表现，且随着辩论轮次增加，答案逐步收敛至更准确的结果。</p>
+
+<p><a href="https://arxiv.org/abs/2406.11776">Improving Multi-Agent Debate with Sparse Communication Topology</a>（Li et al., 2024, EMNLP 2024 Findings, arXiv: 2406.11776）针对辩论框架中"全连接"通信导致的计算成本过高问题，系统研究了通信拓扑的影响。研究发现，采用稀疏通信拓扑（如环形或随机图结构）的多智能体辩论能在大幅降低计算开销的同时达到相当甚至更优的性能。该工作还将框架扩展至多模态推理和对齐标注任务，展示了稀疏通信的广泛适用性。</p>
+
+<h3>3.3 通用框架与平台</h3>
+
+<p>除了特定范式的系统，多项工作致力于构建通用的多智能体开发框架，降低多智能体应用的构建门槛。</p>
+
+<p><a href="https://arxiv.org/abs/2308.08155">AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</a>（Wu et al., 2023, ICLR 2024 Workshop, arXiv: 2308.08155）是 Microsoft 推出的开源多智能体框架。AutoGen 的核心设计是可定制、可对话的智能体（conversable agents），开发者可以灵活定义智能体的角色、能力和对话规则，通过多智能体间的自由对话解决复杂任务。AutoGen 在工业界获得了广泛应用，成为多智能体应用开发的事实标准之一。</p>
+
+<p><a href="https://arxiv.org/abs/2308.10848">AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors in Language Models</a>（Chen et al., 2023, arXiv: 2308.10848）提供了一个动态调整智能体组的多智能体协作框架。AgentVerse 将协作过程分解为专家招募、协作决策、行动执行和评估反馈四个阶段，并深入研究了多智能体群体中涌现的社会行为，包括分工协作、从众行为和破坏性行为等，为理解多智能体系统的群体动态提供了实证基础。</p>
+
+<h3>3.4 规模效应与涌现行为</h3>
+
+<p>随着多智能体系统规模的扩大，研究者开始关注"数量"本身对系统行为的影响，以及群体中涌现出的不可预测行为。</p>
+
+<p><a href="https://arxiv.org/abs/2402.05120">More Agents Is All You Need</a>（Li et al., 2024, TMLR, arXiv: 2402.05120）由腾讯团队提出，揭示了一个简洁而重要的发现：仅通过增加 LLM 智能体的实例数量并采用"采样-投票"机制（称为 Agent Forest），即可在无需修改模型或提示词的情况下显著提升性能。该规模效应与任务难度正相关——越难的任务从增加智能体数量中获益越多，且该方法与现有的链式思维等增强技术正交。</p>
+
+<p><a href="https://arxiv.org/abs/2506.03053">MAEBE: Multi-Agent Emergent Behavior Framework</a>（Erisken et al., 2025, ICML 2025 Workshop, arXiv: 2506.03053）从安全角度切入，系统评估了多智能体集群中的涌现风险。该框架通过 Greatest Good Benchmark 和"双重反转问题"技术发现，LLM 的道德偏好在多智能体群体中表现出极大的脆弱性——群体动态（如同伴压力）会显著影响道德推理的收敛方向，且多智能体集群的道德行为无法从孤立智能体的表现中直接预测。这一发现对多智能体系统的安全部署具有重要警示意义。</p>
+
+<h3>3.5 综述与分类框架</h3>
+
+<p>随着研究数量的爆发式增长，多篇综述工作试图建立统一的概念框架。</p>
+
+<p><a href="https://arxiv.org/abs/2412.17481">A Survey on LLM-based Multi-Agent System: Recent Advances and Future Directions</a>（Tran et al., 2025, arXiv: 2412.17481）从应用视角出发，将 LLM-MAS 研究归纳为三大类别：复杂任务求解、特定场景模拟和生成式智能体评估。该综述提出了一个涵盖多智能体系统定义、应用和挑战的综合框架，为领域提供了系统性知识图谱。</p>
+
+<p><a href="https://arxiv.org/abs/2501.06322">Multi-Agent Collaboration Mechanisms: A Survey of LLMs</a>（Tran et al., 2025, arXiv: 2501.06322）则聚焦于协作机制本身，从参与者、协作类型（合作、竞争、竞合）、结构（对等式、集中式、分布式）、策略（基于角色或基于模型）和协调协议等维度提出了一个可扩展的分类框架。该综述还探讨了 MAS 在 5G/6G 网络、工业 5.0 等领域的应用前景。</p>
+
+<h3>3.6 演进脉络总结</h3>
+
+<p>多智能体系统的发展呈现出从简单到复杂、从静态到动态的清晰演进轨迹。2023 年初，CAMEL 和 Multi-agent Debate 分别从角色扮演和辩论两个方向验证了 LLM 驱动多智能体协作的可行性；同年中，ChatDev、MetaGPT、AutoGen 和 AgentVerse 将这些思想发展为可用的框架和平台，并引入 SOP 等结构化约束以提升协作质量。2024 年起，研究焦点逐步转向系统优化（如稀疏通信、规模效应）和安全评估（如涌现行为风险），标志着该领域从概念验证阶段迈向工程成熟期。整体而言，多智能体系统的研究正沿着"范式探索 → 框架构建 → 优化与安全"的路径推进，未来在去中心化架构、跨智能体通信协议和安全对齐等方面仍存在大量开放挑战。</p>
+
+<h3>3.7 多智能体系统演进脉络图</h3>
+
+<pre><code>          多智能体系统演进脉络 (2023-2025)
+          ═════════════════════════════════
+
+  时间轴     2023 Q1-Q2         2023 Q2-Q4          2024            2024-2025
+  ─────┬──────────────────┬──────────────────┬─────────────────┬──────────────────
+       │                  │                  │                 │
+  范式  │  ┌─────────┐     │  ┌───────────┐  │  ┌───────────┐  │  ┌───────────┐
+  探索  │  │  CAMEL  │     │  │  ChatDev  │  │  │  Sparse   │  │  │   MAEBE   │
+       │  │ (角色    │─────┼─▶│  MetaGPT  │──┼─▶│  Comm.    │──┼─▶│ (涌现安全) │
+       │  │  扮演)   │     │  │  AutoGen  │  │  │  (通信优化) │  │  └───────────┘
+       │  └────┬────┘     │  │ AgentVerse│  │  └───────────┘  │
+       │       │          │  └─────┬─────┘  │       │         │  ┌───────────┐
+       │  ┌────┴────┐     │        │        │  ┌────┴────┐    │  │  More     │
+       │  │ Du et al│─────┼────────┘        │  │ Agents  │    │  │ Agents    │
+       │  │ (辩论)  │     │                 │  │(规模效应)│    │  │ Is All    │
+       │  └─────────┘     │                 │  └─────────┘    │  │ You Need  │
+       │                  │                 │                 │  └───────────┘
+       │                  │                 │                 │
+  ─────┴──────────────────┴─────────────────┴─────────────────┴──────────────────
+       │                                                        │
+       │            ┌──────────────────────────────┐            │
+       └───────────▶│  综述与分类框架 (2024-2025)    │◀───────────┘
+                    │  LLM-MAS Survey (2412.17481)  │
+                    │  Collaboration Mech (2501.06) │
+                    └──────────────────────────────┘
+
+  协作复杂度 ──────────────────────────────────────────────────────▶ 增高
+  简单角色交互 ──▶ 结构化SOP协作 ──▶ 通信优化/规模扩展 ──▶ 涌现行为与安全</code></pre>
+
+</section>
+
+<hr>
+
+<!-- ===== 第 4 章 ===== -->
+<section id="ch4" class="section-anchor">
+<h2>第 4 章：Harness — 工具编排与框架</h2>
+
+<h3>引言</h3>
+
+<p>工具使用（tool use）是大模型 Agent 区别于纯对话系统的核心能力。2023 年以来，研究社区沿"工具调用 → 框架编排 → 计算机操作 → 开放协议"四个阶段持续演进：早期工作致力于让 LLM 学会调用海量 API；随后 DSPy、LangGraph 等框架将零散的提示工程抽象为可编译、可编排的计算图；2024 年起，Claude Computer Use、SWE-agent 等系统将 Agent 的作用域从 API 扩展到完整桌面与代码仓库；2024 年末至 2025 年，MCP、A2A 与 AGENTS.md 等开放协议相继问世，标志着 Agent 生态从"各自为政"走向标准化互操作。本章沿此脉络梳理 13 项代表性工作。</p>
+
+<h3>一、工具调用：让 LLM 掌握海量 API</h3>
+
+<p><strong>ToolLLM</strong> 是工具使用领域的奠基性工作。Qin 等人（2023）构建了 <a href="https://arxiv.org/abs/2307.16789">ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs</a>（arXiv: 2307.16789），提出包含 16,464 个真实 RESTful API（覆盖 49 个类别）的 ToolBench 数据集，并设计基于深度优先搜索的决策树算法（DFSDT）来扩展推理搜索空间。微调得到的 ToolLLaMA 在复杂指令执行上接近 ChatGPT 水平，该工作发表于 ICLR 2024（Qin et al., 2023）。</p>
+
+<p>同期，UC Berkeley 的 <a href="https://arxiv.org/abs/2305.15334">Gorilla: Large Language Model Connected with Massive APIs</a>（Patil et al., 2023, arXiv: 2305.15334）通过对 LLaMA 微调并叠加文档检索器，使模型在 API 调用准确率上超越 GPT-4，并显著降低幻觉。Nexusflow 团队推出的 <a href="https://openreview.net/forum?id=Md6RUrGz67">NexusRaven: a commercially-permissive Language Model for function calling</a>（Srinivasan et al., 2023, NeurIPS 2023 Workshop）基于 CodeLlama-13B 微调，零样本函数调用匹敌 GPT-3.5，且不依赖 GPT-4 蒸馏数据，强调商业可用性。三者共同确立了"数据集构建 + 模型微调 + 自动评估"的工具使用研究范式。</p>
+
+<h3>二、框架编排：从提示模板到可编译计算图</h3>
+
+<p>随着工具调用能力成熟，研究重心转向如何系统性地编排多步推理与工具协作。Stanford 的 <a href="https://arxiv.org/abs/2310.03714">DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines</a>（Khattab et al., 2023, arXiv: 2310.03714）提出将 LM 流水线抽象为"文本转换图"，通过声明式模块与编译器自动优化提示、微调与推理策略的组合，几行代码即可让 GPT-3.5 自举出超越标准少样本提示 25% 以上的流水线，开创了"编程而非提示"的范式。</p>
+
+<p>工业界框架则走向生产化。<a href="https://github.com/langchain-ai/langgraph">LangGraph</a>（LangChain Inc., 2024）以有向图与状态机模型重构 Agent 执行流程，支持循环、条件分支、状态持久化与人机协作（human-in-the-loop），解决了传统 Agent 黑盒化问题。OpenAI 于 2025 年开源的 <a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a>（OpenAI, 2025）提供轻量级多 Agent 编排框架，支持 100+ 模型提供商，内置追踪（tracing）与 handoff 机制。Google 于 Cloud NEXT 2025 发布的 <a href="https://adk.dev/">Agent Development Kit (ADK)</a>（Google, 2025）则定位企业级多 Agent 全栈开发，支持 Python/Java/TypeScript 多语言。</p>
+
+<p>在垂直领域，<a href="https://arxiv.org/abs/2405.15793">SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</a>（Yang et al., 2024, NeurIPS 2024, arXiv: 2405.15793）提出专为 LM Agent 设计的 Agent-Computer Interface（ACI），使 Agent 能自主浏览代码仓库、编辑文件并执行测试，在 SWE-bench 上达 12.5% pass@1，揭示了"接口设计即性能"的重要洞察。</p>
+
+<h3>三、计算机操作：从 API 到完整 GUI</h3>
+
+<p>2024 年，Agent 的作用域从结构化 API 扩展到图形界面。Anthropic 于 2024 年 10 月发布 Claude 3.5 Computer Use，成为首个提供计算机操作公开测试的前沿模型。Show Lab 随即开展案例研究：<a href="https://arxiv.org/abs/2411.10323">The Dawn of GUI Agent: A Preliminary Case Study with Claude 3.5 Computer Use</a>（Hu et al., 2024, arXiv: 2411.10323）精心设计了跨多领域任务，验证了 Claude 3.5 在端到端"语言→桌面操作"上的前所未有的能力，同时揭示了规划、执行与批判（critic）环节的局限。</p>
+
+<p>在 Web 领域，<a href="https://github.com/browser-use/browser-use">browser-use</a>（Müller & Gregor, 2024）基于 Playwright 将 LLM 与浏览器自动化打通，GitHub 星标超 10 万，成为最受欢迎的开源 Web Agent 框架之一，支持自定义工具、多模型后端与生产级云服务。</p>
+
+<h3>四、开放协议：标准化互操作时代</h3>
+
+<p>工具与框架的爆发式增长催生了对标准化的迫切需求。2024 年 11 月，Anthropic 发布模型上下文协议（MCP），定义 AI 模型与外部工具间的双向通信与动态发现标准。<a href="https://arxiv.org/abs/2503.23278">Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions</a>（Hou et al., 2025, arXiv: 2503.23278）首次对 MCP 进行系统性研究，定义了 MCP 服务器四阶段生命周期（创建、部署、运营、维护）与涵盖 16 种威胁场景的安全分类体系。后续实证研究 <a href="https://arxiv.org/abs/2509.25292">A Measurement Study of Model Context Protocol Ecosystem</a>（arXiv: 2509.25292）进一步用 MCPCrawler 对 MCP 生态进行了大规模测量。</p>
+
+<p>2025 年 4 月，Google 发布 <a href="https://github.com/a2aproject/A2A">Agent2Agent (A2A) 协议</a>（Google, 2025），基于 JSON-RPC 2.0 与 Agent Cards 机制实现异构 Agent 间安全协作，同年 6 月捐赠给 Linux Foundation，获 150+ 组织支持。A2A 与 MCP 互补：MCP 连接 Agent 与工具，A2A 连接 Agent 与 Agent。</p>
+
+<p>同期，<a href="https://github.com/agentsmd/agents.md">AGENTS.md</a>（OpenAI/Google/Cursor, 2025）作为轻量级开放标准，以 Markdown 文件为 AI Coding Agent 提供项目级指引，被 60,000+ 开源项目采纳，兼容 GitHub Copilot、Cursor、OpenAI Codex 等主流工具。三者共同构成了 2025 年 Agent 互操作的标准基础设施。</p>
+
+<h3>五、Harness 演进脉络图</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────────────────────┐
+│              Harness（工具编排与框架）演进脉络 2023-2026                │
+└─────────────────────────────────────────────────────────────────────────┘
+
+[阶段一: 工具调用] 2023
+  │  Gorilla (2305.15334) ─── 大规模 API + 检索增强
+  │  ToolLLM/ToolBench (2307.16789) ─── 16000+ API, DFSDT, ICLR 2024
+  │  NexusRaven (NeurIPS 2023 WS) ─── 函数调用微调, 商业可用
+  │
+  ▼
+[阶段二: 框架编排] 2023-2025
+  │  DSPy (2310.03714) ─── 声明式计算图 + 编译器, "编程非提示"
+  │  LangGraph (2024) ─── 图状态机, 循环/分支/持久化
+  │  SWE-agent (2405.15793) ─── ACI 接口设计, NeurIPS 2024
+  │  OpenAI Agents SDK (2025) ─── 多 Agent 编排, 100+ 提供商
+  │  Google ADK (2025) ─── 企业级全栈多 Agent 开发
+  │
+  ▼
+[阶段三: 计算机操作] 2024-2025
+  │  Claude Computer Use (2411.10323) ─── 首个 GUI Agent 前沿模型
+  │  browser-use (2024) ─── Web 自动化, Playwright, 100k+ stars
+  │
+  ▼
+[阶段四: 开放协议] 2024-2026
+  │  MCP (2503.23278) ─── Agent↔工具 标准化通信
+  │  A2A 协议 (2025) ─── Agent↔Agent 互操作, Linux Foundation
+  │  AGENTS.md (2025) ─── 项目级 Agent 指引标准
+  │
+  ▼
+[趋势] 标准化 + 互操作 + 安全治理</code></pre>
+
+</section>
+
+<hr>
+
+<!-- ===== 第 5 章 ===== -->
+<section id="ch5" class="section-anchor">
+<h2>第 5 章：评测基准</h2>
+
+<h3>5.1 引言：Agent 评测的核心困境</h3>
+
+<p>大语言模型（LLM）Agent 的评测面临三重根本性挑战：<strong>环境的真实性</strong>、<strong>任务的开放性</strong>与<strong>评估的可靠性</strong>。传统 NLP 评测依赖于静态数据集和单一正确答案，而 Agent 评测要求在动态交互环境中执行多步操作，任务结果往往难以用简单匹配判定。此外，Agent 能力是多维度的——推理、工具使用、网页浏览、代码编写、多模态理解——单一基准难以全面覆盖。从 2023 年至今，评测基准经历了从单一任务环境到多维度综合评测、从学术合成环境到真实世界任务、从功能正确性到经济价值衡量的系统性演进。本章按评测维度梳理 12 项代表性工作，揭示这一领域的发展脉络与未来趋势。</p>
+
+<h3>5.2 综合能力评测</h3>
+
+<p><a href="https://arxiv.org/abs/2308.03688">AgentBench: Evaluating LLMs as Agents</a>（Liu et al., 2023, ICLR 2024, arXiv: 2308.03688）是首个系统评估 LLM 作为 Agent 能力的多维基准。它涵盖 <strong>8 个交互环境</strong>（包括操作系统、数据库、知识图谱、卡片游戏等），对商业和开源模型进行了大规模评测。核心贡献在于揭示了开源模型与顶级商业模型之间的显著性能差距，并系统识别了长期推理不足、决策能力弱和指令遵循差三大主要障碍。该工作确立了 LLM-as-Agent 评测的基本范式。</p>
+
+<p><a href="https://arxiv.org/abs/2311.12983">GAIA: a benchmark for General AI Assistants</a>（Mialon et al., 2023, Meta, arXiv: 2311.12983）提出了截然不同的评测哲学：任务对人类概念上简单，但对 AI 极具挑战。GAIA 包含 <strong>466 个真实世界问题</strong>，测试推理、多模态处理、网页浏览和工具使用四项基础能力的综合运用。实验显示人类准确率达 <strong>92%</strong>，而配备插件的 GPT-4 仅 <strong>15%</strong>，形成鲜明对比。GAIA 的设计理念挑战了"基准应越来越难"的主流趋势，强调 AGI 的实现需要 AI 在人类日常能力上达到同等鲁棒性。</p>
+
+<h3>5.3 工具使用评测</h3>
+
+<p><a href="https://arxiv.org/abs/2307.16789">ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs</a>（Qin et al., 2023, ICLR 2024 Spotlight, arXiv: 2307.16789）构建了覆盖 <strong>16,464 个真实 RESTful API</strong>（来自 RapidAPI Hub，跨 49 个类别）的 ToolBench 数据集，并提出了 DFS 决策树算法和 ToolEval 评估框架。微调得到的 ToolLLaMA 展现出与 ChatGPT 可比的工具使用能力，并能泛化到未见过的 API。该工作将工具使用评测从少量人工定义 API 扩展到大规模真实 API 生态。</p>
+
+<p><a href="https://arxiv.org/abs/2406.12045">τ-bench: A Benchmark for Tool-Agent-User Interaction in Dynamic Environments</a>（Yao et al., 2024, arXiv: 2406.12045）聚焦于 Agent 与用户动态交互并遵循领域特定规则的能力。涵盖零售和航空两个领域，通过比较对话结束时的数据库状态与目标状态进行评估。其核心创新是提出 <strong>pass^k 指标</strong>——衡量 Agent 在 k 次独立试验中全部成功的概率，揭示即使 GPT-4o 单次成功率接近 50%，其 pass^8 在零售领域仍不足 25%，暴露了当前 Agent 行为一致性和可靠性的严重不足。</p>
+
+<h3>5.4 软件工程评测</h3>
+
+<p><a href="https://arxiv.org/abs/2310.06770">SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</a>（Jimenez et al., 2023, ICLR 2024, arXiv: 2310.06770）从 12 个热门 Python 仓库的真实 GitHub issue-PR 对中构建了 <strong>2,294 个软件工程问题</strong>。模型需要理解跨多个函数和文件的代码库并生成修复方案，通过执行测试用例验证正确性。发布时最佳模型 Claude 2 仅解决 <strong>1.96%</strong> 的问题，揭示了传统代码生成与真实软件工程之间的巨大鸿沟。SWE-bench 迅速成为软件工程 Agent 评测的事实标准，催生了 SWE-agent、SWE-bench Multimodal 等后续工作。</p>
+
+<p><a href="https://arxiv.org/abs/2502.12115">SWE-Lancer: Can Frontier LLMs Earn $1 Million from Real-World Freelance Software Engineering Tasks?</a>（Miserendino et al., 2025, OpenAI, arXiv: 2502.12115）将软件工程评测推进到经济价值维度。该基准包含 <strong>1,400+ 个来自 Upwork 的真实自由职业任务</strong>，总价值 <strong>100 万美元</strong>，任务报酬从 50 美元到 32,000 美元不等。除独立工程任务（端到端测试验证）外，还引入管理决策任务——将模型的技术方案选择与原始工程经理的实际决策对比。研究发现前沿模型仍无法解决大多数任务，但通过将性能映射到货币价值，首次使 AI 工程能力的经济影响得以量化。</p>
+
+<h3>5.5 网页交互评测</h3>
+
+<p><a href="https://arxiv.org/abs/2306.06070">Mind2Web: Towards a Generalist Agent for the Web</a>（Deng et al., 2023, NeurIPS 2023 Spotlight, arXiv: 2306.06070）是首个面向通用 Web Agent 的数据集，覆盖 <strong>137 个真实网站、31 个领域的 2,000+ 任务</strong>。其核心创新在于使用小型语言模型预先过滤原始 HTML，再由 LLM 进行决策，显著提升了处理真实网页的效率和效果。实验显示该方案在未见网站和领域上具备一定泛化能力，但距离真正通用 Web Agent 仍有显著差距。</p>
+
+<p><a href="https://arxiv.org/abs/2307.13854">WebArena: A Realistic Web Environment for Building Autonomous Agents</a>（Zhou et al., 2023, ICLR 2024, arXiv: 2307.13854）构建了包含电子商务、社交论坛、协作开发和内容管理 <strong>四个全功能网站</strong>的可复现 Web 环境。与 Mind2Web 的静态数据集不同，WebArena 提供真实可交互的网站后端，支持端到端任务成功率评估。最佳 GPT-4 Agent 仅完成 <strong>14.41%</strong> 的任务，而人类达 <strong>78.24%</strong>，凸显了长程 Web 任务的巨大挑战。</p>
+
+<h3>5.6 操作系统与移动端评测</h3>
+
+<p><a href="https://arxiv.org/abs/2404.07972">OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</a>（Xie et al., 2024, NeurIPS 2024, arXiv: 2404.07972）是首个支持 Ubuntu、Windows 和 macOS 多操作系统的真实计算机环境，包含 <strong>369 个跨应用计算机任务</strong>。每个任务配备详细的初始状态配置和基于执行的评估脚本，确保可复现性。最佳模型成功率仅 <strong>12.24%</strong>，而人类达 <strong>72.36%</strong>。分析表明 GUI 定位和操作知识是两大核心瓶颈，为多模态通用 Agent 的开发提供了关键洞察。</p>
+
+<p><a href="https://arxiv.org/abs/2405.14573">AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents</a>（Rawles et al., 2024, Google, arXiv: 2405.14573）将 Agent 评测扩展到移动端，提供 <strong>20 个真实 Android 应用上的 116 个程序化任务</strong>。其独特之处在于任务以参数化方式动态生成，可用自然语言无限多种方式表达，支持大规模真实任务测试。最佳 Agent 仅完成 <strong>30.6%</strong> 的任务，且将桌面 Web Agent 适配到移动平台后效果显著下降，揭示了跨平台 Agent 迁移的挑战。</p>
+
+<h3>5.7 经济价值与多智能体评测</h3>
+
+<p><a href="https://arxiv.org/abs/2510.04374">GDPval: Evaluating AI Model Performance on Real-World Economically Valuable Tasks</a>（Patwardhan et al., 2025, OpenAI, arXiv: 2510.04374）代表了评测基准从学术功能正确性向现实经济价值衡量的范式转变。该基准覆盖美国 GDP 前 9 大行业的 <strong>44 个职业、220 个任务（gold subset）</strong>，任务由平均拥有 14 年经验的行业专业人士构建。研究发现前沿模型的表现随时间呈线性提升，已接近行业专家水平，且配合人类监督后在成本和速度上优于未辅助专家。GDPval 首次将评测与宏观经济指标（GDP 贡献）直接关联。</p>
+
+<p><a href="https://arxiv.org/abs/2503.01935">MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents</a>（Zhu et al., 2025, ACL 2025, arXiv: 2503.01935）填补了多智能体系统评测的空白。它覆盖研究协作、Minecraft 建造、狼人杀等 <strong>6 种交互场景</strong>，采用基于里程碑的 KPI 不仅评估任务完成度，还衡量协作与竞争质量。实验发现图结构（graph）协调拓扑表现最佳，认知规划策略将里程碑达成率提升 3%。该工作标志着 Agent 评测从单智能体向多智能体协作与竞争维度的拓展。</p>
+
+<h3>5.8 评测挑战与趋势总结</h3>
+
+<p>综观上述 12 项工作，Agent 评测基准呈现五条清晰趋势：</p>
+<ol>
+  <li><strong>从合成到真实</strong>：早期基准（如 AgentBench）使用部分合成环境，而 SWE-bench（真实 GitHub issue）、SWE-Lancer（真实 Upwork 任务）和 GDPval（真实职业任务）逐步将评测锚定到真实世界工作场景。</li>
+  <li><strong>从单一到多维</strong>：从 ToolBench 聚焦工具调用，到 GAIA 综合测试推理+多模态+浏览+工具，再到 OSWorld 考验跨应用操作系统操作，评测维度不断扩展。</li>
+  <li><strong>从功能正确性到可靠性</strong>：τ-bench 的 pass^k 指标开创性地关注 Agent 行为的一致性，而非仅单次成功率，反映了从"能做"到"可靠地做"的评估范式转变。</li>
+  <li><strong>从学术到经济价值</strong>：SWE-Lancer 将性能映射到美元价值，GDPval 直接关联 GDP 贡献，评测基准开始承担衡量 AI 经济影响的角色。</li>
+  <li><strong>从单智能体到多智能体</strong>：MultiAgentBench 开启了多 Agent 协作与竞争的系统化评测，反映了 Agent 研究从个体能力到集体智能的拓展。</li>
+</ol>
+
+<p>当前仍存在的核心挑战包括：长程任务的评估成本、开放式任务的评判标准、评测环境的可复现性，以及如何衡量 Agent 在安全性和伦理维度的表现。未来评测基准需要更紧密地结合真实部署场景，同时发展更高效的自动化评估方法。</p>
+
+<h3>5.9 评测基准演进脉络图</h3>
+
+<pre><code>Agent 评测基准演进脉络 (2023-2025)
+===========================================================================
+
+2023 Q2  2023 Q3       2023 Q4        2024 Q2       2024 Q2        2025 Q1     2025 Q3
+  |         |              |              |              |              |            |
+  v         v              v              v              v              v            v
+
+Mind2Web  AgentBench     GAIA          OSWorld       τ-bench      SWE-Lancer   GDPval
+(NeurIPS  (ICLR 2024)    (Meta)        (NeurIPS      (pass^k)     (OpenAI)     (OpenAI)
+ 2023)    8环境综合      466问题       2024)         可靠性       $1M价值      GDP关联
+ 137网站  ←─ 综合能力 ─→  人类92%       369任务       ←─ 一致性 ─→  1400任务     44职业
+          开源差距大      GPT-4 15%     多OS环境                    管理决策     接近专家
+                                                                        ↓
+  ToolLLM  WebArena      SWE-bench                   AndroidWorld             MultiAgentBench
+  (ICLR    (ICLR 2024)   (ICLR 2024)                 (Google)                 (ACL 2025)
+   2024)   4网站真实      2294 GitHub                 116任务移动端            6场景多Agent
+  16464    交互环境       issue                       20应用                   协作+竞争
+  API                    Claude 2: 1.96%             30.6%成功率              里程碑KPI
+    │         │              │                         │                        │
+    └─── 工具使用 ────┘    └── 软件工程 ──────────────┘                        │
+                              │                                               │
+                              └────── 经济价值 ────────────────────────────────┘
+                                      │
+                    单一任务 → 多维度综合 → 真实世界 → 经济价值 → 多智能体
+                    (2023)     (2023-24)    (2024)     (2025)     (2025)
+
+维度演进: 功能正确性 → 可靠性(pass^k) → 经济价值($/GDP) → 协作质量(KPI)
+环境演进: 合成/静态 → 真实交互 → 跨平台(OS/移动/Web) → 多智能体社会
+===========================================================================</code></pre>
+
+</section>
+
+<hr>
+
+<!-- ===== 结论 ===== -->
+<section id="conclusion" class="section-anchor">
+<h2>结论与展望</h2>
+
+<p>本综述系统梳理了 2022–2026 年大模型 Agent 研究的五大核心方向，覆盖 59 篇代表性论文与开放标准。纵观全局，Agent 研究正经历从"能力展示"到"工程可靠性"和"经济价值创造"的范式转变，具体体现在以下四个维度：</p>
+
+<div class="trend-box">
+<h4>1. 推理范式的深度累积</h4>
+<p>从 CoT 的线性推理到 LATS 的统一搜索框架，Agent 推理范式展现了清晰的组合式创新轨迹。2025 年的 Search-o1 标志着推理范式从提示工程向模型内化推理与外部工具深度融合的新阶段。未来，随着 o1/R1 类推理模型的普及，Agent 推理将从"提示驱动"转向"训练驱动 + 提示增强"的混合模式。</p>
+</div>
+
+<div class="trend-box">
+<h4>2. 记忆架构的主动化转型</h4>
+<p>记忆机制从被动存储演进到自主组织（A-MEM）、从原始文本升级到可执行知识（Voyager），RAG 与 Agent 记忆的深度融合（MemoRAG、Mem0）预示着记忆将成为 Agent 个性化与持续学习的核心基础设施。遗忘机制和冲突解决仍是未解难题，有待进一步突破。</p>
+</div>
+
+<div class="trend-box">
+<h4>3. 生态标准化与多智能体成熟</h4>
+<p>工具编排从封闭框架走向开放协议（MCP/A2A/AGENTS.md），多智能体系统从概念验证迈向工程成熟（稀疏通信优化、规模效应量化、涌现安全评估）。Agent 间的互操作性正在标准化，为大规模 Agent 协作网络奠定基础。</p>
+</div>
+
+<div class="trend-box">
+<h4>4. 评测范式的经济转向</h4>
+<p>评测基准从学术功能正确性走向经济价值衡量（SWE-Lancer 的美元映射、GDPval 的 GDP 关联）和可靠性评估（τ-bench 的 pass^k），反映了 Agent 研究从学术到产业的系统性成熟。未来评测需要更紧密地结合真实部署场景，同时发展安全性和伦理维度的评估方法。</p>
+</div>
+
+<p><strong>核心趋势</strong>：2025–2026 年 Agent 研究的核心矛盾已从"能不能做"转向"能不能可靠地、经济地、安全地做"。开放协议标准化、多智能体协作安全、以及真实世界经济价值评测，将成为未来 1–2 年最值得关注的研究方向。</p>
+</section>
+
+<hr>
+
+<!-- ===== 参考文献 ===== -->
+<section id="refs" class="section-anchor">
+<h2>完整参考文献</h2>
+
+<div class="references">
+
+<h3>第 1 章：经典范式演进（12 篇）</h3>
+<div class="ref-item">Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. <em>NeurIPS 2022</em>. <a href="https://arxiv.org/abs/2201.11903">arXiv:2201.11903</a></div>
+<div class="ref-item">Wang, X., Wei, J., Schuurmans, D., et al. (2022). Self-Consistency Improves Chain of Thought Reasoning in Language Models. <em>ICLR 2023</em>. <a href="https://arxiv.org/abs/2203.11171">arXiv:2203.11171</a></div>
+<div class="ref-item">Yao, S., Zhao, J., Yu, D., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. <em>ICLR 2023</em>. <a href="https://arxiv.org/abs/2210.03629">arXiv:2210.03629</a></div>
+<div class="ref-item">Schick, T., Dwivedi-Yu, J., Dessì, R., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. <em>NeurIPS 2023</em>. <a href="https://arxiv.org/abs/2302.04761">arXiv:2302.04761</a></div>
+<div class="ref-item">Shinn, N., Cassano, F., Berman, E., et al. (2023). Reflexion: Language Agents with Verbal Reinforcement Learning. <em>NeurIPS 2023</em>. <a href="https://arxiv.org/abs/2303.11366">arXiv:2303.11366</a></div>
+<div class="ref-item">Madaan, A., Tandon, N., Gupta, P., et al. (2023). Self-Refine: Iterative Refinement with Self-Feedback. <em>NeurIPS 2023</em>. <a href="https://arxiv.org/abs/2303.17651">arXiv:2303.17651</a></div>
+<div class="ref-item">Wang, L., Xu, W., Lan, Y., et al. (2023). Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models. <em>ACL 2023</em>. <a href="https://arxiv.org/abs/2305.04091">arXiv:2305.04091</a></div>
+<div class="ref-item">Yao, S., Yu, D., Zhao, J., et al. (2023). Tree of Thoughts: Deliberate Problem Solving with Large Language Models. <em>NeurIPS 2023</em>. <a href="https://arxiv.org/abs/2305.10601">arXiv:2305.10601</a></div>
+<div class="ref-item">Besta, M., Blach, N., Kubicek, A., et al. (2023). Graph of Thoughts: Solving Elaborate Problems with Large Language Models. <em>AAAI 2024</em>. <a href="https://arxiv.org/abs/2308.09687">arXiv:2308.09687</a></div>
+<div class="ref-item">Zhou, A., Yan, K., Shlapentokh-Rothman, M., et al. (2023). Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models. <em>ICML 2024</em>. <a href="https://arxiv.org/abs/2310.04406">arXiv:2310.04406</a></div>
+<div class="ref-item">Wang, Z., Cai, Y., Liang, Y., et al. (2023). Auto-GPT for Online Decision Making: Benchmarks and Additional Insights. <a href="https://arxiv.org/abs/2306.02224">arXiv:2306.02224</a></div>
+<div class="ref-item">Li, S., Sun, Y., et al. (2025). Search-o1: Agentic Search-Enhanced Large Reasoning Models. <em>EMNLP 2025</em>. <a href="https://arxiv.org/abs/2501.05366">arXiv:2501.05366</a></div>
+
+<h3>第 2 章：记忆机制（11 篇）</h3>
+<div class="ref-item">Sumers, T., Yao, S., Narasimhan, K., & Griffiths, T. (2023). Cognitive Architectures for Language Agents (CoALA). <em>TMLR 2024</em>. <a href="https://arxiv.org/abs/2309.02427">arXiv:2309.02427</a></div>
+<div class="ref-item">Zhang, Z., Mao, S., Dong, W., et al. (2024). A Survey on the Memory Mechanism of Large Language Model based Agents. <a href="https://arxiv.org/abs/2404.13501">arXiv:2404.13501</a></div>
+<div class="ref-item">Packer, C., Wooders, S., Lin, K., et al. (2023). MemGPT: Towards LLMs as Operating Systems. <a href="https://arxiv.org/abs/2310.08560">arXiv:2310.08560</a></div>
+<div class="ref-item">Park, J.S., O'Brien, J., Cai, C., et al. (2023). Generative Agents: Interactive Simulacra of Human Behavior. <em>UIST 2023</em>. <a href="https://arxiv.org/abs/2304.03442">arXiv:2304.03442</a></div>
+<div class="ref-item">Zhao, A., Huang, D., Narasimhan, K., et al. (2023). ExpeL: LLM Agents Are Experiential Learners. <em>AAAI 2024</em>. <a href="https://arxiv.org/abs/2308.10144">arXiv:2308.10144</a></div>
+<div class="ref-item">Wang, G., Xie, Y., Jiang, Y., et al. (2023). Voyager: An Open-Ended Embodied Agent with Large Language Models. NVIDIA. <a href="https://arxiv.org/abs/2305.16291">arXiv:2305.16291</a></div>
+<div class="ref-item">Liu, J., et al. (2023). Think-in-Memory: Recalling and Post-thinking Enable LLMs with Long-Term Memory. <a href="https://arxiv.org/abs/2311.08719">arXiv:2311.08719</a></div>
+<div class="ref-item">Zhong, W., Guo, J., et al. (2023). MemoryBank: Enhancing Large Language Models with Long-Term Memory. <a href="https://arxiv.org/abs/2305.10250">arXiv:2305.10250</a></div>
+<div class="ref-item">Xu, Z., Zhang, K.W., Liu, Y., et al. (2025). A-MEM: Agentic Memory for LLM Agents. <em>NeurIPS 2025</em>. <a href="https://arxiv.org/abs/2502.12110">arXiv:2502.12110</a></div>
+<div class="ref-item">Qian, H., et al. (2024). MemoRAG: Boosting Long Context Processing with Global Memory-Enhanced Retrieval Augmentation. <em>theWebConf 2025</em>. <a href="https://arxiv.org/abs/2409.05591">arXiv:2409.05591</a></div>
+<div class="ref-item">Chhikara, P., et al. (2025). Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory. <a href="https://arxiv.org/abs/2504.19413">arXiv:2504.19413</a></div>
+
+<h3>第 3 章：多智能体系统（11 篇）</h3>
+<div class="ref-item">Li, G., Hammoud, H.A., Itani, H., et al. (2023). CAMEL: Communicative Agents for "Mind" Exploration of Language Model Society. <em>NeurIPS 2023</em>. <a href="https://arxiv.org/abs/2303.17760">arXiv:2303.17760</a></div>
+<div class="ref-item">Qian, C., Cong, X., Yang, C., et al. (2023). ChatDev: Communicative Agents for Software Development. <em>ACL 2024</em>. <a href="https://arxiv.org/abs/2307.07924">arXiv:2307.07924</a></div>
+<div class="ref-item">Hong, S., Zhuge, M., Chen, J., et al. (2023). MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework. <em>ICLR 2024 (Oral)</em>. <a href="https://arxiv.org/abs/2308.00352">arXiv:2308.00352</a></div>
+<div class="ref-item">Du, Y., Li, S., Torralba, A., et al. (2023). Improving Factuality and Reasoning in Language Models with Multiagent Debate. <a href="https://arxiv.org/abs/2305.14325">arXiv:2305.14325</a></div>
+<div class="ref-item">Li, Y., Du, Y., Zhang, J., et al. (2024). Improving Multi-Agent Debate with Sparse Communication Topology. <em>EMNLP 2024 Findings</em>. <a href="https://arxiv.org/abs/2406.11776">arXiv:2406.11776</a></div>
+<div class="ref-item">Wu, Q., Bansal, G., Zhang, J., et al. (2023). AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. <em>ICLR 2024 Workshop</em>. <a href="https://arxiv.org/abs/2308.08155">arXiv:2308.08155</a></div>
+<div class="ref-item">Chen, W., Su, Y., Zuo, J., et al. (2023). AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors. <a href="https://arxiv.org/abs/2308.10848">arXiv:2308.10848</a></div>
+<div class="ref-item">Li, J., Zhang, Q., Yu, Y., et al. (2024). More Agents Is All You Need. <em>TMLR</em>. <a href="https://arxiv.org/abs/2402.05120">arXiv:2402.05120</a></div>
+<div class="ref-item">Erisken, S., Gothard, T., Leitgab, M., & Potham, R. (2025). MAEBE: Multi-Agent Emergent Behavior Framework. <em>ICML 2025 Workshop</em>. <a href="https://arxiv.org/abs/2506.03053">arXiv:2506.03053</a></div>
+<div class="ref-item">Tran, D.D., Nguyen, H.D., et al. (2025). A Survey on LLM-based Multi-Agent System: Recent Advances and Future Directions. <a href="https://arxiv.org/abs/2412.17481">arXiv:2412.17481</a></div>
+<div class="ref-item">Tran, K.-T., Dao, D., Nguyen, M.-D., et al. (2025). Multi-Agent Collaboration Mechanisms: A Survey of LLMs. <a href="https://arxiv.org/abs/2501.06322">arXiv:2501.06322</a></div>
+
+<h3>第 4 章：Harness — 工具编排与框架（13 项）</h3>
+<div class="ref-item">Qin, Y., Liang, S., Ye, Y., et al. (2023). ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs. <em>ICLR 2024 Spotlight</em>. <a href="https://arxiv.org/abs/2307.16789">arXiv:2307.16789</a></div>
+<div class="ref-item">Patil, S.G., Zhang, T., Wang, X., & Gonzalez, J.E. (2023). Gorilla: Large Language Model Connected with Massive APIs. <a href="https://arxiv.org/abs/2305.15334">arXiv:2305.15334</a></div>
+<div class="ref-item">Srinivasan, V.K., Dong, Z., Zhu, B., et al. (2023). NexusRaven: A Commercially-Permissive Language Model for Function Calling. <em>NeurIPS 2023 Workshop</em>. <a href="https://openreview.net/forum?id=Md6RUrGz67">OpenReview</a></div>
+<div class="ref-item">Khattab, O., Singhvi, A., Maheshwari, P., et al. (2023). DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines. <a href="https://arxiv.org/abs/2310.03714">arXiv:2310.03714</a></div>
+<div class="ref-item">Yang, J., Jimenez, C.E., Wettig, A., et al. (2024). SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering. <em>NeurIPS 2024</em>. <a href="https://arxiv.org/abs/2405.15793">arXiv:2405.15793</a></div>
+<div class="ref-item">Hu, S., Ouyang, M., Gao, D., & Shou, M.Z. (2024). The Dawn of GUI Agent: A Preliminary Case Study with Claude 3.5 Computer Use. <a href="https://arxiv.org/abs/2411.10323">arXiv:2411.10323</a></div>
+<div class="ref-item">Hou, X., Zhao, Y., Wang, S., & Wang, H. (2025). Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions. <a href="https://arxiv.org/abs/2503.23278">arXiv:2503.23278</a></div>
+<div class="ref-item">(2025). A Measurement Study of Model Context Protocol Ecosystem. <a href="https://arxiv.org/abs/2509.25292">arXiv:2509.25292</a></div>
+<div class="ref-item">LangChain Inc. (2024). LangGraph. <a href="https://github.com/langchain-ai/langgraph">GitHub</a></div>
+<div class="ref-item">OpenAI. (2025). OpenAI Agents SDK. <a href="https://github.com/openai/openai-agents-python">GitHub</a></div>
+<div class="ref-item">Google. (2025). Agent Development Kit (ADK). <a href="https://adk.dev/">adk.dev</a></div>
+<div class="ref-item">Müller, N. & Gregor, G. (2024). browser-use. <a href="https://github.com/browser-use/browser-use">GitHub</a></div>
+<div class="ref-item">Google. (2025). Agent2Agent (A2A) Protocol. <a href="https://github.com/a2aproject/A2A">GitHub</a></div>
+<div class="ref-item">OpenAI/Google/Cursor. (2025). AGENTS.md. <a href="https://github.com/agentsmd/agents.md">GitHub</a></div>
+
+<h3>第 5 章：评测基准（12 篇）</h3>
+<div class="ref-item">Liu, X., Yu, H., Zhang, H., et al. (2023). AgentBench: Evaluating LLMs as Agents. <em>ICLR 2024</em>. <a href="https://arxiv.org/abs/2308.03688">arXiv:2308.03688</a></div>
+<div class="ref-item">Mialon, M., Fourrier, C., Swift, C., et al. (2023). GAIA: A Benchmark for General AI Assistants. Meta. <a href="https://arxiv.org/abs/2311.12983">arXiv:2311.12983</a></div>
+<div class="ref-item">Qin, Y., Liang, S., Ye, Y., et al. (2023). ToolLLM. <em>ICLR 2024 Spotlight</em>. <a href="https://arxiv.org/abs/2307.16789">arXiv:2307.16789</a> <em>(同第 4 章)</em></div>
+<div class="ref-item">Yao, S., et al. (2024). τ-bench: A Benchmark for Tool-Agent-User Interaction in Dynamic Environments. <a href="https://arxiv.org/abs/2406.12045">arXiv:2406.12045</a></div>
+<div class="ref-item">Jimenez, C.E., Yang, J., Wettig, A., et al. (2023). SWE-bench: Can Language Models Resolve Real-World GitHub Issues? <em>ICLR 2024</em>. <a href="https://arxiv.org/abs/2310.06770">arXiv:2310.06770</a></div>
+<div class="ref-item">Miserendino, S., et al. (2025). SWE-Lancer: Can Frontier LLMs Earn $1 Million from Real-World Freelance Software Engineering Tasks? OpenAI. <a href="https://arxiv.org/abs/2502.12115">arXiv:2502.12115</a></div>
+<div class="ref-item">Deng, X., Gu, Y., Zheng, B., et al. (2023). Mind2Web: Towards a Generalist Agent for the Web. <em>NeurIPS 2023 Spotlight</em>. <a href="https://arxiv.org/abs/2306.06070">arXiv:2306.06070</a></div>
+<div class="ref-item">Zhou, S., Xu, F.E., Zhu, H., et al. (2023). WebArena: A Realistic Web Environment for Building Autonomous Agents. <em>ICLR 2024</em>. <a href="https://arxiv.org/abs/2307.13854">arXiv:2307.13854</a></div>
+<div class="ref-item">Xie, T., Zhang, D., Chen, J., et al. (2024). OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments. <em>NeurIPS 2024</em>. <a href="https://arxiv.org/abs/2404.07972">arXiv:2404.07972</a></div>
+<div class="ref-item">Rawles, S., et al. (2024). AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents. Google. <a href="https://arxiv.org/abs/2405.14573">arXiv:2405.14573</a></div>
+<div class="ref-item">Patwardhan, et al. (2025). GDPval: Evaluating AI Model Performance on Real-World Economically Valuable Tasks. OpenAI. <a href="https://arxiv.org/abs/2510.04374">arXiv:2510.04374</a></div>
+<div class="ref-item">Zhu, et al. (2025). MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents. <em>ACL 2025</em>. <a href="https://arxiv.org/abs/2503.01935">arXiv:2503.01935</a></div>
+
+<h3>综合综述</h3>
+<div class="ref-item">Wang, L., Ma, C., Feng, X., et al. (2023). A Survey on Large Language Model based Autonomous Agents. <a href="https://arxiv.org/abs/2308.11432">arXiv:2308.11432</a></div>
+<div class="ref-item">(2025). Large Language Model Agent: A Survey on Methodology, Infrastructure, and Applications. <a href="https://arxiv.org/abs/2503.21460">arXiv:2503.21460</a></div>
+<div class="ref-item">(2025). Retrieval-Augmented Generation: A Comprehensive Survey of RAG Evolution, Current Landscape and Future Directions. <a href="https://arxiv.org/abs/2506.00054">arXiv:2506.00054</a></div>
+
+</div>
+</section>
+
+<hr>
+
+<p style="text-align: center; color: var(--text-light); font-size: 0.88em;">
+报告完成日期：2026 年 7 月 6 日<br>
+论文总数：63 篇（含跨章重复引用）<br>
+所有 arXiv ID 均已通过搜索验证
+</p>
+
+<p style="text-align: center; color: var(--text-light); font-size: 0.82em; margin-top: 15px;">
+本报告由 AI 深度研究团队生成，重要决策请经专业人员核验。所有引用来源请用户在重要场景下二次核验时效性与真实性。
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+  <p>2026 LLM Agent Research Survey · Generated by Deep Research Team</p>
+  <p>Powered by WorkBuddy Deep Research Workflow</p>
+</div>
+
+</body>
+</html>

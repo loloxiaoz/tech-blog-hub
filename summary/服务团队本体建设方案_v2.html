@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在线教育服务团队本体建设方案 v2</title>
+<style>
+:root{
+  --g-950:#030712;--g-900:#111827;--g-800:#1F2937;--g-700:#374151;
+  --g-600:#4B5563;--g-500:#6B7280;--g-400:#9CA3AF;--g-300:#D1D5DB;
+  --g-200:#E5E7EB;--g-100:#F3F4F6;--g-50:#F9FAFB;--white:#FFFFFF;
+  --accent:#E8473F;--accent-dk:#CC3030;--accent-lt:rgba(232,71,63,.08);--accent-bd:rgba(232,71,63,.22);
+  --ink:#111827;--ink-2:#1F2937;--ink-3:#4B5563;--ink-4:#6B7280;
+  --bg:#F9FAFB;--surface:#FFFFFF;--border:#E5E7EB;
+  --sh-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
+  --sh-4:0 2px 8px rgba(0,0,0,.09),0 4px 8px rgba(0,0,0,.05);
+  --r-card:12px;--r-md:10px;--r-sm:8px;--r-xs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Hiragino Sans GB",-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink-2);background:var(--bg);min-height:100vh;line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+
+.cover{background:linear-gradient(160deg,#1A0808 0%,#2D1010 55%,#3A1515 100%);color:#fff;position:relative;overflow:hidden}
+.cover::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,71,63,.15) 0%,transparent 65%);top:-200px;right:-160px;pointer-events:none}
+.cover-inner{padding:72px 48px 64px;position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cover-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:6px;padding:5px 14px;font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:24px}
+.cover h1{font-size:40px;font-weight:700;line-height:1.12;letter-spacing:-.4px;margin-bottom:18px;max-width:720px}
+.cover-sub{font-size:16px;line-height:1.72;color:rgba(255,255,255,.58);max-width:620px;margin-bottom:48px}
+.cover-stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.cover-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:18px 26px;text-align:center;min-width:112px}
+.cover-stat .num{font-size:32px;font-weight:700;line-height:1;color:#fff}
+.cover-stat .lbl{font-size:11px;color:rgba(255,255,255,.48);margin-top:5px;letter-spacing:.8px;text-transform:uppercase}
+
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);border-bottom:2px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.topnav-inner{padding:0 48px;display:flex;align-items:stretch;height:64px;gap:0;justify-content:center}
+.topnav-links{display:flex;align-items:stretch;gap:0}
+.topnav-link{display:flex;align-items:center;padding:0 24px;font-size:14px;font-weight:500;color:var(--g-400);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;transition:color .15s,border-color .15s,background .15s;cursor:pointer}
+.topnav-link:hover{color:var(--ink);border-bottom-color:var(--g-300);background:var(--g-50)}
+.topnav-link.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.topnav-link .tl-num{font-size:11px;opacity:.45;letter-spacing:.3px;font-weight:400;margin-left:6px}
+
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+.container{padding:0 48px;max-width:1200px;margin:0 auto}
+section{padding:48px 0;border-bottom:1px solid var(--g-200)}
+section:last-child{border-bottom:none}
+.section-label{font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:"";width:18px;height:2px;background:var(--accent);border-radius:2px;flex-shrink:0}
+h2{font-size:26px;font-weight:700;color:var(--ink);margin-bottom:10px;letter-spacing:-.3px;line-height:1.28}
+h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;margin-top:20px}
+.lead{font-size:15px;color:var(--ink-3);margin-bottom:28px;line-height:1.80}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:22px;box-shadow:var(--sh-1);transition:box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.card:hover{box-shadow:var(--sh-4);transform:translateY(-2px)}
+.card-top::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-card) var(--r-card) 0 0;background:linear-gradient(90deg,var(--g-800),var(--accent))}
+.card h3{font-size:15px;margin-bottom:6px;color:var(--ink);font-weight:600;margin-top:0}
+.card p{font-size:15px;margin:0;color:var(--ink-3);line-height:1.65}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:var(--r-sm);margin:20px 0}
+.callout-red{background:var(--accent-lt);border:1px solid var(--accent-bd);border-left:3px solid var(--accent)}
+.callout-gray{background:var(--g-50);border:1px solid var(--g-200);border-left:3px solid var(--g-500)}
+.callout h4{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.callout p{margin:0;font-size:15px;color:var(--ink-3);line-height:1.65}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.kpi-card{text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:24px 14px;box-shadow:var(--sh-1);position:relative;overflow:hidden}
+.kpi-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g-800),var(--accent))}
+.kpi-num{font-size:36px;font-weight:700;line-height:1;margin-bottom:8px;letter-spacing:-1px;color:var(--accent)}
+.kpi-label{font-size:12px;color:var(--ink-3);line-height:1.4}
+
+.code-box{background:var(--g-50);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:20px 24px;font-family:'SF Mono','Cascadia Code',monospace;font-size:13px;color:var(--ink-3);line-height:1.85;margin:20px 0;box-shadow:var(--sh-1);overflow-x:auto;white-space:pre-wrap}
+.code-box .hl{color:var(--accent);font-weight:600}
+.code-box .h2{color:#6366f1;font-weight:600}
+.code-box .h3{color:#059669;font-weight:600}
+.code-box .c{color:var(--g-400)}
+
+.pl-board{border-radius:var(--r-card);border:1px solid var(--border);padding:24px;background:var(--surface);box-shadow:var(--sh-1);margin-top:24px}
+.pl-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pl-step{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 12px;min-height:90px;box-shadow:var(--sh-1)}
+.pl-step::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;border-radius:var(--r-md) var(--r-md) 0 0;background:linear-gradient(90deg,var(--g-800),var(--accent))}
+.pl-step:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--accent);z-index:2;font-weight:700}
+.pl-num{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.8px;background:var(--g-100);border:1px solid var(--g-300);border-radius:100px;padding:2px 8px;margin-bottom:6px;color:var(--g-600)}
+.pl-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3}
+.pl-desc{font-size:13px;color:var(--ink-3);margin-top:4px;line-height:1.5}
+
+.phases{display:flex;flex-direction:column;gap:0;margin-top:28px}
+.phase{display:flex;gap:20px;position:relative}
+.phase-left{display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0}
+.phase-dot{width:36px;height:36px;border-radius:8px;background:var(--g-800);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;z-index:1}
+.phase-dot.active{background:var(--accent)}
+.phase-line{width:1px;flex:1;background:var(--g-200);margin:4px 0;min-height:20px}
+.phase:last-child .phase-line{display:none}
+.phase-body{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:22px 24px;flex:1;margin-bottom:12px;box-shadow:var(--sh-1)}
+.phase-tag{font-size:11px;font-weight:600;letter-spacing:.8px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:10px;color:#fff;text-transform:uppercase;background:var(--g-800)}
+.phase-tag.current{background:var(--accent)}
+.phase-body h3{margin-bottom:8px;color:var(--ink);font-size:16px;font-weight:700;margin-top:0}
+.phase-items{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.phase-item{background:var(--g-50);border:1px solid var(--g-200);border-radius:var(--r-sm);padding:10px 13px}
+.phase-item-title{font-weight:600;margin-bottom:2px;color:var(--ink);font-size:13px}
+.phase-item-desc{color:var(--ink-3);font-size:13px;line-height:1.55}
+.phase-ok{margin-top:14px;padding:12px 16px;border-radius:var(--r-sm);background:var(--accent-lt);border:1px solid var(--accent-bd);border-left:3px solid var(--accent);font-size:13px;color:var(--accent-dk);font-weight:500}
+
+.arch{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:28px;margin:24px 0;box-shadow:var(--sh-4)}
+.arch-layer{border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 18px;margin-bottom:8px;background:var(--g-50);display:grid;grid-template-columns:180px 1fr;align-items:start;gap:16px}
+.arch-layer-name{font-size:14px;font-weight:700;color:var(--ink)}
+.arch-layer-sub{font-size:11px;color:var(--g-500);margin-top:2px}
+.arch-layer-desc{font-size:14px;color:var(--ink-3);line-height:1.6}
+
+table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:14px;border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-1)}
+thead tr{background:var(--accent-lt);border-bottom:2px solid var(--accent-bd)}
+thead th{padding:12px 16px;text-align:left;font-weight:600;font-size:11px;color:var(--ink-3);letter-spacing:.6px;text-transform:uppercase}
+tbody tr{border-bottom:1px solid var(--g-200);background:var(--surface)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(even){background:var(--g-50)}
+tbody tr:hover{background:var(--accent-lt)}
+tbody td{padding:12px 16px;color:var(--ink-3);vertical-align:top}
+tbody td:first-child{font-weight:600;color:var(--ink)}
+
+.badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600}
+.badge-p0{background:var(--accent-lt);color:var(--accent-dk);border:1px solid var(--accent-bd)}
+.badge-p1{background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE}
+.badge-p2{background:var(--g-100);color:var(--g-600);border:1px solid var(--g-300)}
+.badge-ctx{background:var(--g-50);color:var(--g-500);border:1px solid var(--g-200)}
+.badge-evd{background:#F3F4F6;color:var(--g-600);border:1px solid var(--g-300)}
+.badge-evt{background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE}
+.badge-st{background:var(--accent-lt);color:var(--accent-dk);border:1px solid var(--accent-bd)}
+.badge-p3{background:var(--g-50);color:var(--g-500);border:1px solid var(--g-200)}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.role-card{border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden;background:var(--surface);box-shadow:var(--sh-1)}
+.role-header{padding:12px 18px;font-weight:600;font-size:14px;background:var(--g-50);border-bottom:1px solid var(--border);color:var(--ink)}
+.role-body{padding:14px 18px}
+.role-item{display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--ink-3);align-items:flex-start}
+.role-item::before{content:"·";color:var(--accent);flex-shrink:0;font-size:18px;line-height:1;font-weight:900}
+
+.onto-block{margin-top:32px;padding-top:8px;border-top:2px solid var(--g-100)}
+.onto-block:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.onto-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.onto-header h3{margin:0;font-size:18px}
+
+.principle-row{display:flex;align-items:flex-start;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);border-left:3px solid var(--accent);margin-bottom:8px}
+.principle-num{width:26px;height:26px;min-width:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.principle-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.principle-desc{font-size:13px;color:var(--ink-3)}
+
+.layer-stack{display:flex;flex-direction:column;gap:8px;margin:24px 0}
+.layer-item{padding:16px 20px;border-radius:var(--r-sm);border:1px solid var(--border);position:relative}
+.layer-item.l1{background:rgba(232,71,63,.06);border-color:rgba(232,71,63,.25);border-left:4px solid var(--accent)}
+.layer-item.l2{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.2);border-left:4px solid #6366f1;margin-left:24px}
+.layer-item.l3{background:rgba(5,150,105,.06);border-color:rgba(5,150,105,.2);border-left:4px solid #059669;margin-left:48px}
+.layer-item.l4{background:var(--g-50);border-left:4px solid var(--g-400);margin-left:72px}
+.layer-tag{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;color:var(--g-500)}
+.layer-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.layer-desc{font-size:13px;color:var(--ink-3)}
+
+.footer{background:var(--g-900);color:rgba(255,255,255,.28);text-align:center;padding:28px 56px;font-size:12px}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;font-size:14px;padding:8px 16px;background:var(--accent);color:#fff;border-radius:var(--r-xs);z-index:9999;text-decoration:none}
+.skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;overflow:visible}
+section a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+section a:hover{border-bottom-color:var(--accent)}
+
+.arch-layer{border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 18px;margin-bottom:8px;background:var(--g-50);display:grid;grid-template-columns:200px 1fr;align-items:start;gap:16px}
+.arch-layer-name{font-size:14px;font-weight:700;color:var(--ink)}
+.arch-layer-sub{font-size:11px;color:var(--g-500);margin-top:2px}
+.arch-layer-desc{font-size:14px;color:var(--ink-3);line-height:1.6;margin-bottom:10px}
+.arch-layer-meta{border-top:1px solid var(--border);padding-top:9px;display:flex;flex-direction:column;gap:4px}
+.arch-layer-meta>div{font-size:13px;color:var(--ink-4);line-height:1.6}
+.alm-key{display:inline-block;font-size:11px;font-weight:600;color:var(--ink-3);background:var(--g-200);border-radius:3px;padding:1px 7px;margin-right:7px;letter-spacing:.2px;white-space:nowrap}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.track{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:20px;box-shadow:var(--sh-1)}
+.track-h{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.track-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.track-items{display:flex;flex-direction:column;gap:6px}
+.track-item{background:var(--g-50);border:1px solid var(--g-200);border-radius:var(--r-xs);padding:9px 12px;font-size:13px;color:var(--ink-3);border-left:3px solid var(--g-300);line-height:1.5}
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.risk-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:18px 20px;box-shadow:var(--sh-1)}
+.risk-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.risk-body{font-size:13px;color:var(--ink-3);line-height:1.7}
+.risk-body strong{color:var(--ink);font-weight:600}
+.badge-red{background:var(--accent-lt);color:var(--accent-dk);border:1px solid var(--accent-bd)}
+.badge-gray{background:var(--g-100);color:var(--g-600);border:1px solid var(--g-300)}
+.badge-dark{background:var(--g-800);color:#fff;border:1px solid var(--g-700)}
+.dual-roadmap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.dual-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:20px;box-shadow:var(--sh-1)}
+.dual-col-h{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--accent-bd)}
+
+.stu-hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:24px 28px;margin:24px 0;box-shadow:var(--sh-4);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.stu-hero-main h3{font-size:20px;font-weight:700;color:var(--ink);margin:0 0 6px}
+.stu-meta{font-size:13px;color:var(--ink-3);line-height:1.7}
+.stu-meta span{display:inline-block;margin-right:14px}
+.stu-stage{text-align:right}
+.stu-stage-tag{display:inline-block;background:var(--accent-lt);color:var(--accent-dk);border:1px solid var(--accent-bd);border-radius:100px;padding:4px 12px;font-size:11px;font-weight:600;margin-bottom:8px}
+.stu-stage-desc{font-size:12px;color:var(--ink-4);max-width:200px;margin-left:auto;line-height:1.5}
+
+.mem-profile{margin:24px 0}
+
+.onto-8-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.onto-state-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--sh-1)}
+.onto-state-h{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--g-200);background:var(--g-50);font-size:13px;font-weight:700;color:var(--ink)}
+.onto-state-h .num{font-size:11px;color:var(--g-500);font-weight:600;min-width:18px}
+.onto-state-body{padding:10px 14px 12px}
+.onto-dim{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
+.onto-dim:last-child{margin-bottom:0}
+.onto-dim-name{color:var(--ink-4);width:72px;flex-shrink:0;line-height:1.35}
+.onto-dim-bar{flex:1;height:6px;background:var(--g-100);border-radius:100px;overflow:hidden}
+.onto-dim-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--g-400),var(--accent))}
+.onto-dim-val{color:var(--accent-dk);font-weight:700;font-size:11px;width:36px;text-align:right;flex-shrink:0}
+.onto-dim-txt{flex:1;color:var(--ink-2);line-height:1.45;font-size:12px}
+.onto-trail{display:flex;flex-direction:column;gap:0;font-size:12px;color:var(--ink-3)}
+.onto-trail-node{display:flex;gap:8px;padding:6px 0;border-left:2px solid var(--g-200);margin-left:6px;padding-left:12px;position:relative}
+.onto-trail-node::before{content:"";position:absolute;left:-5px;top:10px;width:8px;height:8px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.onto-trail-node:last-child{border-left-color:transparent}
+.onto-trail-node .t{font-size:10px;color:var(--g-500);font-weight:600;min-width:52px}
+.onto-strat-row{font-size:12px;padding:6px 8px;background:var(--g-50);border-radius:var(--r-xs);border:1px solid var(--g-200);margin-bottom:5px;line-height:1.5}
+.onto-strat-row.active{border-color:var(--accent-bd);background:var(--accent-lt)}
+.onto-strat-row:last-child{margin-bottom:0}
+.onto-action-bar{margin-top:20px;padding:16px 20px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);border-left:3px solid var(--accent)}
+.onto-action-bar .lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.onto-action-bar .txt{font-size:13px;color:var(--ink-3);line-height:1.6}
+.mem-layers{display:flex;flex-direction:column;gap:10px}
+.mem-layer{border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;background:var(--surface);box-shadow:var(--sh-1)}
+.mem-layer-h{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--g-200);font-size:13px;font-weight:700;color:var(--ink)}
+.mem-layer-h .cnt{font-size:11px;font-weight:600;color:var(--g-500);background:var(--g-100);border-radius:100px;padding:2px 9px}
+.mem-layer.l-core .mem-layer-h{background:rgba(232,71,63,.06);border-left:4px solid var(--accent)}
+.mem-layer.l-work .mem-layer-h{background:rgba(99,102,241,.06);border-left:4px solid #6366f1}
+.mem-layer.l-event .mem-layer-h{background:rgba(5,150,105,.06);border-left:4px solid #059669}
+.mem-layer.l-mental .mem-layer-h{background:rgba(107,114,128,.08);border-left:4px solid var(--g-500)}
+.mem-items{padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.mem-item{display:grid;grid-template-columns:140px 1fr auto;gap:10px;font-size:12px;padding:7px 10px;background:var(--g-50);border-radius:var(--r-xs);border:1px solid var(--g-200);align-items:start}
+.mem-item .k{color:var(--ink-4);font-weight:500;line-height:1.45}
+.mem-item .v{color:var(--ink-2);line-height:1.45}
+.mem-item .tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;white-space:nowrap;margin-top:1px}
+.mem-item .tag.ctx{background:var(--g-100);color:var(--g-600);border:1px solid var(--g-300)}
+.mem-item .tag.evt{background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE}
+.mem-item .tag.evd{background:#F3F4F6;color:var(--g-600);border:1px solid var(--g-300)}
+.mem-item .tag.st{background:var(--accent-lt);color:var(--accent-dk);border:1px solid var(--accent-bd)}
+
+.onto-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:20px;box-shadow:var(--sh-4);position:sticky;top:80px}
+.onto-panel h4{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid var(--accent-bd)}
+.onto-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.onto-row:last-child{margin-bottom:0}
+.onto-name{font-size:12px;color:var(--ink-3);width:72px;flex-shrink:0}
+.onto-bar{flex:1;height:8px;background:var(--g-100);border-radius:100px;overflow:hidden}
+.onto-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--g-400),var(--accent))}
+.onto-val{font-size:12px;font-weight:700;color:var(--accent);width:28px;text-align:right;flex-shrink:0}
+.onto-action{margin-top:16px;padding:12px 14px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);border-left:3px solid var(--accent)}
+.onto-action .lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.onto-action .txt{font-size:12px;color:var(--ink-3);line-height:1.55}
+
+.flow-legend{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
+.flow-legend span{font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
+.flow-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+@media(max-width:1024px){
+  .container{padding:0 32px}
+  .arch-layer{grid-template-columns:1fr}
+  .pl-flow{grid-template-columns:repeat(3,1fr)}
+  .pl-flow[style*="repeat(4"]{grid-template-columns:repeat(2,1fr)}
+  .pl-step:nth-child(3)::after{display:none}
+}
+@media(max-width:768px){
+  .cover-inner{padding:36px 20px}.cover h1{font-size:28px}
+  .container{padding:0 20px}
+  .g2,.g3,.g4,.kpi-grid,.role-grid,.phase-items,.pl-flow,.tracks,.risk-grid,.dual-roadmap,.arch-layer{grid-template-columns:1fr}
+  .topnav-inner{padding:0 16px;height:52px;overflow-x:auto}
+  .topnav-link{padding:0 14px;font-size:13px}
+  .pl-step:not(:last-child)::after{display:none}
+  .layer-item.l2,.layer-item.l3,.layer-item.l4{margin-left:0}
+  .mem-profile{grid-template-columns:1fr}
+  .onto-8-grid{grid-template-columns:1fr}
+  .stu-hero{grid-template-columns:1fr}
+  .stu-stage{text-align:left}
+  .stu-stage-desc{margin-left:0;max-width:none}
+  .mem-item{grid-template-columns:1fr;gap:4px}
+  table{display:block;overflow-x:auto}
+  .phase{flex-direction:column}
+  .phase-left{flex-direction:row;width:100%;margin-bottom:8px}
+  .phase-line{width:auto;height:1px;flex:1;margin:0 8px}
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-badge">学员记忆 · 本体建设 v2 · 2026</div>
+    <h1>在线教育服务团队<br>本体建设方案</h1>
+    <p class="cover-sub">以家庭成长本体为骨架，对外一个「班主任 AI」，对内按服务 / 规划 / 学情 / 续报模块拆分；以四层记忆系统为底座，实现事件→状态→动作的闭环落地</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="num">8</div><div class="lbl">核心本体</div></div>
+      <div class="cover-stat"><div class="num">4</div><div class="lbl">记忆层级</div></div>
+      <div class="cover-stat"><div class="num">1</div><div class="lbl">对外 AI 产品</div></div>
+      <div class="cover-stat"><div class="num">294</div><div class="lbl">记忆标签</div></div>
+    </div>
+  </div>
+</div>
+
+<a href="#main-content" class="skip-link">跳转到主要内容</a>
+
+<nav class="topnav" aria-label="主导航"><div class="topnav-inner">
+  <div class="topnav-links" role="tablist">
+    <a id="tab-overview-trigger" class="topnav-link active" role="tab" aria-selected="true" aria-controls="tab-overview" tabindex="0" onclick="switchTab('overview',event)" onkeydown="handleTabKey(event,'overview')">总体判断<span class="tl-num">01</span></a>
+    <a id="tab-ontology-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-ontology" tabindex="-1" onclick="switchTab('ontology',event)" onkeydown="handleTabKey(event,'ontology')">本体建设<span class="tl-num">02</span></a>
+    <a id="tab-memory-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-memory" tabindex="-1" onclick="switchTab('memory',event)" onkeydown="handleTabKey(event,'memory')">记忆系统<span class="tl-num">03</span></a>
+    <a id="tab-mem0-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-mem0" tabindex="-1" onclick="switchTab('mem0',event)" onkeydown="handleTabKey(event,'mem0')">Mem0 选型<span class="tl-num">04</span></a>
+    <a id="tab-mapping-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-mapping" tabindex="-1" onclick="switchTab('mapping',event)" onkeydown="handleTabKey(event,'mapping')">标签映射<span class="tl-num">05</span></a>
+    <a id="tab-roadmap-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-roadmap" tabindex="-1" onclick="switchTab('roadmap',event)" onkeydown="handleTabKey(event,'roadmap')">落地路线<span class="tl-num">06</span></a>
+    <a id="tab-refs-trigger" class="topnav-link" role="tab" aria-selected="false" aria-controls="tab-refs" tabindex="-1" onclick="switchTab('refs',event)" onkeydown="handleTabKey(event,'refs')">参考资料<span class="tl-num">07</span></a>
+  </div>
+</div></nav>
+
+<div class="container" id="main-content">
+
+<!-- TAB 1: 总体判断 -->
+<div id="tab-overview" class="tab-panel active" role="tabpanel">
+
+<section>
+  <div class="section-label">Core Insight</div>
+  <h2>核心判断：先建什么、不先建什么</h2>
+  <p class="lead">综合四份参考文档的共识：不要先做知识点图谱或大而全用户画像，而要先做「家庭成长本体」——以家庭为中心、以因果结构为骨架、以服务动作为出口。</p>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>本体 vs 标签体系</h4>
+      <p>用户画像回答「这个孩子是什么样的人」；本体论回答「这个教育世界由什么构成，以及它们之间是什么关系」。A1-A7、续报概率、城市线标签保留为<strong>观测层</strong>；本体是<strong>驱动层</strong>——服务团队日常看本体状态，管理层看观测指标。294 个记忆标签是<strong>实现层的原材料</strong>，经提取与收敛后写入本体状态，而非平行维护两套认知结构。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gray" style="margin-top:16px">
+    <div>
+      <h4>v2 融合说明：本体骨架 + 记忆底座</h4>
+      <p>本版在 v1「家庭成长本体 + 班主任 AI 四模块」方案基础上，融合《学员记忆系统技术规划》中的<strong>四层记忆架构、提取流水线、证据治理与实施路径</strong>。分工明确：<strong>本体定义「理解什么、推动什么」</strong>；<strong>记忆系统定义「怎么存、怎么取、怎么迭代」</strong>。具体存储/检索组件不在本文绑定，工程阶段再选型——Mem0 等候选对比见 <a href="#" onclick="switchTab('mem0',event);return false">Mem0 选型</a> 章节。</p>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card card-top"><h3>理解用户</h3><p>这个家庭焦虑什么、信任到哪、卡在哪——不是「属于哪个标签」。</p></div>
+    <div class="card card-top"><h3>推动成长</h3><p>孩子是否在持续成长，家庭是否感知到价值——正价课的核心，不是续报概率。</p></div>
+    <div class="card card-top"><h3>驱动动作</h3><p>服务团队下一步该做什么——状态 → 策略 → 动作，而非 SOP 群发。</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Service Role Principles</div>
+  <h2>服务角色原则</h2>
+  <p class="lead">本体建设必须对齐真实的组织分工。在本方案中，前台服务以<strong>班主任</strong>为唯一主角色——规划、续报不再拆成独立岗位来设计本体。</p>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>核心原则：一个班主任，全程负责</h4>
+      <p><strong>班主任 = 规划师 = 续报顾问</strong>。班主任既能做学情/课程规划，也能做续报跟进，同时承担日常服务。本体与数字分身按<strong>家庭 + 业务阶段</strong>组织，不按「规划师岗 / 续报岗」拆两套认知结构。</p>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin:24px 0">
+    <div class="principle-row">
+      <div class="principle-num">1</div>
+      <div><div class="principle-title">统一前台角色，不按岗位名拆本体</div><div class="principle-desc">参考文档中的「规划师」「续报顾问」「AI 助教」等能力，分别归入真人班主任或「班主任 AI」的内置模块。避免为每个历史岗位名各建一套状态视图或独立 AI 产品。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">2</div>
+      <div><div class="principle-title">班主任职责一体：服务 + 规划 + 续报</div><div class="principle-desc">日常服务（关系维护、成长反馈）· 学情规划（路径、选课、学习方案）· 续报跟进（窗口判断、续报方案）—— 同一角色、同一家庭分身、同一套本体。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">3</div>
+      <div><div class="principle-title">本体按业务阶段激活，不按岗位分配</div><div class="principle-desc">私域/299/正价/续报期激活不同本体子集，但消费者始终是班主任（转化前期可由 LP 接力，成交后交给班主任全程承接）。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">4</div>
+      <div><div class="principle-title">一个分身，体验连续、不掉链子</div><div class="principle-desc">LP 转化期积累的家庭理解决须无缝继承到班主任；班主任在服务期沉淀的规划与关系资产，须在续报期直接可用，不得因「换岗/换系统」重新认识用户。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">5</div>
+      <div><div class="principle-title">AI 按工作场景输出，而非按旧岗位输出</div><div class="principle-desc">由本体状态自动判断当前应偏服务、规划、学情还是续报，班主任 AI 统一呈现结果—— 班主任无需切换多个 AI 产品，也不需先选「我是规划师还是续报顾问」。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">6</div>
+      <div><div class="principle-title">对外一个「班主任 AI」，对内按模块拆分</div><div class="principle-desc">对外只暴露一个 AI 产品名；对内按<strong>服务、规划、学情、续报</strong>四模块实现，共用同一家庭数字分身与本体，模块间可编排、可独立迭代，不对外暴露边界。</div></div>
+    </div>
+    <div class="principle-row">
+      <div class="principle-num">7</div>
+      <div><div class="principle-title">本体同时服务班主任与班主任 AI，不按消费者拆套</div><div class="principle-desc">本体是家庭数字分身的骨架，班主任（真人）与班主任 AI 共用同一套读写。真人据此决策和执行，AI 据此推理和生成——不是给班主任建一套、给 AI 再建一套。</div></div>
+    </div>
+  </div>
+
+  <div class="code-box"><span class="hl">真人前台角色</span>
+
+<span class="h2">班主任</span>  <span class="c">唯一主角色 · 服务 + 规划 + 续报</span>
+    ├── 日常服务 · 学情规划 · 续报跟进
+    └── 使用「班主任 AI」辅助决策与执行
+
+<span class="h2">LP</span>  <span class="c">转化前期接力 · 私域/首转</span>
+    └── 成交后状态移交班主任
+
+<span class="hl">对外 AI 产品（一个）</span>
+
+<span class="h2">班主任 AI</span>  <span class="c">班主任的唯一 AI 搭档 · 共用家庭数字分身</span>
+    ├── <span class="h3">服务模块</span>  关系维护、成长反馈、个性化话术、今日任务
+    ├── <span class="h3">规划模块</span>  路径建议、选课/排课、学习方案（原规划师）
+    ├── <span class="h3">学情模块</span>  学情诊断、干预建议、课堂/作业分析（原 AI 助教）
+    └── <span class="h3">续报模块</span>  续报窗口、续报方案、扩科建议（原续报顾问）</div>
+
+  <h3 style="margin-top:32px">班主任 AI · 四模块一览</h3>
+  <div class="pl-board"><div class="pl-flow" style="grid-template-columns:repeat(4,1fr)">
+    <div class="pl-step"><div class="pl-num">服务</div><div class="pl-title">服务模块</div><div class="pl-desc">关系维护、成长反馈、个性化沟通、今日任务</div></div>
+    <div class="pl-step"><div class="pl-num">规划</div><div class="pl-title">规划模块</div><div class="pl-desc">路径建议、选课排课、学习方案</div></div>
+    <div class="pl-step"><div class="pl-num">学情</div><div class="pl-title">学情模块</div><div class="pl-desc">诊断分析、干预建议、学情事件写入</div></div>
+    <div class="pl-step"><div class="pl-num">续报</div><div class="pl-title">续报模块</div><div class="pl-desc">续报窗口、续报方案、扩科时机</div></div>
+  </div></div>
+  <p style="font-size:14px;color:var(--ink-3);margin-top:12px">模块路由由本体状态自动决定：例如信任感低 → 偏服务模块；成长停滞 → 偏学情+规划；续报准备度高 → 偏续报模块。班主任只看到一个统一的 AI 界面。</p>
+</section>
+
+<section>
+  <div class="section-label">Architecture</div>
+  <h2>一套本体、分阶段激活</h2>
+  <p class="lead">299 体验课、正价课、私域保温共用「家庭成长本体」，不同业务阶段激活不同子集。</p>
+
+  <div class="layer-stack">
+    <div class="layer-item l1">
+      <div class="layer-tag">第一层 · 服务驱动核心 · 优先建设</div>
+      <div class="layer-title">家庭决策本体 · 关系本体 · 决策/转化状态本体 · 孩子成长本体（精简）</div>
+      <div class="layer-desc">解决「理解用户、知道卡在哪、推动首转/保温」—— V1 控制在 15~20 个状态维度</div>
+    </div>
+    <div class="layer-item l2">
+      <div class="layer-tag">第二层 · 正价课增值 · 3~6 个月</div>
+      <div class="layer-title">家庭满意本体 · 成长价值本体 · 成长轨迹本体 · 续报准备度本体</div>
+      <div class="layer-desc">续报来自家庭满意与成长感知，不是围绕「续报概率」设计本体</div>
+    </div>
+    <div class="layer-item l3">
+      <div class="layer-tag">第三层 · 动作闭环 · 6~12 个月</div>
+      <div class="layer-title">成长路径库 · 干预/策略本体</div>
+      <div class="layer-desc">从高转化/高续报家庭归纳路径，绑定「状态 → 策略 → 动作」规则</div>
+    </div>
+    <div class="layer-item l4">
+      <div class="layer-tag">第四层 · 教研复用 · 按需接入</div>
+      <div class="layer-title">知识/能力本体 · 学习行为本体</div>
+      <div class="layer-desc">复用已有学情数据，作为事件源输入状态推断——服务团队消费，不必从零建设</div>
+    </div>
+  </div>
+
+  <div class="code-box"><span class="hl">[ 原始数据 ]</span>  <span class="c">微信 / 电话 / 课堂 / 作业 / CRM</span>
+    │
+    ▼ <span class="c">提取事件，不打标签</span>
+<span class="h2">[ 事件 Event ]</span>  <span class="c">「家长说孩子主动看书了」→ 主动阅读</span>
+    │
+    ▼ <span class="c">映射状态，可累积</span>
+<span class="h3">[ 状态 State ]</span>  <span class="c">阅读兴趣:40 → 50 · 老师信任:35 → 60</span>
+    │
+    ▼ <span class="c">归纳规律</span>
+<span class="h2">[ 路径 Path ]</span>  <span class="c">信任提升 → 成长感知 → 价值认可 → 成交（成功率 62%）</span>
+    │
+    ▼ <span class="c">绑定策略</span>
+<span class="h3">[ 策略 Strategy ]</span>  <span class="c">信任 &lt; 40 → 建立信任策略</span>
+    │
+    ▼
+<span class="hl">[ 动作 Action ]</span>  <span class="c">个性化课堂点评 + 主动关怀消息</span></div>
+</section>
+
+<section>
+  <div class="section-label">Priority</div>
+  <h2>建设优先级</h2>
+  <p class="lead">按业务价值 × 落地难度 × 数据可得性排序。所列本体<strong>统一服务于班主任与班主任 AI</strong>——真人读本体做决策，AI 读同一套本体做推理与生成，不按角色拆两套数据结构。</p>
+
+  <table>
+    <thead><tr><th>优先级</th><th>本体</th><th>为什么先做</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge badge-p0">P0</span></td><td>家庭决策本体</td><td>教育决策主体是家庭，不是单个用户</td></tr>
+      <tr><td><span class="badge badge-p0">P0</span></td><td>关系本体</td><td>299/正价课均强调：信任是最值钱资产</td></tr>
+      <tr><td><span class="badge badge-p0">P0</span></td><td>决策/转化状态本体</td><td>解决「为什么不成交/不续报」—— 知道卡在哪</td></tr>
+      <tr><td><span class="badge badge-p0">P0</span></td><td>孩子成长本体</td><td>正价课核心；299 也需要「成长感知」</td></tr>
+      <tr><td><span class="badge badge-p0">P0</span></td><td>干预/策略本体</td><td>把「状态 → 动作」闭环跑通</td></tr>
+      <tr><td><span class="badge badge-p1">P1</span></td><td>家庭满意 / 成长价值</td><td>续报的真正驱动因素</td></tr>
+      <tr><td><span class="badge badge-p1">P1</span></td><td>成长轨迹本体</td><td>状态说「现在」；轨迹说「怎么变成的」</td></tr>
+      <tr><td><span class="badge badge-p2">P2</span></td><td>知识/能力 + 学习行为</td><td>复用已有学情，作为事件源写入分身</td></tr>
+    </tbody>
+  </table>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-num">15~20</div><div class="kpi-label">V1 状态维度</div></div>
+    <div class="kpi-card"><div class="kpi-num">30~50</div><div class="kpi-label">事件映射规则</div></div>
+    <div class="kpi-card"><div class="kpi-num">5~8</div><div class="kpi-label">V1 策略规则</div></div>
+    <div class="kpi-card"><div class="kpi-num">2</div><div class="kpi-label">MVP 验证场景</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Business Stages</div>
+  <h2>按业务阶段激活不同子集</h2>
+  <p class="lead">一套「家庭成长本体」，不同阶段关注不同切片——积累的是连续几年的家庭数字分身。</p>
+
+  <table>
+    <thead><tr><th>业务阶段</th><th>激活的本体子集</th><th>服务团队核心任务</th><th>AI 最该回答的问题</th></tr></thead>
+    <tbody>
+      <tr><td>私域保温</td><td>家庭决策 + 关系 + 决策状态</td><td>LP 激活沉默用户；班主任承接后持续服务</td><td>这个家长焦虑什么？该用什么话题开口？</td></tr>
+      <tr><td>299 体验课</td><td>+ 孩子成长（精简）+ 转化状态</td><td>班主任/LP：建立信任、验证效果、促进首转</td><td>信任够了吗？该推效果还是推价值？</td></tr>
+      <tr><td>正价课服务</td><td>+ 成长轨迹 + 家庭满意 + 成长价值</td><td>班主任：持续服务 + 学情规划</td><td>孩子在持续成长吗？下一步规划什么？</td></tr>
+      <tr><td>续报期</td><td>+ 续报准备度（非续报概率）</td><td>班主任：基于成长价值自然续报（非独立续报岗）</td><td>续报窗口到了吗？卡点是预算还是效果？</td></tr>
+      <tr><td>扩科/转介绍</td><td>+ 口碑资产</td><td>激活高满意家庭</td><td>谁有推荐意愿？推荐动机是什么？</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Methodology</div>
+  <h2>建设方法论：三个关键原则</h2>
+
+  <div class="principle-row">
+    <div class="principle-num">1</div>
+    <div><div class="principle-title">只提取影响服务动作的信息</div><div class="principle-desc">不做无限扩张。299 文档：「不提取所有信息，只提取影响转化和口碑的信息。」</div></div>
+  </div>
+  <div class="principle-row">
+    <div class="principle-num">2</div>
+    <div><div class="principle-title">证据与状态分离</div><div class="principle-desc">阅读字数、到课率、分数是证据，不是本体。兴趣、信任、动力才是可推理的状态。</div></div>
+  </div>
+  <div class="principle-row">
+    <div class="principle-num">3</div>
+    <div><div class="principle-title">状态可累积，轨迹是一等公民</div><div class="principle-desc">每次沟通更新状态值（信任 35→60），而非生成一次性摘要。正价课追加趋势与轨迹节点。</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Ontology × Memory</div>
+  <h2>本体与记忆系统：两层分工</h2>
+  <p class="lead">本体是业务认知骨架；记忆系统是实现底座。二者不是重复建设，而是「定义层」与「运行层」的关系。</p>
+
+  <table>
+    <thead><tr><th>层级</th><th>回答的问题</th><th>典型产物</th><th>消费者</th></tr></thead>
+    <tbody>
+      <tr><td><strong>本体（驱动层）</strong></td><td>焦虑什么、信任到哪、卡在哪、下一步推动什么</td><td>8 个核心本体、15~20 状态维度、策略规则</td><td>班主任、班主任 AI 四模块</td></tr>
+      <tr><td><strong>记忆系统（实现层）</strong></td><td>事实从哪来、怎么存、怎么取、怎么自迭代</td><td>294 标签字典、四层记忆、提取/检索 Pipeline</td><td>记忆服务、Agent 运行时</td></tr>
+      <tr><td><strong>观测层</strong></td><td>大盘效率、流转归因</td><td>A1-A7、续报概率、城市线</td><td>管理层</td></tr>
+    </tbody>
+  </table>
+
+  <div class="code-box"><span class="hl">[ 原始数据 ]</span>  <span class="c">企微 / 课堂 / 作业 / CRM / 4S</span>
+    │
+    ▼ <span class="c">记忆系统：提取 + 分层存储（见「记忆系统」章节）</span>
+<span class="h2">[ 四层记忆 ]</span>  <span class="c">核心 52 · 工作 26 · 事件流 60 · 心智 156</span>
+    │
+    ▼ <span class="c">收敛映射：背景 / 证据 / 事件源 / 状态维度</span>
+<span class="h3">[ 本体状态 State ]</span>  <span class="c">信任:35→60 · 决策阶段:比较 · 成长趋势:↑</span>
+    │
+    ▼ <span class="c">策略匹配 + 模块路由</span>
+<span class="hl">[ 班主任 AI 动作 ]</span>  <span class="c">服务 / 规划 / 学情 / 续报</span></div>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>Context Rot：最小高信号原则</h4>
+      <p>记忆注入必须贯彻「不是记得越多越好」——核心记忆 ≤1500 token，总注入约 3500 token。本体状态是<strong>高信号摘要</strong>，事件流与标签字典是<strong>可溯源证据</strong>；Agent 读本体做决策，按需召回证据链，避免上下文臃肿导致推理精度下降。</p>
+    </div>
+  </div>
+
+  <div class="g4" style="margin-top:20px">
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">可行动</div>
+      <div style="font-size:13px;color:var(--ink-3)">每条记忆/状态必须能绑定服务动作</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">可解释</div>
+      <div style="font-size:13px;color:var(--ink-3)">心智模型与本体状态须有证据链与置信度</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">可治理</div>
+      <div style="font-size:13px;color:var(--ink-3)">权限、审核、留痕、纠错从第一版设计</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">可评估</div>
+      <div style="font-size:13px;color:var(--ink-3)">不只看模型准确率，还看老师负担与业务结果</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /tab-overview -->
+
+<!-- TAB 2: 本体建设 -->
+<div id="tab-ontology" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">Ontology Design</div>
+  <h2>每个本体怎么建才最合理</h2>
+  <p class="lead">统一遵循：事件 → 状态 → 路径 → 策略 → 动作。以下按 P0 → P2 顺序展开。工程实现见 <a href="#" onclick="switchTab('memory',event);return false">记忆系统</a>；294 标签如何落入各本体见 <a href="#" onclick="switchTab('mapping',event);return false">标签映射</a>。</p>
+
+  <!-- 1. 家庭决策 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p0">P0</span><h3>1. 家庭决策本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:16px">服务团队的「决策地图」—— 谁在做决定、为什么买/不买。中心节点是<strong>家庭</strong>，不是客户。</p>
+    <div class="code-box">家庭
+├── 孩子（学习者）
+├── 家长（决策者，可多个）
+│   ├── 决策人 / 支付人 / 影响人
+│   ├── 焦虑源（学习习惯 / 成绩 / 升学 / 兴趣）
+│   ├── 教育理念（成绩导向 / 成长导向 / 风险规避）
+│   ├── 效果感知
+│   └── 长期学习意愿
+└── 家庭约束（预算 / 时间 / 竞品比较）</div>
+    <table>
+      <thead><tr><th>建设步骤</th><th>具体做法</th></tr></thead>
+      <tbody>
+        <tr><td>定义维度</td><td>从 Top 班主任/LP 访谈提炼 8~10 个影响决策的维度（班主任覆盖规划与续报场景）</td></tr>
+        <tr><td>事件库</td><td>「妈妈提到孩子不爱写作业」→ 焦虑源=学习习惯</td></tr>
+        <tr><td>状态更新</td><td>每次沟通后更新状态值，而非生成一段摘要</td></tr>
+        <tr><td>多家长处理</td><td>分别维护父亲/母亲状态，标注决策影响力权重</td></tr>
+        <tr><td>数据来源</td><td>微信聊天、电话转写、班主任记录、问卷</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-gray"><div><h4>不合理做法</h4><p>把 CRM 城市线/渠道/年级直接当本体；每次沟通重新总结、不累积状态。</p></div></div>
+  </div>
+
+  <!-- 2. 关系本体 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p0">P0</span><h3>2. 关系本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:16px">量化「被理解、被关注、被信任」—— 299 靠它转化，正价课靠它续报。这是服务团队最核心、最值钱的资产。</p>
+    <div class="g2">
+      <div class="code-box">关系状态
+├── 被关注感
+├── 被理解感
+├── 信任感
+├── 情感连接
+└── 服务感知</div>
+      <div class="code-box"><span class="hl">因果映射（本体 vs 数据建模）</span>
+
+老师个性化点评  →  被关注感 +5
+主动关心孩子状态  →  被理解感 +5
+及时答疑/反馈    →  信任感 +3
+连续3天无互动    →  被关注感 -8</div>
+    </div>
+    <table>
+      <thead><tr><th>建设步骤</th><th>具体做法</th></tr></thead>
+      <tbody>
+        <tr><td>定义关系维度</td><td>从优秀班主任案例反推：「老师特别了解孩子」→ 被理解感</td></tr>
+        <tr><td>事件→状态映射</td><td>约 30~50 个高频事件（主动阅读、主动咨询、推荐朋友、投诉…）</td></tr>
+        <tr><td>区分主体关系</td><td>老师↔家长、老师↔孩子、班主任↔家长 分别维护</td></tr>
+        <tr><td>正价课扩展</td><td>增加 孩子↔同学、孩子↔班级 关系维度</td></tr>
+        <tr><td>验证方式</td><td>对比关系状态高/低家庭的转化/续报率差异</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-gray"><div><h4>不合理做法</h4><p>用「亲密度 = 0.3×表扬次数 + 0.2×沟通次数」黑盒公式替代结构化关系维度。</p></div></div>
+  </div>
+
+  <!-- 3. 决策状态 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p0">P0</span><h3>3. 决策/转化状态本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:16px">不是「未成交/已成交」二值标签，而是决策推进的阶段机 + 卡点识别。</p>
+    <div class="pl-board"><div class="pl-flow">
+      <div class="pl-step"><div class="pl-num">01</div><div class="pl-title">认知</div><div class="pl-desc">知道机构存在</div></div>
+      <div class="pl-step"><div class="pl-num">02</div><div class="pl-title">兴趣</div><div class="pl-desc">产生了解意愿</div></div>
+      <div class="pl-step"><div class="pl-num">03</div><div class="pl-title">试听</div><div class="pl-desc">体验课程</div></div>
+      <div class="pl-step"><div class="pl-num">04</div><div class="pl-title">认可</div><div class="pl-desc">认可价值</div></div>
+      <div class="pl-step"><div class="pl-num">05</div><div class="pl-title">比较</div><div class="pl-desc">竞品对比</div></div>
+    </div></div>
+    <div class="code-box" style="margin-top:16px">当前状态: 比较阶段
+卡点: 竞品价格更低
+阻塞维度: 价值认可不足
+建议动作: 不要促单，先发成长证据 + 差异化价值</div>
+    <div class="callout callout-gray"><div><h4>不合理做法</h4><p>用「续报概率 32%」替代「当前在比较阶段，卡点是对效果存疑」。</p></div></div>
+  </div>
+
+  <!-- 4. 孩子成长 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p0">P0</span><h3>4. 孩子成长本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:16px">观察孩子是否在成长，以及成长趋势——不是单次分数。</p>
+    <table>
+      <thead><tr><th>维度</th><th>299（精简 5~7 个）</th><th>正价课（扩展）</th></tr></thead>
+      <tbody>
+        <tr><td>学习动力</td><td>✓ 状态快照</td><td>✓ + 趋势</td></tr>
+        <tr><td>课堂参与/投入度</td><td>✓</td><td>✓ + 趋势</td></tr>
+        <tr><td>兴趣（如阅读兴趣）</td><td>✓</td><td>✓ + 趋势</td></tr>
+        <tr><td>学习习惯 / 自信心</td><td>—</td><td>✓</td></tr>
+        <tr><td>表达/思维能力 / 成长目标</td><td>—</td><td>✓</td></tr>
+      </tbody>
+    </table>
+    <div class="code-box">299: 阅读兴趣 = 40（快照）
+正价课: 阅读兴趣 春40 → 暑55 → 秋73（趋势）
+       AI 判断：持续成长 ✓</div>
+  </div>
+
+  <!-- 5. 干预策略 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p0">P0</span><h3>5. 干预/策略本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:16px">把状态诊断变成可执行动作——服务团队日常操作手册，由 AI 动态匹配。</p>
+    <table>
+      <thead><tr><th>状态条件</th><th>推荐策略</th><th>具体动作</th></tr></thead>
+      <tbody>
+        <tr><td>信任感 &lt; 40</td><td>建立信任策略</td><td>个性化课堂点评 + 主动关怀</td></tr>
+        <tr><td>成长感知 &lt; 30</td><td>效果验证策略</td><td>成长反馈报告 + 阅读展示</td></tr>
+        <tr><td>学习动力下降</td><td>激发动机策略</td><td>游戏化任务 + 老师重点鼓励</td></tr>
+        <tr><td>续报准备度 &gt; 80</td><td>续报窗口策略</td><td>成长总结 + 续报方案</td></tr>
+        <tr><td>决策状态=比较阶段</td><td>差异化策略</td><td>竞品对比 + 效果证据</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6-8 P1/P2 -->
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p1">P1</span><h3>6. 家庭满意 / 成长价值本体</h3></div>
+    <div class="g2">
+      <div class="code-box">家庭满意
+├── 成长感知
+├── 服务满意
+├── 老师认可
+└── 机构认同</div>
+      <div class="code-box">成长价值（AI 持续回答「孩子为什么在成长」）
+├── 能力变化
+├── 习惯变化
+├── 自信变化
+└── 主动性变化</div>
+    </div>
+    <p style="font-size:14px;color:var(--ink-3);margin-top:12px">从沟通中推断（「最近感觉孩子变化很大」→ 成长感知↑），AI 自动生成「过去三个月最大成长是…」的叙事。</p>
+  </div>
+
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p1">P1</span><h3>7. 成长轨迹本体</h3></div>
+    <div class="code-box">2026 春  不喜欢表达
+    ↓
+2026 暑  开始主动发言
+    ↓
+2026 秋  愿意分享阅读
+    ↓
+2027 春  能组织自己的观点
+
+→ AI 续报/扩科时引用轨迹叙事，而非单次状态快照</div>
+  </div>
+
+  <div class="onto-block">
+    <div class="onto-header"><span class="badge badge-p2">P2</span><h3>8. 知识/能力 + 学习行为本体</h3></div>
+    <p style="font-size:14px;color:var(--ink-3)">教研资产，服务团队<strong>消费</strong>而非<strong>建设</strong>。复用已有知识点图谱；到课/作业/提问/复习作为事件源输入状态推断。</p>
+  </div>
+
+</section>
+
+<section>
+  <div class="section-label">Drive vs Observe</div>
+  <h2>驱动层 vs 观测层</h2>
+  <table>
+    <thead><tr><th>层级</th><th>角色</th><th>回答的问题</th><th>使用者</th></tr></thead>
+    <tbody>
+      <tr><td><strong>本体 = 驱动层</strong></td><td>定义因果结构，驱动动作</td><td>焦虑什么、信任到哪、卡在哪、下一步怎么推动</td><td>班主任、班主任 AI</td></tr>
+      <tr><td><strong>A1-A7 = 观测层</strong></td><td>度量大盘效率</td><td>各态用户分布、流转效率、动作归因</td><td>管理层</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-red"><div><h4>数据建模 + 本体论 = 最佳组合</h4><p>本体定义 → 特征工程 → 机器学习 → 预测结果 → <strong>本体解释</strong>。数据建模是 AI 的大脑，本体论是 AI 的世界观，用户画像是 AI 看到的人，数字分身是 AI 理解的人。</p></div></div>
+</section>
+
+</div><!-- /tab-ontology -->
+
+<!-- TAB 3: 记忆系统 -->
+<div id="tab-memory" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">Memory Architecture</div>
+  <h2>四层记忆架构：本体的实现底座</h2>
+  <p class="lead">内层即时感知，外层分层固化。294 个标签按四层组织，经提取 Pipeline 收敛为本体状态与策略输入。</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-num">52</div><div class="kpi-label">核心记忆 · 背景上下文</div></div>
+    <div class="kpi-card"><div class="kpi-num">26</div><div class="kpi-label">工作记忆 · 会话作用域</div></div>
+    <div class="kpi-card"><div class="kpi-num">60</div><div class="kpi-label">事件流 · 只追加流水</div></div>
+    <div class="kpi-card"><div class="kpi-num">156</div><div class="kpi-label">心智模型 · 深度推断</div></div>
+  </div>
+
+  <div class="code-box"><span class="hl">[ 原始交互流 ]</span>  <span class="c">企微 / 直播 / 互动作答 / AI监课 / IM</span>
+    │
+    ▼ <span class="c">双轨并行提取（家长侧 · 学生侧）</span>
+<span class="h2">[ 提取 Pipeline ]</span>  <span class="c">ADD / UPDATE / DELETE · 置信度过滤 · 冲突检测</span>
+    │
+    ├── <span class="h3">核心记忆</span>&nbsp;&nbsp;<span class="c">每次对话自动注入 · 对应本体「背景上下文」</span>
+    ├── <span class="h3">工作记忆</span>&nbsp;<span class="c">会话摘要 · 对应「服务任务 / 临时约束」</span>
+    ├── <span class="h3">事件流记忆</span><span class="c">只追加 · 对应「事件源 → 状态推断」</span>
+    └── <span class="h3">心智模型</span>&nbsp;&nbsp;<span class="c">离线归纳 · 对应「本体状态维度来源」</span>
+    │
+    ▼ <span class="c">夜间批处理 · 混合检索（精确 + 语义 + 关联，按需）</span>
+<span class="hl">[ 班主任 Agent ]</span>  <span class="c">读本体状态 · 按需召回证据 · 输出四模块动作</span></div>
+
+  <div class="arch">
+    <div class="arch-layer" style="border-left:3px solid var(--accent)">
+      <div><div class="arch-layer-name">核心记忆</div><div class="arch-layer-sub">52 标签 · 始终注入 · 无默认 TTL</div></div>
+      <div>
+        <div class="arch-layer-desc">年级、城市、设备、校历等稳定事实。对应本体映射中的<strong>背景上下文</strong>——服务时自动注入，一般不进入状态机推理。</div>
+        <div class="arch-layer-meta">
+          <div><span class="alm-key">本体角色</span>家庭决策本体的约束背景；不写入「焦虑源/信任感」等状态维度</div>
+          <div><span class="alm-key">写入门槛</span>置信度 ≥0.85 的稳定事实；三态写入（新增/覆盖/删除）</div>
+        </div>
+      </div>
+    </div>
+    <div class="arch-layer" style="border-left:3px solid var(--g-700)">
+      <div><div class="arch-layer-name">工作记忆</div><div class="arch-layer-sub">26 标签 · 会话作用域 · 超限自动压缩</div></div>
+      <div>
+        <div class="arch-layer-desc">当次出勤、作业、家长反馈、待处理任务。会话结束后高置信内容晋升核心/心智，其余归档事件流。</div>
+        <div class="arch-layer-meta">
+          <div><span class="alm-key">本体角色</span>事件提取的直接输入；映射到关系/决策/成长本体的<strong>事件源</strong></div>
+          <div><span class="alm-key">典型场景</span>课前提醒确认、临时缺课、支持问题未结案</div>
+        </div>
+      </div>
+    </div>
+    <div class="arch-layer" style="border-left:3px solid var(--g-500)">
+      <div><div class="arch-layer-name">事件流记忆</div><div class="arch-layer-sub">60 标签 · 只追加 · 冷存储</div></div>
+      <div>
+        <div class="arch-layer-desc">购课、出勤、续报、投诉、沟通明细等历史行为。支撑决策阶段推断、成长趋势与轨迹节点生成。</div>
+        <div class="arch-layer-meta">
+          <div><span class="alm-key">本体角色</span>决策/转化状态、成长轨迹、续报准备度的<strong>证据链</strong></div>
+          <div><span class="alm-key">存储</span>时序日志，只追加；按需加载片段，不全量注入上下文</div>
+        </div>
+      </div>
+    </div>
+    <div class="arch-layer" style="border-left:3px solid var(--g-700)">
+      <div><div class="arch-layer-name">心智模型</div><div class="arch-layer-sub">156 标签 · 离线归纳 · 带证据链</div></div>
+      <div>
+        <div class="arch-layer-desc">性格、教育理念、薄弱项、服务偏好等高层推断。经<strong>收敛映射</strong>落入各本体状态维度（~40 个），非 156 个平行字段。</div>
+        <div class="arch-layer-meta">
+          <div><span class="alm-key">本体角色</span>家庭决策、关系、成长、满意/价值本体的<strong>状态维度来源</strong></div>
+          <div><span class="alm-key">晋升门槛</span>多源验证 + 跨时间跨度 + 专家审核（详见下文）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Memory Objects</div>
+  <h2>8 个业务二级记忆对象 ↔ 本体消费</h2>
+  <p class="lead">顶层仍用四层记忆，但真实服务场景需要对齐老师工作流。以下二级对象与 P0/P1 本体一一对应，便于工程落地。</p>
+
+  <table>
+    <thead><tr><th>二级对象</th><th>主记忆层</th><th>对应本体</th><th>典型来源</th></tr></thead>
+    <tbody>
+      <tr><td>服务任务记忆</td><td>工作记忆</td><td>干预/策略本体</td><td>企微、电话、投诉/退费单</td></tr>
+      <tr><td>课程日程约束记忆</td><td>工作 + 事件流</td><td>决策状态（临时阻塞）</td><td>课程计划、请假、考试冲突</td></tr>
+      <tr><td>课程权益记忆</td><td>核心 + 事件流</td><td>家庭决策（预算/约束）</td><td>订单、赠课、企微确认</td></tr>
+      <tr><td>支持问题记忆</td><td>工作 + 事件流</td><td>关系本体（服务感知）</td><td>APP/链接/设备/物流</td></tr>
+      <tr><td>学习证据记忆</td><td>事件流 + 心智候选</td><td>孩子成长 / 成长价值</td><td>课堂、作业、测评、作品</td></tr>
+      <tr><td>家长沟通偏好记忆</td><td>心智模型</td><td>家庭决策 / 关系本体</td><td>企微、电话、问卷</td></tr>
+      <tr><td>转化履约风险记忆</td><td>心智 + 工作</td><td>决策/转化状态、续报准备度</td><td>退费、投诉、NPS、断联</td></tr>
+      <tr><td>心智模型候选</td><td>候选池</td><td>各本体状态维度（待验证）</td><td>事件流聚合、夜间批处理</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-gray">
+    <div>
+      <h4>覆盖 10 类真实聊天场景</h4>
+      <p>课程开通、课前提醒、调课请假、APP/设备问题、作业打卡、学情反馈、考试冲突、续报退费、物流材料、扩科认知——比「学生画像标签」更接近班主任实际工作流，也是本体状态更新的主要事件入口。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Extraction Pipeline</div>
+  <h2>记忆提取与本体状态更新</h2>
+  <p class="lead">增量提取策略（ADD / UPDATE / DELETE 三态）；企微采用「先事件、再任务、后模型」流水线，输出统一写入记忆 Schema，再触发本体状态映射。具体存储与检索组件在工程阶段选型，本文不绑定实现——详见 <a href="#" onclick="switchTab('mem0',event);return false">Mem0 选型</a> 对比分析。</p>
+
+  <div class="tracks">
+    <div class="track">
+      <div class="track-h"><div class="track-dot" style="background:var(--accent)"></div>家长侧 → 家庭/关系/决策本体</div>
+      <div class="track-items">
+        <div class="track-item" style="border-left-color:var(--accent)">「孩子今天发烧」→ 缺课原因事件 → 日程约束</div>
+        <div class="track-item" style="border-left-color:var(--accent)">情绪极性 / 不满意内容 → 续报风险候选 → 决策卡点</div>
+        <div class="track-item" style="border-left-color:var(--accent)">「明确续报了」→ 覆盖旧标签 → 决策阶段推进</div>
+        <div class="track-item" style="border-left-color:var(--accent)">主动咨询 / 推荐朋友 → 关系事件 → 信任感 +N</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-h"><div class="track-dot" style="background:#059669"></div>学生侧 → 成长/学情本体</div>
+      <div class="track-items">
+        <div class="track-item" style="border-left-color:#059669">互动题 100% → 高光事件 → 课堂参与 ↑</div>
+        <div class="track-item" style="border-left-color:#059669">AI 监课离座 → 专注度事件 → 学习投入</div>
+        <div class="track-item" style="border-left-color:#059669">连续打卡 → 学习习惯强化 → 成长轨迹节点</div>
+        <div class="track-item" style="border-left-color:#059669">作答异常 → 畏难推断候选（需多源验证）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pl-board" style="margin-top:24px">
+    <div style="font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--g-500);margin-bottom:14px">记忆 → 本体 处理流水线</div>
+    <div class="pl-flow">
+      <div class="pl-step"><div class="pl-num">01</div><div class="pl-title">实时捕获</div><div class="pl-desc">与主对话并行，不阻塞响应</div></div>
+      <div class="pl-step"><div class="pl-num">02</div><div class="pl-title">证据标注</div><div class="pl-desc">六类 evidence_role + 置信度</div></div>
+      <div class="pl-step"><div class="pl-num">03</div><div class="pl-title">记忆写入</div><div class="pl-desc">16 字段统一 Schema</div></div>
+      <div class="pl-step"><div class="pl-num">04</div><div class="pl-title">本体映射</div><div class="pl-desc">事件→状态，可累积更新</div></div>
+      <div class="pl-step"><div class="pl-num">05</div><div class="pl-title">策略触发</div><div class="pl-desc">状态→动作，模块路由</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px">证据角色分类（evidence_role）</h3>
+  <table>
+    <thead><tr><th>证据角色</th><th>可信含义</th><th>可写入记忆 / 本体推断</th></tr></thead>
+    <tbody>
+      <tr><td><code>system_fact</code></td><td>订单、课程计划、课堂/作业系统</td><td>核心事实、权益、事件流、成长证据</td></tr>
+      <tr><td><code>user_explicit</code></td><td>家长/学生明确表达或确认</td><td>工作记忆、决策/关系状态候选</td></tr>
+      <tr><td><code>behavior_fact</code></td><td>出勤、作业、测评、点击等行为</td><td>事件流、学习证据、成长状态</td></tr>
+      <tr><td><code>teacher_claim</code></td><td>老师描述、评价、承诺</td><td>服务任务、补充证据（不直接升高置信模型）</td></tr>
+      <tr><td><code>ai_suggestion</code></td><td>AI 输出内容</td><td>仅评估回放，不作外部事实证据</td></tr>
+      <tr><td><code>media_placeholder</code></td><td>图片/语音/文件待解析</td><td>事件流占位、待解析任务</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>关键约束（与本体「证据与状态分离」一致）</h4>
+      <p><strong>AI 回复不是外部证据</strong>——不能作为「家长已答应/孩子已完成」的依据。<strong>课程权益以订单系统为准</strong>——聊天只做解释与争议线索。<strong>销售话术不作长期模型证据</strong>——单次转化链路中的高压话术只记为当次事件。</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px">心智模型晋升的 5 条门槛（写入本体状态前）</h3>
+  <div class="g2">
+    <div class="card"><h3>多源验证</h3><p>同一结论至少 2 类证据，优先「行为事实 + 用户明确表达」。</p></div>
+    <div class="card"><h3>跨时间跨度</h3><p>能力结论跨 2 次学习事件；偏好/风险结论跨 2 次沟通或 1 次明确表达。</p></div>
+    <div class="card"><h3>销售话术排除</h3><p>体验课高压话术只作当次转化事件，不晋升长期状态。</p></div>
+    <div class="card"><h3>反证降权</h3><p>存在反证时降低置信度，不覆盖原证据。</p></div>
+    <div class="card"><h3>敏感模型审核</h3><p>涉及退费、家庭经济、心理推断等默认进审核队列，不自动触达家长。</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Query & Retrieval</div>
+  <h2>查询召回：本体状态 + 按需证据</h2>
+  <p class="lead">班主任 Agent 优先读<strong>本体状态摘要</strong>（高信号），再按场景召回记忆证据链。检索层支持精确匹配、语义联想与跨标签关联，贯彻最小高信号原则。</p>
+
+  <div class="g3">
+    <div class="card card-top"><h3>精确检索</h3><p>「上次请假原因」→ 精准召回事件流条目。支撑决策卡点溯源。</p></div>
+    <div class="card card-top"><h3>语义检索</h3><p>「孩子坐不住」→ 关联阅读畏难背景。支撑关系/成长本体推断。</p></div>
+    <div class="card card-top"><h3>关联推理</h3><p>跨标签多跳联想。V3 阶段按需接入，服务本体消费。</p></div>
+  </div>
+
+  <table style="margin-top:24px">
+    <thead><tr><th>召回对象</th><th>注入方式</th><th>Token 预算</th><th>对应本体用途</th></tr></thead>
+    <tbody>
+      <tr><td>本体状态摘要</td><td>Agent 系统 Prompt 固定注入</td><td>~300</td><td>信任、决策阶段、成长趋势、续报准备度</td></tr>
+      <tr><td>核心记忆</td><td>每次对话自动注入</td><td>≤1500</td><td>背景上下文（年级、设备、校历…）</td></tr>
+      <tr><td>工作记忆</td><td>会话内持续维护</td><td>≤800</td><td>待处理任务、当次课状态</td></tr>
+      <tr><td>心智模型</td><td>场景相关性检索</td><td>≤600</td><td>规划/续报/学情模块按需</td></tr>
+      <tr><td>事件流记忆</td><td>按需检索注入</td><td>≤400</td><td>轨迹叙事、风险预警证据</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:28px">班主任 AI 四模块 · 场景召回规则</h3>
+  <table>
+    <thead><tr><th>模块</th><th>优先召回</th><th>本体 + 记忆召回</th><th>必须避免</th></tr></thead>
+    <tbody>
+      <tr><td>服务模块</td><td>关系、家庭满意、孩子成长</td><td>核心背景 + 近期动态 + 待处理任务 + 沟通偏好</td><td>未审核敏感推断、无关历史噪音</td></tr>
+      <tr><td>规划模块</td><td>成长轨迹、知识/能力</td><td>年级教材 + 能力模型 + 作业/互动趋势</td><td>忽略近期负担与时间安排</td></tr>
+      <tr><td>学情模块</td><td>学习行为、干预策略</td><td>本讲次互动 + 作业 + 薄弱点证据</td><td>单次表现说成长期能力</td></tr>
+      <tr><td>续报模块</td><td>续报准备度、成长价值</td><td>报名期待 + 效果证据 + 风险事件</td><td>直接暴露价格敏感等内部标签</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Nightly Batch</div>
+  <h2>夜间自演化批处理</h2>
+  <p class="lead">低峰期批处理：记忆重构、冲突解消、标签字典迭代，并回写本体状态与轨迹节点。</p>
+
+  <div class="pl-board">
+    <div class="pl-flow" style="grid-template-columns:repeat(4,1fr)">
+      <div class="pl-step"><div class="pl-num">1</div><div class="pl-title">全量扫描</div><div class="pl-desc">当日新增事件流 + 记忆快照</div></div>
+      <div class="pl-step"><div class="pl-num">2</div><div class="pl-title">冲突检测</div><div class="pl-desc">新旧矛盾标记，版本回溯</div></div>
+      <div class="pl-step"><div class="pl-num">3</div><div class="pl-title">LLM 重构</div><div class="pl-desc">去噪、时间绝对化、边界过滤</div></div>
+      <div class="pl-step"><div class="pl-num">4</div><div class="pl-title">原子写入</div><div class="pl-desc">更新核心/心智 + 本体状态/轨迹</div></div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="card card-top"><h3>分支 A · 标签自迭代</h3><p>对未匹配语料做语义聚类 → AI 提案新标签 → 专家审核 → 提取规则更新 → 历史回扫。与本体状态维度收敛形成双轨治理。</p></div>
+    <div class="card card-top"><h3>分支 B · 健康检查</h3><p>核心记忆 1500t 膨胀检测、TTL 过期清理、近义合并、覆盖率报告。防止 Context Rot 稀释本体推理精度。</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Memory Schema</div>
+  <h2>统一记忆对象 Schema（16 字段）</h2>
+  <p class="lead">四层记忆共用同一 Schema，通过 memory_layer 区分层级，通过 memory_object_type 绑定 8 个二级对象，通过 action_bindings 落实「可行动」原则；<strong>ontology_mapping</strong> 显式指向本体状态维度。</p>
+
+  <div class="code-box"><span class="c">// 统一记忆对象 Schema</span>
+{
+  <span class="hl">"memory_id"</span>: <span class="h3">"mem_001"</span>,
+  <span class="hl">"student_id"</span>: <span class="h3">"20589653"</span>,
+  <span class="hl">"memory_layer"</span>: <span class="h3">"mental_model"</span>,       <span class="c">// 核心 / 工作 / 事件流 / 心智</span>
+  <span class="hl">"memory_object_type"</span>: <span class="h3">"learning_evidence_memory"</span>,
+  <span class="hl">"field_name"</span>: <span class="h3">"阅读理解薄弱项"</span>,
+  <span class="hl">"value"</span>: <span class="h3">"概括总结弱，阅读理解偏浅"</span>,
+  <span class="hl">"evidence_role"</span>: <span class="h3">"behavior_fact"</span>,
+  <span class="hl">"evidence_summary"</span>: <span class="h3">"近三次阅读概括题错误"</span>,
+  <span class="hl">"confidence"</span>: <span class="h2">0.82</span>,
+  <span class="hl">"event_time"</span>: <span class="h3">"2026-06-25T20:00:00+08:00"</span>,
+  <span class="hl">"valid_until"</span>: <span class="h3">"2026-09-01T00:00:00+08:00"</span>,
+  <span class="hl">"review_status"</span>: <span class="h3">"pending_review"</span>,
+  <span class="c">// privacy_level 等治理字段预留，首版不展开细粒度权限模型</span>
+  <span class="hl">"action_bindings"</span>: [<span class="h3">"recommend_reading_summary_practice"</span>],
+  <span class="hl">"ontology_mapping"</span>: {              <span class="c">// v2 新增：指向本体状态</span>
+    <span class="h3">"ontology"</span>: <span class="h3">"child_growth"</span>,
+    <span class="h3">"state_dimension"</span>: <span class="h3">"reading_comprehension"</span>,
+    <span class="h3">"delta"</span>: <span class="h2">-5</span>
+  }
+}</div>
+</section>
+
+<section>
+  <div class="section-label">Privacy & Governance</div>
+  <h2>数据治理原则（首版轻量）</h2>
+  <p class="lead">处理未成年人、家庭与教育服务数据，需从第一版预留治理能力。细粒度权限模型与合规细则在工程落地阶段再展开，本文只定方向性原则。</p>
+
+  <div class="g3">
+    <div class="card card-top"><h3>最小可见</h3><p>Agent 与班主任只召回当前场景必要记忆；敏感推断默认不进入面向家长的话术。</p></div>
+    <div class="card card-top"><h3>敏感转译</h3><p>家庭经济、价格敏感、心理推断等可用于内部策略参考，输出时必须转译成温和、可执行的话术。</p></div>
+    <div class="card card-top"><h3>人工审核</h3><p>低置信推断、风险类结论、新标签提案进入审核队列；家长/老师可发起事实纠错，不覆盖历史证据。</p></div>
+  </div>
+
+  <div class="callout callout-gray" style="margin-top:20px">
+    <div>
+      <h4>首版不做重、但必须预留</h4>
+      <p>Schema 中保留 <code>review_status</code>、证据链与版本回溯字段；权限分级（如 public / internal / sensitive）作为后续扩展项，不在 v2 方案中展开五级权限表与敏感字段清单。</p>
+    </div>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card"><div class="risk-title">记忆投毒 <span class="badge badge-red">高</span></div><div class="risk-body">外部消息可能注入恶意内容。<strong>应对：</strong>入库前安全过滤 + 低置信隔离。</div></div>
+    <div class="risk-card"><div class="risk-title">Context Rot <span class="badge badge-red">高</span></div><div class="risk-body">低质记忆稀释本体推理。<strong>应对：</strong>Token 硬上限 + 夜间去噪 + 本体状态摘要优先。</div></div>
+    <div class="risk-card"><div class="risk-title">提取杜撰 <span class="badge badge-gray">中</span></div><div class="risk-body">模型猜测不存在事实。<strong>应对：</strong>低置信进审核 + 晋升门槛。</div></div>
+    <div class="risk-card"><div class="risk-title">标签失控 <span class="badge badge-gray">中</span></div><div class="risk-body">自迭代标签语义重叠。<strong>应对：</strong>Human-in-the-Loop + 与本体状态维度定期对齐。</div></div>
+  </div>
+</section>
+
+</div><!-- /tab-memory -->
+
+<!-- TAB 4: Mem0 选型 -->
+<div id="tab-mem0" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">Positioning</div>
+  <h2>Mem0 与本方案：定位与分层</h2>
+  <p class="lead"><a href="https://github.com/mem0ai/mem0" target="_blank">Mem0</a> 是通用 Agent 记忆中间件，回答「怎么记住、怎么搜到」；本方案 v2 是<strong>业务认知 + 动作闭环</strong>，还回答「记住之后意味着什么、推动什么动作」。二者不是替代关系，而是<strong>可分层结合</strong>——Mem0 可承接「记忆系统」章节的存储/提取/检索，本体与策略层仍须自建。</p>
+
+  <div class="callout callout-gray">
+    <div>
+      <h4>与「记忆系统」章节的关系</h4>
+      <p>「记忆系统」定义四层架构、Schema、证据治理与 Token 注入策略；本文档是<strong>工程选型参考</strong>，评估 Mem0 能否作为实现层组件。结论：<strong>Mem0 适合坐记忆底座，不适合替代八大本体与策略闭环。</strong>详见 <a href="#" onclick="switchTab('memory',event);return false">记忆系统</a> 与 <a href="#" onclick="switchTab('roadmap',event);return false">落地路线</a> 的阶段对齐。</p>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>维度</th><th>本方案 v2</th><th>Mem0</th><th>关系</th></tr></thead>
+    <tbody>
+      <tr><td><strong>本质</strong></td><td>驱动层（本体）+ 实现层（记忆）+ 观测层</td><td>通用记忆层（Memory Layer）</td><td>Mem0 可坐实现层</td></tr>
+      <tr><td><strong>核心问题</strong></td><td>焦虑什么、信任到哪、下一步做什么</td><td>对话中学到了什么、下次怎么召回</td><td>互补</td></tr>
+      <tr><td><strong>数据结构</strong></td><td>8 本体 · 15~20 状态维 · 294 标签字典</td><td>LLM 提取的原子化事实 + metadata</td><td>v2 在上做收敛</td></tr>
+      <tr><td><strong>消费者</strong></td><td>真人班主任 + 班主任 AI 四模块</td><td>Agent 运行时</td><td>v2 需双消费者 API</td></tr>
+      <tr><td><strong>动作闭环</strong></td><td>事件→状态→策略→动作</td><td>检索记忆 → 交给 Agent 推理</td><td>策略层必须自建</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Architecture</div>
+  <h2>架构对比：完整栈 vs 记忆中间件</h2>
+
+  <div class="g2">
+    <div class="arch">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">本方案 v2（完整栈）</div>
+      <div class="code-box" style="margin:0;font-size:12px">企微 / 课堂 / CRM 原始数据
+    │
+    ▼ 双轨提取（ADD/UPDATE/DELETE）
+<span class="h2">[ 四层记忆 ]</span>  核心 / 工作 / 事件流 / 心智
+    │
+    ▼ 收敛映射
+<span class="h3">[ 八大本体状态 ]</span>  信任 · 决策阶段 · 成长趋势
+    │
+    ▼ 策略匹配 + 模块路由
+<span class="hl">[ 班主任 AI 动作 ]</span>  服务 / 规划 / 学情 / 续报</div>
+    </div>
+    <div class="arch">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#6366f1;margin-bottom:12px">Mem0（记忆层）</div>
+      <div class="code-box" style="margin:0;font-size:12px">对话 / 交互 messages
+    │
+    ▼ LLM 单遍 ADD-only 提取
+<span class="h2">[ 向量库 + 实体链接 ]</span>
+    │
+    ▼ 语义 + BM25 + 实体 + 时序
+<span class="h3">[ search → Agent ]</span>
+    │
+    ▼ Agent 自行推理（无内置策略引擎）</div>
+    </div>
+  </div>
+
+  <div class="callout callout-red" style="margin-top:20px">
+    <div>
+      <h4>推荐分层：Mem0 在下，本体在上</h4>
+      <p>原始数据 → Mem0（提取 / 存储 / 混合检索）→ <strong>自建适配层</strong>（证据治理 · ontology_mapping · 状态机）→ 八大本体 + 策略引擎 → 班主任 AI。Mem0 不替代本体，也不替代策略闭环。</p>
+    </div>
+  </div>
+
+  <div class="code-box"><span class="hl">[ 推荐结合架构 ]</span>
+
+<span class="h2">自建 · 驱动层</span>     八大本体状态机 · 策略规则 · 四模块路由 · 证据治理 · 审核队列
+        ▲                              │
+        │ ontology_mapping             │ 按需证据召回
+        │                              ▼
+<span class="h3">Mem0 · 实现层</span>     add / search · 向量存储 · 实体链接 · 时序推理 · 混合检索
+        ▲
+        │
+<span class="c">原始数据</span>            企微 / 课堂 / 作业 / CRM / 4S</div>
+</section>
+
+<section>
+  <div class="section-label">Mechanism Diff</div>
+  <h2>六大机制差异</h2>
+  <p class="lead">Mem0 与本方案在「分层记忆」「LLM 提取」「混合检索」「Context 效率」上高度相似；差异集中在<strong>本体收敛、写入语义、证据治理、动作闭环</strong>四块。</p>
+
+  <table>
+    <thead><tr><th>机制</th><th>本方案 v2</th><th>Mem0（2026）</th><th>结合注意点</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>记忆模型</strong></td>
+        <td>294 标签 → 四层记忆 → 收敛至 8 本体 · 15~20 状态维；区分标签/事件/证据/状态</td>
+        <td>LLM 提取原子事实；无预定义业务本体；靠 metadata 过滤</td>
+        <td>Mem0 存候选事实，本体层做收敛</td>
+      </tr>
+      <tr>
+        <td><strong>写入策略</strong></td>
+        <td>ADD / UPDATE / DELETE 三态；核心记忆置信 ≥0.85；「明确续报」可覆盖旧状态</td>
+        <td><strong>ADD-only</strong>：只追加不覆盖；冲突靠时序推理 + 检索消歧</td>
+        <td><span class="badge badge-red">关键分歧</span> UPDATE/DELETE 改由「新记忆 + 本体层覆盖」实现</td>
+      </tr>
+      <tr>
+        <td><strong>检索注入</strong></td>
+        <td>本体摘要 ~300t 固定注入；核心 ≤1500 · 工作 ≤800 · 心智 ≤600 · 事件流 ≤400</td>
+        <td>search(query, filters) → top_k 记忆进 system prompt；语义+BM25+实体+Temporal Reasoning</td>
+        <td>Mem0 负责证据召回；注入编排仍按 v2 Token 预算</td>
+      </tr>
+      <tr>
+        <td><strong>证据治理</strong></td>
+        <td>6 类 evidence_role；AI 回复不作外部证据；心智晋升 5 条门槛；敏感审核</td>
+        <td>metadata + confidence + timestamp；无领域级可信规则</td>
+        <td>治理中间件必须自建，不可交给 Mem0</td>
+      </tr>
+      <tr>
+        <td><strong>动作闭环</strong></td>
+        <td>action_bindings；状态→策略→动作；四模块由本体状态自动路由</td>
+        <td>无策略引擎、无状态机、无模块路由</td>
+        <td>策略层 100% 自建</td>
+      </tr>
+      <tr>
+        <td><strong>作用域</strong></td>
+        <td>以<strong>家庭</strong>为中心；按业务阶段激活本体子集</td>
+        <td>user_id / agent_id / app_id / run_id 多级作用域</td>
+        <td>见下文 ID 映射表</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Similarities</div>
+  <h2>相似点与已对齐设计</h2>
+  <p class="lead">本方案参考资料已引用 <a href="https://arxiv.org/abs/2504.19413" target="_blank">Mem0 Technical Report (2025)</a> 的增量提取思路；下列能力可直接借鉴或 Phase 2 接入。</p>
+
+  <table>
+    <thead><tr><th>能力</th><th>本方案 v2</th><th>Mem0</th><th>借鉴价值</th></tr></thead>
+    <tbody>
+      <tr><td>分层记忆</td><td>核心 / 工作 / 事件流 / 心智（MemGPT 扩展）</td><td>User / Session / Agent 多级</td><td>概念对齐，映射清晰</td></tr>
+      <tr><td>LLM 提取</td><td>双轨 Pipeline（家长侧 + 学生侧）</td><td><code>add(messages, infer=True)</code></td><td>企微对话入库可复用</td></tr>
+      <tr><td>混合检索</td><td>精确 + 语义 + 关联（V3 按需）</td><td>语义 + BM25 + 实体 boost + 时序</td><td>Phase 2 可直接用 OSS 混合检索</td></tr>
+      <tr><td>Context 效率</td><td>Token 硬上限 + 本体摘要优先</td><td>token-efficient 算法（LoCoMo 91.6）</td><td>评测基准可参考</td></tr>
+      <tr><td>实体关联</td><td>家庭 / 孩子 / 家长 / 课程 / 竞品</td><td>Entity linking 跨记忆 boost</td><td>家庭本体结构可映射实体图</td></tr>
+      <tr><td>时序推理</td><td>event_time · valid_until · 成长轨迹</td><td>Temporal Reasoning（Platform v3）</td><td>「现在状态 vs 历史事件」类查询</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Integration</div>
+  <h2>结合点：Mem0 可承接 vs 必须自建</h2>
+
+  <h3>Mem0 可承接（记忆实现层）</h3>
+  <table>
+    <thead><tr><th>v2 记忆层</th><th>Mem0 映射</th><th>典型场景</th></tr></thead>
+    <tbody>
+      <tr><td>核心记忆（52 标签）</td><td>高置信结构化写入 · <code>infer=False</code> 或 metadata.layer=core</td><td>年级、城市、设备、校历</td></tr>
+      <tr><td>工作记忆（26 标签）</td><td><code>run_id=session_id</code> · 会话结束晋升或归档</td><td>本讲出勤、待处理任务</td></tr>
+      <tr><td>事件流（60 标签）</td><td>ADD-only 追加 · metadata.layer=event_stream</td><td>转化日期、近三次出勤率</td></tr>
+      <tr><td>心智模型（156 标签）</td><td>夜间批处理写入 · 检索 filters 限定 layer</td><td>需求强度、阅读水平推断</td></tr>
+      <tr><td>混合检索</td><td><code>search(query, filters={user_id})</code> + explain 调试</td><td>「家长上次不满意什么」「孩子坐不住」</td></tr>
+      <tr><td>实体链接</td><td>Entity linking · 家庭成员 / 课程 / 班主任</td><td>家庭决策本体的决策人 / 影响人</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:28px">作用域 ID 映射</h3>
+  <table>
+    <thead><tr><th>Mem0 字段</th><th>本方案映射</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><code>user_id</code></td><td><code>family_id</code> 或 <code>student_id</code></td><td>以家庭为主键；学情场景可用 student_id</td></tr>
+      <tr><td><code>agent_id</code></td><td>班主任AI_服务 / 规划 / 学情 / 续报</td><td>对应四模块，便于分模块检索分析</td></tr>
+      <tr><td><code>run_id</code></td><td>企微会话 ID / 单讲次 ID</td><td>工作记忆作用域</td></tr>
+      <tr><td><code>metadata.category</code></td><td>294 标签字典 field_name</td><td>与统一 Schema 对齐</td></tr>
+      <tr><td><code>metadata.evidence_role</code></td><td>system_fact / user_explicit / …</td><td>自建扩展字段，Mem0 metadata 承载</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:28px">必须自建的适配层（Mem0 不提供）</h3>
+  <div class="g2">
+    <div class="card card-top"><h3>① 本体状态机</h3><p>15~20 维状态累积、决策阶段推进、信任 35→60 式更新。Mem0 只存事实，不维护业务状态机。</p></div>
+    <div class="card card-top"><h3>② ontology_mapping 写入器</h3><p>Mem0 提取结果 → 八大本体 state_dimension + delta。对应 Schema 中的 ontology_mapping 字段。</p></div>
+    <div class="card card-top"><h3>③ 证据治理中间件</h3><p>6 类 evidence_role 校验；AI 回复隔离；销售话术不晋升长期模型；敏感推断进审核队列。</p></div>
+    <div class="card card-top"><h3>④ ADD-only 适配器</h3><p>若采用 Mem0 2026 算法：逻辑上的 UPDATE/DELETE 由「新记忆追加 + 本体层覆盖」实现，不直接改 Mem0 历史条目。</p></div>
+    <div class="card card-top"><h3>⑤ 策略引擎 + 四模块路由</h3><p>信任 &lt; 40 → 建立信任策略 → 动作；本体状态决定偏服务/规划/学情/续报。</p></div>
+    <div class="card card-top"><h3>⑥ Token 注入编排</h3><p>固定注入本体摘要 ~300t；Mem0 search 补证据 ≤400t；贯彻最小高信号原则。</p></div>
+  </div>
+
+  <h3 style="margin-top:28px">概念集成示意（伪代码）</h3>
+  <div class="code-box"><span class="c"># 概念示意：Mem0 提取 → 治理 → 本体映射</span>
+
+<span class="hl">memory.add</span>(messages,
+    user_id=<span class="h3">"family_20589653"</span>,
+    metadata={
+        <span class="h3">"source"</span>: <span class="h3">"wecom"</span>,
+        <span class="h3">"memory_layer"</span>: <span class="h3">"working"</span>,
+        <span class="h3">"evidence_role"</span>: <span class="h3">"user_explicit"</span>,
+        <span class="h3">"field_name"</span>: <span class="h3">"家长沟通性格"</span>
+    }
+)
+
+<span class="c"># 治理层：置信度 / 多源验证 / 敏感审核</span>
+<span class="hl">candidates</span> = governance.filter(memory.search(...))
+
+<span class="c"># 本体层：收敛写入状态维度</span>
+<span class="hl">ontology.apply_mapping</span>(candidates, {
+    <span class="h3">"ontology"</span>: <span class="h3">"relationship"</span>,
+    <span class="h3">"state_dimension"</span>: <span class="h3">"trust_score"</span>,
+    <span class="h3">"delta"</span>: <span class="h2">+5</span>
+})
+
+<span class="c"># Agent 运行时：先读本体的，再按需召回 Mem0 证据</span>
+<span class="hl">context</span> = ontology.summary(family_id)          <span class="c"># ~300 tokens</span>
+         + memory.search(query, top_k=5)           <span class="c"># ~400 tokens 证据链</span></div>
+</section>
+
+<section>
+  <div class="section-label">Roadmap Align</div>
+  <h2>与落地路线的阶段对齐</h2>
+  <p class="lead">Mem0 接入节奏与「记忆系统交付阶段」对齐；本体建设里程碑不受影响。</p>
+
+  <table>
+    <thead><tr><th>阶段</th><th>Mem0 角色</th><th>自建部分</th><th>验收侧重</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-p0">P1 · Q3</span></td>
+        <td>可选 POC：单轨对话提取 + 基础 search</td>
+        <td>四层 Schema、本体状态、核心注入</td>
+        <td>不依赖 Mem0 也能跑通 MVP</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-p1">P2 · Q4</span></td>
+        <td><strong>推荐接入</strong>：OSS 自托管 · 混合检索 · 实体链接 · 双轨提取</td>
+        <td>治理中间件 · ontology_mapping · 夜间批处理回写本体</td>
+        <td>跨 Session 召回 ≥80% · 话术命中率 ≥65%</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-p2">P3 · Q1</span></td>
+        <td>记忆底座稳定运行；评估 Platform 或继续 OSS</td>
+        <td>标签自迭代 · 策略闭环 · A/B · PMF</td>
+        <td>家庭数字分身连续几年 · 档案覆盖 ≥80%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="callout callout-gray"><div><h4>部署选项</h4><p><strong>Library</strong>（pip install mem0ai）：原型与单服务嵌入。<br><strong>Self-Hosted</strong>（docker compose）：团队自管 infra，数据不出域。<br><strong>Platform</strong>（app.mem0.ai）：零运维，含 Temporal Reasoning 等高级能力；需评估未成年人数据合规。</p></div></div>
+    <div class="callout callout-red"><div><h4>不建议的做法</h4><p>① 用 Mem0 直接替代八大本体与策略引擎<br>② 跳过 evidence_role 治理直接写长期模型<br>③ P1 阶段强绑定 Mem0 导致本体 MVP 延期<br>④ 把续报概率等观测指标当 Mem0 记忆事实存储</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Summary</div>
+  <h2>选型结论</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-num" style="font-size:28px">底座</div><div class="kpi-label">Mem0 = 记忆实现层候选</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="font-size:28px">保留</div><div class="kpi-label">本体 + 策略 + 治理 = 100% 自建</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="font-size:28px">P2</div><div class="kpi-label">推荐正式接入时间点</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="font-size:28px">适配</div><div class="kpi-label">ADD-only 与三态写入需中间层</div></div>
+  </div>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>一句话</h4>
+      <p>Mem0 解决「怎么存、怎么搜」；本方案解决「存下来意味着什么、推动什么服务动作」。用 Mem0 做记忆底座，在上面加「本体适配 + 证据治理 + 策略引擎」，才是 v2 方案的工程化路径——而非二选一。</p>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--ink-3);margin-top:16px">外部链接：<a href="https://github.com/mem0ai/mem0" target="_blank">Mem0 GitHub</a> · <a href="https://docs.mem0.ai" target="_blank">Mem0 文档</a> · <a href="https://arxiv.org/abs/2504.19413" target="_blank">Mem0 Technical Report</a></p>
+</section>
+
+</div><!-- /tab-mem0 -->
+
+<!-- TAB 5: 标签映射 -->
+<div id="tab-mapping" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">Student Profile</div>
+  <h2>学员分层记忆实例：陈子墨</h2>
+  <p class="lead">以下为一例<strong>虚构但贴近真实字段</strong>的学员档案：上方展示四层记忆，下方按<strong>八大本体</strong>分别呈现驱动层状态，并说明班主任 AI 如何跨本体编排动作。标签名均来自 <a href="学生档案标签字段_记忆类型思维导图.md">294 标签字典</a>。</p>
+
+  <div class="stu-hero">
+    <div class="stu-hero-main">
+      <h3>陈子墨 · 20589653</h3>
+      <div class="stu-meta">
+        <span>三年级 · 山西太原</span>
+        <span>阅读伴读正价课</span>
+        <span>决策人：妈妈（李女士）</span>
+        <span>班主任：王老师</span>
+      </div>
+      <p style="font-size:13px;color:var(--ink-3);margin-top:10px;line-height:1.6">2026-07-07 19:20 · 第 12 讲次课后 · 服务阶段<strong>正价课</strong>，距续报窗口约 18 天</p>
+    </div>
+    <div class="stu-stage">
+      <div class="stu-stage-tag">班主任 AI → 续报模块</div>
+      <div class="stu-stage-desc">本体路由：⑥成长感知↑ · ③决策=比较 · ⑤效果验证策略已匹配 → 服务+学情优先，续报预备</div>
+    </div>
+  </div>
+
+  <div class="mem-profile">
+    <div class="mem-layers">
+
+      <div class="mem-layer l-core">
+        <div class="mem-layer-h"><span>核心记忆 · 始终注入</span><span class="cnt">52 标签中激活 8 条</span></div>
+        <div class="mem-items">
+          <div class="mem-item"><span class="k">所在城市</span><span class="v">山西太原</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">就读年级</span><span class="v">三年级（2026 秋）</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">学习设备</span><span class="v">iPad Air · 家庭学习角</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">学习主负责人</span><span class="v">妈妈（工作日 19:00 后方便沟通）</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">课外辅导形式</span><span class="v">线上直播 · 阅读伴读系统班</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">学校作息与校历</span><span class="v">17:30 放学 · 7 月中旬期末考</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">英语在读竞品机构</span><span class="v">无（曾试听过某线上一对一）</span><span class="tag ctx">背景</span></div>
+          <div class="mem-item"><span class="k">其他特殊需求</span><span class="v">视力偏弱，屏幕时长需控制</span><span class="tag ctx">背景</span></div>
+        </div>
+      </div>
+
+      <div class="mem-layer l-work">
+        <div class="mem-layer-h"><span>工作记忆 · 本次讲次（第 12 讲）</span><span class="cnt">26 标签中激活 9 条</span></div>
+        <div class="mem-items">
+          <div class="mem-item"><span class="k">是否出勤 / 完课</span><span class="v">出勤 · 直播完课 42min（19:00–19:42）</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">互动题正确率</span><span class="v">80%（4/5，错题：概括题）</span><span class="tag evd">证据</span></div>
+          <div class="mem-item"><span class="k">是否作业提交</span><span class="v">已提交 · 阅读笔记 186 字</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">高光素材</span><span class="v">主动分享《草房子》选段，开口 35 秒</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">六维评分</span><span class="v">表达 4 · 专注 4 · 互动 5 · 理解 3</span><span class="tag evd">证据</span></div>
+          <div class="mem-item"><span class="k">家长回复时机</span><span class="v">下课后 28 分钟回复「今天好像愿意说了」</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">家长沟通性格</span><span class="v">理性务实 · 偏好数据+案例，不喜空泛表扬</span><span class="tag st">→关系</span></div>
+          <div class="mem-item"><span class="k">上课材料准备</span><span class="v">已备《草房子》纸质书</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">待处理任务</span><span class="v">发送本讲成长反馈 + 布置概括练习（截止 7/9）</span><span class="tag evt">任务</span></div>
+        </div>
+      </div>
+
+      <div class="mem-layer l-event">
+        <div class="mem-layer-h"><span>事件流记忆 · 近 90 天摘要</span><span class="cnt">60 标签中激活 10 条</span></div>
+        <div class="mem-items">
+          <div class="mem-item"><span class="k">299 → 正价转化</span><span class="v">2026-04-18 转化 · 299 出勤率 100%、完课率 83%</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">近三次正价出勤率</span><span class="v">100% · 100% · 67%（第 11 讲临时外出）</span><span class="tag evd">证据</span></div>
+          <div class="mem-item"><span class="k">近三次作业提交率</span><span class="v">100% · 100% · 50%（第 11 讲未交）</span><span class="tag evd">证据</span></div>
+          <div class="mem-item"><span class="k">近三次互动率</span><span class="v">62% · 71% · 88%（持续上升）</span><span class="tag evd">证据</span></div>
+          <div class="mem-item"><span class="k">近七天企微沟通</span><span class="v">4 次 · 平均回复 18 分钟 · 无投诉/退费</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">最近一次 299 购课</span><span class="v">2026-03-02 · 渠道：班主任私域链接</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">最近三次续报日期</span><span class="v">—（首续窗口，无历史续报）</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">最近一次登陆 App</span><span class="v">2026-07-07 18:52（课前 8 分钟）</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">布克星球打卡</span><span class="v">连续 6 天完成（7/1–7/6）</span><span class="tag evt">事件</span></div>
+          <div class="mem-item"><span class="k">风险事件</span><span class="v">无退费/投诉记录</span><span class="tag evt">事件</span></div>
+        </div>
+      </div>
+
+      <div class="mem-layer l-mental">
+        <div class="mem-layer-h"><span>心智模型 · 收敛推断</span><span class="cnt">156 标签中收敛 7 条</span></div>
+        <div class="mem-items">
+          <div class="mem-item"><span class="k">需求强度（焦虑源）</span><span class="v">阅读概括弱、表达不自信 · 置信 0.86</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">阅读伴读报名核心期待</span><span class="v">养成每日阅读习惯 · 能讲清书中情节</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">阅读水平现状</span><span class="v">中等偏下 · 能读不愿说 · 置信 0.81</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">课堂表达意愿</span><span class="v">近 4 讲从「回避」→「偶尔主动」· 置信 0.79</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">课程是否有惊喜</span><span class="v">家长 7/5 反馈「没想到他愿意开口」</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">阅读课具体收获点</span><span class="v">词汇量增加 · 开始主动选书</span><span class="tag st">状态源</span></div>
+          <div class="mem-item"><span class="k">课程价格敏感度</span><span class="v">中等 · 更关注「是否持续有变化」</span><span class="tag st">状态源</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:36px">Role Taxonomy</div>
+  <h3 style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">标签 / 事件 / 证据 / 状态 · 对照表</h3>
+  <p style="font-size:13px;color:var(--ink-3);margin-bottom:16px;line-height:1.65"><strong>标签</strong>是 294 字典里的<strong>字段名</strong>（记什么）；<strong>事件</strong>是某时某刻发生的一次行为（只追加）；<strong>证据</strong>是可溯源的观测值（支撑推断）；<strong>状态</strong>是收敛进八大本体的语义结论（驱动动作）。同名字段在不同层可承担不同角色。</p>
+
+  <table>
+    <thead><tr><th>角色</th><th>是什么</th><th>判断口诀</th><th>写入记忆层</th><th>是否进八大本体</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge badge-ctx">标签·背景</span></td><td>字典字段 + 稳定事实值</td><td>长期成立 · 无「某次发生」</td><td>核心记忆</td><td>否 · 对话背景注入</td></tr>
+      <tr><td><span class="badge badge-evt">事件</span></td><td>带时间、行为主体的一次发生</td><td>几点 · 谁 · 做了什么</td><td>工作记忆 / 事件流</td><td>否 · 作事件源推断</td></tr>
+      <tr><td><span class="badge badge-evd">证据</span></td><td>系统或行为产生的可度量观测</td><td>系统测出来多少 · 可审计</td><td>工作记忆 / 事件流</td><td>否 · 只支撑推断</td></tr>
+      <tr><td><span class="badge badge-st">状态</span></td><td>八大本体里的文字结论</td><td>现在意味着什么 · 驱动下一步</td><td>本体驱动层</td><td>是 · 策略匹配入口</td></tr>
+      <tr><td><span class="badge badge-st">状态源</span></td><td>心智模型标签的推断值（待验证）</td><td>归纳结论 · 需证据链</td><td>心智模型</td><td>验证后收敛为本体状态</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-gray" style="margin:20px 0">
+    <div>
+      <h4>四层快速区分</h4>
+      <p><strong>核心记忆</strong> → 多为<strong>标签·背景</strong>（如所在城市、年级）<br>
+      <strong>工作记忆</strong> → 当次<strong>事件</strong> + <strong>证据</strong>（如本讲出勤、互动题正确率）<br>
+      <strong>事件流</strong> → 历史<strong>事件</strong>流水 + 聚合<strong>证据</strong>（如转化日期、近三次出勤率）<br>
+      <strong>心智模型</strong> → <strong>状态源</strong>（如需求强度、阅读水平）→ 收敛为<strong>状态</strong></p>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--ink);margin:24px 0 12px">陈子墨实例 · 逐项对照</h3>
+  <table>
+    <thead><tr><th>字典标签（字段名）</th><th>角色</th><th>示例值</th><th>对应八大本体（若有）</th></tr></thead>
+    <tbody>
+      <tr><td>所在城市</td><td><span class="badge badge-ctx">标签·背景</span></td><td>山西太原</td><td>—</td></tr>
+      <tr><td>学习主负责人</td><td><span class="badge badge-ctx">标签·背景</span></td><td>妈妈 · 19:00 后方便沟通</td><td>① 家庭决策 · 决策人</td></tr>
+      <tr><td>是否出勤 / 是否直播完课</td><td><span class="badge badge-evt">事件</span></td><td>7/7 19:00–19:42 直播完课</td><td>⑧ 学习行为 · 本讲证据</td></tr>
+      <tr><td>高光素材</td><td><span class="badge badge-evt">事件</span></td><td>主动分享《草房子》35 秒</td><td>④ 孩子成长 · 表达意愿</td></tr>
+      <tr><td>家长回复时机 + 聊天内容</td><td><span class="badge badge-evt">事件</span></td><td>下课后 28 分钟 ·「今天好像愿意说了」</td><td>② 关系 · 被理解感</td></tr>
+      <tr><td>互动题正确率</td><td><span class="badge badge-evd">证据</span></td><td>80%（概括题错题）</td><td>⑧ 知识/能力 · 薄弱项推断依据</td></tr>
+      <tr><td>六维评分</td><td><span class="badge badge-evd">证据</span></td><td>表达 4 · 专注 4 · 互动 5</td><td>④ 孩子成长 · 课堂参与</td></tr>
+      <tr><td>近三次正价课出勤率</td><td><span class="badge badge-evd">证据</span></td><td>全勤 · 全勤 · 第 11 讲缺勤</td><td>⑦ 成长轨迹 · 趋势节点</td></tr>
+      <tr><td>最近三次转化日期</td><td><span class="badge badge-evt">事件</span></td><td>2026-04-18 299→正价</td><td>③ 决策/转化 · 转化事件</td></tr>
+      <tr><td>近七天企微沟通明细</td><td><span class="badge badge-evt">事件</span></td><td>4 次沟通 · 无投诉</td><td>② 关系 · 关系事件源</td></tr>
+      <tr><td>需求强度（需求+焦虑）</td><td><span class="badge badge-st">状态源</span></td><td>阅读概括弱、表达不自信</td><td>① 家庭决策 · 焦虑源</td></tr>
+      <tr><td>课堂表达意愿</td><td><span class="badge badge-st">状态源</span></td><td>近 4 讲从回避→偶尔主动</td><td>④ 孩子成长 · 表达意愿</td></tr>
+      <tr><td>家长沟通性格</td><td><span class="badge badge-st">状态源</span></td><td>理性务实 · 偏好数据+案例</td><td>② 关系 · 被理解感</td></tr>
+      <tr><td>—（本体收敛结果）</td><td><span class="badge badge-st">状态</span></td><td>「从回避表达转向偶尔主动开口」</td><td>④ 孩子成长本体</td></tr>
+      <tr><td>—（本体收敛结果）</td><td><span class="badge badge-st">状态</span></td><td>「决策阶段：认可→比较」</td><td>③ 决策/转化状态本体</td></tr>
+      <tr><td>—（策略匹配结果）</td><td><span class="badge badge-st">状态</span></td><td>已匹配「效果验证策略」</td><td>⑤ 干预/策略本体</td></tr>
+    </tbody>
+  </table>
+
+  <div class="code-box" style="margin-top:20px"><span class="hl">提取时的分类顺序</span>
+
+<span class="c">1. 原始数据进入</span>  →  匹配字典<strong>标签</strong>（字段名）
+<span class="c">2. 有 event_time + 一次性行为?</span>  →  记<strong>事件</strong>（工作/事件流，只追加）
+<span class="c">3. 是可度量观测值?</span>  →  记<strong>证据</strong>（不直接当本体状态）
+<span class="c">4. 是稳定长期事实?</span>  →  记<strong>标签·背景</strong>（核心记忆）
+<span class="c">5. 需归纳、有置信度?</span>  →  记<strong>状态源</strong>（心智模型，待多源验证）
+<span class="c">6. 验证通过 + 映射规则</span>  →  更新八大本体<strong>状态</strong>（文字描述）→ 触发策略</div>
+
+  <h3 style="margin-top:36px;font-size:16px;font-weight:700;color:var(--ink)">八大本体状态 · 驱动层</h3>
+  <p style="font-size:13px;color:var(--ink-3);margin:6px 0 0">由上方四层记忆收敛，按方案定义的 8 个本体分别维护状态——不是扁平标签列表。</p>
+
+  <div class="onto-8-grid">
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">1</span><span class="badge badge-p0">P0</span>家庭决策本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">决策人</span><span class="onto-dim-txt">妈妈（李女士）主导决策，父亲偶尔参与意见</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">焦虑源</span><span class="onto-dim-txt">阅读概括弱、表达不自信，期末前希望看到明显变化</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">教育理念</span><span class="onto-dim-txt">成长导向 · 重习惯与表达，不过分追求短期分数</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">效果感知</span><span class="onto-dim-txt">能看到变化，但仍希望更多「可展示」的成长证据</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">学习意愿</span><span class="onto-dim-txt">愿意继续读，续报意向明确，需进一步确认长期规划</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">预算约束</span><span class="onto-dim-txt">价格敏感度中等 · 更关注是否持续有变化</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">竞品比较</span><span class="onto-dim-txt">曾试听线上一对一 · 当前在对比其他阅读课</span></div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">2</span><span class="badge badge-p0">P0</span>关系本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">被关注感</span><span class="onto-dim-txt">课后有跟进、有反馈，家长感觉「老师在看孩子」</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">被理解感</span><span class="onto-dim-txt">班主任能说出孩子畏难和概括弱，但深度还可加强</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">信任感</span><span class="onto-dim-txt">整体信任建立较好，续报沟通中仍持开放态度</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">情感连接</span><span class="onto-dim-txt">孩子对班主任不排斥，但情感连接仍偏功能性</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">服务感知</span><span class="onto-dim-txt">响应及时、提醒到位，家长对服务流程基本满意</span></div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">3</span><span class="badge badge-p0">P0</span>决策 / 转化状态本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">决策阶段</span><span class="onto-dim-txt"><strong>认可 → 比较</strong>（续报语境 · 距窗口 18 天）</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">卡点识别</span><span class="onto-dim-txt">概括能力证据不足；家长提及「再对比别的阅读课」</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">阻塞维度</span><span class="onto-dim-txt">价值认可待补强 · 非价格主因</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">转化事件</span><span class="onto-dim-txt">2026-04-18 299→正价 · 无退费/投诉</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">风险事件</span><span class="onto-dim-txt">无 · 近 7 天沟通 4 次正常</span></div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">4</span><span class="badge badge-p0">P0</span>孩子成长本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">学习动力</span><span class="onto-dim-txt">从被动应付转向偶尔主动，近几周有改善</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">课堂参与</span><span class="onto-dim-txt">互动频次上升，本讲完课且参与讨论</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">阅读兴趣</span><span class="onto-dim-txt">对《草房子》有兴趣，开始主动选书</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">学习习惯</span><span class="onto-dim-txt">打卡习惯初步建立，作业提交趋于稳定</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">表达意愿</span><span class="onto-dim-txt">从回避表达转向偶尔主动开口</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">趋势判断</span><span class="onto-dim-txt">持续成长 · 表达与阅读习惯均在向好</span></div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">5</span><span class="badge badge-p0">P0</span>干预 / 策略本体</div>
+      <div class="onto-state-body">
+        <div class="onto-strat-row active"><strong>效果验证策略</strong>（已匹配）<br>条件：家长尚未充分感知成长，但本讲已出现积极证据<br>动作：成长反馈报告 + 阅读展示 + 概括小练</div>
+        <div class="onto-strat-row"><strong>续报窗口策略</strong>（待触发）<br>条件：续报意向较好，尚需补全一轮成长证据<br>动作：成长总结 + 续报方案（7/12 前预备）</div>
+        <div class="onto-strat-row"><strong>差异化策略</strong>（并行关注）<br>条件：决策阶段处于比较，家长在对比其他阅读课<br>动作：竞品对比话术 + 3 个月轨迹证据</div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">6</span><span class="badge badge-p1">P1</span>家庭满意 / 成长价值本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">成长感知</span><span class="onto-dim-txt">家长已感到孩子有变化，但希望看到更系统的成长证明</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">服务满意</span><span class="onto-dim-txt">对班主任响应速度和课后跟进整体满意</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">老师认可</span><span class="onto-dim-txt">认可主讲引导方式，孩子愿意跟着读</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">机构认同</span><span class="onto-dim-txt">认可阅读伴读产品形态，仍在比较同类方案</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">续报准备度</span><span class="onto-dim-txt">续报窗口临近，家庭整体偏积极，差一轮完整证据</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">价值叙事</span><span class="onto-dim-txt">表达从回避→主动开口；打卡习惯建立中</span></div>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">7</span><span class="badge badge-p1">P1</span>成长轨迹本体</div>
+      <div class="onto-state-body">
+        <div class="onto-trail">
+          <div class="onto-trail-node"><span class="t">2026-04</span><span>299 期 · 不爱开口 · 家长焦虑概括弱</span></div>
+          <div class="onto-trail-node"><span class="t">2026-05</span><span>转化正价 · 开始稳定交作业</span></div>
+          <div class="onto-trail-node"><span class="t">2026-06</span><span>第 8 讲 · 首次主动分享阅读</span></div>
+          <div class="onto-trail-node"><span class="t">2026-07</span><span>第 12 讲 · 开口 35 秒高光 · 妈妈反馈「愿意说了」</span></div>
+        </div>
+        <p style="font-size:11px;color:var(--g-500);margin-top:10px">轨迹结论：表达维度持续成长 · 续报叙事主证据</p>
+      </div>
+    </div>
+
+    <div class="onto-state-card">
+      <div class="onto-state-h"><span class="num">8</span><span class="badge badge-p2">P2</span>知识 / 能力 + 学习行为本体</div>
+      <div class="onto-state-body">
+        <div class="onto-dim"><span class="onto-dim-name">薄弱项</span><span class="onto-dim-txt">阅读理解 · 概括总结偏弱</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">阅读水平</span><span class="onto-dim-txt">中等偏下 · 能读不愿说</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">互动趋势</span><span class="onto-dim-txt">近三次课堂互动逐步增多，本讲参与最积极</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">作业习惯</span><span class="onto-dim-txt">总体提交稳定，第 11 讲曾漏交，本讲已补交</span></div>
+        <div class="onto-dim"><span class="onto-dim-name">本讲证据</span><span class="onto-dim-txt">完课并完成笔记 · 概括题仍有困难 · 有开口分享高光</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="onto-action-bar">
+    <div class="lbl">班主任 AI 推荐动作 · 跨本体编排</div>
+    <div class="txt">① <strong>服务模块</strong>：24h 内发送本讲成长反馈（关系 + 成长价值 · 含 35 秒高光）<br>② <strong>学情模块</strong>：布置概括小练 · 7/9 前跟进（知识/能力 + 孩子成长）<br>③ <strong>续报模块</strong>：7/12 前输出「3 个月阅读轨迹」方案（成长轨迹 + 决策状态 · 比较阶段差异化）<br><span style="color:var(--g-500)">路由依据：续报意向积极 + 决策阶段=比较 → 先补证据、再续报，不硬促</span></div>
+  </div>
+
+  <div class="flow-legend">
+    <span><i style="background:var(--accent)"></i>核心记忆 → 背景注入</span>
+    <span><i style="background:#6366f1"></i>工作记忆 → 事件/任务</span>
+    <span><i style="background:#059669"></i>事件流 → 证据链</span>
+    <span><i style="background:var(--g-500)"></i>心智模型 → 状态维度</span>
+    <span><i style="background:var(--accent);opacity:.5"></i>下方 → 八大本体状态</span>
+  </div>
+
+  <div class="code-box" style="margin-top:20px"><span class="hl">本例：标签 → 记忆 → 本体 的一条链路</span>
+
+<span class="c">工作记忆</span>  高光素材 =「主动分享《草房子》35 秒」
+    │  evidence_role: behavior_fact · confidence: 0.91
+    ▼
+<span class="h3">④ 孩子成长本体</span>  表达意愿：从回避 → 偶尔主动 · 阅读兴趣：从无感 → 愿意选书
+<span class="h3">⑥ 成长价值本体</span>  成长感知：从「看不太出」→「开始感觉到变化」
+    │  ontology_mapping: child_growth.expression · mental_model.reading_interest
+    ▼
+<span class="h2">⑤ 干预/策略本体</span>  匹配「效果验证策略」
+    ▼
+<span class="hl">动作</span>  服务模块：成长反馈 · 学情模块：概括练习</div>
+</section>
+
+<section>
+  <div class="section-label">Tag Mapping</div>
+  <h2>学生档案标签 → 本体映射</h2>
+  <p class="lead">基于 <a href="学生档案标签字段_记忆类型思维导图.md">学生档案标签字段_记忆类型思维导图.md</a>（294 标签：核心 52 · 工作 26 · 事件流 60 · 心智 156）。上方<strong>陈子墨实例</strong>已展示四层记忆如何收敛为本体状态；以下说明系统化映射规则——不是把标签原样搬进本体，而是按「背景 / 证据 / 事件源 / 状态维度」四类角色重组。详见 <a href="#" onclick="switchTab('memory',event);return false">记忆系统</a> 章节。</p>
+
+  <div class="callout callout-red">
+    <div>
+      <h4>映射原则</h4>
+      <p><strong>证据与状态分离：</strong>出勤率、分数、评分是证据，不直接当本体状态。<strong>心智模型标签</strong>多数需收敛为本体状态维度（如「需求强度」→ 焦虑源），而非 156 个平行字段。<strong>核心记忆</strong>提供服务的背景上下文，一般不进入本体状态机。</p>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>记忆层级</th><th>标签数量</th><th>在本体中的角色</th><th>处理方式</th></tr></thead>
+    <tbody>
+      <tr><td>核心记忆</td><td>52</td><td><span class="badge badge-ctx">背景上下文</span></td><td>年级、城市、设备、校历等——服务时自动注入，不写入本体状态</td></tr>
+      <tr><td>工作记忆</td><td>26</td><td><span class="badge badge-evt">事件源</span> <span class="badge badge-evd">证据</span></td><td>当次课堂/作业行为 → 提取事件 → 更新本体状态</td></tr>
+      <tr><td>事件流记忆</td><td>60</td><td><span class="badge badge-evt">事件源</span> <span class="badge badge-evd">证据</span></td><td>历史购课/出勤/沟通流水 → 推断决策阶段、成长趋势</td></tr>
+      <tr><td>心智模型</td><td>156</td><td><span class="badge badge-st">状态维度来源</span></td><td>经收敛映射到各本体状态，需证据链与置信度</td></tr>
+    </tbody>
+  </table>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-num">52</div><div class="kpi-label">核心 → 背景</div></div>
+    <div class="kpi-card"><div class="kpi-num">86</div><div class="kpi-label">工作+事件流 → 事件/证据</div></div>
+    <div class="kpi-card"><div class="kpi-num">~40</div><div class="kpi-label">心智 → 本体状态（收敛后）</div></div>
+    <div class="kpi-card"><div class="kpi-num">~100</div><div class="kpi-label">学科细分 → 学情模块消费</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">P0 Mapping</div>
+  <h2>P0 本体 · 标签映射</h2>
+
+  <h3>1. 家庭决策本体</h3>
+  <table>
+    <thead><tr><th>本体状态维度</th><th>映射角色</th><th>来源标签（心智模型 / 核心记忆）</th></tr></thead>
+    <tbody>
+      <tr><td>决策人 / 影响人</td><td><span class="badge badge-st">状态</span></td><td>学习主负责人、家长学习参与方式、家长数学辅导时间投入</td></tr>
+      <tr><td>焦虑源</td><td><span class="badge badge-st">状态</span></td><td>需求强度（需求+焦虑）、当前学习最大困惑、数学/英语科目主要问题、初中阶段家长核心关注</td></tr>
+      <tr><td>教育理念</td><td><span class="badge badge-st">状态</span></td><td>家长认知、家长教育理念、教育投入理念、家长教育投入类型、数学补习目标定位</td></tr>
+      <tr><td>效果感知</td><td><span class="badge badge-st">状态</span></td><td>学习效果满意度、报名期待、阅读伴读报名核心期待、数学课报名核心预期、全科规划营报名核心预期</td></tr>
+      <tr><td>长期学习意愿</td><td><span class="badge badge-st">状态</span></td><td>学习需求、学习规划、高中升学规划、阅读伴读学习规划倾向</td></tr>
+      <tr><td>预算 / 支付约束</td><td><span class="badge badge-st">状态</span></td><td>课程价格敏感度、年度校外学习支出区间、家庭经济情况</td></tr>
+      <tr><td>竞品 / 比较</td><td><span class="badge badge-st">状态</span></td><td>竞品课程态度、数学/英语/全科在读竞品机构（核心记忆）</td></tr>
+      <tr><td>决策风格 / 风险规避</td><td><span class="badge badge-st">状态</span></td><td>交易与价值信任顾虑、促单承压与承诺敏感点、报名自主性、账号隐私顾虑</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. 关系本体</h3>
+  <table>
+    <thead><tr><th>本体状态维度</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>被关注感</td><td><span class="badge badge-st">状态</span></td><td>班主任服务期待、班主任服务关注点、班主任服务重点期待</td></tr>
+      <tr><td>被理解感</td><td><span class="badge badge-st">状态</span></td><td>家长对班主任特殊事项要求、家长沟通性格（工作记忆）</td></tr>
+      <tr><td>信任感</td><td><span class="badge badge-st">状态</span></td><td>家长对班主任态度、交易与价值信任顾虑、课程是否有惊喜</td></tr>
+      <tr><td>情感连接</td><td><span class="badge badge-st">状态</span></td><td>孩子对班主任态度、同伴口碑影响度</td></tr>
+      <tr><td>服务感知</td><td><span class="badge badge-st">状态</span></td><td>班主任服务优化诉求、主讲老师评价、主讲老师授课风格偏好</td></tr>
+      <tr><td>关系事件源</td><td><span class="badge badge-evt">事件</span></td><td>近七天企微沟通明细、近七天 OA 电话沟通记录、家长回复时机、互动活跃</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3. 决策 / 转化状态本体</h3>
+  <table>
+    <thead><tr><th>本体状态维度</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>当前决策阶段</td><td><span class="badge badge-st">状态</span></td><td>由购课/试听/转化/续报事件序列推断，非单标签</td></tr>
+      <tr><td>卡点识别</td><td><span class="badge badge-st">状态</span></td><td>不满意的内容、学而思待改进项、课程难度如何、竞品课程态度</td></tr>
+      <tr><td>转化事件源</td><td><span class="badge badge-evt">事件</span></td><td>最近三次转化日期、历史/近一年 0 元课与 299 领课次数、最近一次 0 元/299 购课/开课/结课时间</td></tr>
+      <tr><td>续报事件源</td><td><span class="badge badge-evt">事件</span></td><td>最近三次续报日期、最近一次正价课开课/完课/作业提交率（事件流）</td></tr>
+      <tr><td>风险事件源</td><td><span class="badge badge-evt">事件</span></td><td>最近三次退费课程、最近三次投诉内容、最近一次退费/投诉时间</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4. 孩子成长本体</h3>
+  <table>
+    <thead><tr><th>本体状态维度</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>学习动力 / 学习意愿</td><td><span class="badge badge-st">状态</span></td><td>学习意愿、数学学习兴趣与习惯问题、英语报课目标偏好</td></tr>
+      <tr><td>学习投入 / 课堂参与</td><td><span class="badge badge-st">状态</span></td><td>课堂表达意愿、学习专注力表现、日常学习专注力表现、单节阅读课互动参与体验</td></tr>
+      <tr><td>兴趣（阅读/学科）</td><td><span class="badge badge-st">状态</span></td><td>学生兴趣爱好、当前阅读书目喜爱度、单节阅读课喜爱度、想要培养的阅读习惯</td></tr>
+      <tr><td>学习习惯</td><td><span class="badge badge-st">状态</span></td><td>学生学习习惯、校内作业独立完成情况、阅读模式偏好</td></tr>
+      <tr><td>自信心 / 表达</td><td><span class="badge badge-st">状态</span></td><td>表达意愿、课堂表达意愿、学生性格特点</td></tr>
+      <tr><td>成长趋势证据</td><td><span class="badge badge-evd">证据</span></td><td>最近三次正价课出勤率/完课率/互动率/答题正确率/作业提交率（事件流）</td></tr>
+      <tr><td>当次行为事件源</td><td><span class="badge badge-evt">事件</span></td><td>是否出勤/迟到/直播完课/回放完课、是否作业提交、互动题正确率、掌握评分、六维评分、首讲反馈分层（工作记忆）</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5. 干预 / 策略本体</h3>
+  <p style="font-size:14px;color:var(--ink-3);margin-bottom:12px">策略本体不直接映射单个标签，而是由<strong>本体状态 + 事件</strong>触发规则。以下标签为策略匹配的辅助输入：</p>
+  <table>
+    <thead><tr><th>策略触发输入</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>服务优化类</td><td><span class="badge badge-evd">证据</span></td><td>班主任服务优化诉求、课堂体验优化诉求、App 学习体验问题</td></tr>
+      <tr><td>课程改进类</td><td><span class="badge badge-evd">证据</span></td><td>课程内容与学习辅助优化诉求、新数学系统班整体优化诉求、不了解的课程安排</td></tr>
+      <tr><td>素材/反馈类</td><td><span class="badge badge-evt">事件</span></td><td>高光素材、首讲反馈分层、科学课后正向收获场景</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">P1/P2 Mapping</div>
+  <h2>P1 / P2 本体 · 标签映射</h2>
+
+  <h3>6. 家庭满意 / 成长价值本体</h3>
+  <table>
+    <thead><tr><th>本体状态维度</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>成长感知</td><td><span class="badge badge-st">状态</span></td><td>单节阅读课收获感、阅读课具体收获点、科学课后正向收获场景、课程是否有惊喜</td></tr>
+      <tr><td>服务满意</td><td><span class="badge badge-st">状态</span></td><td>学生 nps、科学课上课体验满意度、英语课程安排体验评价</td></tr>
+      <tr><td>老师认可</td><td><span class="badge badge-st">状态</span></td><td>主讲老师评价、剑桥双语课程满意项、新数学系统班满意项</td></tr>
+      <tr><td>机构认同</td><td><span class="badge badge-st">状态</span></td><td>课程内容质量评价、授课形式态度、APP 用户体验评价</td></tr>
+      <tr><td>成长价值叙事</td><td><span class="badge badge-st">状态</span></td><td>满意的内容、课程学习体验、英语课程正向亮点感知（归纳为多维度成长故事）</td></tr>
+      <tr><td>不满意 / 风险</td><td><span class="badge badge-evd">证据</span></td><td>不满意的内容、剑桥双语课程不满意项、科学首次课不满意项、批改质量争议</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7. 成长轨迹本体</h3>
+  <table>
+    <thead><tr><th>轨迹节点来源</th><th>映射角色</th><th>来源标签 / 数据</th></tr></thead>
+    <tbody>
+      <tr><td>里程碑事件</td><td><span class="badge badge-evt">事件</span></td><td>首讲反馈分层、高光素材、最近三次续报日期、转化日期序列</td></tr>
+      <tr><td>能力转折叙述</td><td><span class="badge badge-st">状态沉淀</span></td><td>由「表达意愿、阅读水平现状、课堂表达意愿」等心智标签的<strong>历史变化</strong>提炼，非单点标签</td></tr>
+      <tr><td>趋势证据链</td><td><span class="badge badge-evd">证据</span></td><td>事件流中多次出勤率/完课率/作业提交率序列 → 生成「持续成长 / 停滞」轨迹节点</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8. 知识 / 能力 + 学习行为本体</h3>
+  <table>
+    <thead><tr><th>本体维度</th><th>映射角色</th><th>来源标签</th></tr></thead>
+    <tbody>
+      <tr><td>学科薄弱项（能力）</td><td><span class="badge badge-st">状态</span></td><td>薄弱项、数学薄弱板块、数学计算/几何/应用题薄弱问题、英语听说/词汇语法/读写薄弱项、阅读理解薄弱项</td></tr>
+      <tr><td>学科水平（能力）</td><td><span class="badge badge-evd">证据</span></td><td>校内数学分数段、校内数学基础能力现状、英语综合水平、阅读水平现状、分科学习成绩等级</td></tr>
+      <tr><td>学习行为</td><td><span class="badge badge-evt">事件</span></td><td>工作记忆全部课堂/作业字段；事件流中的出勤率、完课率、互动率、答题正确率、作业提交率序列</td></tr>
+      <tr><td>学科上下文</td><td><span class="badge badge-ctx">背景</span></td><td>初中数学教材版本、学校英语起始年级、校内班级类型、当前补习科目（核心记忆）</td></tr>
+      <tr><td>学科体验细分</td><td><span class="badge badge-evd">证据</span></td><td>英语/数学/科学/阅读各科目满意项、不满意项、难度感知等（~60+ 学科标签，由学情模块消费，不逐条进入服务本体状态）</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Unmapped</div>
+  <h2>不纳入本体状态的标签</h2>
+  <p class="lead">以下标签保留在记忆系统中作为<strong>背景注入</strong>或<strong>观测指标</strong>，不写入家庭成长本体的状态维度。</p>
+
+  <div class="g2">
+    <div class="card">
+      <h3>核心记忆 · 服务背景（52 中大部分）</h3>
+      <p>学生姓名、性别、生日、所在城市、就读年级、学习空间、桌面细节、学习设备、视力特征、注册时间/渠道、兴趣班固定日程、学校作息与校历、地区学制与时区适配、其他特殊需求等——每次对话自动注入，帮助 AI 生成贴合场景的话术，但不参与「状态 → 策略 → 动作」推理。</p>
+    </div>
+    <div class="card">
+      <h3>学科细分标签 · 学情模块消费</h3>
+      <p>心智模型中大量学科向字段（如「周周练体验评价」「数学课后练习完成时间偏好」「假期英语课程节奏偏好」等）由<strong>班主任 AI 学情模块</strong>按需检索，用于诊断与规划，不逐条映射为服务侧本体状态，避免状态维度爆炸。</p>
+    </div>
+  </div>
+
+  <div class="code-box"><span class="hl">标签 → 记忆层 → 本体 转化流水线</span>
+
+<span class="c">核心记忆（52）</span>  ──────────────────────────→  对话上下文自动注入（背景）
+
+<span class="c">工作记忆（26）+ 事件流（60）</span>  ──→  <span class="h2">事件提取</span>  ──→  更新本体状态 / 沉淀轨迹节点
+                                      ↑
+<span class="c">心智模型（156）</span>  ──→  <span class="h3">收敛映射（~40 维）</span>  ──→  本体状态维度（需证据链）
+                                      ↑
+<span class="c">8 个二级记忆对象</span>  ──────────────────┘  对齐老师工作流，绑定 action_bindings
+                                      ↑
+<span class="c">学情/分数/出勤（证据）</span>  ──────────────┘  不直接当状态，只作推断依据</div>
+</section>
+
+
+</div><!-- /tab-mapping -->
+
+<!-- TAB 5: 落地路线 -->
+<div id="tab-roadmap" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">Roadmap</div>
+  <h2>推荐落地路线</h2>
+  <p class="lead">本体建设与记忆系统<strong>双轨并行、阶段对齐</strong>。不要一开始做复杂知识图谱；V1 让「班主任 AI」服务+学情模块能用；V2 四模块闭环；V3 全生命周期统一。</p>
+
+  <div class="dual-roadmap">
+    <div class="dual-col">
+      <div class="dual-col-h">本体建设里程碑</div>
+      <div class="phase" style="margin-top:0">
+        <div class="phase-left"><div class="phase-dot active" style="width:28px;height:28px;font-size:12px">V1</div><div class="phase-line"></div></div>
+        <div class="phase-body" style="padding:14px 16px;margin-bottom:8px"><strong>1~2 月</strong> · P0 四本体 + 5~8 策略规则</div>
+      </div>
+      <div class="phase">
+        <div class="phase-left"><div class="phase-dot" style="width:28px;height:28px;font-size:12px">V2</div><div class="phase-line"></div></div>
+        <div class="phase-body" style="padding:14px 16px;margin-bottom:8px"><strong>3~6 月</strong> · 路径库 + 正价课增值本体</div>
+      </div>
+      <div class="phase">
+        <div class="phase-left"><div class="phase-dot" style="width:28px;height:28px;font-size:12px">V3</div></div>
+        <div class="phase-body" style="padding:14px 16px"><strong>6~12 月</strong> · 续报准备度 + 关联推理按需</div>
+      </div>
+    </div>
+    <div class="dual-col">
+      <div class="dual-col-h">记忆系统交付阶段</div>
+      <div class="phase" style="margin-top:0">
+        <div class="phase-left"><div class="phase-dot active" style="width:28px;height:28px;font-size:12px">P1</div><div class="phase-line"></div></div>
+        <div class="phase-body" style="padding:14px 16px;margin-bottom:8px"><strong>Q3 · 8 周</strong> · 四层 Schema + 单轨提取 + 核心注入</div>
+      </div>
+      <div class="phase">
+        <div class="phase-left"><div class="phase-dot" style="width:28px;height:28px;font-size:12px">P2</div><div class="phase-line"></div></div>
+        <div class="phase-body" style="padding:14px 16px;margin-bottom:8px"><strong>Q4 · 10 周</strong> · 双轨提取 + 混合检索 + 夜间批处理</div>
+      </div>
+      <div class="phase">
+        <div class="phase-left"><div class="phase-dot" style="width:28px;height:28px;font-size:12px">P3</div></div>
+        <div class="phase-body" style="padding:14px 16px"><strong>Q1 · 8 周</strong> · 标签自迭代 + 关联推理 + PMF 闭环</div>
+      </div>
+    </div>
+  </div>
+
+  <table style="margin-top:24px">
+    <thead><tr><th>阶段</th><th>本体交付</th><th>记忆系统交付</th><th>联合验收标准</th></tr></thead>
+    <tbody>
+      <tr><td>V1 / Phase 1</td><td>家庭决策 + 关系 + 决策状态 + 孩子成长（精简）</td><td>四层 Schema、单轨增量提取、52 标签中 5 核心维度注入、历史入库 ≥60%</td><td>AI 能答「焦虑什么、信任多少、该做什么」；跨 Session 核心事实召回 ≥80%</td></tr>
+      <tr><td>V2 / Phase 2</td><td>成长路径库 + 干预策略 + 家庭满意/成长价值/轨迹</td><td>双轨提取、混合检索、夜间批处理、心智模型离线归纳</td><td>推荐下一步动作且状态变化可追踪；话术命中率 ≥65%</td></tr>
+      <tr><td>V3 / Phase 3</td><td>续报准备度 + 口碑 + 知识/行为接入</td><td>标签自迭代、关联推理按需、效果评测、A/B 闭环</td><td>家庭连续几年数字分身；档案覆盖率 ≥80%；PMF 验证</td></tr>
+    </tbody>
+  </table>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-left"><div class="phase-dot active">V1</div><div class="phase-line"></div></div>
+      <div class="phase-body">
+        <div class="phase-tag current">1~2 个月 · 能用起来</div>
+        <h3>家庭决策 + 关系 + 决策状态 + 孩子成长（精简）</h3>
+        <div class="phase-items">
+          <div class="phase-item"><div class="phase-item-title">15~20 个状态维度</div><div class="phase-item-desc">控制在可管理范围，避免无限扩张</div></div>
+          <div class="phase-item"><div class="phase-item-title">30~50 个事件映射</div><div class="phase-item-desc">从沟通/行为中提取，映射到状态变化</div></div>
+          <div class="phase-item"><div class="phase-item-title">5~8 条策略规则</div><div class="phase-item-desc">信任低、成长停滞、续报窗口、决策卡点</div></div>
+          <div class="phase-item"><div class="phase-item-title">MVP 场景</div><div class="phase-item-desc">私域保温 + 299 直转</div></div>
+        </div>
+        <div class="phase-ok">验收标准：AI 能回答「这个家庭焦虑什么、信任多少、该做什么」</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-left"><div class="phase-dot">V2</div><div class="phase-line"></div></div>
+      <div class="phase-body">
+        <div class="phase-tag">3~6 个月 · 闭环跑通</div>
+        <h3>成长路径库 + 干预策略 + 正价课增值本体</h3>
+        <div class="phase-items">
+          <div class="phase-item"><div class="phase-item-title">成长路径库</div><div class="phase-item-desc">从高转化/高续报家庭归纳：信任→成长感知→成交（62%）</div></div>
+          <div class="phase-item"><div class="phase-item-title">干预/策略本体</div><div class="phase-item-desc">状态→策略→动作，动作后状态可追踪</div></div>
+          <div class="phase-item"><div class="phase-item-title">正价课引入</div><div class="phase-item-desc">家庭满意、成长价值、成长轨迹</div></div>
+          <div class="phase-item"><div class="phase-item-title">AI 能力升级</div><div class="phase-item-desc">推荐「下一步最佳动作」</div></div>
+        </div>
+        <div class="phase-ok">验收标准：AI 能推荐下一步动作，且动作后状态变化可追踪归因</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-left"><div class="phase-dot">V3</div></div>
+      <div class="phase-body">
+        <div class="phase-tag">6~12 个月 · 全生命周期统一</div>
+        <h3>续报准备度 + 口碑 + 知识/行为接入 + 家庭成长图谱</h3>
+        <div class="phase-items">
+          <div class="phase-item"><div class="phase-item-title">续报准备度、口碑资产</div><div class="phase-item-desc">非续报概率，而是成长认可+服务认可+家庭匹配</div></div>
+          <div class="phase-item"><div class="phase-item-title">全角色共用</div><div class="phase-item-desc">LP → 班主任接力；班主任 AI 四模块共用同一家庭数字分身</div></div>
+          <div class="phase-item"><div class="phase-item-title">关联推理按需</div><div class="phase-item-desc">复杂多跳场景再引入知识图谱能力，不前置重投入</div></div>
+          <div class="phase-item"><div class="phase-item-title">闭环自我进化</div><div class="phase-item-desc">互动→更新本体→AI推理→执行→反馈→继续更新</div></div>
+        </div>
+        <div class="phase-ok">验收标准：一个家庭连续几年成长的数字分身，跨角色体验连续、不掉链子</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Service Roles</div>
+  <h2>真人角色与班主任 AI 如何消费本体</h2>
+
+  <div class="callout callout-red" style="margin-bottom:20px">
+    <div>
+      <h4>角色与 AI 产品原则（必读）</h4>
+      <p><strong>真人：</strong>班主任 = 规划师 = 续报顾问，是唯一前台主角色；LP 仅在转化前期接力。<strong>AI：</strong>对外只有一个「班主任 AI」，对内按<strong>服务 / 规划 / 学情 / 续报</strong>四模块实现，共用同一家庭数字分身，由本体状态自动路由到对应模块，班主任无需切换多个 AI 工具。</p>
+    </div>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-header" style="background:var(--accent-lt);border-bottom-color:var(--accent-bd)">班主任（真人）</div>
+      <div class="role-body">
+        <div class="role-item"><strong>角色定位：</strong>唯一前台主角色；服务 + 规划 + 续报职责一体</div>
+        <div class="role-item"><strong>读取本体：</strong>家庭决策、关系、决策状态、孩子成长、家庭满意、成长轨迹、续报准备度等</div>
+        <div class="role-item"><strong>写入本体：</strong>服务 / 规划 / 续报事件 → 状态更新</div>
+        <div class="role-item"><strong>使用 AI：</strong>通过唯一的「班主任 AI」获取建议并执行，不按模块手动切换</div>
+      </div>
+    </div>
+    <div class="role-card">
+      <div class="role-header">LP（真人）</div>
+      <div class="role-body">
+        <div class="role-item"><strong>角色定位：</strong>转化前期接力；私域保温、299 首转</div>
+        <div class="role-item"><strong>读取：</strong>家庭决策、决策状态、关系</div>
+        <div class="role-item"><strong>移交：</strong>成交后完整家庭分身移交班主任，由班主任 + 班主任 AI 全程承接</div>
+      </div>
+    </div>
+    <div class="role-card">
+      <div class="role-header" style="background:var(--accent-lt);border-bottom-color:var(--accent-bd)">班主任 AI（对外唯一产品）</div>
+      <div class="role-body">
+        <div class="role-item"><strong>产品定位：</strong>班主任的唯一 AI 搭档；对内四模块，对外一个入口</div>
+        <div class="role-item"><strong>服务模块：</strong>今日任务、成长反馈、个性化话术、关系维护建议</div>
+        <div class="role-item"><strong>规划模块：</strong>路径建议、选课/排课、学习方案（原规划师 AI 能力）</div>
+        <div class="role-item"><strong>学情模块：</strong>学情诊断、干预建议、课堂/作业事件写入（原 AI 助教能力）</div>
+        <div class="role-item"><strong>续报模块：</strong>续报窗口判断、续报方案、扩科时机（原续报顾问 AI 能力）</div>
+        <div class="role-item"><strong>模块路由：</strong>由本体状态自动决定当前偏哪个模块，班主任看到统一输出</div>
+      </div>
+    </div>
+    <div class="role-card">
+      <div class="role-header">管理层</div>
+      <div class="role-body">
+        <div class="role-item"><strong>读取：</strong>A1-A7 观测指标、路径成功率、各模块效果归因</div>
+        <div class="role-item"><strong>AI 辅助：</strong>大盘健康度、策略迭代建议</div>
+      </div>
+    </div>
+  </div>
+
+  <table style="margin-top:28px">
+    <thead><tr><th>模块</th><th>主要读取本体</th><th>典型输出</th><th>对应原能力</th></tr></thead>
+    <tbody>
+      <tr><td>服务模块</td><td>关系、家庭满意、孩子成长</td><td>今日服务任务、个性化消息、成长反馈</td><td>班主任日常服务</td></tr>
+      <tr><td>规划模块</td><td>孩子成长、成长轨迹、知识/能力</td><td>路径建议、选课方案、学习规划</td><td>原规划师</td></tr>
+      <tr><td>学情模块</td><td>学习行为、干预策略、知识掌握</td><td>学情诊断、干预建议、薄弱点分析</td><td>原 AI 助教</td></tr>
+      <tr><td>续报模块</td><td>续报准备度、成长价值、决策状态</td><td>续报窗口、续报方案、扩科建议</td><td>原续报顾问</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">MVP Scenarios</div>
+  <h2>MVP 验证场景</h2>
+  <div class="g2">
+    <div class="card card-top">
+      <h3>直转场景</h3>
+      <p>本体论驱动转化策略。天然是「先服务再定课」，从用户视角最顺。观测：转化率、长效回捞效果。</p>
+    </div>
+    <div class="card card-top">
+      <h3>学部私域（营外用户）</h3>
+      <p>基于本体的 AI 个性化保温。老师没有精力做断报用户的个性化跟进——这正是本体+AI 最擅长的。观测：开口率、信任关系变化。</p>
+    </div>
+  </div>
+
+  <div class="code-box" style="margin-top:24px"><span class="hl">本体-AI-服务 闭环</span>
+
+用户互动 → 本体状态更新 → AI 推理下一步 → 执行 → 用户反馈 → 继续更新
+
+<span class="c">系统自我进化，不再依赖人不断写新 SOP</span></div>
+</section>
+
+<section>
+  <div class="section-label">Summary</div>
+  <h2>一句话总结</h2>
+  <div class="g4">
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">第一步</div>
+      <div style="font-size:13px;color:var(--ink-3)">家庭决策 + 关系 + 决策状态<br>理解用户、知道卡在哪</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">第二步</div>
+      <div style="font-size:13px;color:var(--ink-3)">孩子成长 + 干预策略<br>推动成长、知道做什么</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">第三步</div>
+      <div style="font-size:13px;color:var(--ink-3)">成长轨迹 + 家庭满意 + 成长价值<br>长期陪伴、自然续报</div>
+    </div>
+    <div style="padding:18px;background:var(--accent-lt);border:1px solid var(--accent-bd);border-radius:var(--r-sm);text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px">第四步</div>
+      <div style="font-size:13px;color:var(--ink-3)">知识/能力/行为<br>复用教研资产，不重复建设</div>
+    </div>
+  </div>
+  <div class="callout callout-red" style="margin-top:24px">
+    <div>
+      <h4>最终形态：家庭成长操作系统</h4>
+      <p>用户画像是数字分身的「结果」；本体论是数字分身的「骨架」；<strong>班主任 AI</strong>是运行在这个骨架上的「大脑」—— 对外一个产品，对内服务/规划/学情/续报四模块。竞品可以抄 SOP，但拿不走你对每个家庭的认知积累。</p>
+    </div>
+  </div>
+</section>
+
+
+</div><!-- /tab-roadmap -->
+<!-- TAB 6: 参考资料 -->
+<div id="tab-refs" class="tab-panel" role="tabpanel">
+
+<section>
+  <div class="section-label">References</div>
+  <h2>参考文档</h2>
+  <p class="lead">v2 综合本体建设参考文档与《学员记忆系统技术规划》整理而成。</p>
+
+  <h3 style="font-size:16px;font-weight:600;color:var(--ink);margin:24px 0 12px">本体与业务方案</h3>
+  <table>
+    <thead><tr><th>文档</th><th>核心贡献</th><th>本地路径</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>服务团队本体建设方案 v1</td>
+        <td>家庭成长本体、班主任 AI 四模块、8 核心本体、标签映射</td>
+        <td><a href="服务团队本体建设方案.html">服务团队本体建设方案.html</a></td>
+      </tr>
+      <tr>
+        <td>学员记忆系统技术规划</td>
+        <td>四层记忆架构、增量提取、夜间批处理、Schema、三阶段实施（详见技术规划）</td>
+        <td><a href="学员记忆系统技术规划.html">学员记忆系统技术规划.html</a></td>
+      </tr>
+      <tr>
+        <td>学生档案标签字段（记忆类型思维导图）</td>
+        <td>294 标签四层分类；「标签映射」章节来源</td>
+        <td><a href="学生档案标签字段_记忆类型思维导图.md">学生档案标签字段_记忆类型思维导图.md</a></td>
+      </tr>
+      <tr>
+        <td>本体论在教育领域的应用</td>
+        <td>本体 vs 用户画像/数据建模；五阶段演进；家庭决策本体</td>
+        <td><a href="参考文档/本体论在教育领域的应用.md">参考文档/本体论在教育领域的应用.md</a></td>
+      </tr>
+      <tr>
+        <td>299阅读课本体设计</td>
+        <td>事件→状态→路径提取法；V1~V4 演进；15~20 状态维度</td>
+        <td><a href="参考文档/299阅读课本体设计（ChatGPT）.md">参考文档/299阅读课本体设计（ChatGPT）.md</a></td>
+      </tr>
+      <tr>
+        <td>正价课本体</td>
+        <td>成长轨迹一等公民；家庭满意/成长价值/续报准备度</td>
+        <td><a href="参考文档/正价课本体.md">参考文档/正价课本体.md</a></td>
+      </tr>
+      <tr>
+        <td>学而思网校私域运营规划</td>
+        <td>驱动层 vs 观测层；本体-AI-服务闭环；MVP 场景</td>
+        <td><a href="参考文档/学而思网校私域运营规划_OnePage.md">参考文档/学而思网校私域运营规划_OnePage.md</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:600;color:var(--ink);margin:28px 0 12px">记忆系统与上下文工程（业界参考，非绑定选型）</h3>
+  <table>
+    <thead><tr><th>来源</th><th>核心贡献</th><th>出处</th></tr></thead>
+    <tbody>
+      <tr><td>增量记忆提取</td><td>消息对 ADD/UPDATE/DELETE 分类，生产级增量写入思路；2026 版 Mem0 已转向 ADD-only，结合方案见 <a href="#" onclick="switchTab('mem0',event);return false">Mem0 选型</a></td><td><a href="https://arxiv.org/abs/2504.19413" target="_blank">Mem0 Technical Report, 2025</a> · <a href="https://github.com/mem0ai/mem0" target="_blank">mem0ai/mem0</a></td></tr>
+      <tr><td>轻量图检索</td><td>图检索 + 关键词双通道，多跳推理参考</td><td><a href="https://arxiv.org/abs/2410.05779" target="_blank">LightRAG, arXiv:2410.05779</a></td></tr>
+      <tr><td>分层记忆管理</td><td>Core/Working/Archival 三层，上下文窗口管理</td><td><a href="https://arxiv.org/abs/2310.08560" target="_blank">MemGPT, arXiv:2310.08560</a></td></tr>
+      <tr><td>Generative Agents</td><td>观察-反思-计划架构，事件流到心智模型</td><td><a href="https://arxiv.org/abs/2304.03442" target="_blank">arXiv:2304.03442</a></td></tr>
+      <tr><td>Anthropic Context Engineering</td><td>Context Rot、最小高信号、Compaction 策略</td><td><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank">Anthropic Engineering Blog</a></td></tr>
+      <tr><td>OpenAI Context Personalization</td><td>Distillation / Injection / Consolidation 评测框架</td><td><a href="https://cookbook.openai.com/examples/context_engineering_for_personalization" target="_blank">OpenAI Cookbook, 2026</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:600;color:var(--ink);margin:28px 0 12px">教育数据治理</h3>
+  <table>
+    <thead><tr><th>来源</th><th>核心贡献</th></tr></thead>
+    <tbody>
+      <tr><td>SoLAR</td><td>学习分析应产生可行动洞察，而不只是展示指标</td></tr>
+      <tr><td>Jisc Code of Practice</td><td>责任、透明、同意、隐私、访问、正向干预</td></tr>
+      <tr><td>UNESCO GenAI in Education</td><td>人本、年龄适配、隐私保护框架</td></tr>
+      <tr><td>FERPA / COPPA</td><td>教育记录与未成年人数据治理参考</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="section-label">Key Quotes</div>
+  <h2>关键论断摘录</h2>
+  <div class="g2">
+    <div class="callout callout-gray"><div><h4>299 体验课</h4><p>目标不是教阅读，而是：建立信任、验证效果、沉淀认知、促进转化、形成口碑。</p></div></div>
+    <div class="callout callout-gray"><div><h4>正价课</h4><p>目标不是续报，而是持续成长。续报只是成长的结果，而不是运营的目标。</p></div></div>
+    <div class="callout callout-gray"><div><h4>私域运营</h4><p>过去是「标签越细，SOP 越多，人越累」；现在是「理解越深，AI 越精准，体验越好」。</p></div></div>
+    <div class="callout callout-gray"><div><h4>Context Engineering（技术规划）</h4><p>上下文是有限注意力预算。本体状态摘要是 Agent 的「高信号入口」；记忆层按 Token 预算分层注入。信号密度 &gt; 信息数量。</p></div></div>
+    <div class="callout callout-gray"><div><h4>服务角色与 AI 产品（本方案）</h4><p>真人：班主任 = 规划师 = 续报顾问。AI：对外只有一个「班主任 AI」，对内按服务/规划/学情/续报四模块拆分，共用家庭数字分身，本体状态自动路由。</p></div></div>
+    <div class="callout callout-gray"><div><h4>轨迹 vs 状态</h4><p>状态告诉 AI「现在是什么」；轨迹告诉 AI「为什么会变成这样，以及下一步最应该做什么」。</p></div></div>
+  </div>
+</section>
+
+</div><!-- /tab-refs -->
+
+</div><!-- /container -->
+
+<div class="footer">在线教育服务团队本体建设方案 v2 · 学员记忆项目组 · 2026-07-08 · 融合《学员记忆系统技术规划》</div>
+
+<script>
+const TAB_IDS=['overview','ontology','memory','mem0','mapping','roadmap','refs'];
+function switchTab(id,e){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.topnav-link[role="tab"]').forEach(l=>{
+    l.classList.remove('active');
+    l.setAttribute('aria-selected','false');
+    l.setAttribute('tabindex','-1');
+  });
+  const activeTab=(e&&e.currentTarget)||document.querySelector('[aria-controls="tab-'+id+'"]');
+  activeTab.classList.add('active');
+  activeTab.setAttribute('aria-selected','true');
+  activeTab.setAttribute('tabindex','0');
+  activeTab.focus();
+}
+function handleTabKey(e,id){
+  const tabs=Array.from(document.querySelectorAll('.topnav-link[role="tab"]'));
+  const idx=TAB_IDS.indexOf(id);
+  let target=-1;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();target=(idx+1)%TAB_IDS.length;}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();target=(idx+TAB_IDS.length-1)%TAB_IDS.length;}
+  else if(e.key==='Home'){e.preventDefault();target=0;}
+  else if(e.key==='End'){e.preventDefault();target=TAB_IDS.length-1;}
+  if(target>=0){tabs[target].click();}
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[target="_blank"]').forEach(function(a){
+    a.setAttribute('rel','noopener noreferrer');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent 评测框架深度研究报告</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --border: #e2e8f0;
+    --accent: #3b82f6;
+    --accent-light: #eff6ff;
+    --table-stripe: #f8fafc;
+    --table-hover: #f1f5f9;
+    --code-bg: #f1f5f9;
+    --blockquote-border: #3b82f6;
+    --blockquote-bg: #f8fafc;
+    --heading-color: #0f172a;
+    --tag-bg: #dbeafe;
+    --tag-text: #1d4ed8;
+    --success-bg: #dcfce7;
+    --success-text: #166534;
+    --warning-bg: #fef3c7;
+    --warning-text: #92400e;
+    --danger-bg: #fee2e2;
+    --danger-text: #991b1b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--heading-color);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-top: 56px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 650;
+    color: var(--heading-color);
+    margin-top: 36px;
+    margin-bottom: 14px;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  strong { color: var(--heading-color); }
+
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    padding: 12px 18px;
+    background: var(--code-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  thead { background: var(--code-bg); }
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) { background: var(--table-stripe); }
+  tbody tr:hover { background: var(--table-hover); }
+
+  /* Blockquote */
+  blockquote {
+    margin: 24px 0;
+    padding: 18px 24px;
+    background: var(--blockquote-bg);
+    border-left: 4px solid var(--blockquote-border);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  blockquote strong { color: var(--accent); }
+
+  /* Lists */
+  ul, ol { margin: 12px 0 20px 24px; }
+  li { margin-bottom: 6px; }
+
+  /* Tags / badges */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 12px;
+    margin-right: 6px;
+  }
+  .tag-blue { background: var(--tag-bg); color: var(--tag-text); }
+  .tag-green { background: var(--success-bg); color: var(--success-text); }
+  .tag-yellow { background: var(--warning-bg); color: var(--warning-text); }
+  .tag-red { background: var(--danger-bg); color: var(--danger-text); }
+
+  /* Highlight numbers */
+  .highlight-num {
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* Section card */
+  .card {
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 24px 0;
+  }
+
+  .card h4 { margin-top: 0; color: var(--accent); }
+
+  /* References */
+  .ref-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .ref-list li {
+    padding: 6px 0;
+    font-size: 0.9rem;
+  }
+
+  .ref-list a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .ref-list a:hover { text-decoration: underline; }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 720px) {
+    body { padding: 20px 16px 60px; }
+    h1 { font-size: 1.7rem; }
+    h2 { font-size: 1.25rem; }
+    .two-col { grid-template-columns: 1fr; }
+    table { font-size: 0.8rem; }
+    th, td { padding: 8px 10px; }
+  }
+
+  .toc {
+    background: var(--code-bg);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+  .toc h3 { margin-top: 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+  .toc ol { margin-bottom: 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>🧠 AI Agent 评测框架深度研究报告</h1>
+<div class="subtitle">
+  研究日期：2026年7月8日 &nbsp;|&nbsp; 覆盖范围：学术研究 · 工业界工具 · Benchmark体系 · 可观测性平台
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <h3>目录</h3>
+  <ol>
+    <li><a href="#sec1">总体概览：三层评测体系</a></li>
+    <li><a href="#sec2">学术评测分类体系（SAP Labs KDD'25 综述）</a></li>
+    <li><a href="#sec3">主流 Agent Benchmark 详解</a></li>
+    <li><a href="#sec4">企业级评估框架 CLEAR</a></li>
+    <li><a href="#sec5">工业界评测 / 可观测性工具</a></li>
+    <li><a href="#sec6">国内视角：RACE-FACT 框架</a></li>
+    <li><a href="#sec7">评估方法论关键要点</a></li>
+    <li><a href="#sec8">趋势与总结</a></li>
+    <li><a href="#refs">参考来源</a></li>
+  </ol>
+</nav>
+
+<hr>
+
+<!-- Section 1 -->
+<h2 id="sec1">一、总体概览：三层评测体系</h2>
+<p>AI Agent 的评估比传统 LLM 评估复杂得多——它涉及多轮工具调用、长链路推理、环境交互和任务规划。截至 2026 年中，Agent 评测领域已经形成了<strong>“三层体系”</strong>：</p>
+
+<table>
+  <thead>
+    <tr><th>层次</th><th>定位</th><th>代表</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>公共模型基准</strong><br><span class="tag tag-blue">Public Benchmarks</span></td>
+      <td>标准化的学术/行业基准，用于横向比较</td>
+      <td>MMLU-Pro, GPQA-Diamond, ARC-AGI-2</td>
+    </tr>
+    <tr>
+      <td><strong>Agent 行为基准</strong><br><span class="tag tag-green">Agentic Benchmarks</span></td>
+      <td>多步任务完成的真实环境测试</td>
+      <td>SWE-bench, WebArena, GAIA, OSWorld</td>
+    </tr>
+    <tr>
+      <td><strong>实践者评测栈</strong><br><span class="tag tag-yellow">Practitioner Stack</span></td>
+      <td>团队自定义评估管线、在线监控</td>
+      <td>Braintrust, LangSmith, DeepEval, Langfuse</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Section 2 -->
+<h2 id="sec2">二、学术评测分类体系（SAP Labs, KDD'25 综述）</h2>
+<p>SAP Labs 发表的综述论文（<a href="https://arxiv.org/html/2507.21504v1" target="_blank">arXiv: 2507.21504</a>）提出了<strong>二维评估分类法</strong>，是目前最系统的学术框架。</p>
+
+<h3>2.1 评估目标（What to Evaluate）</h3>
+
+<h4>A. 智能体行为（黑盒视角）</h4>
+<table>
+  <thead><tr><th>子类</th><th>核心指标</th><th>代表 Benchmark</th></tr></thead>
+  <tbody>
+    <tr><td><strong>任务完成</strong></td><td>Success Rate, Pass Rate, pass@k</td><td>SWE-bench, WebArena, ScienceAgentBench</td></tr>
+    <tr><td><strong>输出质量</strong></td><td>流畅度、逻辑连贯性、事实正确性</td><td>PredictingIQ, EnDex</td></tr>
+    <tr><td><strong>延迟与成本</strong></td><td>TTFT, 端到端延迟, Token成本</td><td>MobileBench, WebArena</td></tr>
+  </tbody>
+</table>
+
+<h4>B. 智能体能力（白盒视角）</h4>
+<table>
+  <thead><tr><th>子类</th><th>核心指标</th><th>代表 Benchmark</th></tr></thead>
+  <tbody>
+    <tr><td><strong>工具使用</strong></td><td>调用准确率、选择准确率、参数F1</td><td>ToolBench, API-Bank, BFCL, FlowBench</td></tr>
+    <tr><td><strong>规划与推理</strong></td><td>Node F1, Edge F1, 进展率, 步骤成功率</td><td>T-Eval, AgentBoard, ReAct 范式</td></tr>
+    <tr><td><strong>记忆与上下文保持</strong></td><td>事实召回准确率、一致性分数</td><td>LongEval, LoCoMo（600+轮）</td></tr>
+    <tr><td><strong>多智能体协作</strong></td><td>协作效率、信息共享效果</td><td>AgentSims, GAMEBENCH, BALROG</td></tr>
+  </tbody>
+</table>
+
+<h4>C. 可靠性</h4>
+<table>
+  <thead><tr><th>子类</th><th>核心关注</th><th>关键发现</th></tr></thead>
+  <tbody>
+    <tr><td><strong>一致性</strong></td><td>pass@1 vs pass^k（k次全部成功）</td><td>τ-benchmark 显示当前 Agent 一致性表现不佳</td></tr>
+    <tr><td><strong>鲁棒性</strong></td><td>输入扰动/环境变化下的稳定性</td><td>CoSafe 揭示即使先进 Agent 也被共指攻击绕过</td></tr>
+  </tbody>
+</table>
+
+<h4>D. 安全性与对齐</h4>
+<table>
+  <thead><tr><th>子类</th><th>代表 Benchmark</th></tr></thead>
+  <tbody>
+    <tr><td>公平性</td><td>CASA, R-Judge, SimuCourt</td></tr>
+    <tr><td>伤害 / 毒性 / 偏见</td><td>Agent Security Bench, AgentDojo, AgentHarm</td></tr>
+    <tr><td>合规与隐私</td><td>Cybench, TheAgentCompany</td></tr>
+  </tbody>
+</table>
+
+<h3>2.2 评估过程（How to Evaluate）</h3>
+<table>
+  <thead><tr><th>维度</th><th>子类</th><th>关键描述</th></tr></thead>
+  <tbody>
+    <tr><td><strong>交互模式</strong></td><td>静态/离线 vs 动态/在线</td><td>离线成本低但易产生误差传播；在线能发现真实痛点</td></tr>
+    <tr><td><strong>评估数据</strong></td><td>人工标注、合成数据、交互生成</td><td>代表：ScienceAgentBench, TaskBench, HAL</td></tr>
+    <tr><td><strong>指标计算</strong></td><td>代码规则、LLM-as-Judge、Agent-as-Judge、人在回路</td><td>四种方法各有优劣，需组合使用</td></tr>
+    <tr><td><strong>评估工具</strong></td><td>OpenAI Evals, DeepEval, InspectAI, Phoenix, GALILEO</td><td>覆盖开源到商业</td></tr>
+    <tr><td><strong>评估环境</strong></td><td>Mocked API → Web 模拟器 → 真实环境</td><td>从低成本低代表性到高成本高代表性</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Section 3 -->
+<h2 id="sec3">三、主流 Agent Benchmark 详解</h2>
+
+<h3>3.1 SWE-bench（软件工程） <span class="tag tag-green">核心</span></h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>2,294 个真实 GitHub Issue，需修改代码并通过现有测试</td></tr>
+  <tr><td><strong>评估方式</strong></td><td>基于执行的测试（pass/fail）</td></tr>
+  <tr><td><strong>子版本</strong></td><td>SWE-bench Verified（500 个人工筛选实例）、SWE-bench Multilingual</td></tr>
+  <tr><td><strong>2026年SOTA</strong></td><td>live-SWE-agent + Claude 4.5 Opus: <span class="highlight-num">79.2%</span> (Verified)</td></tr>
+  <tr><td><strong>定位</strong></td><td>代码 Agent 能力评估的事实标准</td></tr>
+</table>
+
+<h3>3.2 AgentBench（多领域综合） <span class="tag tag-blue">综合</span></h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>29 个 LLM 在 8 个环境中评估</td></tr>
+  <tr><td><strong>覆盖场景</strong></td><td>操作系统、数据库、知识图谱、数字卡牌游戏、网页浏览等</td></tr>
+  <tr><td><strong>特点</strong></td><td>标准化评测，覆盖 8 大场景，适合 PM 横向比较</td></tr>
+  <tr><td><strong>局限</strong></td><td>缺乏成本 / 可靠性维度</td></tr>
+</table>
+
+<h3>3.3 GAIA（通用AI助手） <span class="tag tag-blue">通用</span></h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>466 个真实世界问题，需推理 + 多模态 + 工具使用</td></tr>
+  <tr><td><strong>特点</strong></td><td>人机性能差距 <span class="highlight-num">77%</span>，对当前 Agent 极具挑战性</td></tr>
+  <tr><td><strong>定位</strong></td><td>测量通用智能体接近人类水平的程度</td></tr>
+</table>
+
+<h3>3.4 WebArena（Web 导航）</h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>812 个任务，在自托管网站（电商、论坛、地图、CMS 等）上完成</td></tr>
+  <tr><td><strong>评估方式</strong></td><td>基于状态的功能正确性</td></tr>
+  <tr><td><strong>延伸版本</strong></td><td>VisualWebArena（多模态）、WebCanvas</td></tr>
+</table>
+
+<h3>3.5 τ-bench（企业工具-Agent-用户交互） <span class="tag tag-yellow">企业</span></h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>多轮用户交互 + 策略合规评估</td></tr>
+  <tr><td><strong>两大领域</strong></td><td>零售预订 + 航空预订</td></tr>
+  <tr><td><strong>关键贡献</strong></td><td>引入 pass^k 指标，发现 do-nothing 代理通过 38% 航空任务</td></tr>
+  <tr><td><strong>核心发现</strong></td><td>当前 Agent 在一致性方面表现极差</td></tr>
+</table>
+
+<h3>3.6 OSWorld（多模态计算机操作）</h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>真实计算机环境（Ubuntu/Windows/macOS）中的开放式任务</td></tr>
+  <tr><td><strong>特点</strong></td><td>要求 Agent 操作真实操作系统，最具真实性</td></tr>
+  <tr><td><strong>评估</strong></td><td>基于屏幕状态的执行评估</td></tr>
+</table>
+
+<h3>3.7 Terminal-Bench（终端命令） <span class="tag tag-blue">新兴</span></h3>
+<table>
+  <tr><td style="width:140px"><strong>简介</strong></td><td>评估 Agent 在终端环境中的命令执行能力</td></tr>
+  <tr><td><strong>特点</strong></td><td>2026 年新兴，补充 OSWorld 的 CLI 视角</td></tr>
+</table>
+
+<h3>3.8 其他重要 Benchmark 一览</h3>
+<table>
+  <thead><tr><th>Benchmark</th><th>领域</th><th>特点</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ToolBench / API-Bank</strong></td><td>工具使用</td><td>大规模真实 API（RapidAPI 16,464 个）</td></tr>
+    <tr><td><strong>BFCL</strong></td><td>函数调用</td><td>伯克利函数调用排行榜</td></tr>
+    <tr><td><strong>ScienceAgentBench</strong></td><td>科学数据分析</td><td>编程 + 科学工作流</td></tr>
+    <tr><td><strong>CORE-Bench / PaperBench</strong></td><td>研究复现</td><td>论文结果复现</td></tr>
+    <tr><td><strong>AppWorld</strong></td><td>交互式应用</td><td>日常应用编程</td></tr>
+    <tr><td><strong>AssistantBench</strong></td><td>真实 Web 任务</td><td>长时间跨度的复杂 Web 任务</td></tr>
+    <tr><td><strong>WorkArena</strong></td><td>企业知识工作</td><td>ServiceNow 上的原子任务</td></tr>
+    <tr><td><strong>Mind2Web</strong></td><td>Web 导航</td><td>137 个真实网站，2,350 个任务</td></tr>
+    <tr><td><strong>InterCode</strong></td><td>交互式编码</td><td>Bash / SQL / Python / CTF 执行反馈</td></tr>
+    <tr><td><strong>HAL</strong></td><td>综合排行</td><td>Holistic Agent Leaderboard</td></tr>
+    <tr><td><strong>LegalBench</strong></td><td>法律领域</td><td>162 个法律推理任务</td></tr>
+    <tr><td><strong>MedQA / MultiMedQA</strong></td><td>医疗领域</td><td>医学知识评估</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Section 4 -->
+<h2 id="sec4">四、企业级评估框架 CLEAR</h2>
+<p>由 Yehudai 等人提出的 <strong>CLEAR</strong> 框架，专门针对企业部署场景，弥补了现有 Benchmark 的重大缺陷：</p>
+
+<h3>五维度模型</h3>
+<table>
+  <thead><tr><th>维度</th><th>核心指标</th><th>关键公式 / 说明</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>C — Cost（成本）</strong></td>
+      <td>成本归一化准确率 (CNA)、每次成功成本 (CPS)</td>
+      <td>CNA = (Accuracy / Cost) × 100</td>
+    </tr>
+    <tr>
+      <td><strong>L — Latency（延迟）</strong></td>
+      <td>SLA 合规率 (SCR)</td>
+      <td>SCR = SLA内完成任务数 / 总任务数</td>
+    </tr>
+    <tr>
+      <td><strong>E — Efficacy（效能）</strong></td>
+      <td>领域特定准确率</td>
+      <td>代码：测试通过率；客服：意图分类正确率</td>
+    </tr>
+    <tr>
+      <td><strong>A — Assurance（保障）</strong></td>
+      <td>策略依从得分 (PAS)</td>
+      <td>PAS = 1 − (违规数/策略关键动作数)</td>
+    </tr>
+    <tr>
+      <td><strong>R — Reliability（可靠性）</strong></td>
+      <td>pass@k（连续 k 次全成功）</td>
+      <td>任务关键型应用要求 pass@8 ≥ 80%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>综合评分公式：</strong></p>
+<p style="text-align:center; font-size:1.1rem; padding:10px 0;">CLEAR = w₁·C<sub>norm</sub> + w₂·L<sub>norm</sub> + w₃·E + w₄·A + w₅·R</p>
+
+<div class="card">
+  <h4>核心发现（硬数据）</h4>
+  <ul>
+    <li>准确率最优配置的成本比 Pareto 最优方案贵 <span class="highlight-num">4.4–10.8 倍</span></li>
+    <li>CLEAR 与生产成功相关性 𝛒 = <span class="highlight-num">0.83</span>，远超传统准确率 𝛒 = <span class="highlight-num">0.41</span></li>
+    <li>实验室到生产性能差距达 <span class="highlight-num">37%</span></li>
+    <li>pass@1 = 60% 的系统，pass@8 仅剩 <span class="highlight-num">25%</span></li>
+    <li><span class="highlight-num">85%</span> 企业实验 GenAI，<strong>仅 10% 成功部署</strong></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Section 5 -->
+<h2 id="sec5">五、工业界评测 / 可观测性工具</h2>
+
+<h3>5.1 七大开源/商业评测框架速查</h3>
+<table>
+  <thead>
+    <tr><th>框架</th><th>开源</th><th>核心定位</th><th>最适合</th><th>起步价格</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>DeepEval</strong></td>
+      <td><span class="tag tag-green">✅ Apache 2.0</span></td>
+      <td>50+预置指标，pytest 风格</td>
+      <td>CI 集成、代码优先团队</td>
+      <td>OSS 免费；SaaS $9.99/月</td>
+    </tr>
+    <tr>
+      <td><strong>Braintrust</strong></td>
+      <td><span class="tag tag-red">❌</span> (autoevals MIT)</td>
+      <td>评估优先，数据集+实验+评分器</td>
+      <td>CI 深度集成、跨职能团队</td>
+      <td>免费 1GB+10k 评分/月；Pro $249/月</td>
+    </tr>
+    <tr>
+      <td><strong>LangSmith</strong></td>
+      <td><span class="tag tag-red">❌</span> (AgentEvals MIT)</td>
+      <td>LangChain/LangGraph 原生、轨迹评估最强</td>
+      <td>LangChain 生态用户</td>
+      <td>免费 5k traces/月；Plus $39/月</td>
+    </tr>
+    <tr>
+      <td><strong>Langfuse</strong></td>
+      <td><span class="tag tag-green">✅ 开源</span></td>
+      <td>开源自托管、精细成本追踪、OTel 原生</td>
+      <td>预算敏感、数据自主</td>
+      <td>OSS 免费；云免费档慷慨</td>
+    </tr>
+    <tr>
+      <td><strong>Arize Phoenix</strong></td>
+      <td><span class="tag tag-green">✅</span> Elastic 2.0</td>
+      <td>轨迹评估+路径收敛、漂移检测、OTel 原生</td>
+      <td>ML 团队、长期质量监控</td>
+      <td>OSS 免费；AX 从 $0 起</td>
+    </tr>
+    <tr>
+      <td><strong>Galileo</strong></td>
+      <td><span class="tag tag-red">❌</span> (Agent Control OSS)</td>
+      <td>Agent 优先、蒸馏评估模型 Luna-2、自动根因分析</td>
+      <td>企业级全生命周期</td>
+      <td>免费 5k traces/月；Pro $100/月</td>
+    </tr>
+    <tr>
+      <td><strong>RAGAS</strong></td>
+      <td><span class="tag tag-green">✅ Apache 2.0</span></td>
+      <td>无参考 RAG 指标最佳，新增 Agent 指标</td>
+      <td>RAG 重 Agent、希望免费库</td>
+      <td>完全免费</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>5.2 可观测性平台（侧重不同）</h3>
+<table>
+  <thead><tr><th>平台</th><th>核心能力</th><th>特色场景</th></tr></thead>
+  <tbody>
+    <tr><td><strong>AgentOps</strong></td><td>生产会话回放、成本追踪</td><td>线上问题复盘</td></tr>
+    <tr><td><strong>Helicone</strong></td><td>网关模式、零侵入接入</td><td>快速接入、用户旅程分析</td></tr>
+    <tr><td><strong>Weights &amp; Biases</strong></td><td>实验追踪 + 模型注册表</td><td>已有 W&amp;B 基础设施的团队</td></tr>
+    <tr><td><strong>Confident AI</strong></td><td>40+ 预置 LLM-as-Judge、红队安全测试</td><td>安全意识强的团队</td></tr>
+  </tbody>
+</table>
+
+<h3>5.3 快速选型指南</h3>
+<table>
+  <thead><tr><th>你的优先级</th><th>最佳选择</th><th>备选方案</th></tr></thead>
+  <tbody>
+    <tr><td>开源、代码优先 CI 评估</td><td><strong>DeepEval</strong></td><td>RAGAS</td></tr>
+    <tr><td>评估优先 + CI/CD 深度集成</td><td><strong>Braintrust</strong></td><td>LangSmith</td></tr>
+    <tr><td>自托管、OTel 原生、轨迹评估</td><td><strong>Phoenix</strong></td><td>Langfuse</td></tr>
+    <tr><td>已使用 LangChain / LangGraph</td><td><strong>LangSmith</strong></td><td>Braintrust</td></tr>
+    <tr><td>RAG 扎实度指标</td><td><strong>RAGAS</strong></td><td>DeepEval</td></tr>
+    <tr><td>开源 + 精细成本追踪</td><td><strong>Langfuse</strong></td><td>Phoenix</td></tr>
+    <tr><td>企业全生命周期 + 运行时防护</td><td><strong>Galileo</strong></td><td>Arize AX</td></tr>
+    <tr><td>生产环境会话回放</td><td><strong>AgentOps</strong></td><td>Helicone</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Section 6 -->
+<h2 id="sec6">六、国内视角：RACE-FACT 框架</h2>
+
+<h3>6.1 RACE 评估框架</h3>
+<p>基于参考标准和自适应准则的动态加权评估框架，用于报告质量评估：</p>
+<table>
+  <thead><tr><th>评估维度</th><th>权重示例</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><strong>全面性 (COMP)</strong></td><td>35%</td><td>报告覆盖面和完整性</td></tr>
+    <tr><td><strong>洞察力 / 深度 (DEPTH)</strong></td><td>30%</td><td>分析深度和专业判断</td></tr>
+    <tr><td><strong>指令遵循 (INST)</strong></td><td>15%</td><td>遵循任务要求程度</td></tr>
+    <tr><td><strong>可读性 (READ)</strong></td><td>20%</td><td>结构和表达质量</td></tr>
+  </tbody>
+</table>
+<p>核心流程：动态权重生成 → 基于参考标准评分 → 加权总分计算</p>
+
+<h3>6.2 FACT 评估框架</h3>
+<p>事实丰富性和引用可信性评估框架：</p>
+<ul>
+  <li><strong>引用准确性 (C.Acc.)</strong>：有效支持数 ÷ 有效陈述-URL 对数</li>
+  <li><strong>每任务平均有效引用数 (E.Cit.)</strong>：量化检索呈现的有价值可验证信息</li>
+</ul>
+
+<h3>6.3 Anthropic 最佳实践建议</h3>
+<ol>
+  <li><strong>尽早启动</strong>：从 20–50 个真实失败/高频场景任务开始</li>
+  <li><strong>鲁棒评分</strong>：环境隔离、只评结果不限制路径、读轨迹验证评分器</li>
+  <li><strong>动态迭代</strong>：淘汰 100% 通过的饱和项、让业务侧参与贡献任务</li>
+  <li><strong>评分器组合</strong>：能用代码评分器就不用 LLM 评分器，人工评分器做校准</li>
+</ol>
+
+<h3>6.4 国内相关资源</h3>
+<table>
+  <thead><tr><th>资源</th><th>来源</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>百度开发者平台</td><td>智能体评估体系全解析</td><td>三层次 Benchmark 框架技术实现</td></tr>
+    <tr><td>腾讯云开发者社区</td><td>Agent 自动化评测系统构建</td><td>RACE + FACT 框架实操</td></tr>
+    <tr><td>LLM-Agent-Benchmark-List</td><td>GitHub / zingnex.cn</td><td>评测基准全景图谱汇总</td></tr>
+    <tr><td>HolySheep AI</td><td>Agent 评测框架设计</td><td>Benchmark 设计 + 人机评估实践</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Section 7 -->
+<h2 id="sec7">七、评估方法论关键要点</h2>
+
+<h3>7.1 评分器（Evaluator / Scorer）三类组合</h3>
+<table>
+  <thead><tr><th>类型</th><th>方法</th><th>优点</th><th>缺点</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>代码评分器</strong></td>
+      <td>字符串匹配、单元测试、静态分析</td>
+      <td><span class="tag tag-green">快、便宜、客观、可复现</span></td>
+      <td>脆弱，无法处理开放任务</td>
+    </tr>
+    <tr>
+      <td><strong>LLM 评分器</strong></td>
+      <td>LLM-as-Judge、成对比较</td>
+      <td><span class="tag tag-yellow">灵活、能处理开放式任务</span></td>
+      <td>非确定性、偏见、成本高</td>
+    </tr>
+    <tr>
+      <td><strong>人工评分器</strong></td>
+      <td>领域专家评审、众包</td>
+      <td><span class="tag tag-blue">黄金标准</span></td>
+      <td>昂贵、慢、难规模化</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>7.2 pass@k 三个变体</h3>
+<table>
+  <thead><tr><th>指标</th><th>含义</th><th>适用场景</th></tr></thead>
+  <tbody>
+    <tr><td><strong>pass@1</strong></td><td>单次尝试成功率</td><td>常规 Benchmark 报告</td></tr>
+    <tr><td><strong>pass@k</strong></td><td>k 次尝试中至少一次成功</td><td>宽松评估，容忍随机性</td></tr>
+    <tr><td><strong>pass^k</strong></td><td>k 次尝试全部成功</td><td>严格评估，任务关键型应用</td></tr>
+  </tbody>
+</table>
+
+<h3>7.3 评估数据的质量威胁</h3>
+<ul>
+  <li><strong>污染问题</strong>：MMLU 题目出现在 Common Crawl、HumanEval 类似 LeetCode</li>
+  <li><strong>饱和问题</strong>：MMLU / HumanEval / MBPP 已无法区分前沿模型</li>
+  <li><strong>方法论不透明</strong>：&ldquo;Best-of-16 + CoT + 工具&rdquo; 与 &ldquo;greedy zero-shot&rdquo; 不可比</li>
+  <li><strong>Benchmark 有效性</strong>：8/10 主流基准存在严重有效性缺陷</li>
+</ul>
+
+<hr>
+
+<!-- Section 8 -->
+<h2 id="sec8">八、趋势与总结</h2>
+
+<h3>当前三大根本性缺陷</h3>
+<div class="two-col">
+  <div class="card">
+    <h4>1. 成本被完全忽视</h4>
+    <p>无主要基准报告成本；复杂架构以 <span class="highlight-num">50 倍成本</span> 换边际准确率</p>
+  </div>
+  <div class="card">
+    <h4>2. 可靠性未被测量</h4>
+    <p>单次运行成功掩盖脆弱性<br>（pass@1=60% → pass@8=25%）</p>
+  </div>
+  <div class="card">
+    <h4>3. 企业关键维度缺失</h4>
+    <p>无安全评估、无策略合规、无延迟 SLA、无错误处理</p>
+  </div>
+</div>
+
+<h3>未来方向</h3>
+<ol>
+  <li><strong>整体框架</strong>：同时评估多维度而非孤立指标</li>
+  <li><strong>更真实环境</strong>：融入 RBAC、动态多用户、领域知识</li>
+  <li><strong>自动化可扩展评估</strong>：合成数据 + 模拟环境 + Agent-as-Judge</li>
+  <li><strong>双层架构</strong>：离线框架（CI 回归）+ 在线分类器（捕获新故障）</li>
+  <li><strong>OpenTelemetry GenAI 标准化</strong>：避免厂商锁定，统一追踪语义约定</li>
+</ol>
+
+<blockquote>
+  <p><strong>测试一个 LLM 是检查一个引擎，评估一个 Agent 是测试一辆整车在所有路况下的表现。</strong></p>
+  <p>多维评估不是可选的，而是 Agent 生产部署的必需品。成熟团队的标配是：一个开源可自托管的可观测平台（如 Langfuse）+ 一套定制化的评估基准（如 SWE-bench 或自建评测集）+ OpenTelemetry 将它们串起来。</p>
+</blockquote>
+
+<hr>
+
+<!-- References -->
+<h2 id="refs">参考来源</h2>
+<ul class="ref-list">
+  <li><a href="https://arxiv.org/html/2507.21504v1" target="_blank">Evaluation and Benchmarking of LLM Agents: A Survey — arXiv 2507.21504</a></li>
+  <li><a href="https://arxiv.org/html/2511.14136v1" target="_blank">Beyond Accuracy: A Multi-Dimensional Framework (CLEAR) — arXiv 2511.14136</a></li>
+  <li><a href="https://leanware.co/insights/agent-evaluation-frameworks-methods-metrics-best-practices" target="_blank">Agent Evaluation Frameworks: Methods, Metrics &amp; Best Practices — Leanware</a></li>
+  <li><a href="https://www.morphllm.com/ai-agent-evaluation-frameworks" target="_blank">7 AI Agent Evaluation Frameworks Compared — Morph LLM</a></li>
+  <li><a href="https://galileo.ai/blog/best-agent-evaluation-frameworks" target="_blank">7 Best Agent Evaluation Frameworks — Galileo</a></li>
+  <li><a href="https://benchmarkingagents.com/" target="_blank">Agent Benchmark Leaderboard 2026 — BenchmarkingAgents</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2026/06/agent-observability-with-langsmith-langfuse-arize/" target="_blank">Agent Observability: LangSmith vs Langfuse vs Arize — Analytics Vidhya</a></li>
+  <li><a href="https://yomxxx.com/posts/2026-06-08-ai-agent-observability-tools-comparison-tools" target="_blank">6 款 AI Agent 可观测性平台横评 — YOMXXX</a></li>
+  <li><a href="https://cloud.tencent.com/developer/article/2632481" target="_blank">Agent 自动化评测系统构建 — 腾讯云开发者社区</a></li>
+  <li><a href="https://www.diors.tech/blog/078-agent-benchmarks-2026h1" target="_blank">Agent Benchmark 2026 H1 — Diors</a></li>
+  <li><a href="https://www.swebench.com/" target="_blank">SWE-bench Official Leaderboard — Princeton NLP</a></li>
+  <li><a href="https://www.weforum.org/publications/ai-agents-in-action-foundations-for-evaluation-and-governance/" target="_blank">AI Agents in Action: Evaluation and Governance — WEF</a></li>
+</ul>
+
+</body>
+</html>
