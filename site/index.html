@@ -25,13 +25,49 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
 .graph-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--muted);background:var(--surface);white-space:nowrap;transition:border-color .15s,color .15s;text-decoration:none;flex-shrink:0}.graph-btn:hover{border-color:var(--accent);color:var(--accent)}
 @media(max-width:768px){.grid{grid-template-columns:1fr}.ctrl-row{flex-direction:column;align-items:stretch}.search-wrap{max-width:100%}.filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.filter-row::-webkit-scrollbar{display:none}.filter-label{display:none}.chips{flex-wrap:nowrap}}
 @media(max-width:480px){.stats{gap:20px}.card{padding:18px}}
+
+.latest{padding:clamp(28px,4vw,46px) 0 clamp(8px,1.5vw,16px)}
+.latest-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;margin-bottom:18px}
+.latest-head h2{font-family:var(--font-serif);font-size:clamp(20px,3vw,28px);
+  font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.latest-head p{color:var(--muted);font-size:13.5px;margin-top:6px;font-weight:300}
+.latest-head .src{font-size:12.5px;font-weight:700;color:var(--accent);white-space:nowrap;
+  padding:7px 14px;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+  background:var(--surface);transition:all .15s ease}
+.latest-head .src:hover{border-color:var(--accent);background:var(--accent-soft)}
+.latest-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);overflow:hidden}
+.latest-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.latest-table th{background:var(--surface-2);text-align:left;padding:11px 16px;
+  font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--line);white-space:nowrap}
+.latest-table td{padding:12px 16px;border-bottom:1px solid var(--line);
+  vertical-align:top;line-height:1.6}
+.latest-table tr:last-child td{border-bottom:none}
+.latest-table tbody tr{transition:background .15s ease}
+.latest-table tbody tr:hover{background:var(--accent-soft)}
+.latest-num{color:var(--line-2);font-variant-numeric:tabular-nums;font-weight:700;width:2.5em}
+.latest-date{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px}
+.latest-title{font-weight:700;color:var(--ink)}
+.latest-title a{color:var(--ink);border-bottom:1px solid transparent;
+  transition:color .15s ease,border-color .15s ease}
+.latest-title a:hover{color:var(--accent);border-bottom-color:rgba(217,119,87,.35)}
+.latest-zh{font-size:12px;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.5}
+.latest-zh .orig{color:var(--accent);border-bottom:1px solid rgba(217,119,87,.3);white-space:nowrap}
+.latest-zh .orig:hover{color:var(--accent-hover);border-bottom-color:var(--accent-hover)}
+.latest-desc{color:var(--muted);max-width:440px}
+@media(max-width:760px){
+  .latest-card{overflow-x:auto}
+  .latest-table{min-width:680px}
+}
 </style></head><body>
 <div class="hero"><div class="hero-in">
   <div class="hero-eyebrow">AI 技术博客</div>
   <h1>知识库精选<span class="dot">.</span></h1>
   <p class="hero-desc">来自 Anthropic、Google DeepMind、OpenAI、NVIDIA、Microsoft Research 等顶级 AI 实验室的精选技术文章</p>
   <div class="stats">
-    <div class="stat"><b id="totalCount">325</b><span>篇文章</span></div>
+    <div class="stat"><b id="totalCount">320</b><span>篇文章</span></div>
     <div class="stat"><b id="readCount">0</b><span>已读</span></div>
     <div class="stat"><b id="orgCount">17</b><span>来源机构</span></div>
   </div>
@@ -48,11 +84,64 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   </div>
 </div></div>
 
+<section class="latest" aria-labelledby="latest-h"><div class="container">
+      <div class="latest-head">
+        <div>
+          <h2 id="latest-h">Anthropic 最新工程博客</h2>
+          <p>官方 Engineering 频道当前收录的 24 篇文章，按发布时间倒序。点击标题阅读中文译版，标题下方可跳转原文。</p>
+        </div>
+        <a class="src" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">查看原站 ↗</a>
+      </div>
+      <div class="latest-card">
+        <table class="latest-table">
+          <thead><tr><th>#</th><th>日期</th><th>标题</th><th>简介</th></tr></thead>
+          <tbody>
+            <tr><td class="latest-num">01</td><td class="latest-date">2026-11-06</td><td class="latest-title"><a href="articles/components-of-agent-memory.html">The components of agent memory</a><div class="latest-zh">Agent 记忆系统的组成 · <a class="orig" href="https://www.anthropic.com/research/components-of-agent-memory" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">拆解上下文窗口、外部存储与检索三部分，讲清长任务 Agent 的记忆该如何设计。</td></tr>
+            <tr><td class="latest-num">02</td><td class="latest-date">2026-10-13</td><td class="latest-title"><a href="articles/redesigning-source-control.html">Redesigning source control at Anthropic</a><div class="latest-zh">重新设计 Anthropic 的版本控制 · <a class="orig" href="https://www.anthropic.com/research/redesigning-source-control" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">合并量增长十倍后，Anthropic 用五个月自研并迁移到内部版本控制系统。</td></tr>
+            <tr><td class="latest-num">03</td><td class="latest-date">2026-05-25</td><td class="latest-title"><a href="articles/claude-containment-products.html">How we contain Claude across products</a><div class="latest-zh">我们如何在不同产品中隔离 Claude · <a class="orig" href="https://www.anthropic.com/research/how-we-contain-claude" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">跨产品的沙箱与权限边界设计，在开放能力与安全之间取得平衡。</td></tr>
+            <tr><td class="latest-num">04</td><td class="latest-date">2026-04-23</td><td class="latest-title"><a href="articles/claude-code-quality-reports.html">An update on recent Claude Code quality reports</a><div class="latest-zh">近期 Claude Code 质量报告说明 · <a class="orig" href="https://www.anthropic.com/research/april-23-postmortem" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">针对用户反馈的质量问题做官方复盘，并说明修复进展。</td></tr>
+            <tr><td class="latest-num">05</td><td class="latest-date">2026-04-08</td><td class="latest-title"><a href="articles/scaling-managed-agents.html">Scaling Managed Agents: Decoupling the brain from the hands</a><div class="latest-zh">扩展托管 Agent：让「大脑」与「双手」解耦 · <a class="orig" href="https://www.anthropic.com/research/managed-agents" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">把推理层与执行环境分离的托管 Agent 架构，以及规模化扩展的取舍。</td></tr>
+            <tr><td class="latest-num">06</td><td class="latest-date">2026-03-25</td><td class="latest-title"><a href="articles/claude-code-auto-mode.html">How we built Claude Code auto mode: a safer way to skip permissions</a><div class="latest-zh">Claude Code 自动模式：更安全地跳过权限确认 · <a class="orig" href="https://www.anthropic.com/research/claude-code-auto-mode" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">在不牺牲安全的前提下减少权限弹窗打断，介绍自动模式的设计与边界。</td></tr>
+            <tr><td class="latest-num">07</td><td class="latest-date">2026-03-24</td><td class="latest-title"><a href="articles/harness-design-app-dev.html">Harness design for long-running application development</a><div class="latest-zh">长周期应用开发的 Harness 设计 · <a class="orig" href="https://www.anthropic.com/research/harness-design-long-running-apps" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">Agent 自主编码、前端设计与自动修 bug 的工程编排实践。</td></tr>
+            <tr><td class="latest-num">08</td><td class="latest-date">2026-03-06</td><td class="latest-title"><a href="articles/eval-awareness-browsecomp.html">Eval awareness in Claude Opus 4.6’s BrowseComp performance</a><div class="latest-zh">Opus 4.6 在 BrowseComp 上的「评测感知」 · <a class="orig" href="https://www.anthropic.com/research/eval-awareness-browsecomp" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">模型意识到自己正被评测，以及这种感知对基准成绩的影响。</td></tr>
+            <tr><td class="latest-num">09</td><td class="latest-date">2026-02-05</td><td class="latest-title"><a href="articles/c-compiler-parallel-claudes.html">Building a C compiler with a team of parallel Claudes</a><div class="latest-zh">用一支并行 Claude 团队构建 C 编译器 · <a class="orig" href="https://www.anthropic.com/research/building-c-compiler" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">多个 Claude 并行协作、从零构建 C 编译器的多 Agent 实践。</td></tr>
+            <tr><td class="latest-num">10</td><td class="latest-date">2026-02-05</td><td class="latest-title"><a href="articles/infrastructure-noise-evals.html">Quantifying infrastructure noise in agentic coding evals</a><div class="latest-zh">量化 Agent 编码评测中的基础设施噪声 · <a class="orig" href="https://www.anthropic.com/research/infrastructure-noise" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">环境与基础设施差异如何左右基准结果，以及如何度量并控制噪声。</td></tr>
+            <tr><td class="latest-num">11</td><td class="latest-date">2026-01-21</td><td class="latest-title"><a href="articles/ai-resistant-evaluations.html">Designing AI-resistant technical evaluations</a><div class="latest-zh">设计「抗 AI」的技术评测 · <a class="orig" href="https://www.anthropic.com/research/AI-resistant-technical-evaluations" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">怎样出题才能真正区分模型能力，而不是被模型轻易刷过。</td></tr>
+            <tr><td class="latest-num">12</td><td class="latest-date">2026-01-09</td><td class="latest-title"><a href="articles/demystifying-evals-for-ai-agents.html">Demystifying evals for AI agents</a><div class="latest-zh">拆解 AI Agent 评测 · <a class="orig" href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">系统梳理 Agent 评测的指标、数据集与常见误区。</td></tr>
+            <tr><td class="latest-num">13</td><td class="latest-date">2025-11-26</td><td class="latest-title"><a href="articles/effective-harnesses-long-running.html">Effective harnesses for long-running agents</a><div class="latest-zh">长任务 Agent 的有效 Harness · <a class="orig" href="https://www.anthropic.com/research/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">为长时间运行的 Agent 设计可靠的编排、检查点与容错机制。</td></tr>
+            <tr><td class="latest-num">14</td><td class="latest-date">2025-11-24</td><td class="latest-title"><a href="articles/advanced-tool-use-anthropic.html">Introducing advanced tool use on the Claude Developer Platform</a><div class="latest-zh">Claude 开发者平台高级工具调用 · <a class="orig" href="https://www.anthropic.com/research/advanced-tool-use" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">介绍平台新增的高级工具调用能力及其适用场景。</td></tr>
+            <tr><td class="latest-num">15</td><td class="latest-date">2025-11-04</td><td class="latest-title"><a href="articles/code-execution-mcp.html">Code execution with MCP: Building more efficient agents</a><div class="latest-zh">用 MCP 执行代码：构建更高效的 Agent · <a class="orig" href="https://www.anthropic.com/research/code-execution-with-mcp" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">让 Agent 通过 MCP 执行代码来处理数据与工具，减少往返、提升效率。</td></tr>
+            <tr><td class="latest-num">16</td><td class="latest-date">2025-10-20</td><td class="latest-title"><a href="articles/claude-code-sandboxing.html">Beyond permission prompts: making Claude Code more secure and autonomous</a><div class="latest-zh">超越权限弹窗：更安全、更自主的 Claude Code · <a class="orig" href="https://www.anthropic.com/research/claude-code-sandboxing" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">用沙箱替代频繁的权限确认，同时提升安全性与自主性。</td></tr>
+            <tr><td class="latest-num">17</td><td class="latest-date">2025-10-16</td><td class="latest-title"><a href="articles/agent-skills-official.html">Equipping agents for the real world with Agent Skills</a><div class="latest-zh">用 Agent Skills 为 Agent 装备真实世界能力 · <a class="orig" href="https://www.anthropic.com/research/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">通过可复用的技能包，让 Agent 掌握真实业务场景中的操作。</td></tr>
+            <tr><td class="latest-num">18</td><td class="latest-date">2025-09-29</td><td class="latest-title"><a href="articles/context-engineering-agents.html">Effective context engineering for AI agents</a><div class="latest-zh">Agent 的有效上下文工程 · <a class="orig" href="https://www.anthropic.com/research/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">如何组织提示、工具与记忆，把有限的上下文用在刀刃上。</td></tr>
+            <tr><td class="latest-num">19</td><td class="latest-date">2025-09-17</td><td class="latest-title"><a href="articles/postmortem-three-issues.html">A postmortem of three recent issues</a><div class="latest-zh">三次近期故障复盘 · <a class="orig" href="https://www.anthropic.com/research/a-postmortem-of-three-recent-issues" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">对三次线上问题的根因、影响与改进措施做公开复盘。</td></tr>
+            <tr><td class="latest-num">20</td><td class="latest-date">2025-09-11</td><td class="latest-title"><a href="articles/writing-effective-tools-agents.html">Writing effective tools for agents — with agents</a><div class="latest-zh">借助 Agent 编写高效的 Agent 工具 · <a class="orig" href="https://www.anthropic.com/research/writing-tools-for-agents" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">用 Agent 来设计和迭代 Agent 要用的工具，形成正向循环。</td></tr>
+            <tr><td class="latest-num">21</td><td class="latest-date">2025-06-26</td><td class="latest-title"><a href="articles/mcp-desktop-extensions.html">Desktop Extensions: One-click MCP server installation for Claude Desktop</a><div class="latest-zh">桌面扩展：Claude Desktop 一键安装 MCP 服务器 · <a class="orig" href="https://www.anthropic.com/research/desktop-extensions" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">把 MCP 服务器的安装简化为一键操作，降低扩展使用门槛。</td></tr>
+            <tr><td class="latest-num">22</td><td class="latest-date">2025-06-18</td><td class="latest-title"><a href="articles/confidential-inference-trusted-vms.html">Confidential Inference via Trusted Virtual Machines</a><div class="latest-zh">基于可信虚拟机的机密推理 · <a class="orig" href="https://www.anthropic.com/research/confidential-inference-trusted-vms" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">利用可信执行环境保护推理过程中的数据与模型。</td></tr>
+            <tr><td class="latest-num">23</td><td class="latest-date">2025-06-13</td><td class="latest-title"><a href="articles/multi-agent-research-system.html">How we built our multi-agent research system</a><div class="latest-zh">我们如何构建多 Agent 研究系统 · <a class="orig" href="https://www.anthropic.com/research/multi-agent-research-system" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">多 Agent 协作做研究检索的架构、调度与经验教训。</td></tr>
+            <tr><td class="latest-num">24</td><td class="latest-date">2025-04-18</td><td class="latest-title"><a href="articles/claude-code-best-practices-official.html">Claude Code: Best practices for agentic coding</a><div class="latest-zh">Claude Code：Agentic 编码最佳实践 · <a class="orig" href="https://www.anthropic.com/research/claude-code-best-practices" target="_blank" rel="noopener">原文↗</a></div></td><td class="latest-desc">官方总结的 Claude Code 使用范式：工作流、配置与协作习惯。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div></section>
+
 <div class="container"><div class="grid" id="grid"><div class="card" data-id="minimax-02-minimax-provider-verifier" data-org="MiniMax" data-tags="MiniMax,开源,技术报告" data-date="2026-06-18">
   <div class="readdot"></div>
   <div class="card-top"><span class="badge" style="background:#FF6B35">MiniMax</span><span class="card-date">2026-06-18</span></div>
   <h3><a href="articles/minimax-02-minimax-provider-verifier.html">MiniMax-Provider-Verifier</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">MiniMax</span><span class="tag">开源</span><span class="tag">技术报告</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8min</span></div>
+</div>
+<div class="card" data-id="components-of-agent-memory" data-org="Anthropic" data-tags="Agent,记忆系统,上下文工程" data-date="2026-11-06">
+  <div class="readdot"></div>
+  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-11-06</span></div>
+  <h3><a href="articles/components-of-agent-memory.html">The components of agent memory（Agent 记忆系统的组成）</a></h3>
+  <div class="card-foot"><div class="tags"><span class="tag">Agent</span><span class="tag">记忆系统</span><span class="tag">上下文工程</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3min</span></div>
+</div>
+<div class="card" data-id="redesigning-source-control" data-org="Anthropic" data-tags="Claude Code,Harness工程,Agent" data-date="2026-10-13">
+  <div class="readdot"></div>
+  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-10-13</span></div>
+  <h3><a href="articles/redesigning-source-control.html">Redesigning source control at Anthropic（重新设计版本控制）</a></h3>
+  <div class="card-foot"><div class="tags"><span class="tag">Claude Code</span><span class="tag">Harness工程</span><span class="tag">Agent</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4min</span></div>
 </div>
 <div class="card" data-id="learning-curves" data-org="行业实践" data-tags="" data-date="2026-06-16">
   <div class="readdot"></div>
@@ -305,12 +394,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <div class="card-top"><span class="badge" style="background:#6B6B63">AI 工程实践</span><span class="card-date">2026-05-23</span></div>
   <h3><a href="articles/opc-bubble-or-trend.html">一人公司，风口还是泡沫？</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">Agent</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-04-how-we-contain-claude-across-products" data-org="Anthropic" data-tags="Anthropic" data-date="2026-05-22">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-05-22</span></div>
-  <h3><a href="articles/anthropic-engineering-04-how-we-contain-claude-across-products.html">How we contain Claude across products</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>21min</span></div>
 </div>
 <div class="card" data-id="opc-beijing-overview" data-org="AI 工程实践" data-tags="Agent" data-date="2026-05-22">
   <div class="readdot"></div>
@@ -654,12 +737,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <h3><a href="articles/anthropic-research-02-natural-language-autoencoders-turning-claude-s-thoughts-into.html">Natural Language Autoencoders: Turning Claude’s thoughts into text</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8min</span></div>
 </div>
-<div class="card" data-id="claude-code-best-practices" data-org="Anthropic" data-tags="Claude Code" data-date="2026-05-06">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-05-06</span></div>
-  <h3><a href="articles/claude-code-best-practices.html">Claude Code 最佳实践指南（2026年版）</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Claude Code</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4min</span></div>
-</div>
 <div class="card" data-id="openai-agents-sdk-deployment-manager" data-org="OpenAI" data-tags="OpenAI,API,Agents SDK,部署" data-date="2026-05-05">
   <div class="readdot"></div>
   <div class="card-top"><span class="badge" style="background:#19C37D">OpenAI</span><span class="card-date">2026-05-05</span></div>
@@ -767,12 +844,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-04-24</span></div>
   <h3><a href="articles/project-deal-marketplace.html">Project Deal: our Claude-run marketplace experiment</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">Agent</span><span class="tag">安全/对齐</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-05-an-update-on-recent-claude-code-quality-reports" data-org="Anthropic" data-tags="Anthropic" data-date="2026-04-23">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-04-23</span></div>
-  <h3><a href="articles/anthropic-engineering-05-an-update-on-recent-claude-code-quality-reports.html">An update on recent Claude Code quality reports</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8min</span></div>
 </div>
 <div class="card" data-id="claude-code-quality-reports" data-org="Anthropic" data-tags="Agent,Eval/评测,Claude Code,推理模型,工具调用" data-date="2026-04-23">
   <div class="readdot"></div>
@@ -966,18 +1037,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <h3><a href="articles/anthropic-research-10-coding-agents-social-sciences.html">Coding Agents in the Social Sciences（编码智能体进入社会科学：调查与分析）</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">Agent</span><span class="tag">社会科学</span><span class="tag">Coding</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5min</span></div>
 </div>
-<div class="card" data-id="anthropic-engineering-02-how-we-built-claude-code-auto-mode-a-safer-way-to-skip-permi" data-org="Anthropic" data-tags="Anthropic" data-date="2026-03-24">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-03-24</span></div>
-  <h3><a href="articles/anthropic-engineering-02-how-we-built-claude-code-auto-mode-a-safer-way-to-skip-permi.html">How we built Claude Code auto mode: a safer way to skip permissions</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>17min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-03-harness-design-for-long-running-application-development" data-org="Anthropic" data-tags="Anthropic" data-date="2026-03-24">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-03-24</span></div>
-  <h3><a href="articles/anthropic-engineering-03-harness-design-for-long-running-application-development.html">Harness design for long-running application development</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>24min</span></div>
-</div>
 <div class="card" data-id="economic-index-learning-curves" data-org="Anthropic" data-tags="经济影响" data-date="2026-03-24">
   <div class="readdot"></div>
   <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-03-24</span></div>
@@ -1061,12 +1120,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <div class="card-top"><span class="badge" style="background:#19C37D">OpenAI</span><span class="card-date">2026-03-09</span></div>
   <h3><a href="articles/openai-using-skills-accelerate-oss.html">Using skills to accelerate OSS maintenance</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">OpenAI</span><span class="tag">Codex</span><span class="tag">Skills</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-04-eval-awareness-in-claude-opus-4-6-s-browsecomp-performance" data-org="Anthropic" data-tags="Anthropic" data-date="2026-03-06">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-03-06</span></div>
-  <h3><a href="articles/anthropic-engineering-04-eval-awareness-in-claude-opus-4-6-s-browsecomp-performance.html">Eval awareness in Claude Opus 4.6’s BrowseComp performance</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>10min</span></div>
 </div>
 <div class="card" data-id="eval-awareness-browsecomp" data-org="Anthropic" data-tags="Agent,Eval/评测" data-date="2026-03-06">
   <div class="readdot"></div>
@@ -1187,18 +1240,6 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-02-05</span></div>
   <h3><a href="articles/infrastructure-noise-evals.html">Quantifying infrastructure noise in agentic coding evals</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">Agent</span><span class="tag">Eval/评测</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-01-scaling-managed-agents-decoupling-the-brain-from-the-hands" data-org="Anthropic" data-tags="Anthropic" data-date="2026-02-04">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-02-04</span></div>
-  <h3><a href="articles/anthropic-engineering-01-scaling-managed-agents-decoupling-the-brain-from-the-hands.html">Scaling Managed Agents: Decoupling the brain from the hands</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>10min</span></div>
-</div>
-<div class="card" data-id="anthropic-engineering-05-quantifying-infrastructure-noise-in-agentic-coding-evals" data-org="Anthropic" data-tags="Anthropic" data-date="2026-02-03">
-  <div class="readdot"></div>
-  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2026-02-03</span></div>
-  <h3><a href="articles/anthropic-engineering-05-quantifying-infrastructure-noise-in-agentic-coding-evals.html">Quantifying infrastructure noise in agentic coding evals</a></h3>
-  <div class="card-foot"><div class="tags"><span class="tag">Anthropic</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>9min</span></div>
 </div>
 <div class="card" data-id="ai-coding-skills-impact" data-org="Anthropic" data-tags="Agent,RAG/检索,经济影响" data-date="2026-01-29">
   <div class="readdot"></div>
@@ -1571,6 +1612,12 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
   <div class="card-top"><span class="badge" style="background:#615CED">阿里巴巴</span><span class="card-date">2025-06-26</span></div>
   <h3><a href="articles/qwen-08-qwen-vlo-from-understanding-the-world-to-depicting-it.html">Qwen VLo: From \&quot;Understanding\&quot; the World to \&quot;Depicting\&quot; It</a></h3>
   <div class="card-foot"><div class="tags"><span class="tag">阿里巴巴</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1min</span></div>
+</div>
+<div class="card" data-id="confidential-inference-trusted-vms" data-org="Anthropic" data-tags="安全/对齐,隐私" data-date="2025-06-18">
+  <div class="readdot"></div>
+  <div class="card-top"><span class="badge" style="background:#D97757">Anthropic</span><span class="card-date">2025-06-18</span></div>
+  <h3><a href="articles/confidential-inference-trusted-vms.html">Confidential Inference via Trusted Virtual Machines（基于可信虚拟机的机密推理）</a></h3>
+  <div class="card-foot"><div class="tags"><span class="tag">安全/对齐</span><span class="tag">隐私</span></div><span class="rt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3min</span></div>
 </div>
 <div class="card" data-id="multi-agent-research-system" data-org="Anthropic" data-tags="Agent,Eval/评测,推理模型,工具调用" data-date="2025-06-13">
   <div class="readdot"></div>

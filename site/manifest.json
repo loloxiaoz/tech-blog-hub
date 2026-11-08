@@ -1,5 +1,31 @@
 [
   {
+    "id": "components-of-agent-memory",
+    "title": "The components of agent memory（Agent 记忆系统的组成）",
+    "org": "Anthropic",
+    "date": "2026-11-06",
+    "tags": [
+      "Agent",
+      "记忆系统",
+      "上下文工程"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/components-of-agent-memory"
+  },
+  {
+    "id": "redesigning-source-control",
+    "title": "Redesigning source control at Anthropic（重新设计版本控制）",
+    "org": "Anthropic",
+    "date": "2026-10-13",
+    "tags": [
+      "Claude Code",
+      "Harness工程",
+      "Agent"
+    ],
+    "minutes": 4,
+    "source_url": "https://www.anthropic.com/research/redesigning-source-control"
+  },
+  {
     "id": "minimax-02-minimax-provider-verifier",
     "title": "MiniMax-Provider-Verifier",
     "org": "MiniMax",
@@ -549,17 +575,6 @@
     ],
     "minutes": 5,
     "source_url": ""
-  },
-  {
-    "id": "anthropic-engineering-04-how-we-contain-claude-across-products",
-    "title": "How we contain Claude across products",
-    "org": "Anthropic",
-    "date": "2026-05-22",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 21,
-    "source_url": "https://www.anthropic.com/engineering/how-we-contain-claude"
   },
   {
     "id": "opc-beijing-overview",
@@ -1292,17 +1307,6 @@
     "source_url": "https://www.anthropic.com/research/natural-language-autoencoders"
   },
   {
-    "id": "claude-code-best-practices",
-    "title": "Claude Code 最佳实践指南（2026年版）",
-    "org": "Anthropic",
-    "date": "2026-05-06",
-    "tags": [
-      "Claude Code"
-    ],
-    "minutes": 4,
-    "source_url": "https://www.anthropic.com/engineering/claude-code-best-practices"
-  },
-  {
     "id": "openai-agents-sdk-deployment-manager",
     "title": "Agents SDK Deployment Manager",
     "org": "OpenAI",
@@ -1530,17 +1534,6 @@
     ],
     "minutes": 3,
     "source_url": "https://www.anthropic.com/news/project-deal"
-  },
-  {
-    "id": "anthropic-engineering-05-an-update-on-recent-claude-code-quality-reports",
-    "title": "An update on recent Claude Code quality reports",
-    "org": "Anthropic",
-    "date": "2026-04-23",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 8,
-    "source_url": "https://www.anthropic.com/engineering/april-23-postmortem"
   },
   {
     "id": "claude-code-quality-reports",
@@ -1978,28 +1971,6 @@
     "source_url": "https://www.anthropic.com/research/coding-agents-social-sciences"
   },
   {
-    "id": "anthropic-engineering-02-how-we-built-claude-code-auto-mode-a-safer-way-to-skip-permi",
-    "title": "How we built Claude Code auto mode: a safer way to skip permissions",
-    "org": "Anthropic",
-    "date": "2026-03-24",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 17,
-    "source_url": "https://www.anthropic.com/engineering/claude-code-auto-mode"
-  },
-  {
-    "id": "anthropic-engineering-03-harness-design-for-long-running-application-development",
-    "title": "Harness design for long-running application development",
-    "org": "Anthropic",
-    "date": "2026-03-24",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 24,
-    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps"
-  },
-  {
     "id": "economic-index-learning-curves",
     "title": "Anthropic Economic Index report: Learning curves",
     "org": "Anthropic",
@@ -2183,17 +2154,6 @@
     ],
     "minutes": 4,
     "source_url": "https://developers.openai.com/blog/using-skills-to-accelerate-oss-maintenance"
-  },
-  {
-    "id": "anthropic-engineering-04-eval-awareness-in-claude-opus-4-6-s-browsecomp-performance",
-    "title": "Eval awareness in Claude Opus 4.6’s BrowseComp performance",
-    "org": "Anthropic",
-    "date": "2026-03-06",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 10,
-    "source_url": "https://www.anthropic.com/engineering/eval-awareness-browsecomp"
   },
   {
     "id": "eval-awareness-browsecomp",
@@ -2452,28 +2412,6 @@
       "Eval/评测"
     ],
     "minutes": 3,
-    "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
-  },
-  {
-    "id": "anthropic-engineering-01-scaling-managed-agents-decoupling-the-brain-from-the-hands",
-    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
-    "org": "Anthropic",
-    "date": "2026-02-04",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 10,
-    "source_url": "https://www.anthropic.com/engineering/managed-agents"
-  },
-  {
-    "id": "anthropic-engineering-05-quantifying-infrastructure-noise-in-agentic-coding-evals",
-    "title": "Quantifying infrastructure noise in agentic coding evals",
-    "org": "Anthropic",
-    "date": "2026-02-03",
-    "tags": [
-      "Anthropic"
-    ],
-    "minutes": 9,
     "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
   },
   {
@@ -3235,6 +3173,18 @@
     ],
     "minutes": 1,
     "source_url": "https://qwenlm.github.io/blog/qwen-vlo/"
+  },
+  {
+    "id": "confidential-inference-trusted-vms",
+    "title": "Confidential Inference via Trusted Virtual Machines（基于可信虚拟机的机密推理）",
+    "org": "Anthropic",
+    "date": "2025-06-18",
+    "tags": [
+      "安全/对齐",
+      "隐私"
+    ],
+    "minutes": 3,
+    "source_url": "https://www.anthropic.com/research/confidential-inference-trusted-vms"
   },
   {
     "id": "multi-agent-research-system",
