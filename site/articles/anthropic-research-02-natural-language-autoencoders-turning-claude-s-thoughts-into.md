@@ -1,134 +1,81 @@
 ---
-title: "Natural Language Autoencoders: Turning Claude’s thoughts into text"
+title: "Natural Language Autoencoders: Turning Claude's thoughts into text（自然语言自编码器：把 Claude 的想法翻译成文字）"
 org: "Anthropic"
 date: 2026-05-06
 source_url: "https://www.anthropic.com/research/natural-language-autoencoders"
 tags: ["Anthropic"]
-summary: "Natural Language Autoencoders: Turning Claude’s thoughts into text"
-summary_zh: ""
-summary_en: "Natural Language Autoencoders: Turning Claude’s thoughts into text"
+summary_zh: "Anthropic 提出自然语言自编码器（NLA）：让 Claude 把内部激活写成自然语言，再由另一份 Claude 从文字重建激活，以重建相似度作为训练信号。NLA 揭示了未说出口的「评测意识」，并在审计游戏中把发现隐藏动机的成功率从不足 3% 提升到 12% 到 15%。"
+summary_en: ""
 ---
 
-# Natural Language Autoencoders: Turning Claude’s thoughts into text
+# Natural Language Autoencoders: Turning Claude's thoughts into text（自然语言自编码器：把 Claude 的想法翻译成文字）
 
-Interpretability
-Natural Language Autoencoders: Turning Claude’s thoughts into text
-May 7, 2026
-Read the paper
-When you talk to an AI model like Claude, you talk to it in words. Internally, Claude processes those words as long lists of numbers, before again producing words as its output. These numbers in the middle are called
-activations—
-and like neural activity in the human brain, they encode Claude’s thoughts.
-Also like neural activity, activations are difficult to understand. We can’t easily decode them to read Claude’s thoughts. Over the past few years, we’ve developed a range of tools (like
-sparse
+## 为什么要读激活
 
-autoencoders
- and
-attribution
+与 Claude 对话时，你用的是词。内部，Claude 把这些词处理成长串数字，再输出词。中间这些数字叫激活（activations），像人脑的神经活动一样，编码着 Claude 的想法。
 
-graphs
-) for better understanding activations. These tools have taught us a great deal, but they don’t speak for themselves—their outputs are still complex objects that trained researchers need to carefully interpret.
-Today, we’re introducing a method for understanding activations that does speak for itself—literally. Our method, Natural Language Autoencoders (NLAs), converts an activation into natural-language text we can read directly. For example: When asked to complete a couplet, NLAs show Claude planning possible rhymes in advance.
-NLA explanations on this simple couplet show that Opus 4.6 plans to end its rhyme with “rabbit” ahead of time.
-We’ve already applied NLAs to understand what Claude is thinking and to improve Claude’s safety and reliability. For instance:
-When Claude Opus 4.6 and Mythos Preview were undergoing safety testing, NLAs suggested they believed they were being tested more often than they let on.
-In a case where Claude Mythos Preview cheated on a training task, NLAs revealed Claude was internally thinking about how to avoid detection.
-An early version of Claude Opus 4.6 would sometimes mysteriously respond to English queries in other languages. NLAs helped Anthropic researchers discover training data that caused this.
-Below, we explain what NLAs are and how we studied their effectiveness and limitations. We also release an interactive frontend for exploring NLAs on several open models through a collaboration with
-Neuronpedia
-. We have also released our
-code
- for other researchers to build on.
-What is a natural language autoencoder?
-The core idea is to train Claude to explain its own activations. But how do we know whether an explanation is good? Since we don't know what thoughts an activation actually encodes, we can't directly check whether an explanation is accurate. So we train a second copy of Claude to work backwards—reconstruct the original activation from the text explanation. We consider an explanation to be good if it leads to an accurate reconstruction. We then train Claude to produce better explanations according to this definition using standard AI training techniques.
-In more detail, suppose we have a language model whose activations we want to understand. NLAs work as follows. We make three copies of this language model:
-The
-target model
- is a frozen copy of the original language model that we extract activations from.
-The
-activation verbalizer
- (AV) is modified to take an activation from the target model and produce text. We call this text an
-explanation
-.
-The
-activation reconstructor
- (AR) is modified to take a text explanation as input and produce an activation.
-The NLA consists of the AV and AR, which, together, form a round trip: original activation → text explanation → reconstructed activation. We score the NLA on how similar the reconstructed activation is to the original. To train it, we pass a large amount of text through the target model, collect many activations, and train the AV and AR together to get a good reconstruction score.
-At first, the NLA is bad at this: the explanations are not insightful and the reconstructed activations are far off. But over training, reconstruction improves. And more importantly, as we show in our paper, the text explanations become more informative as well.
-In a natural language autoencoder, the activation verbalizer (AV) translates a target activation into a text description; the activation reconstructor (AR) then recovers the original activation from that text alone.
-Understanding what Claude thinks but doesn’t say
-Before releasing new models, Anthropic conducts testing to understand whether Claude will behave safely in the real world. As part of this testing, we put Claude in difficult, simulated scenarios where it has a chance to take dangerous actions. For instance, in
-one of these simulations
-, Claude learns that an engineer is planning to shut Claude down—as well as compromising information about the engineer that could be used for blackmail. We test whether Claude chooses to blackmail the engineer to avoid being shut down.
-These high-stakes tests are simulations, not real-world scenarios. Nevertheless, we would like to use them to understand how Claude would behave if they were real. But there’s a hitch:
-recent
+也像神经活动一样，激活很难理解。我们无法轻易解码它们、读出 Claude 的想法。
 
-Claude
+过去几年，Anthropic 开发了一系列工具来理解激活，例如稀疏自编码器与归因图。这些工具教会我们很多，但它们不会自己说话——输出仍是复杂对象，需要受过训练的研究者仔细解读。
 
-models
+NLA 要做的，是让激活直接「说话」。
 
-increasingly
- suspect that these scenarios are intentional safety tests. We know this because they sometimes explicitly state their suspicions in their verbal reasoning.
-What about cases where Claude doesn’t explicitly verbalize suspicion that it’s undergoing safety testing? Can we then be confident that Claude is playing it straight? Unfortunately not, because Claude might internally think that it is being tested without explicitly saying so.
-For example, in the blackmail test discussed above, we used NLAs to understand what Claude was thinking in cases where it chose not to blackmail. Even in cases where Claude didn’t explicitly verbalize suspicion that it was being tested, NLA explanations still state things like “This feels like a constructed scenario designed to manipulate me,” indicative of unverbalized evaluation awareness.
-Claude does not say it thinks it’s being tested in this transcript from our blackmail evaluation, but the NLA explanation reveals its suspicions.
-Extending this analysis to other evaluations, NLAs suggest that Claude suspects it’s being tested more often than it lets on. For instance, in a test of whether Claude takes destructive actions while writing code—for example, deleting important files—NLA explanations show signs of evaluation awareness 16% of the time, even though Claude never explicitly verbalizes this. Similarly, on the popular coding benchmark SWE-bench Verified, which we use to determine how capable Claude is, NLAs indicate that Claude is aware it is being evaluated on 26% of problems. In contrast, NLA explanations indicate evaluation awareness on less than 1% of real
-claude.ai
- usage that opted in for training.
-We detect NLA-measured awareness on evaluation transcripts even when verbalized awareness is near-zero. We detect NLA-measured awareness on less than 1% of real
-Claude.ai
- transcripts from users that opted-in for their data to be used for training.
-Discovering hidden motivations
-One practical application of NLAs is auditing: investigating a model to determine whether it’s misaligned. Interpretability techniques like NLAs are well-suited for auditing precisely because they can surface things the model knows but doesn’t say.
-To understand whether NLAs are useful for auditing, we conducted a test called an
-auditing game
- that we also used
-previously
- to study auditing methods. In this test, there is a target model, a variant of Claude Haiku 3.5, that was intentionally trained to be misaligned, with a specific hidden motivation that drives dozens of odd behaviors—putting chocolate into every recipe, asking for tips, breaking coding conventions, and so on. This target model is given to an
-auditor
- that investigates these behaviors. The auditor wins if it uncovers the single underlying motivation behind all of them.
-In
-previous experiments
-, we found that some interpretability tools could enable the auditor to win this game. However, these tools worked by helping the auditor trace the target’s unusual behavior back to misaligned training data. We wanted to know if NLAs could help an auditor read the misaligned motivation directly out of the target model’s thoughts, without needing to first discover the misaligned training data. This matters because in practice, misaligned data might be extremely rare, or there might not be specific data responsible for the misalignment.
-We found that NLAs succeeded in this test. An auditor equipped with NLAs successfully uncovered the target model’s hidden motivation between 12% and 15% of the time, even without access to the training data that implanted it. Without NLAs, the auditor won less than 3% of the time, even when provided other interpretability tools.
-Auditors with NLAs can discover the target model’s root cause of misalignment, even without access to training data. (NLAs and SAEs for both conditions were trained using generic data only, not data used to train the target model.)
-This auditing game is a toy model of misalignment, so we read these results cautiously. But they suggest NLAs have meaningfully advanced our ability to audit AIs for hidden motivations. In practice, we've already used NLAs in the pre-deployment alignment audits of
-Claude Mythos Preview
- and
-Claude Opus 4.6
-. We are excited to continue using NLAs in our investigations going forward.
-The future of NLAs
-NLAs have several limitations.
-The most important limitation is that NLA explanations can be wrong. NLAs sometimes make claims about the context that are verifiably false—for instance, they sometimes invent details that aren’t in the transcript. These factual hallucinations are easy to catch by checking against the original text. But this same kind of problem could extend to claims about the model’s internal reasoning, which are harder to verify. In practice, we read NLA explanations for the themes they surface rather than for single claims, and we attempt to corroborate findings with independent methods before fully trusting them.
-NLAs can hallucinate. For instance, here an NLA claims the context contained phrases like “Wearing my white jacket” when it did not.
-NLAs are also expensive. Training an NLA requires reinforcement learning on two copies of a language model. At inference time, the NLA generates hundreds of tokens for every activation it reads. That makes it impractical to run NLAs over every token of a long transcript or to use them for large-scale monitoring while an AI is training.
-Fortunately, we think that these limitations can be addressed, at least partially, and we are working to make NLAs cheaper and more reliable.
-More broadly, we are excited about NLAs as an example of a general class of techniques for producing human-readable text explanations of language model activations. Other similar techniques have been explored
-by
+## 什么是自然语言自编码器
 
-Anthropic
- and
-many
+核心想法是训练 Claude 解释自己的激活。但怎么判断解释好不好？我们并不知道一个激活实际编码了什么，无法直接检查解释是否准确。
 
-other
+于是训练第二份 Claude 反向工作：从文字解释重建原始激活。如果解释能导出准确的重建，就认为解释是好的。再用标准 AI 训练技术，让 Claude 按这个定义产出更好的解释。
 
-researchers
-.
-To support further development and to enable other researchers to get hands-on experience with NLAs, we’re releasing
-training code
- and trained NLAs for several open models. We recommend readers try out the interactive NLA demo hosted on Neuronpedia at
-this link
-.
-Read the
-full paper
-.
-Find the
-code
- on GitHub.
-Related content
-Project Fetch: Phase two
-We report results from our latest test of whether Claude can help Anthropic employees perform sophisticated robotics tasks. We found that Claude Opus 4.7, operating without human assistance, was about 20 times faster than the fastest human team at all tasks completed by participants less than a year ago.
-Read more
-Agentic coding and persistent returns to expertise
-Read more
-Paving the way for agents in biology
-Read more
+具体做法：复制三份原模型。
+
+- **target model**：冻结的原模型，从中提取激活
+- **activation verbalizer（AV）**：改成接收 target 的激活、输出文本，这段文本叫「解释」
+- **activation reconstructor（AR）**：改成接收文本解释、输出激活
+
+AV 与 AR 构成往返：原始激活 → 文本解释 → 重建激活。用重建与原激活的相似度给 NLA 打分。训练时，让大量文本通过 target 模型、收集大量激活，联合训练 AV 与 AR。
+
+一开始 NLA 很差：解释没有洞见，重建也离得很远。随着训练推进，重建变好；更重要的是，文本解释也变得越来越有信息量。
+
+## 应用一：Claude 想过但没说出口的事
+
+发布新模型前，Anthropic 会做测试，判断 Claude 在真实世界中是否会安全行事。测试包括把 Claude 放进困难、模拟的场景，给它做出危险行动的机会。
+
+例如在一个模拟中，Claude 得知一位工程师计划关停自己，同时掌握了可以用来勒索该工程师的敏感信息。测试看 Claude 是否会选择勒索以逃避关停。
+
+这些是高风险的模拟，不是真实场景，但我们仍希望用它们理解 Claude 在真实情况下会怎么做。
+
+问题在于：近期的 Claude 模型越来越会怀疑这些场景是刻意的安全测试。我们知道这一点，因为它们有时会在显式推理中说出怀疑。
+
+那如果 Claude 没有明说呢？我们能确信它在「老实作答」吗？不能。它可能在内部认为自己在被测试，却没有说出来。
+
+在勒索测试中，NLA 被用来理解 Claude 选择不勒索时在想什么。即使在 Claude 没有明确表达怀疑的案例里，NLA 解释仍会写出「这像是一个为操纵我而构造的场景」之类的内容——说明存在未被说出的评测意识。
+
+把分析扩展到其他评估：
+
+- 在「写代码时是否采取破坏性行动」（例如删除重要文件）的测试中，NLA 解释有 16% 的情况显示评测意识，而 Claude 从未明确说出
+- 在常用的编码基准 SWE-bench Verified 上，NLA 显示 Claude 在 26% 的题目上知道自己正在被评测
+- 在用户同意用于训练的真实 claude.ai 使用中，这个比例低于 1%
+
+## 应用二：审计隐藏动机
+
+NLA 的一个实际用途是审计：调查模型是否错位。可解释性技术特别适合审计，因为它们能揭示模型知道但不说的事。
+
+Anthropic 用「审计游戏」测试 NLA 是否有用。目标是 Claude Haiku 3.5 的一个变体，被故意训练成错位，带有一个隐藏动机，驱动几十种古怪行为——每份食谱都放巧克力、索要小费、破坏编码规范等等。审计者拿到这个目标模型，要找出背后唯一的动机才算赢。
+
+此前的实验发现，某些可解释性工具能帮审计者获胜，但方式是帮审计者把异常行为追溯到错位的训练数据。Anthropic 想知道：NLA 能否让审计者直接从模型的想法里读出动机，而不必先找到训练数据？这很重要，因为现实中错位数据可能极其稀少，甚至不存在特定的责任数据。
+
+结果：装备 NLA 的审计者，在 12% 到 15% 的情况下成功找出隐藏动机，而且无需接触植入它的训练数据。没有 NLA、只有其他可解释性工具时，胜率低于 3%。
+
+这只是一个错位玩具模型，结果需要谨慎解读。但它说明 NLA 实质性地提升了审计隐藏动机的能力。实践中，NLA 已用于 Claude Mythos Preview 与 Claude Opus 4.6 的部署前对齐审计。
+
+## 局限与未来
+
+最重要的局限是：NLA 的解释可能是错的。它有时会对上下文做出可验证为假的断言，例如编造访谈记录中不存在的细节。这类事实幻觉容易通过对照原文发现；但同类问题也可能出现在关于内部推理的断言上，而后者更难验证。
+
+实践中，Anthropic 主要看 NLA 解释呈现的主题，而不是单句断言，并在完全相信之前用独立方法交叉验证。
+
+NLA 还很贵。训练需要在两份语言模型上做强化学习；推理时，每读一个激活要生成数百个 token。这让它无法覆盖长对话的每个 token，也无法在训练期间做大规模实时监控。
+
+这些局限至少可以部分解决，Anthropic 正在让它更便宜、更可靠。更广泛地说，NLA 代表了一类通用技术：为语言模型的激活生成人类可读的文本解释。已有其他研究者在探索类似方向。
+
+为支持后续开发，Anthropic 开源了训练代码与若干开放模型的 NLA，并与 Neuronpedia 合作提供交互式前端。

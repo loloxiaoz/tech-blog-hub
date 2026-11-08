@@ -1,5 +1,5 @@
 ---
-title: "Widening the conversation on frontier AI"
+title: "Widening the conversation on frontier AI（扩大关于前沿 AI 的讨论）"
 org: "Anthropic"
 date: 2026-05-19
 source_url: "https://www.anthropic.com/news/widening-frontier-ai-conversation"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Widening the conversation on frontier AI
+# Widening the conversation on frontier AI（扩大关于前沿 AI 的讨论）
 # 拓宽前沿 AI 的对话
 
 ## 核心观点

@@ -1,5 +1,5 @@
 ---
-title: "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models"
+title: "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models（从 RAG 到记忆：大语言模型的非参数持续学习）"
 org: "记忆系统"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# From RAG to Memory: Non-Parametric Continual Learning for Large Language Models
+# From RAG to Memory: Non-Parametric Continual Learning for Large Language Models（从 RAG 到记忆：大语言模型的非参数持续学习）
 
 **来源**：`raw/From RAG to Memory.pdf`
 **arXiv**：2502.14802v2（2025-06-19）

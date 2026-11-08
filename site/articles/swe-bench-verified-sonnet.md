@@ -1,5 +1,5 @@
 ---
-title: "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet"
+title: "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet（用 Claude 3.5 Sonnet 抬升 SWE-bench Verified 的天花板）"
 org: "Anthropic"
 date: 2025-01-06
 source_url: "https://www.anthropic.com/engineering/swe-bench-sonnet"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
+# Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet（用 Claude 3.5 Sonnet 抬升 SWE-bench Verified 的天花板）
 
 ## 核心观点
 

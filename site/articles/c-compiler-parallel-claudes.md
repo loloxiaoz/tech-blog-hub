@@ -1,5 +1,5 @@
 ---
-title: "Building a C compiler with a team of parallel Claudes"
+title: "Building a C compiler with a team of parallel Claudes（用一支并行的 Claude 团队构建 C 编译器）"
 org: "Anthropic"
 date: 2026-02-05
 source_url: "https://www.anthropic.com/engineering/parallel-claudes-c-compiler"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Building a C compiler with a team of parallel Claudes
+# Building a C compiler with a team of parallel Claudes（用一支并行的 Claude 团队构建 C 编译器）
 
 ## 核心观点
 

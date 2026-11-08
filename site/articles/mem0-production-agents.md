@@ -1,5 +1,5 @@
 ---
-title: "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory"
+title: "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory（Mem0：用可扩展长期记忆构建生产级 AI Agent）"
 org: "记忆系统"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory
+# Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory（Mem0：用可扩展长期记忆构建生产级 AI Agent）
 
 **来源**：`raw/Building Production-Ready AI Agents.pdf`
 **arXiv**：2504.19413v1（2025-04-28）

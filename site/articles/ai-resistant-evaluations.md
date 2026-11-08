@@ -1,5 +1,5 @@
 ---
-title: "Designing AI-resistant technical evaluations"
+title: "Designing AI-resistant technical evaluations（设计抗 AI 的技术评测）"
 org: "Anthropic"
 date: 2026-01-21
 source_url: "https://www.anthropic.com/research/ai-resistant-evaluations"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Designing AI-resistant technical evaluations
+# Designing AI-resistant technical evaluations（设计抗 AI 的技术评测）
 
 ## 核心观点
 

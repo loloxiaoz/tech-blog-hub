@@ -1,5 +1,5 @@
 ---
-title: "Anthropic Economic Index: Insights from Claude 3.7 Sonnet"
+title: "Anthropic Economic Index: Insights from Claude 3.7 Sonnet（Anthropic 经济指数：来自 Claude 3.7 Sonnet 的洞察）"
 org: "Anthropic"
 date: 2025-03-27
 source_url: "https://www.anthropic.com/research/anthropic-economic-index"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Anthropic Economic Index: Insights from Claude 3.7 Sonnet
+# Anthropic Economic Index: Insights from Claude 3.7 Sonnet（Anthropic 经济指数：来自 Claude 3.7 Sonnet 的洞察）
 # Anthropic 经济指数：Claude 3.7 Sonnet 洞察报告
 
 ## 核心观点

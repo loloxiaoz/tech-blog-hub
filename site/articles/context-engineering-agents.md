@@ -1,5 +1,5 @@
 ---
-title: "Effective context engineering for AI agents"
+title: "Effective context engineering for AI agents（面向 AI Agent 的有效上下文工程）"
 org: "Anthropic"
 date: 2025-09-29
 source_url: "https://www.anthropic.com/engineering/context-engineering"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Effective context engineering for AI agents
+# Effective context engineering for AI agents（面向 AI Agent 的有效上下文工程）
 
 ## 核心观点
 

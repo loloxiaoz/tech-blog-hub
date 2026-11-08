@@ -1,5 +1,5 @@
 ---
-title: "How AI Is Transforming Work at Anthropic"
+title: "How AI Is Transforming Work at Anthropic（AI 如何改变 Anthropic 的工作方式）"
 org: "Anthropic"
 date: 2025-12-02
 source_url: "https://www.anthropic.com/research/how-ai-is-transforming-work"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# How AI Is Transforming Work at Anthropic
+# How AI Is Transforming Work at Anthropic（AI 如何改变 Anthropic 的工作方式）
 # AI 如何改变 Anthropic 的工作方式
 
 原文：https://www.anthropic.com/news/how-ai-is-transforming-work-at-anthropic

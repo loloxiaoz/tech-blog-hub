@@ -1,5 +1,5 @@
 ---
-title: "Writing effective tools for agents — with agents"
+title: "Writing effective tools for agents — with agents（用 Agent 为 Agent 编写高效工具）"
 org: "Anthropic"
 date: 2025-09-11
 source_url: "https://www.anthropic.com/engineering/writing-effective-tools"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Writing effective tools for agents — with agents
+# Writing effective tools for agents — with agents（用 Agent 为 Agent 编写高效工具）
 
 ## 核心观点
 

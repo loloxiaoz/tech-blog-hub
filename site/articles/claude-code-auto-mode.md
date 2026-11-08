@@ -1,5 +1,5 @@
 ---
-title: "How we built Claude Code auto mode: a safer way to skip permissions"
+title: "How we built Claude Code auto mode: a safer way to skip permissions（我们如何打造 Claude Code 自动模式：更安全地跳过权限确认）"
 org: "Anthropic"
 date: 2026-03-25
 source_url: "https://www.anthropic.com/engineering/claude-code-auto-mode"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# How we built Claude Code auto mode: a safer way to skip permissions
+# How we built Claude Code auto mode: a safer way to skip permissions（我们如何打造 Claude Code 自动模式：更安全地跳过权限确认）
 
 ## 核心观点
 

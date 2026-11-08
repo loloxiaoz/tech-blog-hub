@@ -1,5 +1,5 @@
 ---
-title: "How we contain Claude across products"
+title: "How we contain Claude across products（我们如何在各产品中约束 Claude）"
 org: "Anthropic"
 date: 2026-05-25
 source_url: "https://www.anthropic.com/engineering/how-we-contain-claude"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# How we contain Claude across products
+# How we contain Claude across products（我们如何在各产品中约束 Claude）
 
 ## 核心观点
 

@@ -1,5 +1,5 @@
 ---
-title: "AI-native Memory 2.0: Second Me"
+title: "AI-native Memory 2.0: Second Me（AI 原生记忆 2.0：Second Me）"
 org: "记忆系统"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# AI-native Memory 2.0: Second Me
+# AI-native Memory 2.0: Second Me（AI 原生记忆 2.0：Second Me）
 
 **来源**：`raw/2503.08102v2.pdf`
 **arXiv**：2503.08102v2（2025-03-12）

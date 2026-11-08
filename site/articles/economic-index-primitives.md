@@ -1,5 +1,5 @@
 ---
-title: "Anthropic Economic Index Report: Economic Primitives"
+title: "Anthropic Economic Index Report: Economic Primitives（Anthropic 经济指数报告：经济基元）"
 org: "Anthropic"
 date: 2026-01-15
 source_url: "https://www.anthropic.com/research/economic-index-primitives"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Anthropic Economic Index Report: Economic Primitives
+# Anthropic Economic Index Report: Economic Primitives（Anthropic 经济指数报告：经济基元）
 # Anthropic 经济指数报告：经济原语
 
 ## 核心观点

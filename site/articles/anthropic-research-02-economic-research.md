@@ -1,81 +1,31 @@
 ---
-title: "Economic Research"
+title: "Economic Research（经济研究团队）"
 org: "Anthropic"
 date: 2025-11-24
 source_url: "https://www.anthropic.com/research/team/economic-research"
 tags: ["Anthropic"]
-summary: "The Economic Research team studies how AI is reshaping the economy, including work, productivity, and economic opportunity. Through rigorous"
-summary_zh: ""
-summary_en: "The Economic Research team studies how AI is reshaping the economy, including work, productivity, and economic opportunity. Through rigorous data coll"
+summary_zh: "经济研究团队通过 Anthropic Economic Index 等数据，追踪 AI 对工作、生产力和经济机会的真实影响。"
+summary_en: ""
 ---
 
-# Economic Research
+# Economic Research（经济研究团队）
 
-Back to Overview
-Economic Research
-The Economic Research team studies how AI is reshaping the economy, including work, productivity, and economic opportunity. Through rigorous data collection and analysis, we track AI's real-world economic effects and publish research that helps policymakers, businesses, and the public understand and prepare for the changes ahead.
-Research teams:
-Alignment
-Economic Research
-Interpretability
-Societal Impacts
-What We Do
-We build the empirical foundation for understanding AI's economic impact. Our flagship Anthropic Economic Index tracks how AI tools are actually being used around the world and across every sector of the economy—moving beyond speculation to measure adoption patterns as they unfold. Alongside our index reports, we produce novel research that studies the implications of AI usage and diffusion—as tracked in the index—for workers, for firms, and for the broader economy.
-Why It Matters
-Economic transitions create both opportunity and disruption. The speed of AI development means the stakes are unusually high. We need reliable data to inform the decisions that workers, employers, and policymakers make about the future. Our research provides evidence to address uncertainty and helps society navigate this transition in ways that are broadly beneficial.
-Anthropic Economic Index report: Learning curves
-Economic Research
-Mar 24, 2026
-Anthropic's fifth Economic Index report studies Claude usage in February 2026, building on the economic primitives framework introduced in our previous report.
-Economic Research
-Apr 22, 2026
-What 81,000 people told us about the economics of AI
-Our recent survey study with 81,000 Claude users provides a way to connect people’s economic concerns with what we’ve quantified in Claude traffic.
-Economic Research
-Mar 5, 2026
-Labor market impacts of AI: A new measure and early evidence
-In this paper, we present a new framework for understanding AI’s labor market impacts, and test it against early data.
-Economic Research
-Jan 15, 2026
-Anthropic Economic Index report: Economic primitives
-This report introduces new metrics of AI usage to provide a rich portrait of interactions with Claude in November 2025, just prior to the release of Opus 4.5.
-Economic Research
-Nov 25, 2025
-Estimating AI productivity gains from Claude conversations
-Analyzing 100,000 Claude conversations, this research finds AI reduces task time by 80% on average.
-Publications
-Search
-Date
-Category
-Title
-Jun 16, 2026
-Economic Research
-Agentic coding and persistent returns to expertise
-May 27, 2026
-Economic Research
-Coding agents in the social sciences
-Apr 22, 2026
-Economic Research
-Announcing the Anthropic Economic Index Survey
-Apr 22, 2026
-Economic Research
-What 81,000 people told us about the economics of AI
-Mar 31, 2026
-Economic Research
-How Australia Uses Claude: Findings from the Anthropic Economic Index
-Mar 24, 2026
-Economic Research
-Anthropic Economic Index report: Learning curves
-Mar 5, 2026
-Economic Research
-Labor market impacts of AI: A new measure and early evidence
-Feb 16, 2026
-Economic Research
-India Country Brief: The Anthropic Economic Index
-Jan 15, 2026
-Economic Research
-Anthropic Economic Index: New building blocks for understanding AI use
-Jan 15, 2026
-Economic Research
-Anthropic Economic Index report: Economic primitives
-See more
+## 研究什么
+
+经济研究团队研究 AI 如何重塑经济，包括工作、生产力与经济机会。团队通过严谨的数据收集与分析，追踪 AI 的真实经济效果，并发布研究帮助政策制定者、企业和公众理解并准备即将到来的变化。
+
+## 核心工作
+
+旗舰项目 Anthropic Economic Index 追踪 AI 工具在全球各行业中的实际使用情况，把讨论从推测推进到可测量的采用模式。围绕指数报告，团队还研究 AI 使用与扩散对劳动者、企业和整体经济的影响。
+
+## 为什么重要
+
+经济转型同时带来机会与冲击。AI 的发展速度意味着风险敞口异常之高，需要可靠数据来支撑劳动者、雇主和政策制定者的决策。
+
+## 近期报告
+
+- Anthropic Economic Index：学习曲线
+- 8.1 万人告诉我们 AI 的经济影响
+- AI 对劳动力市场的影响：新度量与早期证据
+- Anthropic Economic Index：经济原语
+

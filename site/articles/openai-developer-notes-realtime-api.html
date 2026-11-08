@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Developer notes on the Realtime API · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Developer notes on the Realtime API（Realtime API 开发者笔记） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -139,47 +139,29 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#0891B2">Audio</span>
-          <h1>Developer notes on the Realtime API</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-09-12</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Realtime API</span><span class="tag">Audio</span></div>
+          <h1>Developer notes on the Realtime API（Realtime API 开发者笔记）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-09-12</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 1 分钟</span><span class="tag">Realtime API</span><span class="tag">Audio</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">OpenAI 工程师 Peter Bakkum 分享 Realtime API GA 发布的关键技术细节：新增图像输入、长达 60 分钟会话、异步函数调用、EU 数据驻留、旁路连接等特性，并提供提示词优化与语音选择建议。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/developer-notes-on-the-realtime-api" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/developer-notes-on-the-realtime-api</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">Realtime API 正式版的变化：图像输入、长上下文、异步函数调用、MCP、欧盟数据驻留、空闲超时等。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/developer-notes-on-the-realtime-api" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/developer-notes-on-the-realtime-api</a></div></div></div></div>
         <div class="prose">
-<h2 id="model-improvements">Model improvements</h2>
-<ul>
-<li>Experiment with prompting in the realtime playground</li>
-<li>Use <code>marin</code> or <code>cedar</code> voices for best quality</li>
-<li>Rewrite prompts for the new model—specific instructions are now much more powerful</li>
-</ul>
-<h2 id="api-shape-changes">API shape changes</h2>
-<p>GA release includes: Image input, Long context, Async function calling, MCP (best with async FC), Audio token → text, EU data residency, SIP, Idle timeouts.</p>
-<p>Temperature removed from GA interface. Beta limited to 0.6-1.2, default 0.8.</p>
-<h2 id="new-features">New features</h2>
-<h3>Conversation idle timeouts</h3>
-<p>Set <code>idle_timeout_ms</code> on <code>server_vad</code> settings. Triggers model to say "Are you still there?" after silence.</p>
-<h3>Long conversations and context handling</h3>
-<ul>
-<li>Sessions up to 60 minutes (up from 30)</li>
-<li>Token window: 32,768 tokens. Max response: 4,096 tokens. Max input: 28,672 tokens</li>
-<li>Automatic truncation with configurable retention ratio (0.8 recommended for cache-friendly behavior)</li>
-</ul>
-<h3>Asynchronous function calling</h3>
-<p>The GA API adds placeholder responses when awaiting function responses.</p>
-<h3>EU data residency</h3>
-<p>Supported for specific model snapshots via <code>https://eu.api.openai.com</code>.</p>
-<h3>Tracing</h3>
-<p>Logs traces to the developer console with new event types.</p>
-<h3>Hosted prompts</h3>
-<p>Reference a prompt by ID with optional version pinning and variables.</p>
-<h3>Sideband connections</h3>
-<p>Two active connections to the same realtime session: client + server. Server can monitor session, update instructions, respond to tool calls.</p>
+          <h2 id="模型改进">模型改进</h2>
+          <ul><li>在 realtime playground 里试验提示词</li><li>使用 marin 或 cedar 音色以获得最佳质量</li><li>为新模型重写提示词，具体指令现在更有效</li></ul>
+          <h2 id="api-形态变化">API 形态变化</h2>
+          <p>正式版包含：图像输入、长上下文、异步函数调用、MCP（配合异步函数调用最佳）、音频 token 转文本、欧盟数据驻留、SIP、空闲超时。</p>
+          <p>正式版接口移除了 temperature；Beta 版限制在 0.6–1.2，默认 0.8。</p>
+          <h2 id="新功能">新功能</h2>
+          <p><strong>会话空闲超时</strong>：在 <code>server_vad</code> 设置中配置 <code>idle_timeout_ms</code>，静音一段时间后触发模型说「你还在吗？」</p>
+          <p><strong>长会话与上下文处理</strong>：</p>
+          <ul><li>单个会话最长 60 分钟（原为 30 分钟）</li><li>token 窗口 32,768；最大响应 4,096；最大输入 28,672</li><li>自动截断，可配置保留比例（推荐 0.8，对缓存友好）</li></ul>
+          <p><strong>异步函数调用</strong>：正式版 API 在等待函数返回时加入占位响应。</p>
+          <p><strong>欧盟数据驻留</strong>：特定模型快照可通过 <code>https://eu.api.openai.com</code> 使用。</p>
+          <p><strong>追踪</strong>：把 trace 记录到开发者控制台，并新增事件类型。</p>
+          <p><strong>托管提示词</strong>：通过 ID 引用提示词，支持版本固定与变量。</p>
+          <p><strong>Sideband 连接</strong>：同一 realtime 会话可以同时有客户端和服务端两条连接，服务端可监控会话、更新指令并响应工具调用。</p>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-<a class="lv2" href="#model-improvements">Model improvements</a>
-<a class="lv2" href="#api-shape-changes">API shape changes</a>
-<a class="lv2" href="#new-features">New features</a>
-</nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#模型改进">模型改进</a><a class="lv2" href="#api-形态变化">API 形态变化</a><a class="lv2" href="#新功能">新功能</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>

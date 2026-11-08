@@ -1,5 +1,5 @@
 ---
-title: "How People Use Claude for Support, Advice, and Companionship"
+title: "How People Use Claude for Support, Advice, and Companionship（人们如何用 Claude 寻求支持、建议与陪伴）"
 org: "Anthropic"
 date: 2025-06-27
 source_url: "https://www.anthropic.com/research/how-people-use-claude-for-support"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# How People Use Claude for Support, Advice, and Companionship
+# How People Use Claude for Support, Advice, and Companionship（人们如何用 Claude 寻求支持、建议与陪伴）
 # 人们如何使用 Claude 寻求支持、建议与陪伴
 
 ## 核心观点

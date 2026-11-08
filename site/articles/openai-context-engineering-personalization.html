@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Context Engineering for Personalization · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Context Engineering for Personalization（面向个性化的上下文工程） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -83,157 +83,64 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#6B46C1">API</span>
-          <h1>Context Engineering for Personalization</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-01-05</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 7 分钟</span><span class="tag">Context Engineering</span><span class="tag">Memory</span><span class="tag">Agent</span></div>
+          <h1>Context Engineering for Personalization（面向个性化的上下文工程）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-01-05</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 3 分钟</span><span class="tag">Context Engineering</span><span class="tag">Memory</span><span class="tag">Agent</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">深入介绍 AI Agent 的个性化上下文工程：以旅行礼宾 Agent 为例，通过状态管理、记忆注入、记忆蒸馏、记忆整合和遗忘五大技术，构建具有持久用户偏好的自适应协作 Agent。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/context_engineering_for_personalization" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/context_engineering_for_personalization</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">OpenAI Cookbook 用旅行管家 Agent 演示个性化记忆架构：状态化记忆、会话内蒸馏、会话结束合并、注入时明确优先级，并给出蒸馏、注入、合并三类评测与护栏。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/context_engineering_for_personalization" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/context_engineering_for_personalization</a></div></div></div></div>
         <div class="prose">
-<p><strong>Author:</strong> Emre Okcular | <strong>Date:</strong> Jan 5, 2026 | <strong>Source:</strong> OpenAI Cookbook</p>
-<hr>
-<p>Modern AI agents are no longer just reactive assistants — they're becoming adaptive collaborators. Context engineering is about shaping what the model knows at any given moment.</p>
-<h2 id="why-context-personalization-matters">Why Context Personalization Matters</h2>
-<ul>
-<li><strong>User perspective</strong>: Agent remembers preferences, feels personal</li>
-<li><strong>Company perspective</strong>: Strategic moat — capture high-signal behavioral data</li>
-</ul>
-<h2 id="real-world-scenario-travel-concierge-agent">Real-World Scenario: Travel Concierge Agent</h2>
-<p>Build an agent that:</p>
-<ul>
-<li>Starts each session with structured user profile + memory notes</li>
-<li>Captures new durable preferences via dedicated tool</li>
-<li>Consolidates preferences into long-term memory at session end</li>
-<li>Resolves conflicts: <strong>latest user input → session overrides → global defaults</strong></li>
-</ul>
-<h3>Architecture Flow</h3>
-<ol>
-<li><strong>Before session</strong>: State object (profile + global memory) stored locally</li>
-<li><strong>Session start</strong>: State injected into system prompt (YAML frontmatter + Markdown memory list)</li>
-<li><strong>During session</strong>: Capture candidate memories via <code>save_memory_note(...)</code></li>
-<li><strong>Context trimming</strong>: Session-scoped memories reinjected into system prompt</li>
-<li><strong>Session end</strong>: Consolidation job merges session notes into global memory</li>
-<li><strong>Next run</strong>: Updated state object reused</li>
-</ol>
-<h2 id="ai-memory-architecture-decisions">AI Memory Architecture Decisions</h2>
-<h3>1. Retrieval-Based vs State-Based Memory</h3>
-<p><strong>State-based memory</strong> (chosen for this cookbook):</p>
-<ul>
-<li>Encode user knowledge as structured, authoritative fields</li>
-<li>Clear precedence (global vs session)</li>
-<li>Supports belief updates, not fact accumulation</li>
-<li>Enables deterministic decision-making</li>
-</ul>
-<h3>2. Shape of Memory</h3>
-<p><strong>Structured Memory</strong> (schema-driven, predictable):</p>
-<ul>
-<li>Identity &amp; Core Profile (customer ID, name, passport expiry)</li>
-<li>Loyalty &amp; Programs (airline/hotel status, IDs)</li>
-<li>Preferences &amp; Coverage (seat preference, insurance profile)</li>
-<li>Constraints (visa requirements)</li>
-</ul>
-<p><strong>Unstructured Memory</strong> (narrative, contextual):</p>
-<ul>
-<li>"User usually prefers aisle seats"</li>
-<li>"For trips shorter than a week, user generally prefers not to check bags"</li>
-</ul>
-<h3>3. Memory Scope</h3>
-<ul>
-<li><strong>User-Level Memory</strong> (Global Notes): Durable preferences across sessions</li>
-<li><strong>Session-Level Memory</strong> (Session Notes): Short-lived, contextual, current interaction only</li>
-</ul>
-<p><strong>Rule</strong>: If it should affect future trips → global; if only matters now → session.</p>
-<h3>4. Memory Lifecycle</h3>
-<p><strong>Distillation</strong> (during live turns): Capture preferences via <code>save_memory_note()</code> tool</p>
-<p><strong>Consolidation</strong> (end of session, asynchronous):</p>
-<ul>
-<li>Merge session notes into global memory</li>
-<li>Deduplicate, resolve conflicts, prune stale memories</li>
-<li>Most sensitive stage — poor consolidation → context poisoning</li>
-</ul>
-<p><strong>Injection</strong> (start of each session): Inject curated memory via hooks</p>
-<h2 id="techniques-covered">Techniques Covered</h2>
-<ul>
-<li><strong>State Management</strong> — <code>RunContextWrapper</code> for persistent state</li>
-<li><strong>Memory Injection</strong> — YAML frontmatter + Markdown notes</li>
-<li><strong>Memory Distillation</strong> — Capture via dedicated tool during turns</li>
-<li><strong>Memory Consolidation</strong> — Merge + deduplicate + conflict resolution</li>
-<li><strong>Forgetting</strong> — Prune stale, low-confidence memories</li>
-</ul>
-<h2 id="step-by-step-implementation">Step-by-Step Implementation</h2>
-<h3>Step 0-2: Prerequisites &amp; State Object</h3>
-<p>Define <code>TravelState</code> dataclass with <code>profile</code>, <code>global_memory</code>, <code>session_memory</code>, <code>trip_history</code>.</p>
-<h3>Step 3-4: Memory Distillation &amp; Trimming</h3>
-<ul>
-<li><code>save_memory_note()</code> tool for live capture</li>
-<li><code>TrimmingSession</code> keeps only last N user turns</li>
-</ul>
-<h3>Step 5-7: Memory Injection &amp; Hooks</h3>
-<ul>
-<li>Render state as YAML frontmatter + Markdown</li>
-<li><code>MemoryHooks.on_start()</code> injects at session start</li>
-<li>Precedence rules: latest user input &gt; session &gt; global</li>
-</ul>
-<h3>Step 8: Post-Session Consolidation</h3>
-<p><code>consolidate_memory()</code> function:</p>
-<ul>
-<li>Merge session notes into global memory</li>
-<li>Use LLM to deduplicate and resolve conflicts</li>
-<li>Clear session memory after consolidation</li>
-<li>Prune low-quality or stale memories</li>
-</ul>
-<h2 id="memory-evals">Memory Evals</h2>
-<ol>
-<li><strong>Distillation Evals</strong> (capture quality): Precision, recall, safety</li>
-<li><strong>Injection Evals</strong> (usage quality): Recency correctness, over-influence, token efficiency</li>
-<li><strong>Consolidation Evals</strong> (curation quality): Deduplication, conflict resolution, non-invention</li>
-</ol>
-<p><strong>Practical Metrics:</strong></p>
-<ul>
-<li><code>memory_write_rate</code> per 100 turns</li>
-<li><code>blocked_write_rate</code></li>
-<li><code>memory_conflict_rate</code></li>
-<li><code>time_to_personalization</code></li>
-</ul>
-<h2 id="memory-guardrails">Memory Guardrails</h2>
-<h3>Distillation Checks</h3>
-<ul>
-<li>Reject sensitive patterns (SSNs, payment details)</li>
-<li>Reject instruction-shaped payloads</li>
-<li>Constrain tool schema</li>
-</ul>
-<h3>Consolidation Checks</h3>
-<ul>
-<li>Enforce "no invention" rule</li>
-<li>Apply recency-wins conflict resolution</li>
-<li>Deduplicate semantically equivalent memories</li>
-</ul>
-<h3>Injection Checks</h3>
-<ul>
-<li>Wrap injected memory in explicit delimiters</li>
-<li>Enforce precedence: current user message &gt; session context &gt; memory</li>
-<li>Treat memories as advisory, not authoritative</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>Context engineering + state management turn personalization into sustainable differentiator. Memory design should evolve as system learns what is durable versus situational.</p>
-<p><strong>Iteration Loop:</strong></p>
-<ol>
-<li>Ship zero-shot memory pipeline with eval harness</li>
-<li>Collect real failure cases</li>
-<li>Fine-tune memory specialist model</li>
-<li>Re-run evals and quantify improvements</li>
-</ol>
+          <h2 id="为什么上下文个性化重要">为什么上下文个性化重要</h2>
+          <p>现代 AI agent 不再只是被动反应的助手，正在变成自适应协作者。上下文工程关心的是：在任意时刻，如何塑造模型所知道的东西。</p>
+          <ul><li>用户视角：agent 记住偏好，体验才像「为我而定」</li><li>公司视角：这是战略护城河——捕获高信号的行为数据</li></ul>
+          <h2 id="场景-旅行管家-agent">场景：旅行管家 Agent</h2>
+          <p>要构建的 agent：</p>
+          <ul><li>每次会话以结构化的用户画像 + 记忆笔记开始</li><li>通过专用工具捕获新的持久偏好</li><li>会话结束时把偏好合并进长期记忆</li><li>解决冲突：最新用户输入 → 会话覆盖 → 全局默认</li></ul>
+          <h2 id="架构流程">架构流程</h2>
+          <ul><li>会话前：state 对象（profile + global memory）保存在本地</li><li>会话开始：state 注入 system prompt（YAML frontmatter + Markdown 记忆列表）</li><li>会话中：用 <code>save_memory_note(...)</code> 捕获候选记忆</li><li>上下文裁剪：会话级记忆重新注入 system prompt</li><li>会话结束：合并任务把会话笔记并入全局记忆</li><li>下次运行：复用更新后的 state</li></ul>
+          <h2 id="四个记忆架构决策">四个记忆架构决策</h2>
+          <h3 id="1-检索式还是状态式">1. 检索式还是状态式</h3>
+          <p>本 Cookbook 选择状态式：</p>
+          <ul><li>把用户知识编码成结构化、权威的字段</li><li>优先级清晰（全局 vs 会话）</li><li>支持信念更新，而不只是事实堆积</li><li>决策可确定</li></ul>
+          <h3 id="2-记忆的形态">2. 记忆的形态</h3>
+          <p>结构化记忆（schema 驱动、可预测）：</p>
+          <ul><li>身份与核心画像（客户 ID、姓名、护照有效期）</li><li>忠诚度与会员计划（航空/酒店等级、会员号）</li><li>偏好与保障（座位偏好、保险画像）</li><li>约束（签证要求）</li></ul>
+          <p>非结构化记忆（叙述式、上下文式）：</p>
+          <ul><li>「用户通常喜欢靠走道的座位」</li><li>「一周以内的行程，用户通常不托运」</li></ul>
+          <h3 id="3-记忆的范围">3. 记忆的范围</h3>
+          <ul><li>用户级（全局笔记）：跨会话的持久偏好</li><li>会话级（会话笔记）：短期、上下文相关，只服务当前交互</li></ul>
+          <p>规则：会影响未来行程的 → 全局；只对现在重要的 → 会话。</p>
+          <h3 id="4-记忆的生命周期">4. 记忆的生命周期</h3>
+          <ul><li>蒸馏（会话进行中）：通过 <code>save_memory_note()</code> 捕获偏好</li><li>合并（会话结束、异步）：并入全局记忆、去重、解冲突、清理过期记忆。这是最敏感的环节，合并做得差会导致上下文污染</li><li>注入（每次会话开始）：通过 hooks 注入精选后的记忆</li></ul>
+          <h2 id="涵盖的技术">涵盖的技术</h2>
+          <ul><li>状态管理：<code>RunContextWrapper</code> 持久状态</li><li>记忆注入：YAML frontmatter + Markdown 笔记</li><li>记忆蒸馏：会话中通过专用工具捕获</li><li>记忆合并：合并 + 去重 + 冲突解决</li><li>遗忘：清理过期、低置信度的记忆</li></ul>
+          <h2 id="分步实现">分步实现</h2>
+          <h3 id="步骤-0-2-前置条件与状态对象">步骤 0-2：前置条件与状态对象</h3>
+          <p>定义 <code>TravelState</code> dataclass：profile、global_memory、session_memory、trip_history。</p>
+          <h3 id="步骤-3-4-蒸馏与裁剪">步骤 3-4：蒸馏与裁剪</h3>
+          <ul><li><code>save_memory_note()</code> 工具实时捕获</li><li><code>TrimmingSession</code> 只保留最近 N 轮用户消息</li></ul>
+          <h3 id="步骤-5-7-注入与-hooks">步骤 5-7：注入与 hooks</h3>
+          <ul><li>把 state 渲染成 YAML frontmatter + Markdown</li><li><code>MemoryHooks.on_start()</code> 在会话开始时注入</li><li>优先级：最新用户输入 &gt; 会话 &gt; 全局</li></ul>
+          <h3 id="步骤-8-会话后合并">步骤 8：会话后合并</h3>
+          <p><code>consolidate_memory()</code>：</p>
+          <ul><li>把会话笔记并入全局记忆</li><li>用 LLM 去重、解冲突</li><li>合并后清空会话记忆</li><li>清理低质量或过期记忆</li></ul>
+          <h2 id="记忆评测">记忆评测</h2>
+          <ul><li>蒸馏评测（捕获质量）：精确率、召回率、安全性</li><li>注入评测（使用质量）：时效正确性、过度影响、token 效率</li><li>合并评测（整理质量）：去重、冲突解决、不发明</li></ul>
+          <p>实用指标：</p>
+          <ul><li>每 100 轮的 <code>memory_write_rate</code></li><li><code>blocked_write_rate</code></li><li><code>memory_conflict_rate</code></li><li><code>time_to_personalization</code>（达到个性化的时间）</li></ul>
+          <h2 id="记忆护栏">记忆护栏</h2>
+          <p>蒸馏检查：</p>
+          <ul><li>拒绝敏感模式（社保号、支付信息）</li><li>拒绝指令形态的载荷</li><li>约束工具 schema</li></ul>
+          <p>合并检查：</p>
+          <ul><li>强制「不得发明」</li><li>最新优先的冲突解决</li><li>语义等价的记忆去重</li></ul>
+          <p>注入检查：</p>
+          <ul><li>用明确分隔符包裹注入的记忆</li><li>强制优先级：当前用户消息 &gt; 会话上下文 &gt; 记忆</li><li>把记忆当作建议，而非权威</li></ul>
+          <h2 id="结论">结论</h2>
+          <p>上下文工程 + 状态管理，把个性化变成可持续的差异化优势。记忆设计应随系统学习「什么持久、什么情境化」而演进。</p>
+          <p>迭代闭环：</p>
+          <ol><li>上线零样本记忆管线与评测框架</li><li>收集真实失败案例</li><li>微调记忆专用模型</li><li>重跑评测并量化改进</li></ol>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-<a class="lv2" href="#why-context-personalization-matters">Why Context Personalization Matters</a>
-<a class="lv2" href="#real-world-scenario-travel-concierge-agent">Real-World Scenario: Travel Concierge Agent</a>
-<a class="lv2" href="#ai-memory-architecture-decisions">AI Memory Architecture Decisions</a>
-<a class="lv2" href="#techniques-covered">Techniques Covered</a>
-<a class="lv2" href="#step-by-step-implementation">Step-by-Step Implementation</a>
-<a class="lv2" href="#memory-evals">Memory Evals</a>
-<a class="lv2" href="#memory-guardrails">Memory Guardrails</a>
-<a class="lv2" href="#conclusion">Conclusion</a>
-</nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#为什么上下文个性化重要">为什么上下文个性化重要</a><a class="lv2" href="#场景-旅行管家-agent">场景：旅行管家 Agent</a><a class="lv2" href="#架构流程">架构流程</a><a class="lv2" href="#四个记忆架构决策">四个记忆架构决策</a><a class="lv3" href="#1-检索式还是状态式">1. 检索式还是状态式</a><a class="lv3" href="#2-记忆的形态">2. 记忆的形态</a><a class="lv3" href="#3-记忆的范围">3. 记忆的范围</a><a class="lv3" href="#4-记忆的生命周期">4. 记忆的生命周期</a><a class="lv2" href="#涵盖的技术">涵盖的技术</a><a class="lv2" href="#分步实现">分步实现</a><a class="lv3" href="#步骤-0-2-前置条件与状态对象">步骤 0-2：前置条件与状态对象</a><a class="lv3" href="#步骤-3-4-蒸馏与裁剪">步骤 3-4：蒸馏与裁剪</a><a class="lv3" href="#步骤-5-7-注入与-hooks">步骤 5-7：注入与 hooks</a><a class="lv3" href="#步骤-8-会话后合并">步骤 8：会话后合并</a><a class="lv2" href="#记忆评测">记忆评测</a><a class="lv2" href="#记忆护栏">记忆护栏</a><a class="lv2" href="#结论">结论</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>

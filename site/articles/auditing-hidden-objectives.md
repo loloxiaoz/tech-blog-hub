@@ -1,5 +1,5 @@
 ---
-title: "Auditing language models for hidden objectives"
+title: "Auditing language models for hidden objectives（审计语言模型的隐藏目标）"
 org: "Anthropic"
 date: 2025-03-13
 source_url: "https://www.anthropic.com/research/auditing-hidden-objectives"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Auditing language models for hidden objectives
+# Auditing language models for hidden objectives（审计语言模型的隐藏目标）
 # 审计语言模型的隐藏目标
 
 > 原文：https://www.anthropic.com/research/auditing-hidden-objectives

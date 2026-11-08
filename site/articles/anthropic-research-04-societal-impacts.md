@@ -1,82 +1,27 @@
 ---
-title: "Societal Impacts"
+title: "Societal Impacts（社会影响研究）"
 org: "Anthropic"
 date: 2025-11-07
 source_url: "https://www.anthropic.com/research/team/societal-impacts"
 tags: ["Anthropic"]
-summary: "Working closely with the Anthropic Policy and Safeguards teams, Societal Impacts is a technical research team that explores how AI is used i"
-summary_zh: ""
-summary_en: "Working closely with the Anthropic Policy and Safeguards teams, Societal Impacts is a technical research team that explores how AI is used in the real"
+summary_zh: "社会影响团队研究 AI 在真实世界中的使用与误用，以及模型应当持有哪些人类价值。"
+summary_en: ""
 ---
 
-# Societal Impacts
+# Societal Impacts（社会影响研究）
 
-Back to Overview
-Societal Impacts
-Working closely with the Anthropic Policy and Safeguards teams, Societal Impacts is a technical research team that explores how AI is used in the real world.
-Research teams:
-Alignment
-Economic Research
-Interpretability
-Societal Impacts
-Sociotechnical alignment
-Which human values should AI models hold, and how should they operate in the face of conflicting or ambiguous values? How is AI used (and misused) in the wild? How can we anticipate future uses and risks of AI? Societal Impacts researchers develop experiments, training methods, and evaluations to answer these questions.
-Policy relevance
-Though the Societal Impacts team is technical, they often pick research questions that have policy relevance. They believe that providing trustworthy research concerning topics policymakers care about will lead to better policy (and overall) outcomes for everyone.
-What 81,000 people want from AI
-Mar 18, 2026
-We invited Claude.ai users to share how they use AI, what they dream it could make possible, and what they fear it might do. Nearly 81,000 people participated—the largest and most multilingual qualitative study of its kind. Here's what we found.
-Societal Impacts
-Feb 18, 2026
-Measuring AI agent autonomy in practice
-How much autonomy do people grant agents? How does that change as people gain experience? We analyzed millions of human-agent interactions to answer these and other questions.
-Societal Impacts
-Dec 4, 2025
-Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI
-We built an interview tool called Anthropic Interviewer. Powered by Claude, Anthropic Interviewer runs detailed interviews automatically and at unprecedented scale.
-Societal Impacts
-Dec 2, 2025
-How AI is transforming work at Anthropic
-We surveyed Anthropic engineers and researchers, conducted in-depth qualitative interviews, and studied internal Claude Code usage data to find out how AI use is changing how we do our jobs.
-Societal Impacts
-Apr 21, 2025
-Values in the wild: Discovering and analyzing values in real-world language model interactions
-What values does Claude actually express during real conversations? Analyzing 700,000 interactions, this paper creates the first large-scale empirical taxonomy of AI values.
-Publications
-Search
-Date
-Category
-Title
-Apr 30, 2026
-Societal Impacts
-How people ask Claude for personal guidance
-Feb 18, 2026
-Societal Impacts
-Measuring AI agent autonomy in practice
-Dec 4, 2025
-Societal Impacts
-Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI
-Dec 2, 2025
-Societal Impacts
-How AI is transforming work at Anthropic
-Aug 27, 2025
-Societal Impacts
-Anthropic Education Report: How educators use Claude
-Jun 27, 2025
-Societal Impacts
-How people use Claude for support, advice, and companionship
-Apr 28, 2025
-Societal Impacts
-Anthropic Economic Index: AI’s impact on software development
-Apr 21, 2025
-Societal Impacts
-Values in the wild: Discovering and analyzing values in real-world language model interactions
-Apr 8, 2025
-Announcements
-Anthropic Education Report: How university students use Claude
-Mar 27, 2025
-Societal Impacts
-Anthropic Economic Index: Insights from Claude 3.7 Sonnet
-See more
-Join the Research team
-See open roles
+## 社会技术对齐
+
+AI 模型应该持有哪些人类价值？当价值相互冲突或含义模糊时，它应当如何行动？AI 在现实中如何被使用，又如何被滥用？我们如何预判未来的用途与风险？社会影响团队通过实验、训练方法和评估来回答这些问题。
+
+## 政策相关性
+
+团队虽然做技术研究，但经常选择与政策相关的问题。团队相信，围绕政策制定者关心的话题提供可信研究，能让政策与整体结果对每个人都更好。
+
+## 近期工作
+
+- 8.1 万人对 AI 的期待：迄今规模最大、语种最多的定性研究
+- 实测 AI 智能体的自主性
+- Anthropic Interviewer：1,250 位专业人士如何与 AI 共事
+- AI 如何改变 Anthropic 内部的工作方式
+

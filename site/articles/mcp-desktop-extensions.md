@@ -1,5 +1,5 @@
 ---
-title: "Desktop Extensions: One-click MCP server installation for Claude Desktop"
+title: "Desktop Extensions: One-click MCP server installation for Claude Desktop（桌面扩展：为 Claude Desktop 一键安装 MCP server）"
 org: "Anthropic"
 date: 2025-06-26
 source_url: "https://www.anthropic.com/engineering/desktop-extensions"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Desktop Extensions: One-click MCP server installation for Claude Desktop
+# Desktop Extensions: One-click MCP server installation for Claude Desktop（桌面扩展：为 Claude Desktop 一键安装 MCP server）
 
 ## 核心观点
 

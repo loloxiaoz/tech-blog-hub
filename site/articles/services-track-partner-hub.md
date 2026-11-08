@@ -1,5 +1,5 @@
 ---
-title: "An update on recent Claude Code quality reports"
+title: "An update on recent Claude Code quality reports（关于近期 Claude Code 质量报告的更新）"
 org: "Anthropic"
 date: 2026-04-23
 source_url: "https://www.anthropic.com/news/services-track-partner-hub"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# An update on recent Claude Code quality reports
+# An update on recent Claude Code quality reports（关于近期 Claude Code 质量报告的更新）
 # Claude Code 质量退化复盘（2026-04）
 
 ## 核心观点

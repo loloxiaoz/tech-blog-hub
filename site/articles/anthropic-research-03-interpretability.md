@@ -1,83 +1,28 @@
 ---
-title: "Interpretability"
+title: "Interpretability（可解释性研究）"
 org: "Anthropic"
 date: 2025-11-07
 source_url: "https://www.anthropic.com/research/team/interpretability"
 tags: ["Anthropic"]
-summary: "The mission of the Interpretability team is to discover and understand how large language models work internally, as a foundation for AI saf"
-summary_zh: ""
-summary_en: "The mission of the Interpretability team is to discover and understand how large language models work internally, as a foundation for AI safety and po"
+summary_zh: "可解释性团队的使命是弄清大模型内部如何运作，以此作为 AI 安全与正向结果的基础。"
+summary_en: ""
 ---
 
-# Interpretability
+# Interpretability（可解释性研究）
 
-Back to Overview
-Interpretability
-The mission of the Interpretability team is to discover and understand how large language models work internally, as a foundation for AI safety and positive outcomes.
-Research teams:
-Alignment
-Economic Research
-Interpretability
-Societal Impacts
-Safety through understanding
-It's very challenging to reason about the safety of neural networks without understanding them. The Interpretability team’s goal is to be able to explain large language models’ behaviors in detail, and then use that to solve a variety of problems ranging from bias to misuse to autonomous harmful behavior.
-Multidisciplinary approach
-Some Interpretability researchers have deep backgrounds in machine learning – one member of the team is often described as having started mechanistic interpretability, while another was on the famous scaling laws paper. Other members joined after careers in astronomy, physics, mathematics, biology, data visualization, and more.
-Natural Language Autoencoders: Turning Claude’s thoughts into text
-Interpretability
-May 7, 2026
-AI models like Claude talk in words but think in numbers. In this study, we train Claude to translate its thoughts into human-readable text.
-Interpretability
-Apr 2, 2026
-Emotion concepts and their function in a large language model
-All modern language models sometimes act like they have emotions. What’s behind these behaviors? Our interpretability team investigates.
-Interpretability
-Jan 19, 2026
-The assistant axis: situating and stabilizing the character of large language models
-Who is the Assistant? We investigate the character that most modern language models inhabit when interacting with users.
-Interpretability
-Oct 29, 2025
-Signs of introspection in large language models
-Can Claude access and report on its own internal states? This research finds evidence for a limited but functional ability to introspect.
-Interpretability
-Aug 1, 2025
-Persona vectors: Monitoring and controlling character traits in language models
-AI models represent character traits as patterns of activations within their neural networks. By extracting "persona vectors" for traits like sycophancy or hallucination, we can monitor personality shifts and mitigate undesirable behaviors.
-Publications
-Search
-Date
-Category
-Title
-May 7, 2026
-Interpretability
-Natural Language Autoencoders: Turning Claude’s thoughts into text
-Apr 2, 2026
-Interpretability
-Emotion concepts and their function in a large language model
-Mar 13, 2026
-Interpretability
-A “diff” tool for AI: Finding behavioral differences in new models
-Jan 19, 2026
-Interpretability
-The assistant axis: situating and stabilizing the character of large language models
-Oct 29, 2025
-Interpretability
-Signs of introspection in large language models
-Aug 1, 2025
-Interpretability
-Persona vectors: Monitoring and controlling character traits in language models
-May 29, 2025
-Interpretability
-Open-sourcing circuit tracing tools
-Mar 27, 2025
-Interpretability
-Tracing the thoughts of a large language model
-Mar 13, 2025
-Alignment
-Auditing language models for hidden objectives
-Feb 20, 2025
-Interpretability
-Insights on Crosscoder Model Diffing
-See more
-Join the Research team
-See open roles
+## 用理解换安全
+
+在不理解神经网络的情况下推理其安全性非常困难。团队的目标是对大模型的行为给出细致解释，再用这些解释去解决偏见、滥用、自主有害行为等问题。
+
+## 跨学科的方法
+
+团队成员背景横跨机器学习、天文学、物理学、数学、生物学和数据可视化。有人被视为机制可解释性的开创者之一，也有人参与过著名的缩放定律论文。
+
+## 近期研究
+
+- 自然语言自编码器：把 Claude 的「思考」翻译成人类可读的文本
+- 情绪概念及其在大模型中的功能
+- 助手轴：定位并稳定大模型的角色人格
+- 内省的迹象：模型能否访问并报告自身内部状态
+- 人格向量：监控与控制模型中的性格特征
+

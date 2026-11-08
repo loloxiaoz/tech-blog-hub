@@ -1,5 +1,5 @@
 ---
-title: "How we built our multi-agent research system"
+title: "How we built our multi-agent research system（我们如何构建多 Agent 研究系统）"
 org: "Anthropic"
 date: 2025-06-13
 source_url: "https://www.anthropic.com/engineering/multi-agent-research-system"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# How we built our multi-agent research system
+# How we built our multi-agent research system（我们如何构建多 Agent 研究系统）
 
 ## 核心观点
 

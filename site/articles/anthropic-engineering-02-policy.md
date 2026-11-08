@@ -1,186 +1,96 @@
 ---
-title: "Policy"
+title: "Policy（Anthropic 的 AI 政策主张）"
 org: "Anthropic"
 date: 2026-06-04
 source_url: "https://www.anthropic.com/policy"
 tags: ["Anthropic"]
-summary: "AI will be one of the most transformative technologies in history. We work with governments to ensure that AI policy is built on the best av"
-summary_zh: ""
-summary_en: "AI will be one of the most transformative technologies in history. We work with governments to ensure that AI policy is built on the best available ev"
+summary_zh: "Anthropic 系统阐述其政策立场：模型安全与透明度、国家安全与出口管制、能源与基础设施、用户福祉、民主国家的 AI 领导力，以及 AI 对劳动力市场的冲击。"
+summary_en: ""
 ---
 
-# Policy
+# Policy（Anthropic 的 AI 政策主张）
 
-Policy
-AI will be one of the most transformative technologies in history. We work with governments to ensure that AI policy is built on the best available evidence.
-Policy on the AI Exponential
-AI is advancing at exponential speed, and the policymaking process was built for a slower world. We’re sharing policy proposals to prepare our institutions for AI progress.
-Read more
-Economic Policy Framework
-We’re sharing an initial framework for a US policy response to AI-driven labor market disruption focused on what we should prepare for now, what can be done today, and where more research is needed.
-Read more
-Advanced AI Framework
-We’re publishing Anthropic's Advanced AI Framework, our proposal for how governments should address catastrophic risks from the most powerful AI models in the near term.
-Read more
-2028: Two Scenarios for global AI leadership
-Our views on the AI competition between the US and China.
-Read more
-Philosophy & approach
-We expect the world to change rapidly due to AI.
-Anthropic builds the world’s most capable AI systems. We have a front-row seat to a technology that is improving faster than most people realize, with consequences that aren’t yet reflected in public debate.
-In the US, people are adopting Claude
-10 times faster
- than Americans adopted any other new technology over the 20th century. In the next few years, we expect to have powerful AI systems that are smarter than Nobel Prize winners in many fields, and that can work on complex, novel scientific challenges for days or weeks at a time.
-We expect AI will bring enormous
-benefits
-. Indeed, we are already starting to see them.
-Hospital systems
- are using Claude to better qualify patients for life-saving treatments. Our
-AI for Science program
- is accelerating discoveries in biology and the life sciences. Coding is now accessible to millions, with people describing what they want to create in plain language. And governments are using AI to increase transparency and promote access to services by allowing people to read policies in
-multiple languages
-, helping workers navigate
-reentering the workforce
-, and providing teachers with
-support in lesson planning
-.
-But these capabilities also carry serious
-risks
-. AI could give authoritarian governments powerful new tools for surveillance and repression, expose critical infrastructure to cyberattacks, or flood public life with misinformation. As labor markets shift to accommodate AI, a small number of companies or countries could lock in advantages that leave others behind. And these risks could sharpen considerably if AI systems begin to meaningfully
-automate and accelerate
- their own development.
-Some of these risks are already here. In late 2025, we
-disrupted
- the first reported AI-orchestrated cyber espionage campaign. In 2026, Claude Mythos Preview found thousands of previously unknown vulnerabilities in major operating systems,
-browsers
-, and
-open-source projects
-.
-Hundreds of people at Anthropic work to
-safeguard against AI’s downsides
-. But a technology moving this fast, at this scale, should not be governed by the industry alone. Governments are the only actors who can set industry-wide rules with the force of law, comprehensively support workers through economic transition, and negotiate the international agreements and export controls that govern how AI is used across borders.
-Our policy priorities
-Model safety & oversight
-AI companies shouldn’t be the only ones deciding whether their systems are safe. When companies inform the public of model risks, it helps consumers make more informed decisions, promotes accountability, and improves public trust. Companies should be
-required to publish
- catastrophic risk evaluations and summaries of safety testing results. We publish our own
-Responsible Scaling Policy
- and
-Transparency Hub
-, and have
-advocated
- for laws that require similar transparency, including California’s SB 53, New York’s RAISE Act, Illinois’ SB 315, and the
-EU Code of Practice
-.
-But transparency alone is not sufficient to safeguard against the most serious risks posed by powerful AI, including the ability to help create biological weapons or carry out cyber operations and the loss of control of AI systems. Our
-Advanced AI Framework
- lays out what we think governments should do about these risks in the near term. The framework proposes a set of obligations for developers of the most capable models, who should test for these risks, engage independent evaluators, and disclose risk assessments and safety incidents on an ongoing basis. It pairs this with cross-government investments in societal resilience, so that biological and cyber attacks are harder to carry out and easier to recover from. The framework is written primarily with the US government in mind, but its principles are designed for policymakers in other jurisdictions to adapt.
-More broadly, we support the development of a robust global evaluation ecosystem that includes independent third-party evaluations and model testing by governments with appropriate technical capacity. In the US, we’ve advocated for
-well-funded teams
- inside the National Institute of Standards and Technology (NIST). While we already submit our systems for
-pre-deployment evaluation
- with the US Center for AI Standards and Innovation (CAISI) and the UK AI Security Institute, we’d like to see sustained investment in evaluators so that independent evaluation becomes standard practice.
-National security
-The most capable AI models are built in the United States and allied democracies, and it’s essential that this remains the case. The political systems where the most advanced AI is developed will shape the rules and norms that govern it, including whether it is safe, whose security it protects, and whose interests it serves. We believe these rules and norms for AI should be shaped by democratically elected governments. When governments answer to their people, there are checks on how powerful technology gets used. Without this accountability, AI could become a tool for surveillance, repression, and control.
-That is why we support
- policies that
- help democracies build and maintain a lead in advanced AI, while limiting the ability of authoritarian regimes to develop and deploy it. This
-includes strict export controls
- on advanced chips and semiconductor manufacturing equipment (including closing loopholes that let advanced chips slip through), and
- protecting US models from distillation attacks.
-We are also careful about what is allowed under our
-Usage Policy
-: we don’t allow Claude to be used for censorship and disinformation.
-In order to protect our national security, we also work closely with the public and private sectors to make sure advanced AI systems are deployed securely, and, alongside our
-National Security and Public Sector Advisory Council
- and the
-Frontier Model Forum
-, stress test how advanced AI will continue to shape national security. These relationships allowed us to quickly disrupt the AI-orchestrated
-cyber espionage campaign
- we discussed above.
-Energy & infrastructure
-The world’s energy infrastructure was not built for the scale of demand for AI. In the US, the grid needs significant expansion, which means that the permitting rules that govern new generation and transmission need to change. Our
-Build AI in America
- report lays out the case for accelerating permitting on geothermal energy, natural gas, and nuclear projects, for expanding domestic energy production, and for fast-tracking approval of the long-distance power lines needed to carry electricity to new data centers.
-The cost of this infrastructure should fall on the companies that are building it. Anthropic has
-committed
- to covering the electricity price increases, transmission lines, and substations tied to our own data centers. This should be the expectation across the industry. These commitments are part of our approach to investments in new computing infrastructure—we’re investing
-$50 billion
- in new American computing infrastructure, and we’re
-funding
- energy efficiency research and cybersecurity workforce training at Carnegie Mellon University.
-We’re actively exploring
-building data centers
- in other democratic countries whose legal and regulatory frameworks support investment, and we’ve made a
-similar energy commitment
- in Australia.
-User wellbeing
-People turn to AI for a wide variety of reasons, and for some that may include emotional support. Model providers have a responsibility to handle these conversations appropriately and to build safeguards that protect users’ wellbeing. We train Claude to respond to signs of distress with care, to be honest about its limitations as an AI, and to point people towards human support: helplines, mental health professionals, or trusted friends and family. We also work closely with in-house and external experts to inform how our models should behave in these conversations.
-We layer safeguards on top of model training, using classifiers to detect when someone may be experiencing emotional distress, including thoughts of suicide and self-harm, and to share support resources in real time. For example, we
-partner with ThroughLine
- to connect users who are experiencing signs of emotional distress with trained support in more than 170 countries. We also evaluate how our models respond against a
-defined set of risk areas
- and publish the methods and results in our
-system cards.
-Every AI company should have rigorous pre-launch evaluations in place, and they should publish the results. This type of transparency allows experts and the public to verify safety claims, holds companies accountable, and raises standards across the industry.
-We know that children using AI face different risks than adults. The industry needs clear protections for them.
-Claude.ai
-, our consumer product, is not offered to users under 18, and we’ve built detection systems to flag potential underage use and offboard those users. Developers building on Claude’s API are bound by our
-Usage Policy
-, and those serving minors face
-additional requirements
-, including age verification, content moderation, monitoring, and compliance with child privacy laws. We also enforce strict policies against child sexualization, abuse, and exploitation, working with partners like the National Center for Missing & Exploited Children to detect and report abuse. Our
-child safety principles
- and
-progress report
- outline this work in detail. But the strongest child safety practices should be standard across the industry, and that requires clear and consistent safety benchmarks that every provider is measured against.
-How people relate to AI is changing quickly, and we continue to study what’s happening at scale —from
-interviewing 81,000 Claude users
- to researching how Claude handles requests for
-personal guidance
-. We will continue to publish what we find, so that policymakers can stay informed on how models behave in tricky situations.
-Democratic AI leadership
-Building AI in democracies is not sufficient to guarantee their lead. Democracies must also outpace authoritarian countries on the
-adoption
- of AI, to serve and protect their citizens. Democratic governments have already started to use AI to support education, improve government services, and strengthen national defense. But to stay ahead, they will need to significantly broaden and scale their use. We've
-provided access to Claude
-for all three branches of the US government, signed formal agreements with
-the UK
-,
-Australia
-, and
-other allies
-, and built a pilot
-AI assistant for
-GOV.UK
-. Government deployments often come with security and data handling requirements that consumer products don’t face, and we’ve built dedicated offerings to meet them, including
-Claude for Government
- and
-Claude Gov
- for US national security customers.
-We also participate in industry-wide and international efforts to shape how AI is governed across borders, with the goal of increasing the number of people around the world who have a say in how this technology is developed. These include the
-EU General-Purpose AI Code of Practice
-, the
-ISO 42001
- certification (an international standard for AI governance), and the
-Frontier Model Forum
-.
-Supporting democracies also means building AI that isn’t predisposed towards a particular political point of view. We train Claude to be politically evenhanded; to treat opposing perspectives with equal depth and quality of analysis. We’ve
-published our methodology
- for measuring and preventing political bias in Claude, and
- we’ve open-sourced
- our evaluation so that others can run it on other models.
-Economic futures
-AI will reshape work across nearly every sector of the economy. We have an obligation to help policymakers see this transformation clearly and to prepare for it now.
-The
-Anthropic Economic Index
- analyzes millions of anonymized Claude conversations to show how AI is impacting tasks, occupations, and industries, and our
-labor market research framework
- studies where we see potential signals of job disruption. Our
-Anthropic Economic Futures Program
- funds independent researchers to study AI’s potential labor market and macroeconomic effects, identifies policy responses, and brings researchers, policymakers, and civil society together in dialogue. Our
-Economic Advisory Council
- brings perspectives from leading economists and practitioners to our work.
-Forecasting economic changes is challenging, and proactively responding to them is even harder. Our
-Economic Policy Framework
- lays out how the US can prepare for AI’s impact on work by measuring its effects and modernizing support systems to deliver support quickly. It also describes our best current assessment of promising policy approaches at different levels of AI-driven economic impact and disruption. We are ready to evolve these proposals as we continue to learn. Much more research is needed, which is why we’re investing $350 million in policy trials, partnerships across government, and nonprofits and academic partners.
+## 为什么现在就要参与政策
+
+AI 正以指数速度前进，而政策制定流程是为更慢的世界设计的。在美国，人们采用 Claude 的速度是 20 世纪任何新技术的 10 倍。未来几年，我们可能拥有在许多领域比诺奖得主更聪明、能连续数天到数周处理复杂科学问题的系统。
+
+收益已经出现：
+
+- 医院系统用 Claude 更好地筛选适合救命治疗的患者
+- AI for Science 项目加速生物学与生命科学发现
+- 编程向数百万人开放，用自然语言描述想做的产品
+- 政府用多语言政策解读、再就业辅助、备课支持来提升公共服务
+
+风险同样真实：AI 可能给威权政府提供监控与镇压工具，让关键基础设施暴露于网络攻击，让公共生活被虚假信息淹没；劳动力市场转型中，少数公司或国家可能锁定优势；如果 AI 开始实质性地自动化并加速自身研发，风险会进一步放大。
+
+2025 年底，Anthropic 阻断了首例有报道的 AI  orchestrated 网络间谍行动；2026 年，Claude Mythos Preview 在主流操作系统、浏览器与开源项目中发现了数千个此前未知的漏洞。
+
+Anthropic 有数百人专职防范这些下行风险，但一项发展如此之快、规模如此之大的技术，不应只由行业自律。只有政府能制定具有法律效力的行业规则、在經濟转型中全面支持劳动者、谈判跨境 AI 使用的国际协议与出口管制。
+
+## 模型安全与监督
+
+AI 公司不应是唯一决定系统是否安全的人。企业应被要求公开发布灾难性风险评估与安全测试摘要。
+
+Anthropic 发布自己的 Responsible Scaling Policy 与 Transparency Hub，并支持要求类似透明度的立法，包括加州 SB 53、纽约 RAISE Act、伊利诺伊 SB 315，以及欧盟 Code of Practice。
+
+但透明度不足以防范最严重的风险——帮助制造生物武器、实施网络攻击、以及 AI 系统失控。Advanced AI Framework 提出对最强模型开发者的义务：测试这些风险、引入独立评估者、持续披露风险评估与安全事件；同时配套政府对生物与网络攻击韧性的投入，让攻击更难实施、后果更易恢复。
+
+该框架主要面向美国政府，但原则可供其他司法辖区调整使用。更广泛地说，Anthropic 支持建立稳健的全球评测生态，包括独立第三方评估与具备技术能力的政府测试。在美国，Anthropic 主张为 NIST 内部团队提供充足经费；目前已在 CAISI 与英国 AI Security Institute 进行部署前评估，但希望看到对评测者的持续投入，让独立评估成为标准做法。
+
+## 国家安全
+
+最先进的 AI 模型在美国与民主盟友中开发，这一点必须保持。开发最先进 AI 的政治体系，会塑造治理它的规则与规范：它是否安全、保护谁的安全、服务谁的利益。
+
+Anthropic 支持帮助民主国家建立并保持先进 AI 领先地位的政策，同时限制威权政权开发与部署：
+
+- 对先进芯片与半导体制造设备实施严格出口管制，堵住让先进芯片流出的漏洞
+- 保护美国模型免受蒸馏攻击
+- 使用政策禁止将 Claude 用于审查与虚假信息
+
+Anthropic 还与公共与私营部门合作，确保先进 AI 系统安全部署，并通过 National Security and Public Sector Advisory Council 与 Frontier Model Forum 对 AI 如何影响国家安全进行压力测试。这些关系让公司得以快速阻断前述 AI  orchestrated 网络间谍行动。
+
+## 能源与基础设施
+
+世界能源基础设施不是为 AI 的需求规模建造的。美国的电网需要大幅扩张，这意味着新建发电与输电的许可规则必须改变。
+
+Build AI in America 报告主张：加快地热、天然气与核能项目的许可，扩大本土能源生产，快速批准通往新数据中心的长距离输电线路。
+
+基础设施成本应由建设它的公司承担。Anthropic 已承诺覆盖自有数据中心带来的电价上涨、输电线路与变电站成本，并认为这应成为全行业的预期。公司正在投入 500 亿美元建设美国算力基础设施，并资助卡内基梅隆大学的能效研究与网络安全人才培训；同时探索在法律与监管框架支持投资的民主国家建设数据中心，并已在澳大利亚作出类似能源承诺。
+
+## 用户福祉
+
+人们使用 AI 的原因多种多样，其中包括情感支持。模型提供者有责任妥善处理这类对话，并建立保护用户福祉的护栏。
+
+Anthropic 训练 Claude：以关怀回应痛苦信号、诚实说明自己作为 AI 的局限、把人引向人类支持——热线、心理健康专业人士、可信的亲友。同时与内外部专家合作，确定模型在这些对话中应如何表现。
+
+在训练之上还叠加分类器，识别用户可能正处于情绪困扰（包括自杀与自伤念头），并实时提供支持资源。例如与 ThroughLine 合作，在 170 多个国家为出现情绪困扰迹象的用户连接受训支持人员。
+
+Anthropic 还按既定风险领域评估模型表现，并在 system card 中公开方法与结果。每家公司都应有严格的发布前评估，并公开结果。
+
+儿童面临与成人不同的风险。Claude.ai 不向 18 岁以下用户开放，并建有检测系统标记可能的未成年使用并使其退出。基于 Claude API 的开发者受使用政策约束；服务未成年人的开发者还须满足年龄验证、内容审核、监控与儿童隐私合规等额外要求。公司严禁儿童性化、虐待与剥削内容，并与 National Center for Missing & Exploited Children 等伙伴合作检测与报告。
+
+## 民主国家的 AI 领导力
+
+在民主国家建设 AI 并不足以保证领先，民主国家还必须在 AI 采用上超过威权国家。
+
+- 已向美国政府三个分支提供 Claude
+- 与英国、澳大利亚等盟友签署正式协议
+- 为 GOV.UK 构建试点 AI 助手
+- 提供 Claude for Government 与面向美国国家安全客户的 Claude Gov
+
+政府部署往往有消费产品不具备的安全与数据处理要求，因此需要专门产品。
+
+Anthropic 还参与欧盟 General-Purpose AI Code of Practice、ISO 42001 认证、Frontier Model Forum 等国际与行业治理机制，目标是让世界各地更多人对这项技术如何发展有发言权。
+
+支持民主也意味着构建不偏向特定政治立场的 AI。Anthropic 训练 Claude 保持政治中立，对对立观点给予同等深度与质量的分析；公开测量与防止政治偏见的方法，并开源评测，供他人用于其他模型。
+
+## 经济未来
+
+AI 将重塑几乎所有经济部门。Anthropic 有义务帮助政策制定者看清这场转型并提前准备。
+
+- Anthropic Economic Index 分析数百万条匿名 Claude 对话，展示 AI 如何影响任务、职业与行业
+- 劳动力市场研究框架追踪可能出现岗位冲击的信号
+- Economic Futures Program 资助独立研究者研究 AI 对劳动力市场与宏观经济的影响，识别政策回应，并促成研究者、政策制定者与公民社会的对话
+- Economic Advisory Council 引入领先经济学家与从业者的视角
+
+Economic Policy Framework 提出美国如何通过测量影响、现代化支持体系来准备 AI 对工作的冲击，并给出在不同冲击程度下当前最有希望的政策路径。Anthropic 投入 3.5 亿美元用于政策试验、政府合作以及非营利与学术伙伴，随着学习继续演进这些主张。

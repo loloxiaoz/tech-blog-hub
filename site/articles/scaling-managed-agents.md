@@ -1,5 +1,5 @@
 ---
-title: "Scaling Managed Agents: Decoupling the brain from the hands"
+title: "Scaling Managed Agents: Decoupling the brain from the hands（扩展托管式 Agent：把「大脑」和「双手」解耦）"
 org: "Anthropic"
 date: 2026-04-08
 source_url: "https://www.anthropic.com/engineering/managed-agents"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Scaling Managed Agents: Decoupling the brain from the hands
+# Scaling Managed Agents: Decoupling the brain from the hands（扩展托管式 Agent：把「大脑」和「双手」解耦）
 
 ## 核心观点
 

@@ -1,5 +1,5 @@
 ---
-title: "Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight"
+title: "Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight（自动化对齐研究员：用 LLM 扩展可扩展监督）"
 org: "Anthropic"
 date: 2026-04-14
 source_url: "https://www.anthropic.com/research/automated-alignment-researchers"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight
+# Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight（自动化对齐研究员：用 LLM 扩展可扩展监督）
 # 自动化对齐研究员：用大语言模型扩展可扩展监督
 
 ## 核心观点

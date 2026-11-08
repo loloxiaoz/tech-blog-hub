@@ -1,5 +1,5 @@
 ---
-title: "Introducing Bloom: an open source tool for automated behavioral evaluations"
+title: "Introducing Bloom: an open source tool for automated behavioral evaluations（推出 Bloom：自动化行为评测的开源工具）"
 org: "Anthropic"
 date: 2025-12-19
 source_url: "https://www.anthropic.com/news/introducing-bloom"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Introducing Bloom: an open source tool for automated behavioral evaluations
+# Introducing Bloom: an open source tool for automated behavioral evaluations（推出 Bloom：自动化行为评测的开源工具）
 # Bloom：自动化行为评测生成的开源框架
 
 ## 核心观点

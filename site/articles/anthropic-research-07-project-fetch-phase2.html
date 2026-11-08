@@ -11,60 +11,36 @@ html{scroll-behavior:smooth;font-size:16px}body{background:var(--bg);color:var(-
 @media(max-width:1024px){.alayout{grid-template-columns:1fr;gap:0}.toc{display:none}}@media(max-width:768px){.ahead h1{font-size:26px}}
 </style></head><body>
     <div class="abar"><div class="abar-in"><a class="back" href="../index.html" aria-label="返回学习站"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>返回</a><div class="spacer"></div><button class="btn" id="readBtn" aria-pressed="false">标记已读</button></div></div>
-    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#D97757">Anthropic</span><h1>Project Fetch: Phase Two（机器人任务第二阶段：Claude 自主完成速度超人类20倍）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-15</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Agent</span><span class="tag">研究项目</span><span class="tag">机器人</span><span class="tag">自主编程</span></div><a class="source-btn" href="https://www.anthropic.com/research/project-fetch-phase-two" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-label">中文摘要</div><div class="sc-text">Anthropic 实验显示，Claude Opus 4.7 在无人协助下完成机器人四足犬任务，速度比最快人类团队快约20倍：4项共同任务平均快18.9倍，总耗时仅9分35秒，且代码量比人类团队减少近10倍。</div></div><div class="prose"><p>In August 2025, we ran an <a href="https://www.anthropic.com/research/project-fetch-robot-dog">experiment</a> to see how much Claude could help Anthropic employees—who were not robotics experts—perform sophisticated (and amusing) tasks with an off-the-shelf robotic quadruped (henceforth, a robodog). We called this Project Fetch. We found that access to our state-of-the-art model at the time (Claude Opus 4.1) helped one team substantially outperform the other, who had to rely only on the internet and their own ingenuity. The Claude-enabled team got more done, faster.</p>
-
-<p>Before we dragged our colleagues to a warehouse for the experiment, we double checked whether Opus 4.1 could do the tasks entirely on its own. Unquestionably, it could not. Much like our team without Claude, it got hung up on the preliminary task of figuring out how to connect to the robot.</p>
-
-<p>But AI models are moving fast—even faster than the runaway robodog that almost rammed into one of our human teams back in August.</p>
-
-<p>We figured it was time to revisit Project Fetch to see if our newer models could outperform the previous generation. Not only did they do that, but <strong>Claude Opus 4.7—operating without human assistance—was about 20 times faster than the fastest human team at all tasks completed by our participants less than a year ago</strong>.</p>
-
-<p>This doesn't mean that LLMs have now solved robotics. Far from it. The latest Claude models still struggled with using the robot to precisely move the beach ball—the "fetching" part of Project Fetch. And none of the tasks in these experiments implicate the more challenging, low-level elements of robotic control, such as developing a specific actuation policy. However, once again, we are seeing a pattern whereby first, models are helpful to humans. Then, humans are helpful to models. Finally, models are largely able to do things themselves. We have seen this in <a href="https://red.anthropic.com/2026/mythos-preview/">cybersecurity</a> and now the same dynamics are starting to take shape at the intersection of AI and the physical world.</p>
-
-<h2 id="what-did-we-do">What did we do?</h2>
-
-<p>The original Project Fetch had teams of Anthropic employees (randomly assigned to work with or without Claude) do the following steps: operate the robodog using the manufacturer-provided controller, connect to the robodog's video and lidar sensors, write and operate a program to manually control the robodog, develop a way to monitor the robodog's path through space, write a program to detect the beach ball, and finally put it all together to autonomously retrieve the ball.</p>
-
-<p>For this autonomous update, we couldn't ask Claude to use a physical controller, nor did we evaluate the time it took a researcher to use the Claude-programmed controller to retrieve the ball (though we did confirm that it worked as intended). On the remaining subset of tasks, we ran three trials of Opus 4.7 using adaptive thinking with effort set to maximum in Claude Code. We measured the elapsed time for each objective and qualitatively assessed the models' success.</p>
-
-<p>The role of our researcher was limited to plugging a laptop running Claude Code into the robodog, entering the initial prompt, approving commands, and approving the model to go to the next task.</p>
-
-<h2 id="where-did-claude-excel">Where did Claude excel?</h2>
-
-<p>Very simply: on every task that was completed by at least one human team in August, Opus 4.7 completed the same task at least ten times faster. If you consider the four tasks that were completed by both human teams, Opus 4.7 was, on average, more than 37 times faster than Team Claude-less and more than 18 times faster than Team Claude.</p>
-
-<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F0424a5a4ed31f7891e4048d091aefa52f36862cf-1999x1092.png&w=3840&q=75" alt="Bar chart: Total time comparison for 4 tasks. Team Claude-less: 361 min; Team Claude: 181 min; Claude Opus 4.7: 9 min 35 sec. Opus 4.7 was 37.7x faster than Team Claude-less and 18.9x faster than Team Claude." />
-
-<p>The table compares the speed of the original teams (Team Claude and Team Claude-less) to Opus 4.7 on all of the tasks we tested as part of Phase Two.</p>
-
-<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F5d1655f4a40044244b6fae0c3826e668a8422bd3-4005x2308.png&w=3840&q=75" alt="Table comparing Claude Opus 4.7 to Team Claude-less and Team Claude. Opus 4.7 averaged 12 min 7 sec vs Team Claude's 264 min across 5 tasks." />
-
-<p>Whereas the humans struggled to choose between multiple different approaches to interface with the dog's sensors, Opus 4.7 was able to quickly identify the best path. Much of the code it wrote was effective on the first try (which was not the case for Team Claude or Team Claude-less in the original experiment). Indeed, we can see evidence of Opus 4.7's efficiency when we look at the volume of code it generated: it was as or more successful than both human teams while producing almost ten times less code than Team Claude.</p>
-
-<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F5c08d125a49025bd24e1f382a2c1e417519661eb-1999x1088.png&w=3840&q=75" alt="Bar chart of total code volume: Team Claude wrote 10,309 lines; Team Claude-less wrote 1,136 lines; Opus 4.7 alone wrote 1,045 lines." />
-
-<p>Opus 4.7 was not perfect. For example, it defaulted to using an outdated object detection algorithm. But even then, it was able to work around this and arrive at an effective solution.</p>
-
-<p>We observed little within-task variance (in absolute terms) on completion times for steps the model finished. Overall, for the tasks in this experiment within its capability envelope, Claude is now quite reliable.</p>
-
-<img src="/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F1a362dfdaae7ff55cf8b04c7ac316e75455a9d21-1999x1122.png&w=3840&q=75" alt="Scatter plot showing Opus 4.7's reliability on task performance across three runs, with consistent completion times." />
-
-<p>It is worth underscoring that this progress is not the result of a concerted effort to improve the robotics capabilities of our models. These improvements, like so many others in the history of LLM development, have emerged from much more general scaling.</p>
-
-<h2 id="where-did-claude-struggle">Where did Claude struggle?</h2>
-
-<p>When using their hands, and with some practice, our humans were able to pilot the robodogs to gently nudge a beach ball back to the home base (a patch of fake grass) where the robots started. This required the ability to quickly perceive if the ball had gone off course, how that error related to the previous command, where the ball was now, and then how to adjust future inputs to more precisely move the ball. This is a kind of closed loop at which people excel (at least after making some mistakes and learning from them).</p>
-
-<p>In our Phase Two experiments, Claude struggled to capture this subtlety. Like the humans who reached the phase of needing to write a program for autonomous beach ball retrieval, Claude was able to move the robot behind the ball and position it to knock the ball back to the starting point. But the efforts to do so were poorly controlled and (again, like our human participants) not successful.</p>
-
-<p>One of our researchers with more robotics experience than our Phase One volunteers successfully accomplished the task of programming autonomous fetching. With more time and additional scaffolding, we think it is very likely that current generations of Claude could do the same. What we will be watching for next, though, is the ability of the models to accomplish this final task with the same speed and reliability they displayed on the other elements of Project Fetch.</p>
-
-<h2 id="what-does-this-mean">What does this mean?</h2>
-
-<p>Writing about Phase One, we emphasized how LLMs could provide uplift to non-expert humans needing to use robots. This is even more true now than before. Models now complete what was previously pair-programming work between humans and models much more quickly by themselves, which means that people can more quickly transition to controlling and using the robots. And for some tasks, a human in the loop controlling the robot may still outstrip the AI model with its (virtual) hand on the D-pad.</p>
-
-<p>What is interesting and different is that we now seem much closer to a world where models will be able to use off-the-shelf physical tools with relative ease—at least for limited purposes. This is similar to how AI models used existing software editing tools like string-replace when they made the transition to more agentic coding. We are plausibly entering the early era of <em>physical</em> agentic AI.</p>
-
-<p>More research is needed to understand models' ability to make these physical tools more bespoke, whether by writing control policies tailored to particular tasks or by designing robotic systems. And there may be substantial barriers to this more generalized vision of physically capable and adaptable language models. But as we have seen, apparently large distances in model capability can be traversed quickly. Models building their own software tools might have seemed outlandish not long ago, but it is happening. It would be unwise to rule out the same trajectory in hardware.</p></div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#what-did-we-do">What did we do?</a><a class="lv2" href="#where-did-claude-excel">Where did Claude excel?</a><a class="lv2" href="#where-did-claude-struggle">Where did Claude struggle?</a><a class="lv2" href="#what-does-this-mean">What does this mean?</a></nav></div>
+    <div class="alayout"><article class="article"><div class="ahead"><span class="badge" style="background:#D97757">Anthropic</span><h1>Project Fetch: Phase Two（机器人任务第二阶段：Claude 自主完成速度超人类20倍）</h1><div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-15</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Agent</span><span class="tag">研究项目</span><span class="tag">机器人</span><span class="tag">自主编程</span></div><a class="source-btn" href="https://www.anthropic.com/research/project-fetch-phase-two" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 阅读原文</a></div><div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">Project Fetch 第二阶段：不借助人类操作，Claude Opus 4.7 在所有人类团队完成过的任务上至少快 10 倍，四项共同任务平均快 18.9 倍；但精确「取球」这项闭环控制仍是短板。</div></div></div></div><div class="prose">
+          <h2 id="回顾第一阶段">回顾第一阶段</h2>
+          <p>2025 年 8 月，Anthropic 做了一次实验：让并非机器人专家的 Anthropic 员工，用现成的四足机器人（下称 robodog）完成一些复杂且有趣的任务。实验叫 Project Fetch。</p>
+          <p>结果是：能使用当时最先进模型（Claude Opus 4.1）的队伍明显胜过只能靠互联网与自身聪明才智的队伍。有 Claude 的队伍做得更多、更快。</p>
+          <p>在把同事拖去仓库之前，Anthropic 先确认了 Opus 4.1 能否完全独立完成这些任务。答案明确：不能。和没有 Claude 的人类队伍一样，它卡在「如何连接机器人」这个前置任务上。</p>
+          <p>但 AI 模型进步很快——比当年差点撞上人类队伍的失控 robodog 还快。</p>
+          <p>于是 Anthropic 决定重做 Project Fetch，看新一代模型能否超过上一代。结果不仅超过了：Claude Opus 4.7 在没有任何人类协助的情况下，在所有参与者不到一年前完成过的任务上，比最快的人类队伍快约 20 倍。</p>
+          <p>这并不意味着大语言模型已经解决了机器人学，远非如此。最新的 Claude 模型仍然难以用机器人精确移动沙滩球——也就是 Project Fetch 里「取物」的部分。这些实验也没有涉及更困难的底层机器人控制，例如开发特定的驱动策略。</p>
+          <p>但模式再次出现：先是模型帮助人类，然后人类帮助模型，最后模型基本能自己做。我们在网络安全领域见过这一幕，现在同样的动态开始在 AI 与物理世界的交汇处成形。</p>
+          <h2 id="第二阶段做了什么">第二阶段做了什么</h2>
+          <p>原始 Project Fetch 中，Anthropic 员工被随机分配为「有 Claude」与「无 Claude」两队，依次完成：用厂商手柄操作 robodog、连接视频与激光雷达传感器、写程序手动控制 robodog、开发路径监控、写程序检测沙滩球，最后整合起来自主取球。</p>
+          <p>这次自主化更新中，无法让 Claude 使用物理手柄，也没有评估研究者用 Claude 编写的控制器取球所需的时间（但确认了它能按预期工作）。</p>
+          <p>在剩余任务子集上，Opus 4.7 在 Claude Code 中以 adaptive thinking、effort 设为最大运行三次。记录每个目标的耗时，并定性评估成功程度。</p>
+          <p>研究者的角色仅限于：把运行 Claude Code 的笔记本插到 robodog 上、输入初始提示、批准命令、批准模型进入下一任务。</p>
+          <h2 id="claude-在哪里表现出色">Claude 在哪里表现出色</h2>
+          <p>简单说：在 2025 年 8 月至少被一支人类队伍完成的每一项任务上，Opus 4.7 都至少快 10 倍。</p>
+          <p>如果只看两支人类队伍都完成的四项任务：Opus 4.7 平均比无 Claude 队伍快 37 倍以上，比有 Claude 队伍快 18 倍以上。</p>
+          <p>人类在多种连接传感器的方法之间犹豫时，Opus 4.7 能迅速找到最佳路径。它写的大部分代码第一次就有效——这在原始实验的两支人类队伍中都没有发生。代码量也说明了效率：它和两支人类队伍一样成功甚至更成功，但产出的代码比有 Claude 的队伍少近 10 倍。</p>
+          <p>Opus 4.7 并不完美。例如它默认使用了一个过时的目标检测算法。但即便这样，它也能绕过问题，得到有效解法。</p>
+          <p>在模型能力范围内，任务完成时间的组内方差很小。总体而言，对这次实验中处于其能力范围内的任务，Claude 已经相当可靠。</p>
+          <p>值得强调：这些进步并不是专门提升模型机器人能力的结果。和 LLM 发展史上的许多进步一样，它们来自更通用的规模扩展。</p>
+          <h2 id="claude-在哪里吃力">Claude 在哪里吃力</h2>
+          <p>人类用双手、经过一些练习，可以把 robodog 轻轻把沙滩球推回起点（一块假草坪）。这需要快速感知球是否偏离、这个误差与上一条指令的关系、球现在在哪，然后调整后续输入更精确地移动球。这是人类擅长的闭环——至少在犯一些错并从中学习之后。</p>
+          <p>第二阶段中，Claude 难以捕捉这种微妙之处。和走到「写自主取球程序」阶段的人类一样，Claude 能把机器人移到球后、摆好位置准备把球撞回起点；但控制很差，也没有成功。</p>
+          <p>一位比第一阶段志愿者更有机器人经验的研究者，成功完成了自主取球的编程。给足时间与额外脚手架，当前这一代 Claude 很可能也能做到。接下来要观察的，是模型能否以它在 Project Fetch 其他环节展现出的速度与可靠性，完成这个最后的任务。</p>
+          <h2 id="这意味着什么">这意味着什么</h2>
+          <p>在第一阶段的文章里，Anthropic 强调 LLM 能为需要使用机器人的非专家提供助力。现在这一点比之前更成立：模型可以更快地独自完成过去需要人机结对编程的工作，人们因此能更快转向控制和使用机器人。对某些任务，人类在回路中操控机器人，可能仍然强过「虚拟手指放在方向键上」的 AI。</p>
+          <p>真正有趣且不同的是：我们似乎更接近一个模型能相对容易地使用现成物理工具的世界——至少对有限目的而言。这类似 AI 模型在转向 agentic 编程时，学会使用 string-replace 这类现有软件编辑工具。</p>
+          <p>我们可能正进入物理 agentic AI 的早期时代。</p>
+          <p>还需要更多研究来理解模型能否让这些物理工具更定制化：为特定任务编写控制策略，或设计机器人系统。通往「具备物理能力且可适应的语言模型」这一更通用愿景，可能仍有实质性障碍。但我们已经看到，看似很大的能力距离可以被快速跨越。模型构建自己的软件工具，不久前还显得荒诞，如今正在发生。认为硬件领域不会走上同样轨迹，并不明智。</p>
+        </div></article><nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#回顾第一阶段">回顾第一阶段</a><a class="lv2" href="#第二阶段做了什么">第二阶段做了什么</a><a class="lv2" href="#claude-在哪里表现出色">Claude 在哪里表现出色</a><a class="lv2" href="#claude-在哪里吃力">Claude 在哪里吃力</a><a class="lv2" href="#这意味着什么">这意味着什么</a></nav></div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>var RK="techblog_read",ID="anthropic-research-07-project-fetch-phase2";function rset(){try{return new Set(JSON.parse(localStorage.getItem(RK)||"[]"))}catch(e){return new Set()}}var btn=document.getElementById("readBtn");btn.addEventListener("click",function(){var s=rset();if(s.has(ID))s.delete(ID);else s.add(ID);localStorage.setItem(RK,JSON.stringify([...s]));paint();});function paint(){var on=rset().has(ID);btn.classList.toggle("done",on);btn.setAttribute("aria-pressed",on?"true":"false");btn.innerHTML=on?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已读':' 标记已读';}paint();</script></body></html>

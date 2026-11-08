@@ -1,5 +1,5 @@
 ---
-title: "Introducing Advanced Tool Use on the Claude Developer Platform"
+title: "Introducing Advanced Tool Use on the Claude Developer Platform（推出 Claude 开发者平台的高级工具调用）"
 org: "Anthropic"
 date: 2025-11-24
 source_url: "https://www.anthropic.com/engineering/advanced-tool-use"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Introducing Advanced Tool Use on the Claude Developer Platform
+# Introducing Advanced Tool Use on the Claude Developer Platform（推出 Claude 开发者平台的高级工具调用）
 
 ## 核心观点
 

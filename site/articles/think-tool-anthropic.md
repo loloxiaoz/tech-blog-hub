@@ -1,5 +1,5 @@
 ---
-title: "The \"think\" tool: Enabling Claude to stop and think in complex tool use situations"
+title: "The \\\"think\\\" tool: Enabling Claude to stop and think in complex tool use situations（“think” 工具：让 Claude 在复杂工具调用中停下来思考）"
 org: "Anthropic"
 date: 2025-03-20
 source_url: "https://www.anthropic.com/engineering/claude-think-tool"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# The "think" tool: Enabling Claude to stop and think in complex tool use situations
+# The \"think\" tool: Enabling Claude to stop and think in complex tool use situations（“think” 工具：让 Claude 在复杂工具调用中停下来思考）
 
 ## 核心观点
 

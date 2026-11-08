@@ -1,5 +1,5 @@
 ---
-title: "Introducing Contextual Retrieval"
+title: "Introducing Contextual Retrieval（推出上下文检索（Contextual Retrieval））"
 org: "Anthropic"
 date: 2024-09-19
 source_url: "https://www.anthropic.com/engineering/contextual-retrieval"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Introducing Contextual Retrieval
+# Introducing Contextual Retrieval（推出上下文检索（Contextual Retrieval））
 
 ## 核心观点
 

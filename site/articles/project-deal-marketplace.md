@@ -1,5 +1,5 @@
 ---
-title: "Project Deal: our Claude-run marketplace experiment"
+title: "Project Deal: our Claude-run marketplace experiment（Project Deal：我们用 Claude 运营的市场实验）"
 org: "Anthropic"
 date: 2026-04-24
 source_url: "https://www.anthropic.com/news/project-deal"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Project Deal: our Claude-run marketplace experiment
+# Project Deal: our Claude-run marketplace experiment（Project Deal：我们用 Claude 运营的市场实验）
 # Project Deal：Anthropic 的 AI 代理市场实验
 
 ## 核心观点

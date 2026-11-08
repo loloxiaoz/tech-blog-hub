@@ -1,5 +1,5 @@
 ---
-title: "Titans: Learning to Memorize at Test Time"
+title: "Titans: Learning to Memorize at Test Time（Titans：在测试时学习记忆）"
 org: "记忆系统"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Titans: Learning to Memorize at Test Time
+# Titans: Learning to Memorize at Test Time（Titans：在测试时学习记忆）
 
 **来源**：`raw/Learning to Memorize At Test Time.pdf`
 **arXiv**：2501.00663v1（2024-12-31）

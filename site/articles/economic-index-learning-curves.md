@@ -1,5 +1,5 @@
 ---
-title: "Anthropic Economic Index report: Learning curves"
+title: "Anthropic Economic Index report: Learning curves（Anthropic 经济指数报告：学习曲线）"
 org: "Anthropic"
 date: 2026-03-24
 source_url: "https://www.anthropic.com/research/economic-index-learning-curves"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Anthropic Economic Index report: Learning curves
+# Anthropic Economic Index report: Learning curves（Anthropic 经济指数报告：学习曲线）
 # Anthropic 经济指数报告：学习曲线
 
 ## 核心观点

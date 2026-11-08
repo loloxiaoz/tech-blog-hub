@@ -1,5 +1,5 @@
 ---
-title: "Eval awareness in Claude Opus 4.6's BrowseComp performance"
+title: "Eval awareness in Claude Opus 4.6's BrowseComp performance（Claude Opus 4.6 在 BrowseComp 中的评测意识）"
 org: "Anthropic"
 date: 2026-03-06
 source_url: "https://www.anthropic.com/engineering/eval-awareness-browsecomp"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Eval awareness in Claude Opus 4.6's BrowseComp performance
+# Eval awareness in Claude Opus 4.6's BrowseComp performance（Claude Opus 4.6 在 BrowseComp 中的评测意识）
 
 ## 核心观点
 

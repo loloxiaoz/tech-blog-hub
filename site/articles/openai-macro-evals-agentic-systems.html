@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Macro Evals for Agentic Systems · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Macro Evals for Agentic Systems（Agent 系统的宏观评测） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -83,118 +83,57 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#1A73E8">OpenAI</span>
-          <h1>Macro Evals for Agentic Systems</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-19</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 8 分钟</span><span class="tag">Eval</span><span class="tag">Agent</span><span class="tag">Multi-Agent</span></div>
+          <h1>Macro Evals for Agentic Systems（Agent 系统的宏观评测）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-19</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Eval</span><span class="tag">Agent</span><span class="tag">Multi-Agent</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">介绍多智能体系统的宏观评测工作流：从收集追踪数据、运行下层评测，到 BERTopic 风格的行为模式发现，再到 AgentTrace 风格的根因诊断，让 AI 工程团队能从数千条 Agent 事件中提炼出可操作的改进信号。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">当多 Agent 系统出错时，问题往往不在单次回答。宏观评测把成千上万条 trace 压缩成可理解的行为模式：用 BERTopic 式聚类发现重复问题，再用 AgentTrace 式图分析定位最该先检查的环节。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/macro_evals_for_agentic_systems</a></div></div></div></div>
         <div class="prose">
-<p><strong>Authors:</strong> Shikhar Kwatra (OpenAI), Will Thieme, Bradley Strauss</p>
-<p><strong>Date:</strong> May 19, 2026 | <strong>Source:</strong> OpenAI Cookbook</p>
-<hr>
-<p>When an agentic system fails, the problem is often larger than a single bad response. A handoff may happen too late, a specialist agent may miss the same signal across many runs, or a review process may trigger for the wrong class of cases. To improve the system, teams need to see recurring behaviors across the whole population of traces.</p>
-<p>This cookbook walks through a <strong>macro-eval workflow</strong> for a multi-agent system. We use a synthetic EV order workflow where specialist agents handle pricing, compliance, supply, factory routing, scheduling, and release decisions while market and operational conditions change.</p>
-<h2 id="what-you-will-learn">What You Will Learn</h2>
-<p>By the end of this guide, you will be able to:</p>
-<ol>
-<li>Generate or collect many traced agent runs</li>
-<li>Run lower-level evals on each completed run</li>
-<li>Turn each trace into a compact document</li>
-<li>Discover recurring behavior patterns across the population</li>
-<li>Drill into one high-impact pattern to find where a human should inspect the system next</li>
-</ol>
-<p>The goal is not to build a perfect taxonomy of every trace. The goal is to show how an AI engineering team can move from thousands of agent events to a small number of patterns that are understandable by both technical and business stakeholders.</p>
-<h2 id="1-why-macro-evals">1. Why Macro Evals?</h2>
-<p>Evals are how AI teams measure whether a system is working. For a simple model call, an eval might compare one output against a rubric or reference answer. For an agentic system, we also need to evaluate whether the system used the right tools, delegated to the right specialist, paused for review when risk was high, and stayed grounded in the business context.</p>
-<p><strong>Multi-agent systems</strong> make this harder because a final answer is only the last event in a longer workflow. A release recommendation can look plausible while the trace reveals that the pricing agent ignored an incentive, the supply agent missed a stockout, or the orchestrator routed around a required review step.</p>
-<p>This notebook separates the problem into two levels:</p>
-<ul>
-<li><strong>Lower-level evals</strong> grade individual agents, handoffs, tools, and completed runs.</li>
-<li><strong>Macro evals</strong> look across many lower-level findings. They ask: which kinds of problems repeat, where do they concentrate, and which part of the agent workflow should we inspect first?</li>
-</ul>
-<p>We will use four reader-facing labels throughout the cookbook:</p>
-<ul>
-<li><code>case_type</code>: the generated business situation (clean order, validation block, supplier substitution, pricing exception)</li>
-<li><code>run_outcome</code>: how the run ended (completed, awaiting review, blocked, failed)</li>
-<li><code>eval_finding</code>: the lower-level signal that says what seemed wrong or risky</li>
-<li><code>behavior_pattern</code>: the recurring pattern discovered across many traces</li>
-</ul>
-<p><strong>Useful mental model:</strong> <code>case_type</code> is the setup, <code>run_outcome</code> is the ending, <code>eval_finding</code> is the local symptom, and <code>behavior_pattern</code> is the population-level pattern.</p>
-<h2 id="2-the-simulation-automotive-orders-in-a-changing-world">2. The Simulation: Automotive Orders in a Changing World</h2>
-<p>The simulated business is an <strong>EV order and post-configuration workflow</strong>. A customer has chosen a vehicle configuration, and the company needs to decide whether the order can proceed as-is, needs adjustment, should be rerouted, requires substitution, or should pause for review.</p>
-<p>The simulation includes the kinds of constraints that make real automotive fulfillment hard:</p>
-<ul>
-<li>Component availability and supplier substitution</li>
-<li>Factory capacity and production scheduling</li>
-<li>Pricing exceptions, promotions, and incentives</li>
-<li>Tariffs and dated market signals</li>
-<li>Regional compliance constraints</li>
-<li>Customer clarification and escalation paths</li>
-<li>Release review thresholds for risky or ambiguous cases</li>
-</ul>
-<p>The agent swarm is organized around those business responsibilities. An orchestrator receives the order and current environment, then delegates to specialists (validation, supply risk, procurement planning, capacity balancing, factory routing, market intelligence, pricing, compliance, customer communications, release review).</p>
-<h2 id="3-lower-level-agent-evals-with-promptfoo">3. Lower-Level Agent Evals with Promptfoo</h2>
-<p>A mature multi-agent system should not rely on final-answer inspection alone. Each launched agent usually needs its own evals: did this specialist use the right evidence, call the right tools, respect policy, hand off at the right time, and produce an output that the rest of the system can trust?</p>
-<p><strong>Promptfoo</strong> plays that role in this notebook. In a live system, some of these checks might run online, some might run asynchronously, and some might be sampled for human review.</p>
-<p>This dataset, Promptfoo grades completed traces with questions that mirror the kinds of agent-level evals teams build for real systems:</p>
-<ul>
-<li>Did the final decision follow from the active issue?</li>
-<li>Did the system respect pricing, tariff, incentive, regional, and policy constraints?</li>
-<li>Did the orchestrator activate the specialists implied by the case?</li>
-<li>Did the run respond to dated market signals rather than acting as if the world were static?</li>
-<li>Was review or escalation proportionate to the risk?</li>
-</ul>
-<p>These checks produce <code>eval_finding</code>. A failing lower-level eval is a <strong>local signal</strong>: one trace, one rubric, one symptom. The macro-eval sections later ask what those local signals become at population scale.</p>
-<h2 id="4-build-the-analysis-dataset">4. Build the Analysis Dataset</h2>
-<p>Now we normalize the run bundles into two analysis tables:</p>
-<ul>
-<li><code>traces_df</code>: one row per run, with metadata, outcome, findings, and document fields</li>
-<li><code>events_df</code>: one row per normalized trace event (handoffs, tool calls, status events, model responses, review/finding markers)</li>
-</ul>
-<p>We also build <strong>trace documents</strong>. The document is the modeling object that the BERTopic-style section will cluster.</p>
-<p>The public analysis path is:</p>
-<p><code>case_type → run_outcome → eval_finding → behavior_pattern</code></p>
-<h2 id="5-bertopic-style-discovery">5. BERTopic-Style Discovery</h2>
-<p>The discovery pass is inspired by the BERTopic family of methods. The high-level idea is modular:</p>
-<ol>
-<li><strong>Represent each trace document as a vector.</strong></li>
-<li><strong>Reduce the vector geometry.</strong> A reducer such as UMAP maps vectors to lower-dimensional points that preserve useful local neighborhoods.</li>
-<li><strong>Cluster dense regions.</strong> A density clusterer such as HDBSCAN groups nearby points and can mark outliers as noise.</li>
-<li><strong>Represent each topic.</strong> For each cluster, compute terms that distinguish that cluster from the rest of the corpus.</li>
-</ol>
-<p>Finally, we rank patterns by a triage metric — a pattern matters more when it is both common and severe.</p>
-<h2 id="6-agenttrace-style-diagnosis">6. AgentTrace-Style Diagnosis</h2>
-<p>Discovery tells us what repeats. <strong>Diagnosis</strong> asks where to inspect first.</p>
-<p>For a selected behavior pattern, we reconstruct a lightweight execution graph where each node is a normalized trace event and each edge links events through temporal order, handoff boundaries, tool-call hierarchies, and nearby execution context.</p>
-<p>From an anchor event, the diagnosis pass walks <strong>backward</strong> through the graph and scores upstream suspects:</p>
-<ul>
-<li><strong>Proximity</strong> rewards events close to the focus event</li>
-<li><strong>Frequency</strong> rewards events that recur across sampled traces in the same behavior pattern</li>
-<li><strong>Bridge</strong> rewards events that connect parts of the execution graph</li>
-<li><strong>Role</strong> rewards events whose agent/tool role is plausibly related to the finding</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>Macro evals shift the question from "did this one run fail?" to "which system-level behaviors keep failing across runs?" The workflow in this notebook is:</p>
-<ol>
-<li>Generate or collect many traced runs</li>
-<li>Run lower-level evals on each completed run</li>
-<li>Turn each trace into a compact document</li>
-<li>Discover recurring behavior patterns (BERTopic-style)</li>
-<li>Drill into one high-impact pattern (AgentTrace-style)</li>
-</ol>
-<p>The same loop works for real agentic systems: keep traces, grade them with lower-level evals, turn graded traces into comparable documents, cluster the documents to discover behavior patterns, and use the highest-impact patterns to guide where humans should inspect the system next.</p>
+          <h2 id="为什么需要宏观评测">为什么需要宏观评测</h2>
+          <p>当 agent 系统失败时，问题往往比一次糟糕的回答更大：交接发生得太晚，某个专家 agent 在多次运行中漏掉同一个信号，或者复核流程在错误类型的事件上触发。要改进系统，团队需要看到整个 trace 群体中反复出现的行为。</p>
+          <p>本文用一个合成的电动车订单流程，演示多 agent 系统的宏观评测工作流。专家 agent 分别处理定价、合规、供应、工厂路由、排程与发布决策，同时市场与运营条件不断变化。</p>
+          <p>读完之后，你应当能够：</p>
+          <ul><li>生成或收集大量带 trace 的 agent 运行</li><li>对每次完成的运行做低层评测</li><li>把每条 trace 转成紧凑文档</li><li>在群体中发现反复出现的行为模式</li><li>深入一个高影响模式，找到人类下一步最该检查的地方</li></ul>
+          <p>目标不是为每条 trace 建立完美分类，而是展示 AI 工程团队如何从成千上万个 agent 事件，走到少数技术与非技术干系人都能理解的模式。</p>
+          <h2 id="为什么需要宏观评测-1">为什么需要宏观评测</h2>
+          <p>对简单模型调用，评测可以拿一个输出与 rubric 或参考答案比较。对 agent 系统，还要评估：是否用了正确的工具、是否委派给正确的专家、风险高时是否暂停复核、是否始终扎根于业务上下文。</p>
+          <p>多 agent 系统更难，因为最终答案只是长流程的最后一个事件。一份发布建议看起来合理，但 trace 可能显示：定价 agent 忽略了激励、供应 agent 漏掉缺货、编排器绕过了必要的复核步骤。</p>
+          <p>把问题分成两层：</p>
+          <ul><li>低层评测：给单个 agent、handoff、工具与完成的 run 打分</li><li>宏观评测：跨大量低层发现，问哪些问题在重复、集中在哪、先检查工作流的哪一部分</li></ul>
+          <p>四个面向读者的标签：</p>
+          <ul><li>case_type：生成的业务场景（正常订单、验证阻塞、供应商替换、定价例外）</li><li>run_outcome：运行如何结束（完成、等待复核、阻塞、失败）</li><li>eval_finding：低层信号，说明哪里看起来错了或有风险</li><li>behavior_pattern：跨大量 trace 发现的重复模式</li></ul>
+          <p>有用心智模型：case_type 是布景，run_outcome 是结局，eval_finding 是局部症状，behavior_pattern 是群体层面的模式。</p>
+          <h2 id="模拟环境">模拟环境</h2>
+          <p>模拟业务是电动车订单与配置后流程：客户选好车辆配置，公司要决定订单能否原样推进、需要调整、改道、替换，还是暂停复核。</p>
+          <p>模拟包含真实汽车履约中的约束：</p>
+          <ul><li>零部件可用性与供应商替换</li><li>工厂产能与生产排程</li><li>定价例外、促销与激励</li><li>关税与带日期的市场信号</li><li>地区合规约束</li><li>客户澄清与升级路径</li><li>高风险或模糊案例的发布复核阈值</li></ul>
+          <p>agent 群围绕这些业务职责组织：编排器接收订单与当前环境，再分派给验证、供应风险、采购计划、产能平衡、工厂路由、市场情报、定价、合规、客户沟通、发布复核等专家。</p>
+          <h2 id="用-promptfoo-做低层评测">用 Promptfoo 做低层评测</h2>
+          <p>成熟的多 agent 系统不应只靠检查最终答案。每个启动的 agent 通常需要自己的评测：这个专家是否用了正确证据、调用了正确工具、遵守政策、在正确时机交接、产出可信的输出？</p>
+          <p>在真实系统中，有些检查可能在线运行，有些异步运行，有些抽样交人工复核。这里用 Promptfoo 给完成的 trace 打分，问题对应真实系统里的 agent 级评测：</p>
+          <ul><li>最终决定是否由当前问题推出？</li><li>系统是否遵守定价、关税、激励、地区与政策约束？</li><li>编排器是否激活了案例隐含的专家？</li><li>运行是否回应了带日期的市场信号，而不是把世界当作静态的？</li><li>复核或升级是否与风险成比例？</li></ul>
+          <p>这些检查产出 eval_finding。一个失败的低层评测是局部信号：一条 trace、一个 rubric、一个症状。宏观评测要问的是：这些局部信号在群体规模上会变成什么。</p>
+          <h2 id="构建分析数据集">构建分析数据集</h2>
+          <p>把运行包规范成两张分析表：</p>
+          <ul><li>traces_df：每次运行一行，含元数据、结果、发现与文档字段</li><li>events_df：每个规范化 trace 事件一行（handoff、工具调用、状态事件、模型响应、复核/发现标记）</li></ul>
+          <p>再构建 trace 文档——它将成为 BERTopic 式聚类建模的对象。</p>
+          <p>公开的分析路径是：case_type → run_outcome → eval_finding → behavior_pattern。</p>
+          <h2 id="bertopic-式发现">BERTopic 式发现</h2>
+          <p>发现阶段受 BERTopic 系列方法启发，模块化思路：</p>
+          <ol><li>把每条 trace 文档表示为向量</li><li>降维：用 UMAP 之类的 reducer 把向量映射到低维，保留有用的局部邻域</li><li>聚类稠密区域：用 HDBSCAN 之类的密度聚类把邻近点分组，可把离群点标为噪声</li><li>表示每个主题：为每个簇计算能把它与语料其余部分区分开的词项</li></ol>
+          <p>最后按分诊指标排序模式——一个模式既常见又严重时更重要。</p>
+          <h2 id="agenttrace-式诊断">AgentTrace 式诊断</h2>
+          <p>发现告诉你什么在重复，诊断告诉你先查哪里。</p>
+          <p>对选中的行为模式，重建一张轻量执行图：每个节点是规范化 trace 事件，每条边通过时间顺序、handoff 边界、工具调用层级与邻近执行上下文连接事件。</p>
+          <p>从一个锚点事件出发，诊断阶段沿图向后走，给上游嫌疑打分：</p>
+          <ul><li>邻近度：离焦点事件越近分越高</li><li>频率：在同一行为模式的多个采样 trace 中反复出现</li><li>桥接度：连接执行图不同部分的事件</li><li>角色：agent/工具角色与发现的相关性</li></ul>
+          <h2 id="结论">结论</h2>
+          <p>宏观评测把问题从「这一次运行为什么失败」转为「哪些系统级行为在多次运行中反复失败」。工作流是：</p>
+          <ul><li>生成或收集大量带 trace 的运行</li><li>对每次完成的运行做低层评测</li><li>把每条 trace 转成紧凑文档</li><li>用 BERTopic 式方法发现重复的行为模式</li><li>用 AgentTrace 式方法深入一个高影响模式</li></ul>
+          <p>同样的闭环适用于真实 agent 系统：保留 trace，用低层评测打分，把打过分数的 trace 变成可比较的文档，聚类文档以发现行为模式，再用最高影响的模式指导人类下一步检查哪里。</p>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-<a class="lv2" href="#what-you-will-learn">What You Will Learn</a>
-<a class="lv2" href="#1-why-macro-evals">1. Why Macro Evals?</a>
-<a class="lv2" href="#2-the-simulation-automotive-orders-in-a-changing-world">2. The Simulation: Automotive Orders in a Changing World</a>
-<a class="lv2" href="#3-lower-level-agent-evals-with-promptfoo">3. Lower-Level Agent Evals with Promptfoo</a>
-<a class="lv2" href="#4-build-the-analysis-dataset">4. Build the Analysis Dataset</a>
-<a class="lv2" href="#5-bertopic-style-discovery">5. BERTopic-Style Discovery</a>
-<a class="lv2" href="#6-agenttrace-style-diagnosis">6. AgentTrace-Style Diagnosis</a>
-<a class="lv2" href="#conclusion">Conclusion</a>
-</nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#为什么需要宏观评测">为什么需要宏观评测</a><a class="lv2" href="#为什么需要宏观评测-1">为什么需要宏观评测</a><a class="lv2" href="#模拟环境">模拟环境</a><a class="lv2" href="#用-promptfoo-做低层评测">用 Promptfoo 做低层评测</a><a class="lv2" href="#构建分析数据集">构建分析数据集</a><a class="lv2" href="#bertopic-式发现">BERTopic 式发现</a><a class="lv2" href="#agenttrace-式诊断">AgentTrace 式诊断</a><a class="lv2" href="#结论">结论</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>

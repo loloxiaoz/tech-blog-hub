@@ -1,5 +1,5 @@
 ---
-title: "Quantifying infrastructure noise in agentic coding evals"
+title: "Quantifying infrastructure noise in agentic coding evals（量化 Agent 编程评测中的基础设施噪声）"
 org: "Anthropic"
 date: 2026-02-05
 source_url: "https://www.anthropic.com/engineering/infrastructure-noise"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Quantifying infrastructure noise in agentic coding evals
+# Quantifying infrastructure noise in agentic coding evals（量化 Agent 编程评测中的基础设施噪声）
 
 ## 核心观点
 

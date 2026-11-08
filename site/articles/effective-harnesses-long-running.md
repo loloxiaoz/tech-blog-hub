@@ -1,5 +1,5 @@
 ---
-title: "Effective harnesses for long-running agents"
+title: "Effective harnesses for long-running agents（面向长时间运行 Agent 的有效 Harness）"
 org: "Anthropic"
 date: 2025-11-26
 source_url: "https://www.anthropic.com/engineering/effective-harnesses-long-running-agents"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Effective harnesses for long-running agents
+# Effective harnesses for long-running agents（面向长时间运行 Agent 的有效 Harness）
 
 ## 核心观点
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Using Codex for education at Dagster Labs · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Using Codex for education at Dagster Labs（Dagster Labs 用 Codex 做文档与教学） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -139,35 +139,25 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#0A4A23">Codex</span>
-          <h1>Using Codex for education at Dagster Labs</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-10-27</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 3 分钟</span><span class="tag">Codex</span><span class="tag">教育</span><span class="tag">文档</span></div>
+          <h1>Using Codex for education at Dagster Labs（Dagster Labs 用 Codex 做文档与教学）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-10-27</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 1 分钟</span><span class="tag">Codex</span><span class="tag">教育</span><span class="tag">文档</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">Dagster Labs 工程师分享用 Codex 赋能技术教育的五个实践：利用结构化 CONTRIBUTING.md 引导 AI、用 Codex 理解 PR、借助 mono repo 完整上下文、翻译内容格式，以及通过代码生成测试来间接评估文档质量。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/using-codex-for-education-at-dagster-labs" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/using-codex-for-education-at-dagster-labs</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">Dagster Labs 把 Codex 用在文档覆盖度评估、PR 解释和跨媒介内容转换上。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/using-codex-for-education-at-dagster-labs" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/using-codex-for-education-at-dagster-labs</a></div></div></div></div>
         <div class="prose">
-          <h2 id="the-power-of-contributingmd-files">The power of CONTRIBUTING.md files</h2>
-          <p>A well-structured CONTRIBUTING.md becomes both documentation for humans and a map for AI.</p>
-
-          <h2 id="codex-for-understanding">Codex for understanding</h2>
-          <p>Use <code>gh</code> command from within Codex to explain pull requests. Ask it to review the PR description and diff, summarize why the feature was implemented.</p>
-
-          <h2 id="the-power-of-the-mono-repo">The power of the mono repo</h2>
-          <p>Having everything accessible in a single repository gives Codex complete context: code, docs, and examples all in one place.</p>
-
-          <h2 id="translating-between-content-mediums">Translating between content mediums</h2>
-          <p>Codex works exceptionally well at translating between mediums: taking a tutorial and producing a video transcript, or taking a low-level tutorial for a blog post.</p>
-
-          <h2 id="evaluating-documentation-coverage">Evaluating documentation coverage</h2>
-          <p>By prompting Codex to reference documentation and produce code, then running a test suite on the resulting code, you can indirectly measure documentation completeness. If Codex can generate working code purely from documentation, it's a strong signal that humans can as well.</p>
+          <h2 id="contributing-md-的作用">CONTRIBUTING.md 的作用</h2>
+          <p>结构良好的 <code>CONTRIBUTING.md</code> 既是给人看的文档，也是给 AI 看的地图。</p>
+          <h2 id="用-codex-理解代码">用 Codex 理解代码</h2>
+          <p>在 Codex 里使用 <code>gh</code> 命令解释 pull request：让它阅读 PR 描述与 diff，总结这个功能为什么要这样实现。</p>
+          <h2 id="单体仓库的优势">单体仓库的优势</h2>
+          <p>代码、文档和示例都在同一个仓库里，Codex 能获得完整上下文。</p>
+          <h2 id="跨媒介转换">跨媒介转换</h2>
+          <p>Codex 很擅长在不同媒介之间转换：把教程整理成视频字幕，或把偏底层的教程改写成博客文章。</p>
+          <h2 id="评估文档覆盖度">评估文档覆盖度</h2>
+          <p>让 Codex 只依据文档生成代码，再对生成的代码跑测试，就能间接衡量文档的完整度。如果 Codex 仅凭文档就能写出可运行的代码，通常说明人也能做到。</p>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">&#8249; 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-        <a class="lv2" href="#the-power-of-contributingmd-files">The power of CONTRIBUTING.md files</a>
-        <a class="lv2" href="#codex-for-understanding">Codex for understanding</a>
-        <a class="lv2" href="#the-power-of-the-mono-repo">The power of the mono repo</a>
-        <a class="lv2" href="#translating-between-content-mediums">Translating between content mediums</a>
-        <a class="lv2" href="#evaluating-documentation-coverage">Evaluating documentation coverage</a>
-      </nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#contributing-md-的作用">CONTRIBUTING.md 的作用</a><a class="lv2" href="#用-codex-理解代码">用 Codex 理解代码</a><a class="lv2" href="#单体仓库的优势">单体仓库的优势</a><a class="lv2" href="#跨媒介转换">跨媒介转换</a><a class="lv2" href="#评估文档覆盖度">评估文档覆盖度</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>

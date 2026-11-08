@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How Codex ran OpenAI DevDay 2025 · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How Codex ran OpenAI DevDay 2025（Codex 如何撑起 OpenAI DevDay 2025） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -139,43 +139,33 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#0A4A23">Codex</span>
-          <h1>How Codex ran OpenAI DevDay 2025</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-01-01</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 4 分钟</span><span class="tag">Codex</span><span class="tag">DevDay</span></div>
+          <h1>How Codex ran OpenAI DevDay 2025（Codex 如何撑起 OpenAI DevDay 2025）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025-01-01</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 1 分钟</span><span class="tag">Codex</span><span class="tag">DevDay</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">DevDay 2025 活动背后的 Codex 实战故事：从实现 VISCA 协议控制摄像机和灯光，到并行迭代多个节拍垫设计，再到将 Streamlit 应用迁移到 Next.js——展示了 Codex 在真实活动场景中并行、大规模加速开发的能力。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/how-codex-ran-openai-devday-2025" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/how-codex-ran-openai-devday-2025</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">DevDay 2025 背后的 Codex 实战：一个下午实现 90 年代的 VISCA 协议并做出控制会场灯光的 MCP server，七个终端并行写 Phaser 游戏，午休回来应用已从 Streamlit 迁到 Next.js。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://developers.openai.com/blog/how-codex-ran-openai-devday-2025" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://developers.openai.com/blog/how-codex-ran-openai-devday-2025</a></div></div></div></div>
         <div class="prose">
-<h2 id="controlling-cameras-and-creating-a-venue-lighting-mcp">Controlling cameras and creating a venue lighting MCP</h2>
-<p>Romain Huet's keynote demo: Codex implemented the VISCA protocol (from the early 90s!) and built an MCP server to control venue lights, all in an afternoon.</p>
-<h2 id="bringing-the-beats">Bringing the beats</h2>
-<p>Katia Gil Guzman used Codex Cloud and best-of-N to iterate on multiple beat pad designs in parallel for the Apps SDK demo.</p>
-<h2 id="multi-tasking-game-design">Multi-tasking game design</h2>
-<p>Kevin Whinnery had seven different terminals open, each with an instance of Codex CLI working on single-file Phaser game implementations for ArcadeGPT.</p>
-<h2 id="rebuilding-demo-apps">Rebuilding demo apps</h2>
-<p>Dominik used Codex IDE extension to port a Streamlit app to Next.js with FastAPI. Went to lunch, came back to a fully implemented application.</p>
-<h2 id="making-it-real">Making it real</h2>
-<p>Erika Kettleson used Codex to turn a sketch into a booth demo, write evals for SVG generation, evaluate single vs multi-agent architecture, and create Mermaid diagrams.</p>
-<h2 id="reviewing-at-scale">Reviewing at scale</h2>
-<p>Kaz used Codex to ramp up with codebase, identify bugs, fix them, and leverage Codex code review for the Guardrails SDKs launch.</p>
-<h2 id="juggling-multiple-projects-at-once">Juggling multiple projects at once</h2>
-<p>Running 3-4 independent tasks at the same time. Quick prompts, fire off tasks, check status later.</p>
-<h2 id="getting-organized">Getting organized</h2>
-<p>Codex Cloud took fragmented docs, split them up, converted to MDX, set up navigation structures, and opened PRs.</p>
-<h2 id="dealing-with-side-quests">Dealing with side quests</h2>
-<p>Katia shipped a redesigned 404 page in 5 minutes using Codex Web's best-of-n feature.</p>
+          <h2 id="控制摄像机与会场灯光">控制摄像机与会场灯光</h2>
+          <p>Romain Huet 的主题演讲 demo：Codex 实现了 1990 年代初的 VISCA 协议，并构建了一个控制会场灯光的 MCP server，全程只用一个下午。</p>
+          <h2 id="节拍垫">节拍垫</h2>
+          <p>Katia Gil Guzman 用 Codex Cloud 与 best-of-N，为 Apps SDK demo 并行迭代多个节拍垫设计。</p>
+          <h2 id="多任务游戏设计">多任务游戏设计</h2>
+          <p>Kevin Whinnery 同时开了七个终端，每个跑一个 Codex CLI 实例，为 ArcadeGPT 编写单文件 Phaser 游戏实现。</p>
+          <h2 id="重写-demo-应用">重写 demo 应用</h2>
+          <p>Dominik 用 Codex IDE 扩展把 Streamlit 应用迁到 Next.js + FastAPI。他去吃了个午饭，回来时应用已经完整实现。</p>
+          <h2 id="把想法做成展台">把想法做成展台</h2>
+          <p>Erika Kettleson 用 Codex 把草图变成展台 demo、为 SVG 生成写评测、评估单 agent 与多 agent 架构、并绘制 Mermaid 图。</p>
+          <h2 id="规模化评审">规模化评审</h2>
+          <p>Kaz 用 Codex 熟悉代码库、找出 bug、修复它们，并在 Guardrails SDK 发布时使用 Codex 代码评审。</p>
+          <h2 id="同时处理多个项目">同时处理多个项目</h2>
+          <p>同时运行 3 到 4 个独立任务：快速下提示、把任务发出去、稍后再查状态。</p>
+          <h2 id="整理文档">整理文档</h2>
+          <p>Codex Cloud 把零散的文档拆分、转换成 MDX、搭好导航结构，并开 PR。</p>
+          <h2 id="处理顺手的小任务">处理顺手的小任务</h2>
+          <p>Katia 用 Codex Web 的 best-of-n 功能，5 分钟上线了一个重新设计的 404 页面。</p>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-<a class="lv2" href="#controlling-cameras-and-creating-a-venue-lighting-mcp">Controlling cameras and creating a venue lighting MCP</a>
-<a class="lv2" href="#bringing-the-beats">Bringing the beats</a>
-<a class="lv2" href="#multi-tasking-game-design">Multi-tasking game design</a>
-<a class="lv2" href="#rebuilding-demo-apps">Rebuilding demo apps</a>
-<a class="lv2" href="#making-it-real">Making it real</a>
-<a class="lv2" href="#reviewing-at-scale">Reviewing at scale</a>
-<a class="lv2" href="#juggling-multiple-projects-at-once">Juggling multiple projects at once</a>
-<a class="lv2" href="#getting-organized">Getting organized</a>
-<a class="lv2" href="#dealing-with-side-quests">Dealing with side quests</a>
-</nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#控制摄像机与会场灯光">控制摄像机与会场灯光</a><a class="lv2" href="#节拍垫">节拍垫</a><a class="lv2" href="#多任务游戏设计">多任务游戏设计</a><a class="lv2" href="#重写-demo-应用">重写 demo 应用</a><a class="lv2" href="#把想法做成展台">把想法做成展台</a><a class="lv2" href="#规模化评审">规模化评审</a><a class="lv2" href="#同时处理多个项目">同时处理多个项目</a><a class="lv2" href="#整理文档">整理文档</a><a class="lv2" href="#处理顺手的小任务">处理顺手的小任务</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>

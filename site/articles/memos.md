@@ -1,5 +1,5 @@
 ---
-title: "MemOS: A Memory OS for AI System"
+title: "MemOS: A Memory OS for AI System（MemOS：AI 系统的记忆操作系统）"
 org: "记忆系统"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# MemOS: A Memory OS for AI System
+# MemOS: A Memory OS for AI System（MemOS：AI 系统的记忆操作系统）
 
 **来源**：`raw/MEMOS.pdf`
 **arXiv**：2507.03724v4（2025-12-03）

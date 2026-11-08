@@ -1,5 +1,5 @@
 ---
-title: "COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation"
+title: "COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation（COLLEAGUE.SKILL：通过专家知识蒸馏自动生成 AI 技能）"
 org: "AI 工程实践"
 date: 2026-05-10
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation
+# COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation（COLLEAGUE.SKILL：通过专家知识蒸馏自动生成 AI 技能）
 
 **来源**：学术论文，`raw/colleague_skill.pdf`
 **作者**：Tianyi Zhou, Dongrui Liu, Leitao Yuan, Jing Shao, Xia Hu（上海人工智能实验室）

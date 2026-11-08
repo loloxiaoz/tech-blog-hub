@@ -1,5 +1,5 @@
 ---
-title: "Code execution with MCP: Building more efficient agents"
+title: "Code execution with MCP: Building more efficient agents（用 MCP 执行代码：构建更高效的 Agent）"
 org: "Anthropic"
 date: 2025-11-04
 source_url: "https://www.anthropic.com/engineering/code-execution-mcp"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Code execution with MCP: Building more efficient agents
+# Code execution with MCP: Building more efficient agents（用 MCP 执行代码：构建更高效的 Agent）
 
 ## 核心观点
 

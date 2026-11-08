@@ -1,5 +1,5 @@
 ---
-title: "Beyond permission prompts: making Claude Code more secure and autonomous"
+title: "Beyond permission prompts: making Claude Code more secure and autonomous（超越权限提示：让 Claude Code 更安全、更自主）"
 org: "Anthropic"
 date: 2025-10-20
 source_url: "https://www.anthropic.com/engineering/claude-code-sandboxing"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Beyond permission prompts: making Claude Code more secure and autonomous
+# Beyond permission prompts: making Claude Code more secure and autonomous（超越权限提示：让 Claude Code 更安全、更自主）
 
 ## 核心观点
 

@@ -217,7 +217,7 @@
   },
   {
     "id": "anthropic-engineering-02-policy",
-    "title": "Policy",
+    "title": "Policy（Anthropic 的 AI 政策主张）",
     "org": "Anthropic",
     "date": "2026-06-04",
     "tags": [
@@ -302,7 +302,7 @@
   },
   {
     "id": "openai-models-amazon-bedrock",
-    "title": "Getting Started with OpenAI Models on Amazon Bedrock",
+    "title": "Getting Started with OpenAI Models on Amazon Bedrock（在 Amazon Bedrock 上开始使用 OpenAI 模型）",
     "org": "OpenAI",
     "date": "2026-05-31",
     "tags": [
@@ -465,7 +465,7 @@
   },
   {
     "id": "claude-containment-products",
-    "title": "How we contain Claude across products",
+    "title": "How we contain Claude across products（我们如何在各产品中约束 Claude）",
     "org": "Anthropic",
     "date": "2026-05-25",
     "tags": [
@@ -686,7 +686,7 @@
   },
   {
     "id": "openai-macro-evals-agentic-systems",
-    "title": "Macro Evals for Agentic Systems",
+    "title": "Macro Evals for Agentic Systems（Agent 系统的宏观评测）",
     "org": "OpenAI",
     "date": "2026-05-19",
     "tags": [
@@ -700,7 +700,7 @@
   },
   {
     "id": "widening-frontier-ai-conversation",
-    "title": "Widening the conversation on frontier AI",
+    "title": "Widening the conversation on frontier AI（扩大关于前沿 AI 的讨论）",
     "org": "Anthropic",
     "date": "2026-05-19",
     "tags": [
@@ -855,7 +855,7 @@
   },
   {
     "id": "openai-agent-improvement-loop-traces-evals",
-    "title": "Build an Agent Improvement Loop with Traces, Evals, and Codex",
+    "title": "Build an Agent Improvement Loop with Traces, Evals, and Codex（构建 Agent 改进闭环：追踪、评测与 Codex 交接）",
     "org": "OpenAI",
     "date": "2026-05-12",
     "tags": [
@@ -881,7 +881,7 @@
   },
   {
     "id": "openai-build-iterative-repair-loops-codex",
-    "title": "Build iterative repair loops with Codex",
+    "title": "Build iterative repair loops with Codex（用 Codex 构建迭代式修复循环）",
     "org": "OpenAI",
     "date": "2026-05-11",
     "tags": [
@@ -945,7 +945,7 @@
   },
   {
     "id": "colleague-skill",
-    "title": "COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation",
+    "title": "COLLEAGUE.SKILL: Automated AI Skill Generation via Expert Knowledge Distillation（COLLEAGUE.SKILL：通过专家知识蒸馏自动生成 AI 技能）",
     "org": "AI 工程实践",
     "date": "2026-05-10",
     "tags": [],
@@ -968,7 +968,7 @@
   },
   {
     "id": "hipporag2",
-    "title": "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models",
+    "title": "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models（从 RAG 到记忆：大语言模型的非参数持续学习）",
     "org": "记忆系统",
     "date": "2026-05-10",
     "tags": [
@@ -980,7 +980,7 @@
   },
   {
     "id": "mem0-production-agents",
-    "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+    "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory（Mem0：用可扩展长期记忆构建生产级 AI Agent）",
     "org": "记忆系统",
     "date": "2026-05-10",
     "tags": [
@@ -1008,7 +1008,7 @@
   },
   {
     "id": "memos",
-    "title": "MemOS: A Memory OS for AI System",
+    "title": "MemOS: A Memory OS for AI System（MemOS：AI 系统的记忆操作系统）",
     "org": "记忆系统",
     "date": "2026-05-10",
     "tags": [
@@ -1045,7 +1045,7 @@
   },
   {
     "id": "second-me",
-    "title": "AI-native Memory 2.0: Second Me",
+    "title": "AI-native Memory 2.0: Second Me（AI 原生记忆 2.0：Second Me）",
     "org": "记忆系统",
     "date": "2026-05-10",
     "tags": [
@@ -1058,7 +1058,7 @@
   },
   {
     "id": "titans",
-    "title": "Titans: Learning to Memorize at Test Time",
+    "title": "Titans: Learning to Memorize at Test Time（Titans：在测试时学习记忆）",
     "org": "记忆系统",
     "date": "2026-05-10",
     "tags": [
@@ -1084,7 +1084,7 @@
   },
   {
     "id": "openai-using-goals-in-codex",
-    "title": "Using Goals in Codex",
+    "title": "Using Goals in Codex（在 Codex 中使用 Goals）",
     "org": "OpenAI",
     "date": "2026-05-09",
     "tags": [
@@ -1111,7 +1111,7 @@
   },
   {
     "id": "anthropic-research-03-teaching-claude-why",
-    "title": "Teaching Claude why",
+    "title": "Teaching Claude why（教 Claude 理解「为什么」）",
     "org": "Anthropic",
     "date": "2026-05-08",
     "tags": [
@@ -1151,7 +1151,7 @@
   },
   {
     "id": "openai-migrate-claude-sdk-to-openai-agents-sdk",
-    "title": "Migrate from Claude Agent SDK to OpenAI Agents SDK",
+    "title": "Migrate from Claude Agent SDK to OpenAI Agents SDK（从 Claude Agent SDK 迁移到 OpenAI Agents SDK）",
     "org": "OpenAI",
     "date": "2026-05-07",
     "tags": [
@@ -1227,7 +1227,7 @@
   },
   {
     "id": "anthropic-research-02-natural-language-autoencoders-turning-claude-s-thoughts-into",
-    "title": "Natural Language Autoencoders: Turning Claude’s thoughts into text",
+    "title": "Natural Language Autoencoders: Turning Claude's thoughts into text（自然语言自编码器：把 Claude 的想法翻译成文字）",
     "org": "Anthropic",
     "date": "2026-05-06",
     "tags": [
@@ -1238,7 +1238,7 @@
   },
   {
     "id": "openai-agents-sdk-deployment-manager",
-    "title": "Agents SDK Deployment Manager",
+    "title": "Agents SDK Deployment Manager（Agents SDK 部署管理器）",
     "org": "OpenAI",
     "date": "2026-05-05",
     "tags": [
@@ -1279,7 +1279,7 @@
   },
   {
     "id": "openai-building-reliable-agents-memory-compaction",
-    "title": "Building Reliable Agents with Memory and Compaction",
+    "title": "Building Reliable Agents with Memory and Compaction（用记忆与压缩构建可靠的长时间运行 Agent）",
     "org": "OpenAI",
     "date": "2026-05-01",
     "tags": [
@@ -1294,7 +1294,7 @@
   },
   {
     "id": "openai-building-workspace-agents-chatgpt",
-    "title": "Building workspace agents in ChatGPT",
+    "title": "Building workspace agents in ChatGPT（在 ChatGPT 中构建工作区 Agent）",
     "org": "OpenAI",
     "date": "2026-05-01",
     "tags": [
@@ -1455,7 +1455,7 @@
   },
   {
     "id": "project-deal-marketplace",
-    "title": "Project Deal: our Claude-run marketplace experiment",
+    "title": "Project Deal: our Claude-run marketplace experiment（Project Deal：我们用 Claude 运营的市场实验）",
     "org": "Anthropic",
     "date": "2026-04-24",
     "tags": [
@@ -1467,7 +1467,7 @@
   },
   {
     "id": "claude-code-quality-reports",
-    "title": "An update on recent Claude Code quality reports",
+    "title": "An update on recent Claude Code quality reports（关于近期 Claude Code 质量报告的更新）",
     "org": "Anthropic",
     "date": "2026-04-23",
     "tags": [
@@ -1482,7 +1482,7 @@
   },
   {
     "id": "services-track-partner-hub",
-    "title": "An update on recent Claude Code quality reports",
+    "title": "An update on recent Claude Code quality reports（关于近期 Claude Code 质量报告的更新）",
     "org": "Anthropic",
     "date": "2026-04-23",
     "tags": [
@@ -1546,7 +1546,7 @@
   },
   {
     "id": "openai-computer-use-agents-daytona-sandboxes",
-    "title": "Computer Use Agents in Daytona Sandboxes",
+    "title": "Computer Use Agents in Daytona Sandboxes（在 Daytona 沙箱中运行 Computer Use Agent）",
     "org": "OpenAI",
     "date": "2026-04-15",
     "tags": [
@@ -1601,7 +1601,7 @@
   },
   {
     "id": "openai-what-makes-great-chatgpt-app",
-    "title": "What makes a great ChatGPT app",
+    "title": "What makes a great ChatGPT app（什么样的 ChatGPT 应用才算优秀）",
     "org": "OpenAI",
     "date": "2026-04-14",
     "tags": [
@@ -1614,7 +1614,7 @@
   },
   {
     "id": "automated-alignment-researchers",
-    "title": "Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight",
+    "title": "Automated Alignment Researchers: Using LLMs to Scale Scalable Oversight（自动化对齐研究员：用 LLM 扩展可扩展监督）",
     "org": "Anthropic",
     "date": "2026-04-14",
     "tags": [
@@ -1696,7 +1696,7 @@
   },
   {
     "id": "openai-15-lessons-chatgpt-apps",
-    "title": "15 lessons learned building ChatGPT Apps",
+    "title": "15 lessons learned building ChatGPT Apps（构建 ChatGPT 应用学到的 15 条经验）",
     "org": "OpenAI",
     "date": "2026-04-08",
     "tags": [
@@ -1709,7 +1709,7 @@
   },
   {
     "id": "scaling-managed-agents",
-    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "title": "Scaling Managed Agents: Decoupling the brain from the hands（扩展托管式 Agent：把「大脑」和「双手」解耦）",
     "org": "Anthropic",
     "date": "2026-04-08",
     "tags": [
@@ -1738,7 +1738,7 @@
   },
   {
     "id": "openai-migrate-legacy-codebase-sandbox-agents",
-    "title": "Migrate a Legacy Codebase with Sandbox Agents",
+    "title": "Migrate a Legacy Codebase with Sandbox Agents（用沙箱 Agent 迁移遗留代码库）",
     "org": "OpenAI",
     "date": "2026-04-07",
     "tags": [
@@ -1766,7 +1766,7 @@
   },
   {
     "id": "emotion-concepts",
-    "title": "Emotion Concepts and Their Function in a Large Language Model",
+    "title": "Emotion Concepts and Their Function in a Large Language Model（情绪概念及其在大语言模型中的作用）",
     "org": "Anthropic",
     "date": "2026-04-02",
     "tags": [
@@ -1780,7 +1780,7 @@
   },
   {
     "id": "openai-prompt-caching-201",
-    "title": "Prompt Caching 201",
+    "title": "Prompt Caching 201（提示缓存进阶）",
     "org": "OpenAI",
     "date": "2026-04-01",
     "tags": [
@@ -1846,7 +1846,7 @@
   },
   {
     "id": "openai-perplexity-voice-search",
-    "title": "How Perplexity Brought Voice Search to Millions Using the Realtime API",
+    "title": "How Perplexity Brought Voice Search to Millions Using the Realtime API（Perplexity 如何用 Realtime API 把语音搜索带给数百万用户）",
     "org": "OpenAI",
     "date": "2026-03-25",
     "tags": [
@@ -1860,7 +1860,7 @@
   },
   {
     "id": "claude-code-auto-mode",
-    "title": "How we built Claude Code auto mode: a safer way to skip permissions",
+    "title": "How we built Claude Code auto mode: a safer way to skip permissions（我们如何打造 Claude Code 自动模式：更安全地跳过权限确认）",
     "org": "Anthropic",
     "date": "2026-03-25",
     "tags": [
@@ -1888,7 +1888,7 @@
   },
   {
     "id": "economic-index-learning-curves",
-    "title": "Anthropic Economic Index report: Learning curves",
+    "title": "Anthropic Economic Index report: Learning curves（Anthropic 经济指数报告：学习曲线）",
     "org": "Anthropic",
     "date": "2026-03-24",
     "tags": [
@@ -1899,7 +1899,7 @@
   },
   {
     "id": "harness-design-app-dev",
-    "title": "Harness design for long-running application development",
+    "title": "Harness design for long-running application development（面向长时间应用开发的 Harness 设计）",
     "org": "Anthropic",
     "date": "2026-03-24",
     "tags": [
@@ -1925,7 +1925,7 @@
   },
   {
     "id": "openai-designing-delightful-frontends-gpt54",
-    "title": "Designing delightful frontends with GPT-5.4",
+    "title": "Designing delightful frontends with GPT-5.4（用 GPT-5.4 设计令人愉悦的前端）",
     "org": "OpenAI",
     "date": "2026-03-20",
     "tags": [
@@ -1953,7 +1953,7 @@
   },
   {
     "id": "anthropic-research-05-what-81-000-peoplewant-from-ai",
-    "title": "What 81,000 peoplewant from AI",
+    "title": "What 81,000 People Want from AI（8.1 万人对 AI 的期待）",
     "org": "Anthropic",
     "date": "2026-03-18",
     "tags": [
@@ -2007,7 +2007,7 @@
   },
   {
     "id": "openai-from-prompts-to-products-responses",
-    "title": "From prompts to products: One year of Responses",
+    "title": "From prompts to products: One year of Responses（从提示词到产品：Responses 的一年）",
     "org": "OpenAI",
     "date": "2026-03-11",
     "tags": [
@@ -2020,7 +2020,7 @@
   },
   {
     "id": "openai-skills-in-api",
-    "title": "Skills in OpenAI API",
+    "title": "Skills in OpenAI API（OpenAI API 中的 Skills）",
     "org": "OpenAI",
     "date": "2026-03-10",
     "tags": [
@@ -2059,7 +2059,7 @@
   },
   {
     "id": "openai-using-skills-accelerate-oss",
-    "title": "Using skills to accelerate OSS maintenance",
+    "title": "Using skills to accelerate OSS maintenance（用 Skills 加速开源项目维护）",
     "org": "OpenAI",
     "date": "2026-03-09",
     "tags": [
@@ -2073,7 +2073,7 @@
   },
   {
     "id": "eval-awareness-browsecomp",
-    "title": "Eval awareness in Claude Opus 4.6's BrowseComp performance",
+    "title": "Eval awareness in Claude Opus 4.6's BrowseComp performance（Claude Opus 4.6 在 BrowseComp 中的评测意识）",
     "org": "Anthropic",
     "date": "2026-03-06",
     "tags": [
@@ -2108,7 +2108,7 @@
   },
   {
     "id": "openai-realtime-eval-guide",
-    "title": "Realtime Eval Guide",
+    "title": "Realtime Eval Guide（Realtime 评测指南）",
     "org": "OpenAI",
     "date": "2026-03-01",
     "tags": [
@@ -2163,7 +2163,7 @@
   },
   {
     "id": "openai-building-frontend-uis-codex-figma",
-    "title": "Building frontend UIs with Codex and Figma",
+    "title": "Building frontend UIs with Codex and Figma（用 Codex 与 Figma 构建前端界面）",
     "org": "OpenAI",
     "date": "2026-02-26",
     "tags": [
@@ -2177,7 +2177,7 @@
   },
   {
     "id": "openai-codex-prompting-guide",
-    "title": "Codex Prompting Guide",
+    "title": "Codex Prompting Guide（Codex 提示词指南）",
     "org": "OpenAI",
     "date": "2026-02-25",
     "tags": [
@@ -2190,7 +2190,7 @@
   },
   {
     "id": "openai-realtime-prompting-guide",
-    "title": "Realtime Prompting Guide",
+    "title": "Realtime Prompting Guide（Realtime 提示词指南）",
     "org": "OpenAI",
     "date": "2026-02-25",
     "tags": [
@@ -2213,7 +2213,7 @@
   },
   {
     "id": "openai-run-long-horizon-tasks-codex",
-    "title": "Run long horizon tasks with Codex",
+    "title": "Run long horizon tasks with Codex（用 Codex 运行长周期任务）",
     "org": "OpenAI",
     "date": "2026-02-23",
     "tags": [
@@ -2292,7 +2292,7 @@
   },
   {
     "id": "openai-shell-skills-compaction-agents",
-    "title": "Shell + Skills + Compaction: Tips for long-running agents",
+    "title": "Shell + Skills + Compaction: Tips for long-running agents（Shell + Skills + 压缩：长时间运行 Agent 的技巧）",
     "org": "OpenAI",
     "date": "2026-02-11",
     "tags": [
@@ -2307,7 +2307,7 @@
   },
   {
     "id": "c-compiler-parallel-claudes",
-    "title": "Building a C compiler with a team of parallel Claudes",
+    "title": "Building a C compiler with a team of parallel Claudes（用一支并行的 Claude 团队构建 C 编译器）",
     "org": "Anthropic",
     "date": "2026-02-05",
     "tags": [
@@ -2320,7 +2320,7 @@
   },
   {
     "id": "infrastructure-noise-evals",
-    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "title": "Quantifying infrastructure noise in agentic coding evals（量化 Agent 编程评测中的基础设施噪声）",
     "org": "Anthropic",
     "date": "2026-02-05",
     "tags": [
@@ -2345,7 +2345,7 @@
   },
   {
     "id": "openai-testing-agent-skills-evals",
-    "title": "Testing Agent Skills Systematically with Evals",
+    "title": "Testing Agent Skills Systematically with Evals（用评测系统地测试 Agent Skills）",
     "org": "OpenAI",
     "date": "2026-01-22",
     "tags": [
@@ -2359,7 +2359,7 @@
   },
   {
     "id": "ai-resistant-evaluations",
-    "title": "Designing AI-resistant technical evaluations",
+    "title": "Designing AI-resistant technical evaluations（设计抗 AI 的技术评测）",
     "org": "Anthropic",
     "date": "2026-01-21",
     "tags": [
@@ -2385,7 +2385,7 @@
   },
   {
     "id": "openai-quantifying-infrastructure-noise-evals",
-    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "title": "Quantifying infrastructure noise in agentic coding evals（量化 Agent 编程评测中的基础设施噪声）",
     "org": "OpenAI",
     "date": "2026-01-15",
     "tags": [
@@ -2399,7 +2399,7 @@
   },
   {
     "id": "economic-index-primitives",
-    "title": "Anthropic Economic Index Report: Economic Primitives",
+    "title": "Anthropic Economic Index Report: Economic Primitives（Anthropic 经济指数报告：经济基元）",
     "org": "Anthropic",
     "date": "2026-01-15",
     "tags": [
@@ -2411,7 +2411,7 @@
   },
   {
     "id": "openai-scaling-managed-agents",
-    "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "title": "Scaling Managed Agents: Decoupling the brain from the hands（扩展托管式 Agent：把「大脑」和「双手」解耦）",
     "org": "OpenAI",
     "date": "2026-01-14",
     "tags": [
@@ -2425,7 +2425,7 @@
   },
   {
     "id": "openai-supercharging-codex-jetbrains-mcp",
-    "title": "Supercharging Codex with JetBrains MCP at Skyscanner",
+    "title": "Supercharging Codex with JetBrains MCP at Skyscanner（Skyscanner 用 JetBrains MCP 增强 Codex）",
     "org": "OpenAI",
     "date": "2026-01-11",
     "tags": [
@@ -2451,7 +2451,7 @@
   },
   {
     "id": "openai-context-engineering-personalization",
-    "title": "Context Engineering for Personalization",
+    "title": "Context Engineering for Personalization（面向个性化的上下文工程）",
     "org": "OpenAI",
     "date": "2026-01-05",
     "tags": [
@@ -2481,7 +2481,7 @@
   },
   {
     "id": "openai-updates-developers-voice",
-    "title": "Updates for developers building with voice",
+    "title": "Updates for developers building with voice（语音能力更新）",
     "org": "OpenAI",
     "date": "2025-12-22",
     "tags": [
@@ -2509,7 +2509,7 @@
   },
   {
     "id": "introducing-bloom",
-    "title": "Introducing Bloom: an open source tool for automated behavioral evaluations",
+    "title": "Introducing Bloom: an open source tool for automated behavioral evaluations（推出 Bloom：自动化行为评测的开源工具）",
     "org": "Anthropic",
     "date": "2025-12-19",
     "tags": [
@@ -2547,7 +2547,7 @@
   },
   {
     "id": "anthropic-interviewer",
-    "title": "Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI",
+    "title": "Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI（推出 Anthropic Interviewer：1,250 位专业人士如何讲述与 AI 共事）",
     "org": "Anthropic",
     "date": "2025-12-04",
     "tags": [
@@ -2560,7 +2560,7 @@
   },
   {
     "id": "ai-transforming-work-anthropic",
-    "title": "How AI Is Transforming Work at Anthropic",
+    "title": "How AI Is Transforming Work at Anthropic（AI 如何改变 Anthropic 的工作方式）",
     "org": "Anthropic",
     "date": "2025-12-02",
     "tags": [
@@ -2587,7 +2587,7 @@
   },
   {
     "id": "effective-harnesses-long-running",
-    "title": "Effective harnesses for long-running agents",
+    "title": "Effective harnesses for long-running agents（面向长时间运行 Agent 的有效 Harness）",
     "org": "Anthropic",
     "date": "2025-11-26",
     "tags": [
@@ -2610,7 +2610,7 @@
   },
   {
     "id": "advanced-tool-use-anthropic",
-    "title": "Introducing Advanced Tool Use on the Claude Developer Platform",
+    "title": "Introducing Advanced Tool Use on the Claude Developer Platform（推出 Claude 开发者平台的高级工具调用）",
     "org": "Anthropic",
     "date": "2025-11-24",
     "tags": [
@@ -2624,7 +2624,7 @@
   },
   {
     "id": "anthropic-research-02-economic-research",
-    "title": "Economic Research",
+    "title": "Economic Research（经济研究团队）",
     "org": "Anthropic",
     "date": "2025-11-24",
     "tags": [
@@ -2647,7 +2647,7 @@
   },
   {
     "id": "anthropic-research-01-frontier-red-team",
-    "title": "Frontier Red Team",
+    "title": "Frontier Red Team（前沿红队）",
     "org": "Anthropic",
     "date": "2025-11-20",
     "tags": [
@@ -2658,7 +2658,7 @@
   },
   {
     "id": "anthropic-research-01-alignment",
-    "title": "Alignment",
+    "title": "Alignment（对齐研究）",
     "org": "Anthropic",
     "date": "2025-11-07",
     "tags": [
@@ -2669,7 +2669,7 @@
   },
   {
     "id": "anthropic-research-03-interpretability",
-    "title": "Interpretability",
+    "title": "Interpretability（可解释性研究）",
     "org": "Anthropic",
     "date": "2025-11-07",
     "tags": [
@@ -2680,7 +2680,7 @@
   },
   {
     "id": "anthropic-research-04-societal-impacts",
-    "title": "Societal Impacts",
+    "title": "Societal Impacts（社会影响研究）",
     "org": "Anthropic",
     "date": "2025-11-07",
     "tags": [
@@ -2724,7 +2724,7 @@
   },
   {
     "id": "code-execution-mcp",
-    "title": "Code execution with MCP: Building more efficient agents",
+    "title": "Code execution with MCP: Building more efficient agents（用 MCP 执行代码：构建更高效的 Agent）",
     "org": "Anthropic",
     "date": "2025-11-04",
     "tags": [
@@ -2749,7 +2749,7 @@
   },
   {
     "id": "openai-codex-education-dagster-labs",
-    "title": "Using Codex for education at Dagster Labs",
+    "title": "Using Codex for education at Dagster Labs（Dagster Labs 用 Codex 做文档与教学）",
     "org": "OpenAI",
     "date": "2025-10-27",
     "tags": [
@@ -2763,7 +2763,7 @@
   },
   {
     "id": "claude-code-sandboxing",
-    "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
+    "title": "Beyond permission prompts: making Claude Code more secure and autonomous（超越权限提示：让 Claude Code 更安全、更自主）",
     "org": "Anthropic",
     "date": "2025-10-20",
     "tags": [
@@ -2776,7 +2776,7 @@
   },
   {
     "id": "agent-skills-official",
-    "title": "Equipping agents for the real world with Agent Skills",
+    "title": "Equipping agents for the real world with Agent Skills（用 Agent Skills 装备面向真实世界的 Agent）",
     "org": "AI 工程实践",
     "date": "2025-10-16",
     "tags": [
@@ -2801,7 +2801,7 @@
   },
   {
     "id": "openai-codex-ran-devday-2025",
-    "title": "How Codex ran OpenAI DevDay 2025",
+    "title": "How Codex ran OpenAI DevDay 2025（Codex 如何撑起 OpenAI DevDay 2025）",
     "org": "OpenAI",
     "date": "2025-10-10",
     "tags": [
@@ -2814,7 +2814,7 @@
   },
   {
     "id": "context-engineering-agents",
-    "title": "Effective context engineering for AI agents",
+    "title": "Effective context engineering for AI agents（面向 AI Agent 的有效上下文工程）",
     "org": "Anthropic",
     "date": "2025-09-29",
     "tags": [
@@ -2837,7 +2837,7 @@
   },
   {
     "id": "openai-why-we-built-responses-api",
-    "title": "Why we built the Responses API",
+    "title": "Why we built the Responses API（我们为什么要构建 Responses API）",
     "org": "OpenAI",
     "date": "2025-09-22",
     "tags": [
@@ -2850,7 +2850,7 @@
   },
   {
     "id": "postmortem-three-issues",
-    "title": "A Postmortem of Three Recent Issues",
+    "title": "A Postmortem of Three Recent Issues（近期三起问题的复盘）",
     "org": "Anthropic",
     "date": "2025-09-17",
     "tags": [
@@ -2873,7 +2873,7 @@
   },
   {
     "id": "openai-developer-notes-realtime-api",
-    "title": "Developer notes on the Realtime API",
+    "title": "Developer notes on the Realtime API（Realtime API 开发者笔记）",
     "org": "OpenAI",
     "date": "2025-09-12",
     "tags": [
@@ -2886,7 +2886,7 @@
   },
   {
     "id": "openai-for-developers-2025",
-    "title": "OpenAI for Developers in 2025",
+    "title": "OpenAI for Developers in 2025（2025 年 OpenAI 开发者生态回顾）",
     "org": "OpenAI",
     "date": "2025-09-11",
     "tags": [
@@ -2899,7 +2899,7 @@
   },
   {
     "id": "openai-hello-world-developer-blog",
-    "title": "Hello, world! — OpenAI Developer Blog",
+    "title": "Hello, world! — OpenAI Developer Blog（OpenAI 开发者博客上线）",
     "org": "OpenAI",
     "date": "2025-09-11",
     "tags": [
@@ -2911,7 +2911,7 @@
   },
   {
     "id": "writing-effective-tools-agents",
-    "title": "Writing effective tools for agents — with agents",
+    "title": "Writing effective tools for agents — with agents（用 Agent 为 Agent 编写高效工具）",
     "org": "Anthropic",
     "date": "2025-09-11",
     "tags": [
@@ -3049,7 +3049,7 @@
   },
   {
     "id": "claude-support-usage",
-    "title": "How People Use Claude for Support, Advice, and Companionship",
+    "title": "How People Use Claude for Support, Advice, and Companionship（人们如何用 Claude 寻求支持、建议与陪伴）",
     "org": "Anthropic",
     "date": "2025-06-27",
     "tags": [],
@@ -3069,7 +3069,7 @@
   },
   {
     "id": "mcp-desktop-extensions",
-    "title": "Desktop Extensions: One-click MCP server installation for Claude Desktop",
+    "title": "Desktop Extensions: One-click MCP server installation for Claude Desktop（桌面扩展：为 Claude Desktop 一键安装 MCP server）",
     "org": "Anthropic",
     "date": "2025-06-26",
     "tags": [
@@ -3104,7 +3104,7 @@
   },
   {
     "id": "multi-agent-research-system",
-    "title": "How we built our multi-agent research system",
+    "title": "How we built our multi-agent research system（我们如何构建多 Agent 研究系统）",
     "org": "Anthropic",
     "date": "2025-06-13",
     "tags": [
@@ -3246,7 +3246,7 @@
   },
   {
     "id": "anthropic-economic-index",
-    "title": "Anthropic Economic Index: Insights from Claude 3.7 Sonnet",
+    "title": "Anthropic Economic Index: Insights from Claude 3.7 Sonnet（Anthropic 经济指数：来自 Claude 3.7 Sonnet 的洞察）",
     "org": "Anthropic",
     "date": "2025-03-27",
     "tags": [
@@ -3295,7 +3295,7 @@
   },
   {
     "id": "think-tool-anthropic",
-    "title": "The \\\"think\\\" tool: Enabling Claude to stop and think in complex tool use situations",
+    "title": "The \\\"think\\\" tool: Enabling Claude to stop and think in complex tool use situations（“think” 工具：让 Claude 在复杂工具调用中停下来思考）",
     "org": "Anthropic",
     "date": "2025-03-20",
     "tags": [
@@ -3308,7 +3308,7 @@
   },
   {
     "id": "auditing-hidden-objectives",
-    "title": "Auditing language models for hidden objectives",
+    "title": "Auditing language models for hidden objectives（审计语言模型的隐藏目标）",
     "org": "Anthropic",
     "date": "2025-03-13",
     "tags": [
@@ -3444,7 +3444,7 @@
   },
   {
     "id": "swe-bench-verified-sonnet",
-    "title": "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet",
+    "title": "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet（用 Claude 3.5 Sonnet 抬升 SWE-bench Verified 的天花板）",
     "org": "Anthropic",
     "date": "2025-01-06",
     "tags": [
@@ -3540,7 +3540,7 @@
   },
   {
     "id": "contextual-retrieval-anthropic",
-    "title": "Introducing Contextual Retrieval",
+    "title": "Introducing Contextual Retrieval（推出上下文检索（Contextual Retrieval））",
     "org": "Anthropic",
     "date": "2024-09-19",
     "tags": [
@@ -3827,7 +3827,7 @@
   },
   {
     "id": "anthropic-engineering-01-research",
-    "title": "Research",
+    "title": "Research（Anthropic 研究团队）",
     "org": "Anthropic",
     "date": "2024-03-09",
     "tags": [
@@ -3871,7 +3871,7 @@
   },
   {
     "id": "anthropic-research-04-projectdeal",
-    "title": "projectdeal",
+    "title": "Project Deal（让 AI 代理替你讨价还价）",
     "org": "Anthropic",
     "date": "2023-11-03",
     "tags": [

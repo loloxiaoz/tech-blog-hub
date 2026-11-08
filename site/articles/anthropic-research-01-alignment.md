@@ -1,83 +1,29 @@
 ---
-title: "Alignment"
+title: "Alignment（对齐研究）"
 org: "Anthropic"
 date: 2025-11-07
 source_url: "https://www.anthropic.com/research/team/alignment"
 tags: ["Anthropic"]
-summary: "Future AI systems will be even more powerful than today’s, likely in ways that break key assumptions behind current safety techniques. That’"
-summary_zh: ""
-summary_en: "Future AI systems will be even more powerful than today’s, likely in ways that break key assumptions behind current safety techniques. That’s why it’s"
+summary_zh: "对齐团队研究未来 AI 的安全挑战，通过评估监督、压力测试与「Teaching Claude why」等方向，确保高能力模型始终有帮助、诚实、无害。"
+summary_en: ""
 ---
 
-# Alignment
+# Alignment（对齐研究）
 
-Back to Overview
-Alignment
-Future AI systems will be even more powerful than today’s, likely in ways that break key assumptions behind current safety techniques. That’s why it’s important to develop sophisticated safeguards to ensure models remain helpful, honest, and harmless. The Alignment team works to understand the challenges ahead and create protocols to train, evaluate, and monitor highly-capable models safely.
-Research teams:
-Alignment
-Economic Research
-Interpretability
-Societal Impacts
-Evaluation and oversight
-Alignment researchers validate that models are harmless and honest even under very different circumstances than those under which they were trained. They also develop methods to allow humans to collaborate with language models to verify claims that humans might not be able to on their own.
-Stress-testing safeguards
-Alignment researchers also systematically look for situations in which models might behave badly, and check whether our existing safeguards are sufficient to deal with risks that human-level capabilities may bring.
-Teaching Claude why
-Alignment
-May 8, 2026
-New research on how we've reduced agentic misalignment.
-Alignment
-Apr 14, 2026
-Automated Alignment Researchers: Using large language models to scale scalable oversight
-Can Claude develop, test, and analyze alignment ideas of its own? We ran an experiment to find out.
-Alignment
-Feb 23, 2026
-The persona selection model
-Why do AI assistants like Claude sometimes seem surprisingly human. We advance a theory.
-Alignment
-Jan 9, 2026
-Next-generation Constitutional Classifiers: More efficient protection against universal jailbreaks
-Last year, we described a new approach to defend against jailbreaks, which we called Constitutional Classifiers. We’ve now developed the next generation.
-Alignment
-Nov 21, 2025
-From shortcuts to sabotage: natural emergent misalignment from reward hacking
-We show for the first time that realistic AI training processes can accidentally produce misaligned models.
-Publications
-Search
-Date
-Category
-Title
-May 8, 2026
-Alignment
-Teaching Claude why
-May 7, 2026
-Alignment
-Donating our open-source alignment tool
-Apr 14, 2026
-Alignment
-Automated Alignment Researchers: Using large language models to scale scalable oversight
-Feb 25, 2026
-Alignment
-An update on our model deprecation commitments for Claude Opus 3
-Feb 23, 2026
-Alignment
-The persona selection model
-Jan 29, 2026
-Alignment
-How AI assistance impacts the formation of coding skills
-Jan 28, 2026
-Alignment
-Disempowerment patterns in real-world AI usage
-Jan 9, 2026
-Alignment
-Next-generation Constitutional Classifiers: More efficient protection against universal jailbreaks
-Dec 19, 2025
-Alignment
-Introducing Bloom: an open source tool for automated behavioral evaluations
-Nov 21, 2025
-Alignment
-From shortcuts to sabotage: natural emergent misalignment from reward hacking
-See more
-Join the Research team
-See open roles
+## 团队使命
+
+未来的 AI 系统会比今天更强大，而且很可能以打破现有安全技术关键假设的方式演进。对齐团队的任务，是理解这些即将到来的挑战，并建立训练、评估与监控高能力模型的安全协议。
+
+## 三个方向
+
+- **评估与监督**：验证模型在与训练环境差异很大的情境下仍然无害、诚实；同时开发人机协作方法，让人可以借助语言模型核验自己无法独立判断的结论。
+- **压力测试**：系统性寻找模型可能表现不佳的场景，检验现有防护是否足以应对接近人类水平的能力带来的风险。
+- **Teaching Claude why**：研究如何减少智能体错位（agentic misalignment），是该团队近期的重点成果。
+
+## 近期研究
+
+- 用大语言模型扩展可扩展监督（Automated Alignment Researchers）
+- 人格选择模型：解释 AI 助手为何有时表现得异常像人
+- 下一代 Constitutional Classifiers：更高效地抵御通用越狱
+- 从走捷径到蓄意破坏：奖励黑客如何自然涌现出失准
+

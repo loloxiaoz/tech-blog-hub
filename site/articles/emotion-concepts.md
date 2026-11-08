@@ -1,5 +1,5 @@
 ---
-title: "Emotion Concepts and Their Function in a Large Language Model"
+title: "Emotion Concepts and Their Function in a Large Language Model（情绪概念及其在大语言模型中的作用）"
 org: "Anthropic"
 date: 2026-04-02
 source_url: "https://www.anthropic.com/research/emotion-concepts"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Emotion Concepts and Their Function in a Large Language Model
+# Emotion Concepts and Their Function in a Large Language Model（情绪概念及其在大语言模型中的作用）
 # LLM 中的情感概念及其功能
 
 原文：https://www.anthropic.com/research/emotion-concepts-function

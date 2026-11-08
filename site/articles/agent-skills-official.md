@@ -1,5 +1,5 @@
 ---
-title: "Equipping agents for the real world with Agent Skills"
+title: "Equipping agents for the real world with Agent Skills（用 Agent Skills 装备面向真实世界的 Agent）"
 org: "AI 工程实践"
 date: 2025-10-16
 source_url: ""
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Equipping agents for the real world with Agent Skills
+# Equipping agents for the real world with Agent Skills（用 Agent Skills 装备面向真实世界的 Agent）
 
 原文：https://www.anthropic.com/engineering/agent-skills-equipping-agents
 发布：2025年10月16日 | 更新：2025年12月18日（发布为开放标准 agentskills.io）

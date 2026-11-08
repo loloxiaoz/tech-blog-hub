@@ -1,5 +1,5 @@
 ---
-title: "Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI"
+title: "Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI（推出 Anthropic Interviewer：1,250 位专业人士如何讲述与 AI 共事）"
 org: "Anthropic"
 date: 2025-12-04
 source_url: "https://www.anthropic.com/news/anthropic-interviewer"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI
+# Introducing Anthropic Interviewer: What 1,250 professionals told us about working with AI（推出 Anthropic Interviewer：1,250 位专业人士如何讲述与 AI 共事）
 
 ## 核心观点
 

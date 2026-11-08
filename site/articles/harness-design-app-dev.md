@@ -1,5 +1,5 @@
 ---
-title: "Harness design for long-running application development"
+title: "Harness design for long-running application development（面向长时间应用开发的 Harness 设计）"
 org: "Anthropic"
 date: 2026-03-24
 source_url: "https://www.anthropic.com/engineering/harness-design-long-running-apps"
@@ -11,7 +11,7 @@ summary_en: ""
 
 
 
-# Harness design for long-running application development
+# Harness design for long-running application development（面向长时间应用开发的 Harness 设计）
 
 ## 核心观点
 

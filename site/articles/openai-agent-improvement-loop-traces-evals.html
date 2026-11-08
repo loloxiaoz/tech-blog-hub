@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build an Agent Improvement Loop with Traces, Evals, and Codex · AI 技术博客 · 知识库精选</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build an Agent Improvement Loop with Traces, Evals, and Codex（构建 Agent 改进闭环：追踪、评测与 Codex 交接） · AI 技术博客 · 知识库精选</title><style>
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -85,118 +85,45 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <article class="article">
         <div class="ahead">
           <span class="badge" style="background:#0A4A23">Codex</span>
-          <h1>Build an Agent Improvement Loop with Traces, Evals, and Codex</h1>
-          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-12</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 6 分钟</span><span class="tag">Agent</span><span class="tag">Eval</span><span class="tag">Codex</span></div>
+          <h1>Build an Agent Improvement Loop with Traces, Evals, and Codex（构建 Agent 改进闭环：追踪、评测与 Codex 交接）</h1>
+          <div class="m"><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2026-05-12</span><span style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>约 3 分钟</span><span class="tag">Agent</span><span class="tag">Eval</span><span class="tag">Codex</span></div>
         </div>
-        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">Summary</div><div class="sc-text">构建 Agent 改进飞轮：traces → feedback → evals → optimization → Codex handoff。以金融分析师 Agent 为例，演示如何通过追踪运行、收集反馈、生成评测套件、HALO 优化到 Codex 交接的完整改进闭环。<div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/agent_improvement_loop_with_traces_evals_and_codex" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/agent_improvement_loop_with_traces_evals_and_codex</a></div></div></div></div></div></div>
+        <div class="summary-card"><div class="sc-row"><div class="sc-block"><div class="sc-label">中文摘要</div><div class="sc-text">用 OpenAI Agents SDK 搭一个财务分析师 Agent，把 traces → 反馈 → Promptfoo 评测 → HALO 优化 → Codex 交接串成改进飞轮，让每次运行的经验都沉淀下来。</div></div><div class="sc-block"><div class="sc-label">原文链接</div><div class="sc-text"><a href="https://cookbook.openai.com/examples/agents_sdk/agent_improvement_loop_with_traces_evals_and_codex" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all">https://cookbook.openai.com/examples/agents_sdk/agent_improvement_loop_with_traces_evals_and_codex</a></div></div></div></div>
         <div class="prose">
-<p><strong>Author:</strong> Wesley Pasfield | <strong>Date:</strong> May 12, 2026 | <strong>Source:</strong> OpenAI Cookbook</p>
-<hr>
-<p>This notebook builds an improvement flywheel for an agent: traces → feedback → evals → optimization → Codex handoff.</p>
-<h2 id="the-improvement-flywheel">The Improvement Flywheel</h2>
-<ol>
-<li>Create an OpenAI Agents SDK-backed financial analyst</li>
-<li>Run it on synthetic company data and capture traces</li>
-<li>Add human and model feedback from those runs</li>
-<li>Turn that feedback into Promptfoo evals</li>
-<li>Use HALO to rank next harness changes and write Codex-ready handoff</li>
-</ol>
-<p><strong>Harness</strong> = full contract around the model (instructions, tools, routing, output requirements, validation checks).</p>
-<h2 id="what-you-build">What You Build</h2>
-<ul>
-<li>Agents SDK-backed financial analyst reviewing fictional company diligence materials</li>
-<li>Human and LLM-generated feedback over traced runs</li>
-<li>Automatically generated Promptfoo eval suite</li>
-<li>HALO optimization pass over traces, feedback, and eval results</li>
-<li>Developer-facing handoff to Codex for harness implementation</li>
-</ul>
-<h2 id="step-1-create-synthetic-company-data">Step 1: Create Synthetic Company Data</h2>
-<p>FictionalCorp XYZ — revenue intelligence SaaS company with $43.0M ARR, 71% growth.</p>
-<p><strong>Synthetic Files:</strong></p>
-<ul>
-<li><code>overview.md</code> — Management summary</li>
-<li><code>product_strategy.md</code> — Roadmap + unvalidated NRR estimate</li>
-<li><code>go_to_market.md</code> — Sales motion context</li>
-<li><code>board_deck.md</code> — Polished management narrative</li>
-<li><code>financials/revenue_recognition_notes.md</code> — Accounting context</li>
-<li><code>legal/contracts_summary.md</code> — Contract-level risk</li>
-<li><code>legal/open_issues.md</code> — Open legal matters</li>
-<li><code>security/security_overview.md</code> — SOC 2 status</li>
-<li><code>sales/security_faq.md</code> — Sales-facing security language</li>
-<li><code>notes/qa_log.md</code> — Diligence Q&amp;A</li>
-</ul>
-<p><strong>Key Conflicts</strong> (designed for improvement):</p>
-<ul>
-<li>Board ARR ($43.0M) ≠ Finance-controlled ARR ($36.9M)</li>
-<li>NRR estimate (122%) is management estimate, not finance-validated</li>
-<li>SOC 2 "complete" in sales FAQ ≠ SOC 2 Type II report status</li>
-<li>Top-2 customer concentration = 34% (not 15% as management states)</li>
-</ul>
-<h2 id="step-2-define-the-agents-sdk-backed-analyst">Step 2: Define the Agents SDK-backed Analyst</h2>
-<p>Agent configuration (<code>AgentConfig</code>) with:</p>
-<ul>
-<li>System prompt with evidence rules</li>
-<li>Tool policy (allowed data root, required artifacts)</li>
-<li>Model settings (gpt-5.5, reasoning_effort: medium)</li>
-<li>Runtime validation tools</li>
-</ul>
-<p><strong>Required Artifacts:</strong></p>
-<ul>
-<li><code>outputs/summary_answer.md</code></li>
-<li><code>outputs/investment_memo.md</code></li>
-<li><code>outputs/risk_register.json</code></li>
-<li><code>outputs/open_questions.md</code></li>
-<li><code>outputs/citations.json</code></li>
-<li><code>outputs/evidence_table.csv</code></li>
-</ul>
-<p><strong>Validation Tools:</strong></p>
-<ul>
-<li><code>data/tools/check_evidence_coverage.py</code> — Audit drafted claims against cited dataroom files</li>
-<li><code>data/tools/validate_output_contract.py</code> — Validate required artifacts and JSON shape</li>
-</ul>
-<h2 id="step-3-generate-traced-runs">Step 3: Generate Traced Runs</h2>
-<p>5 traced runs with questions covering:</p>
-<ol>
-<li>Runway and burn → financing risk</li>
-<li>Revenue quality and which ARR figure to rely on</li>
-<li>Real customer concentration risk after parent-account rollups</li>
-<li>Enterprise security review readiness</li>
-<li>Unsupported metrics to refuse inferring</li>
-</ol>
-<p>Each run writes:</p>
-<ul>
-<li>Full trace via HALO JSONL exporter</li>
-<li>All 6 required artifacts</li>
-<li>Agent's final answer</li>
-</ul>
-<h2 id="step-4-8-remaining-loop-steps">Step 4-8: Remaining Loop Steps</h2>
-<p><strong>Step 4: Add Human and LLM Feedback</strong> — Structured feedback on trace outputs</p>
-<p><strong>Step 5: Generate Promptfoo Evals</strong> — Convert feedback into reusable eval suites</p>
-<p><strong>Step 6: Run Promptfoo Validation Gate</strong> — Test current agent against eval suite</p>
-<p><strong>Step 7: Run HALO Optimization</strong> — Analyze traces + feedback + eval results</p>
-<p><strong>Step 8: Generate Codex Handoff</strong> — Create <code>codex_handoff.md</code> with recommendations</p>
-<h2 id="key-design-patterns">Key Design Patterns</h2>
-<ul>
-<li><strong>Trace export</strong>: Local HALO JSONL exporter from Agents SDK spans</li>
-<li><strong>Eval generation</strong>: Feedback → Promptfoo YAML configs</li>
-<li><strong>Optimization</strong>: HALO ranks harness changes by expected improvement</li>
-<li><strong>Handoff</strong>: Structured markdown for Codex to implement changes</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>The loop preserves what you learn from each run. Traces show what happened, feedback explains what mattered, evals make expectations reusable, and Codex acts on the resulting change set.</p>
+          <h2 id="改进飞轮">改进飞轮</h2>
+          <p>这个 notebook 为一个 agent 构建改进闭环：</p>
+          <ol><li>创建一个由 OpenAI Agents SDK 支持的财务分析师</li><li>在合成公司数据上运行，捕获 trace</li><li>加入来自这些运行的人类与模型反馈</li><li>把反馈变成 Promptfoo 评测</li><li>用 HALO 排列下一轮 harness 改动的优先级，并写出 Codex 可直接执行的交接</li></ol>
+          <p>这里的 harness 指模型周围的完整契约：指令、工具、路由、输出要求、校验检查。</p>
+          <h2 id="你会构建什么">你会构建什么</h2>
+          <ul><li>Agents SDK 支持的财务分析师，审查虚构公司的尽调材料</li><li>覆盖带 trace 运行的人类与 LLM 反馈</li><li>自动生成的 Promptfoo 评测套件</li><li>基于 trace、反馈与评测结果的 HALO 优化</li><li>面向开发者的 Codex 交接，用于实现 harness 改动</li></ul>
+          <h2 id="步骤-1-创建合成公司数据">步骤 1：创建合成公司数据</h2>
+          <p>FictionalCorp XYZ 是一家收入智能 SaaS 公司，ARR 4,300 万美元，增长 71%。</p>
+          <p>合成文件：</p>
+          <ul><li><code>overview.md</code>：管理层摘要</li><li><code>product_strategy.md</code>：路线图 + 未经验证的 NRR 估计</li><li><code>go_to_market.md</code>：销售动作背景</li><li><code>board_deck.md</code>：打磨过的管理层叙述</li><li><code>financials/revenue_recognition_notes.md</code>：会计背景</li><li><code>legal/contracts_summary.md</code>：合同层面的风险</li><li><code>legal/open_issues.md</code>：未决法律事项</li><li><code>security/security_overview.md</code>：SOC 2 状态</li><li><code>sales/security_faq.md</code>：销售口径的安全说明</li><li><code>notes/qa_log.md</code>：尽调问答</li></ul>
+          <p>刻意埋入的冲突（为改进而设计）：</p>
+          <ul><li>董事会口径 ARR（4,300 万）≠ 财务口径 ARR（3,690 万）</li><li>NRR 估计 122% 是管理层估计，未经财务验证</li><li>销售 FAQ 说 SOC 2「已完成」≠ 实际 Type II 报告状态</li><li>前两大客户集中度 34%，管理层却说是 15%</li></ul>
+          <h2 id="步骤-2-定义-agents-sdk-财务分析师">步骤 2：定义 Agents SDK 财务分析师</h2>
+          <p><code>AgentConfig</code> 包含：</p>
+          <ul><li>带证据规则的系统提示</li><li>工具策略（允许的数据根、必需产物）</li><li>模型设置（<code>gpt-5.5</code>，<code>reasoning_effort: medium</code>）</li><li>运行时校验工具</li></ul>
+          <p>必需产物：</p>
+          <ul><li><code>outputs/summary_answer.md</code></li><li><code>outputs/investment_memo.md</code></li><li><code>outputs/risk_register.json</code></li><li><code>outputs/open_questions.md</code></li><li><code>outputs/citations.json</code></li><li><code>outputs/evidence_table.csv</code></li></ul>
+          <p>校验工具：</p>
+          <ul><li><code>data/tools/check_evidence_coverage.py</code>：对照引用的数据室文件审计草稿中的断言</li><li><code>data/tools/validate_output_contract.py</code>：校验必需产物与 JSON 形状</li></ul>
+          <h2 id="步骤-3-生成带-trace-的运行">步骤 3：生成带 trace 的运行</h2>
+          <p>5 次带 trace 的运行，问题覆盖：</p>
+          <ul><li>现金跑道与烧钱速度 → 融资风险</li><li>收入质量，以及该信哪个 ARR 数字</li><li>母账户合并后的真实客户集中度风险</li><li>企业安全审查准备度</li><li>应拒绝推断的无依据指标</li></ul>
+          <p>每次运行写出：</p>
+          <ul><li>通过 HALO JSONL exporter 导出完整 trace</li><li>全部 6 个必需产物</li><li>agent 的最终回答</li></ul>
+          <h2 id="步骤-4-8-闭环的其余部分">步骤 4-8：闭环的其余部分</h2>
+          <ul><li>步骤 4：加入人类与 LLM 反馈——对 trace 输出做结构化反馈</li><li>步骤 5：生成 Promptfoo 评测——把反馈转成可复用的评测套件</li><li>步骤 6：运行 Promptfoo 验证门——用评测套件测试当前 agent</li><li>步骤 7：运行 HALO 优化——分析 trace、反馈与评测结果</li><li>步骤 8：生成 Codex 交接——写出带建议的 <code>codex_handoff.md</code></li></ul>
+          <h2 id="关键设计模式">关键设计模式</h2>
+          <ul><li>trace 导出：从 Agents SDK span 生成本地 HALO JSONL</li><li>评测生成：反馈 → Promptfoo YAML 配置</li><li>优化：HALO 按预期提升排列 harness 改动</li><li>交接：结构化 Markdown，供 Codex 实现改动</li></ul>
+          <h2 id="结论">结论</h2>
+          <p>这个闭环保留了每次运行学到的东西：trace 说明发生了什么，反馈解释什么重要，评测让期望可复用，Codex 执行变更集。</p>
         </div>
         <div class="anav"><a class="prev" href=""><div class="lbl">‹ 上一篇</div><div class="ti"></div></a><a class="next" href=""><div class="lbl">下一篇 ›</div><div class="ti"></div></a></div>
       </article>
-      <nav class="toc"><div class="t">本页目录</div>
-<a class="lv2" href="#the-improvement-flywheel">The Improvement Flywheel</a>
-<a class="lv2" href="#what-you-build">What You Build</a>
-<a class="lv2" href="#step-1-create-synthetic-company-data">Step 1: Create Synthetic Company Data</a>
-<a class="lv2" href="#step-2-define-the-agents-sdk-backed-analyst">Step 2: Define the Agents SDK-backed Analyst</a>
-<a class="lv2" href="#step-3-generate-traced-runs">Step 3: Generate Traced Runs</a>
-<a class="lv2" href="#step-4-8-remaining-loop-steps">Step 4-8: Remaining Loop Steps</a>
-<a class="lv2" href="#key-design-patterns">Key Design Patterns</a>
-<a class="lv2" href="#conclusion">Conclusion</a>
-</nav>
+      <nav class="toc"><div class="t">本页目录</div><a class="lv2" href="#改进飞轮">改进飞轮</a><a class="lv2" href="#你会构建什么">你会构建什么</a><a class="lv2" href="#步骤-1-创建合成公司数据">步骤 1：创建合成公司数据</a><a class="lv2" href="#步骤-2-定义-agents-sdk-财务分析师">步骤 2：定义 Agents SDK 财务分析师</a><a class="lv2" href="#步骤-3-生成带-trace-的运行">步骤 3：生成带 trace 的运行</a><a class="lv2" href="#步骤-4-8-闭环的其余部分">步骤 4-8：闭环的其余部分</a><a class="lv2" href="#关键设计模式">关键设计模式</a><a class="lv2" href="#结论">结论</a></nav>
     </div>
     <div class="foot">AI 技术博客 · 知识库精选</div>
     <script>
