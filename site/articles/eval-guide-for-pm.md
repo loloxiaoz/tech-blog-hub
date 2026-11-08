@@ -5,8 +5,8 @@ date: 2026-06-09
 source_url: ""
 tags: ["Agent", "Eval/评测"]
 summary: "综合 Anthropic《Demystifying Evals for AI Agents》、Meta PM Daniel McKinnon《Show, Don't Tell》、Braintrust《Evals Are the New PRD / Evals for PMs》、H"
-summary_zh: ""
-summary_en: "综合 Anthropic《Demystifying Evals for AI Agents》、Meta PM Daniel McKinnon《Show, Don't Tell》、Braintrust《Evals Are the New PRD / Evals for PMs》、H"
+summary_zh: "原因：Eval 的核心不是技术，而是定义\"什么算好\"——这是产品判断，PM 是最合适的人。工程师能搭基础设施，但\"出什么题、怎么评分\"应由 PM 来定。"
+summary_en: ""
 ---
 
 

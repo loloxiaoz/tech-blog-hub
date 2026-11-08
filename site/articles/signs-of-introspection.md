@@ -5,8 +5,8 @@ date: 2025-10-29
 source_url: "https://www.anthropic.com/research/signs-of-introspection"
 tags: ["可解释性", "安全/对齐"]
 summary: "原文链接：https://transformer-circuits.pub/2025/introspection/index.html"
-summary_zh: ""
-summary_en: "原文链接：https://transformer-circuits.pub/2025/introspection/index.html"
+summary_zh: "Anthropic 设计了\"概念注入\"实验：先记录模型在特定上下文中的神经激活向量（即该概念的内部表征），然后在无关上下文中将该向量注入模型激活层，观察模型能否感知这一异常。关键发现是：成功的实验中，模型在提及该概念之前就已报告\"感知到异常\"——这与旧式激活引导（Golden Gate Claude）形成本质区别…"
+summary_en: ""
 ---
 
 

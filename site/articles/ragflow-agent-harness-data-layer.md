@@ -5,8 +5,8 @@ date: 2026-04-28
 source_url: "https://zhuanlan.zhihu.com/p/2032559018770683864"
 tags: ["Agent", "Eval/评测", "RAG/检索", "Harness工程"]
 summary: "Anthropic 最新将 LLM + Harness 统一抽象为 Brain："
-summary_zh: ""
-summary_en: "Anthropic 最新将 LLM + Harness 统一抽象为 Brain："
+summary_zh: "这一分离的战略意义：企业无需被特定厂商的 Brain 实现绑定，自主掌控数据基础设施。"
+summary_en: ""
 ---
 
 

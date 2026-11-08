@@ -5,8 +5,8 @@ date: 2026-05-11
 source_url: ""
 tags: ["Agent", "Eval/评测", "RAG/检索"]
 summary: "1. EBDD（Evaluation and Badcase Driven Development） 是医疗 Agent 的核心研发范式"
-summary_zh: ""
-summary_en: "1. EBDD（Evaluation and Badcase Driven Development） 是医疗 Agent 的核心研发范式"
+summary_zh: "演讲者：郭春晓，蚂蚁集团医疗工程引擎 会议：QCon 全球软件开发大会，2026年 核心主张：AI Agent 正在重新定义医疗健康"
+summary_en: ""
 ---
 
 

@@ -5,8 +5,8 @@ date: 2026-01-29
 source_url: "https://www.anthropic.com/research/ai-coding-skills"
 tags: ["Agent", "RAG/检索", "经济影响"]
 summary: "原文：https://www.anthropic.com/research/AI-assistance-coding-skills"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/research/AI-assistance-coding-skills"
+summary_zh: "实验设计：52名初中级软件工程师，Python使用频率≥每周一次，均不熟悉Trio库（异步编程）。随机分为AI辅助组和手动编码组，完成两个编程任务后立即进行测验。参与者被告知有测验，但被鼓励尽快完成任务。"
+summary_en: ""
 ---
 
 

@@ -5,8 +5,8 @@ date: 2026-05-26
 source_url: "https://www.anthropic.com/news/anthropic-korea-director"
 tags: ["company", "Agent", "MCP", "Claude Code", "经济影响"]
 summary: "原文：Anthropic appoints KiYoung Choi as Representative Director of Korea ahead of Seoul office opening"
-summary_zh: ""
-summary_en: "原文：Anthropic appoints KiYoung Choi as Representative Director of Korea ahead of Seoul office opening"
+summary_zh: "韩国是全球 Claude 最活跃市场之一，使用率达人口规模预期的3.5倍以上。 根据 Anthropic 最新 Economic Index，韩国用户使用 Claude 的频率远超同等规模国家，且用途集中在技术和创意工作，显示高质量用户密度而非泛化使用。"
+summary_en: ""
 ---
 
 

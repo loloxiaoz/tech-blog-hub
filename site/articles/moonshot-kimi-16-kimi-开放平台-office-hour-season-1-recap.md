@@ -5,8 +5,8 @@ date: 2024-07-23
 source_url: "https://platform.kimi.com/blog/posts/office-hour-s1"
 tags: ["Moonshot AI"]
 summary: "Kimi 开放平台 Office Hour Season 1 Recap"
-summary_zh: ""
-summary_en: "Kimi 开放平台 Office Hour Season 1 Recap"
+summary_zh: "Kimi 开放平台 Office Hour Season 1 Recap MinakoKojima , 发表于 2024年07月23日 • 1 min read community 返回 嗨，各位开发者，我们的 Kimi 开放平台 Office Hour 第一季已经成功完结啦，它们分别是："
+summary_en: ""
 ---
 
 # Kimi 开放平台 Office Hour Season 1 Recap

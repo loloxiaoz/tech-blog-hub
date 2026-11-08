@@ -5,8 +5,8 @@ date: 2024-09-19
 source_url: "https://www.anthropic.com/engineering/contextual-retrieval"
 tags: ["Eval/评测", "RAG/检索"]
 summary: "Claude Haiku 的 Chunk 上下文生成 Prompt："
-summary_zh: ""
-summary_en: "Claude Haiku 的 Chunk 上下文生成 Prompt："
+summary_zh: "传统 RAG 的根本缺陷是上下文丢失。文档分块后，单个 Chunk 失去了定位信息（如\"本段来自 ACME 公司 2023 年 Q2 财报，上季度营收为 3.14 亿美元\"），导致检索阶段无法精准匹配用户查询，即使内容相关也会被漏掉。"
+summary_en: ""
 ---
 
 

@@ -5,8 +5,8 @@ date: 2026-05-25
 source_url: "https://www.anthropic.com/news/chris-olah-pope-leo-xiv"
 tags: ["可解释性"]
 summary: "Anthropic co-founder Chris Olah's remarks on Pope Leo XIV's encyclical \"Magnifica humanitas\""
-summary_zh: ""
-summary_en: "Anthropic co-founder Chris Olah's remarks on Pope Leo XIV's encyclical \"Magnifica humanitas\""
+summary_zh: "Olah 坦承：每家前沿AI实验室——包括Anthropic——都运行在一套可能与\"做正确的事\"相冲突的激励与约束体系中。商业可行性压力、保持研究前沿的压力、地缘政治压力，以及更古老、更普通的骄傲与野心的压力。无论从业者多么真诚地打算做正确的事，这些激励都会持续影响行为。因此，需要来自这些激励体系之外的人——那些关…"
+summary_en: ""
 ---
 
 

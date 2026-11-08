@@ -5,8 +5,8 @@ date: 2025-12-02
 source_url: "https://www.anthropic.com/research/how-ai-is-transforming-work"
 tags: ["Agent", "Claude Code", "多模态", "经济影响", "工具调用"]
 summary: "原文：https://www.anthropic.com/news/how-ai-is-transforming-work-at-anthropic"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/news/how-ai-is-transforming-work-at-anthropic"
+summary_zh: "1. AI使用量与生产力在一年内双倍增长 工程师自报Claude参与59%工作（去年28%），生产力提升+50%（去年+20%）。14%的超级用户生产力提升超100%。产出量增长显著大于时间节省——在几乎所有任务类别中，产出量净增加，而时间净减少幅度相对较小。"
+summary_en: ""
 ---
 
 

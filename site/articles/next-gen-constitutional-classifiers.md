@@ -5,8 +5,8 @@ date: 2026-01-09
 source_url: "https://www.anthropic.com/research/constitutional-classifiers"
 tags: ["可解释性", "安全/对齐"]
 summary: "原文：https://www.anthropic.com/research/constitutional-classifiers-2"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/research/constitutional-classifiers-2"
+summary_zh: "第一代 Constitutional Classifiers 将越狱成功率从86%降至4.4%，但带来23.7%计算开销和0.38%误拒率。CC++ 将计算开销压缩至约1%，误拒率从0.38%降至0.05%，同时检测率进一步提升（0.005高危漏洞/千次查询）。"
+summary_en: ""
 ---
 
 

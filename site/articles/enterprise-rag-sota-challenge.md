@@ -5,8 +5,8 @@ date: 2025-06-10
 source_url: "https://zhuanlan.zhihu.com/p/1915060185329796001"
 tags: ["RAG/检索", "推理模型", "开源模型"]
 summary: "→ 分块（300 Token，50 Token overlap）"
-summary_zh: ""
-summary_en: "→ 分块（300 Token，50 Token overlap）"
+summary_zh: "大型表格中水平/垂直标题相距太远，语义割裂。 解法：将表格转为一组上下文独立的子句："
+summary_en: ""
 ---
 
 

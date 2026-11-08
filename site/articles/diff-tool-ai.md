@@ -5,8 +5,8 @@ date: 2026-03-13
 source_url: "https://www.anthropic.com/engineering/diff-tool-ai"
 tags: ["Eval/评测", "安全/对齐", "推理模型", "代码模型", "开源模型"]
 summary: "原文：https://www.anthropic.com/research/diff-tool"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/research/diff-tool"
+summary_zh: "现有基准测试（benchmark）只能测试人类已知并会测量的风险。这意味着模型中新兴的、未被预想到的行为——即\"未知的未知\"——会被漏检。传统评测相当于拿到百万行代码从头找安全漏洞，效率极低。"
+summary_en: ""
 ---
 
 

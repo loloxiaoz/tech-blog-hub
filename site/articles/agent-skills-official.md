@@ -5,8 +5,8 @@ date: 2025-10-16
 source_url: ""
 tags: ["Agent", "Eval/评测"]
 summary: "原文：https://www.anthropic.com/engineering/agent-skills-equipping-agents"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/engineering/agent-skills-equipping-agents"
+summary_zh: "Skills 是组织成文件夹的指令、脚本和资源集合，核心是 SKILL.md 文件。与为每个用例构建碎片化专用 Agent 不同，Skills 让任何人都能通过封装和共享程序性知识，将通用 Agent 专化为满足特定需求的专业 Agent。构建 Skill 类比于为新员工准备入职指南。"
+summary_en: ""
 ---
 
 

@@ -5,8 +5,8 @@ date: 2025-05-29
 source_url: "https://www.anthropic.com/research/open-sourcing-circuit-tracing"
 tags: ["可解释性", "安全/对齐", "代码模型", "开源模型"]
 summary: "原文：https://www.anthropic.com/research/open-source-circuit-tracing"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/research/open-source-circuit-tracing"
+summary_zh: "归因图是揭示模型内部推理的核心工具。 Anthropic 将其可解释性研究方法论具体化为\"归因图\"（Attribution Graph）——一种部分展现模型从输入到输出内部决策路径的图结构。这不是黑盒探针，而是对\"模型如何一步步得出答案\"的机理追踪。"
+summary_en: ""
 ---
 
 

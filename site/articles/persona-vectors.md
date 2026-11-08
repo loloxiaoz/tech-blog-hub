@@ -5,8 +5,8 @@ date: 2025-08-01
 source_url: "https://www.anthropic.com/research/persona-vectors"
 tags: ["interpretability", "安全/对齐"]
 summary: "原文链接：https://www.anthropic.com/research/persona-vectors"
-summary_zh: ""
-summary_en: "原文链接：https://www.anthropic.com/research/persona-vectors"
+summary_zh: "Persona vectors 是 LLM 神经网络内部用于表征人格特征的激活方向向量。提取方法：给定一个人格特征描述（如\"邪恶\"），自动生成一批对比提示（邪恶 vs. 非邪恶响应），通过比较两组激活差异得到该特征的方向向量。通过\"steering\"（将向量注入模型）可以验证因果关系：注入邪恶向量 → 模型输出不道…"
+summary_en: ""
 ---
 
 

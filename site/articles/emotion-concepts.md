@@ -5,8 +5,8 @@ date: 2026-04-02
 source_url: "https://www.anthropic.com/research/emotion-concepts"
 tags: ["interpretability", "可解释性", "安全/对齐", "推理模型"]
 summary: "原文：https://www.anthropic.com/research/emotion-concepts-function"
-summary_zh: ""
-summary_en: "原文：https://www.anthropic.com/research/emotion-concepts-function"
+summary_zh: "1. 功能性情感的存在性与可测量性 Claude Sonnet 4.5 内部存在对应 171 种情感概念的情感向量（emotion vectors）——特定神经激活模式。这些向量在情境上具有选择性（如恐惧向量随泰诺剂量升高而增强），结构上类似人类情感空间（正负效价、相似情感相邻），可跨情境泛化。研究者明确区分：功能…"
+summary_en: ""
 ---
 
 
