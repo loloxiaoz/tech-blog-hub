@@ -75,20 +75,6 @@
     "source_url": "https://github.com/MiniMax-AI/MiniMax-M3"
   },
   {
-    "id": "anthropic-engineering-07-context-engineering-new",
-    "title": "Effective Context Engineering for AI Agents（AI 智能体的有效上下文工程）",
-    "org": "Anthropic",
-    "date": "2026-06-15",
-    "tags": [
-      "Context Engineering",
-      "Agent",
-      "工程实践",
-      "LLM"
-    ],
-    "minutes": 6,
-    "source_url": "https://www.anthropic.com/engineering/context-engineering"
-  },
-  {
     "id": "minimax-04-minimax-code",
     "title": "MiniMax Code",
     "org": "MiniMax",
@@ -138,20 +124,6 @@
     ],
     "minutes": 6,
     "source_url": "https://developer.nvidia.com/blog/cccl-runtime-a-modern-c-runtime-for-cuda/"
-  },
-  {
-    "id": "anthropic-engineering-08-writing-tools-new",
-    "title": "Writing Effective Tools for Agents — with Agents（用 Agent 为 Agent 编写高效工具）",
-    "org": "Anthropic",
-    "date": "2026-06-10",
-    "tags": [
-      "工具调用",
-      "Agent",
-      "ACI",
-      "评估"
-    ],
-    "minutes": 6,
-    "source_url": "https://www.anthropic.com/engineering/writing-effective-tools"
   },
   {
     "id": "eval-guide-for-pm",
@@ -821,20 +793,6 @@
     "source_url": "https://developer.nvidia.com/blog/build-personal-ai-agents-on-windows-pcs-with-new-tools-from-microsoft-and-nvidia/"
   },
   {
-    "id": "qwen-new-03-qwen-image-native-text",
-    "title": "Qwen-Image: Crafting with Native Text Rendering（原生文字渲染的图像生成基础模型）",
-    "org": "Qwen",
-    "date": "2026-05-15",
-    "tags": [
-      "Qwen",
-      "图像生成",
-      "文字渲染",
-      "多模态"
-    ],
-    "minutes": 4,
-    "source_url": "https://qwenlm.github.io/blog/qwen-image/"
-  },
-  {
     "id": "anthropic-research-07-project-fetch-phase2",
     "title": "Project Fetch: Phase Two（机器人任务第二阶段：Claude 自主完成速度超人类20倍）",
     "org": "Anthropic",
@@ -1125,20 +1083,6 @@
     "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/"
   },
   {
-    "id": "qwen-new-04-gspo-scalable-rl",
-    "title": "GSPO: Towards Scalable Reinforcement Learning for Language Models（面向可扩展强化学习的序列级策略优化）",
-    "org": "Qwen",
-    "date": "2026-05-10",
-    "tags": [
-      "强化学习",
-      "GSPO",
-      "训练算法",
-      "MoE"
-    ],
-    "minutes": 3,
-    "source_url": "https://qwenlm.github.io/blog/gspo/"
-  },
-  {
     "id": "openai-using-goals-in-codex",
     "title": "Using Goals in Codex",
     "org": "OpenAI",
@@ -1204,20 +1148,6 @@
     ],
     "minutes": 4,
     "source_url": "https://www.anthropic.com/research/teaching-claude-why"
-  },
-  {
-    "id": "qwen-new-05-qwen-mt-translation",
-    "title": "Qwen-MT: Where Speed Meets Smart Translation（Qwen-MT：速度与智能兼备的机器翻译模型）",
-    "org": "Qwen",
-    "date": "2026-05-08",
-    "tags": [
-      "Qwen",
-      "机器翻译",
-      "多语言",
-      "MoE"
-    ],
-    "minutes": 4,
-    "source_url": "https://qwenlm.github.io/blog/qwen-mt/"
   },
   {
     "id": "openai-migrate-claude-sdk-to-openai-agents-sdk",
@@ -1833,20 +1763,6 @@
     ],
     "minutes": 2,
     "source_url": "https://deepmind.google/blog/opening-new-paths-in-aging-research/"
-  },
-  {
-    "id": "anthropic-engineering-06-infra-noise-evals-new",
-    "title": "Quantifying Infrastructure Noise in Agentic Coding Evals（量化 Agent 编程评测中的基础设施噪声）",
-    "org": "Anthropic",
-    "date": "2026-04-05",
-    "tags": [
-      "Eval/评测",
-      "Agent",
-      "基础设施",
-      "工程实践"
-    ],
-    "minutes": 5,
-    "source_url": "https://www.anthropic.com/engineering/infrastructure-noise"
   },
   {
     "id": "emotion-concepts",
